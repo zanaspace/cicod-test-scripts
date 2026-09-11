@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CICOD &amp; 1Government Enterprise Architecture — Modular Suite Portal</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap"
+    rel="stylesheet">
+  
+  <!-- Modular Compact Navbar Stylesheet -->
+  <link rel="stylesheet" href="navbar/css/navbar.css">
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --bg-base: #050811;
+      --bg-surface: #0a1122;
+      --bg-card: rgba(15, 23, 42, 0.75);
+      --border-subtle: rgba(255, 255, 255, 0.08);
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --text-dim: #64748b;
+      --radius-sm: 8px;
+      --radius-md: 12px;
+      --radius-lg: 18px;
+      --brand-primary: #2563eb;
+      --brand-primary-light: #60a5fa;
+    }
+
+    body.mode-gov {
+      --brand-primary: #21714B;
+      --brand-primary-light: #2da46a;
+    }
+
+    body.theme-light {
+      --bg-base: #f8fafc;
+      --bg-surface: #ffffff;
+      --bg-card: #ffffff;
+      --border-subtle: #e2e8f0;
+      --text-main: #0f172a;
+      --text-muted: #334155;
+      --text-dim: #64748b;
+      background-color: var(--bg-base);
+      color: var(--text-main);
+    }
+
+    body {
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      background-color: var(--bg-base);
+      color: var(--text-main);
+      line-height: 1.5;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      transition: background-color 0.2s ease, color 0.2s ease;
+    }
+
+    /* Master Body Viewport */
+    .master-body {
+      flex: 1;
+      display: flex;
+      position: relative;
+      overflow: hidden;
+      background: var(--bg-base);
+    }
+
+    /* Embedded Module Frames */
+    .module-frame {
+      width: 100%;
+      height: 100%;
+      border: none;
+      display: none;
+    }
+
+    .module-frame.active {
+      display: block;
+    }
+
+    /* Integrated Architecture Sections */
+    .arch-view {
+      width: 100%;
+      height: 100%;
+      overflow-y: auto;
+      padding: 36px 48px;
+      display: none;
+      flex-direction: column;
+      gap: 32px;
+    }
+
+    .arch-view.active {
+      display: flex;
+    }
+
+    .pipeline-tier {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      padding: 26px;
+    }
+
+    .tier-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+      padding-bottom: 14px;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .cards-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 18px;
+    }
+
+    .module-card {
+      background: rgba(10, 16, 31, 0.85);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 18px;
+      cursor: pointer;
+      transition: all 0.22s ease;
+    }
+
+    .module-card:hover {
+      border-color: #3b82f6;
+      transform: translateY(-2px);
+    }
+
+    /* Light Theme Overrides */
+    body.theme-light .module-card {
+      background: #ffffff;
+      border-color: #e2e8f0;
+      box-shadow: 0 4px 18px rgba(0, 0, 0, 0.04);
+    }
+
+    body.theme-light .pipeline-tier {
+      background: #ffffff;
+      border-color: #e2e8f0;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+    }
+
+    body.theme-light .arch-view h2,
+    body.theme-light .arch-view h3,
+    body.theme-light .arch-view h4 {
+      color: #0f172a;
+    }
+
+    body.theme-light .arch-view table {
+      color: #0f172a;
+    }
+
+    body.theme-light .arch-view table td {
+      color: #334155;
+    }
+
+    body.theme-light .arch-view table strong {
+      color: #0f172a;
+    }
+
+    /* Toast */
+    .toast-box {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      z-index: 500;
+    }
+
+    .toast {
+      background: rgba(15, 23, 42, 0.95);
+      border: 1px solid #3b82f6;
+      padding: 12px 20px;
+      border-radius: var(--radius-md);
+      color: #fff;
+      font-size: 13px;
+      font-weight: 600;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5);
+    }
+
+    body.theme-light .toast {
+      background: #ffffff;
+      border-color: var(--brand-primary);
+      color: #0f172a;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+    }
+  </style>
+</head>
+
+<body class="mode-commercial">
+
+  <!-- Ultra-Compact Modular Master Header (46px) -->
+  <header class="master-header-compact">
+    <!-- Left Section: Compact Brand & Super-Tiny Micro NavTabs -->
+    <div class="header-left-compact">
+      <!-- 1. Brand Capsule -->
+      <div class="brand-compact" onclick="selectCompactModule('cdrive', event)">
+        <div class="brand-badge-mini" id="brandBadgeMini">C</div>
+        <div class="brand-info-mini">
+          <span class="brand-title-mini" id="brandTitleMini">CICOD Cloud</span>
+          <span class="brand-tag-mini" id="brandTagMini">Enterprise</span>
+        </div>
+      </div>
+
+      <!-- 2. Super-Tiny Micro NavTabs -->
+      <nav class="nav-micro-tabs">
+        <button class="tab-btn-mini active" id="tab-mini-cdrive" data-module="cdrive" onclick="selectCompactModule('cdrive', event)">
+          <span>📁 cDrive</span>
+        </button>
+        <button class="tab-btn-mini" id="tab-mini-cflow" data-module="cflow" onclick="selectCompactModule('cflow', event)">
+          <span>📝 cFlow</span>
+        </button>
+        <button class="tab-btn-mini" id="tab-mini-usecases" data-module="usecases" onclick="selectCompactModule('usecases', event)">
+          <span>🎯 Blueprint</span>
+        </button>
+
+        <!-- "••• More ▾" Dropdown for Secondary Views -->
+        <div style="position: relative; display: inline-block;">
+          <button class="more-dropdown-btn" id="btnMoreDropdown" onclick="toggleMoreMenu(event)" title="Additional Views &amp; Tools">
+            <span>•••</span>
+            <small style="font-size: 9px; opacity: 0.7;">▾</small>
+          </button>
+
+          <!-- Floating More Menu Popover -->
+          <div class="popover-menu" id="morePopover" style="left: 0; min-width: 230px;">
+            <button class="popover-item" data-module="pipeline" onclick="selectCompactModule('pipeline', event)">
+              <span class="popover-item-icon">🌐</span>
+              <span>End-to-End Pipeline</span>
+            </button>
+            <button class="popover-item" data-module="deepdive" onclick="selectCompactModule('deepdive', event)">
+              <span class="popover-item-icon">⚡</span>
+              <span>Deep-Dive Matrix</span>
+            </button>
+            <button class="popover-item" data-module="sharing" onclick="selectCompactModule('sharing', event)">
+              <span class="popover-item-icon">⚖️</span>
+              <span>Sharing Comparison (1Gov vs cDrive)</span>
+            </button>
+            <div class="popover-divider"></div>
+            <button class="popover-item" onclick="showToast('S3 MinIO: 24.5 GB / 100 GB (Active)'); closeMoreMenu();">
+              <span class="popover-item-icon">📊</span>
+              <span>Storage &amp; S3 Telemetry</span>
+            </button>
+            <button class="popover-item" onclick="showToast('Cryptographic audit trail active.'); closeMoreMenu();">
+              <span class="popover-item-icon">🛡️</span>
+              <span>SOC 2 Compliance Log</span>
+            </button>
+          </div>
+        </div>
+      </nav>
+    </div>
+
+    <!-- Right Section: Compact Switcher & Separated Admin Control Center -->
+    <div class="header-right-compact">
+      <!-- Subtle Vertical Divider -->
+      <div class="nav-separator"></div>
+
+      <!-- Compact Vocabulary Switcher -->
+      <div class="vocab-switch-mini">
+        <button class="vocab-btn-mini active" id="btnVocabComm" onclick="setMasterVocab('commercial')">
+          <span>🏢 Commercial</span>
+        </button>
+        <button class="vocab-btn-mini" id="btnVocabGov" onclick="setMasterVocab('gov')">
+          <span>🏛️ Government</span>
+        </button>
+      </div>
+
+      <!-- Subtle Vertical Divider -->
+      <div class="nav-separator"></div>
+
+      <!-- Theme Switcher Button -->
+      <button class="theme-switch-btn" id="btnMasterTheme" onclick="toggleTheme()" title="Toggle Dark/Light Mode">
+        <span>☀️ Light</span>
+      </button>
+
+      <!-- Subtle Vertical Divider -->
+      <div class="nav-separator"></div>
+
+      <!-- ==========================================================
+           SEPARATED ADMIN CONTROL CENTER
+           ========================================================== -->
+      <div class="admin-control-group">
+        <button class="admin-pill-btn" id="btnAdminPill" onclick="toggleAdminMenu(event)" title="Account &amp; Workspace Management">
+          <div class="admin-status-dot"></div>
+          <div class="admin-avatar-mini">PZ</div>
+          <span class="admin-name-mini">Prince Zana</span>
+          <span class="admin-role-badge">ADMIN</span>
+          <span class="admin-chevron">▼</span>
+        </button>
+
+        <!-- Interactive Admin Profile & Tenant Popover -->
+        <div class="admin-popover" id="adminPopover">
+          <!-- Profile Header -->
+          <div class="admin-profile-card">
+            <div class="admin-avatar-large">PZ</div>
+            <div class="admin-profile-meta">
+              <h4>Prince Zana</h4>
+              <p>prince@cicod.com</p>
+              <span class="admin-role-badge" style="margin-top: 4px; display: inline-block;">SUPERADMIN</span>
+            </div>
+          </div>
+
+          <!-- Active Tenant Box -->
+          <div class="admin-tenant-box">
+            <span class="admin-tenant-label">Current Organization / Workspace</span>
+            <div class="admin-tenant-value" id="adminTenantDisplay">
+              <span>🏢 Acme Global HQ (Tenant #001)</span>
+              <small style="color: #60a5fa;">Active</small>
+            </div>
+          </div>
+
+          <!-- Quick Navigation Actions -->
+          <div class="admin-quick-menu">
+            <button class="admin-menu-item" onclick="showToast('Opening Workspace Settings...'); closeAdminMenu();">
+              <span>⚙️</span>
+              <span>Workspace Settings &amp; Quotas</span>
+            </button>
+            <button class="admin-menu-item" onclick="showToast('Zero-Trust Keys &amp; 2FA active.'); closeAdminMenu();">
+              <span>🔐</span>
+              <span>2FA &amp; API Credentials</span>
+            </button>
+            <button class="admin-menu-item" onclick="showToast('Switching Organization...'); closeAdminMenu();">
+              <span>🔄</span>
+              <span>Switch Workspace Tenant</span>
+            </button>
+            <div class="popover-divider"></div>
+            <button class="admin-menu-item danger" onclick="showToast('Admin session locked.'); closeAdminMenu();">
+              <span>🚪</span>
+              <span>Sign Out / Lock Session</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Master Body Viewport -->
+  <main class="master-body">
+
+    <!-- Embedded cDrive Module (Dedicated Sidebar & App) -->
+    <iframe id="frame-cdrive" class="module-frame active" src="cdrive.html?mode=commercial" onload="syncChildFrame(this)"></iframe>
+
+    <!-- Embedded cFlow Module (Dedicated Sidebar & App) -->
+    <iframe id="frame-cflow" class="module-frame" src="cflow.html?mode=commercial" onload="syncChildFrame(this)"></iframe>
+
+    <!-- Embedded Use Cases & Transformation Module (Dedicated Sidebar & App) -->
+    <iframe id="frame-usecases" class="module-frame" src="usecases.html" onload="syncChildFrame(this)"></iframe>
+
+    <!-- Integrated End-to-End Pipeline View -->
+    <div id="view-pipeline" class="arch-view">
+      <div style="text-align: center; max-width: 800px; margin: 0 auto 10px;">
+        <h2 style="font-size: 28px; font-weight: 800;">🌐 Integrated Enterprise Architecture Pipeline</h2>
+        <p style="font-size: 14px; color: var(--text-muted); margin-top: 6px;">
+          How external intake, cFlow digital minuting, and cDrive classified document vaults coordinate in a unified
+          zero-trust workflow.
+        </p>
+      </div>
+
+      <div class="pipeline-tier">
+        <div class="tier-header">
+          <div>
+            <h3 style="font-size: 16px; font-weight: 700;">Tier 1: Intake &amp; Inbound Ingestion</h3>
+            <p style="font-size: 12px; color: var(--text-muted);">Web Forms, Gov InMail Gateway, and B2B Cross-Company
+              Requests</p>
+          </div>
+          <span style="font-size: 12px; font-weight: 700; color: #60a5fa;">Input Layer</span>
+        </div>
+        <div class="cards-row">
+          <div class="module-card" onclick="openModule('cdrive')">
+            <h4 style="font-size: 14px; font-weight: 700; margin-bottom: 6px;">📥 Inbound Reception Desk</h4>
+            <p style="font-size: 12px; color: var(--text-muted);">External workpapers and contracts arrive in a
+              verification gate requiring manual acceptance.</p>
+          </div>
+          <div class="module-card" onclick="openModule('cflow')">
+            <h4 style="font-size: 14px; font-weight: 700; margin-bottom: 6px;">📋 Dynamic Web Forms</h4>
+            <p style="font-size: 12px; color: var(--text-muted);">Public or internal intake forms automatically spawn
+              tickets in cFlow workflows.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="pipeline-tier" style="border-left: 4px solid var(--brand-primary);">
+        <div class="tier-header">
+          <div>
+            <h3 style="font-size: 16px; font-weight: 700;">Tier 2: cFlow (Workflow &amp; Digital Minuting Engine)</h3>
+            <p style="font-size: 12px; color: var(--text-muted);">Digital Memos, state machines, and hierarchical
+              sign-offs</p>
+          </div>
+          <span style="font-size: 12px; font-weight: 700; color: var(--brand-primary-light);">Workflow Engine</span>
+        </div>
+        <div class="cards-row">
+          <div class="module-card" onclick="openModule('cflow')">
+            <h4 style="font-size: 14px; font-weight: 700; margin-bottom: 6px;">📝 Electronic Memos &amp; Minuting</h4>
+            <p style="font-size: 12px; color: var(--text-muted);">Minute remarks added chronologically; forwarded across
+              management hierarchies.</p>
+          </div>
+          <div class="module-card" onclick="openModule('cflow')">
+            <h4 style="font-size: 14px; font-weight: 700; margin-bottom: 6px;">⏱️ 48h / 96h SLA Watchdog</h4>
+            <p style="font-size: 12px; color: var(--text-muted);">Automatically triggers alerts on dormant tasks and
+              reassigns overdue items to Line Managers.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="pipeline-tier" style="border-left: 4px solid #3b82f6;">
+        <div class="tier-header">
+          <div>
+            <h3 style="font-size: 16px; font-weight: 700;">Tier 3: cDrive (Zero-Trust Document Ecosystem)</h3>
+            <p style="font-size: 12px; color: var(--text-muted);">Team spaces, Deal Rooms, 2FA step-up, and S3
+              pre-signed storage</p>
+          </div>
+          <span style="font-size: 12px; font-weight: 700; color: #60a5fa;">Storage &amp; Security Layer</span>
+        </div>
+        <div class="cards-row">
+          <div class="module-card" onclick="openModule('cdrive')">
+            <h4 style="font-size: 14px; font-weight: 700; margin-bottom: 6px;">🔐 Zero-Trust Step-up 2FA</h4>
+            <p style="font-size: 12px; color: var(--text-muted);">Sensitive and restricted files prompt for 6-digit OTP
+              before decrypting.</p>
+          </div>
+          <div class="module-card" onclick="openModule('cdrive')">
+            <h4 style="font-size: 14px; font-weight: 700; margin-bottom: 6px;">🤝 B2B Partner Exchange</h4>
+            <p style="font-size: 12px; color: var(--text-muted);">Direct tenant-to-tenant document routing without
+              third-party email exposure.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Integrated Deep-Dive Matrix View -->
+    <div id="view-deepdive" class="arch-view">
+      <div
+        style="background: var(--bg-card); border: 1px solid var(--border-subtle); border-radius: var(--radius-lg); padding: 32px;">
+        <h2 style="font-size: 22px; font-weight: 800; margin-bottom: 8px;">⚡ White-Labeling Transformation: Gov vs.
+          Commercial</h2>
+        <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 24px;">
+          Direct mapping of government concepts to enterprise B2B SaaS features:
+        </p>
+
+        <table style="width: 100%; border-collapse: collapse; font-size: 13px;">
+          <thead>
+            <tr style="border-bottom: 1px solid var(--border-subtle); text-align: left;">
+              <th style="padding: 12px; color: var(--text-muted);">1Government (GovDrive) Concept</th>
+              <th style="padding: 12px; color: #60a5fa;">CICOD Drive (cDrive) Enterprise Revamp</th>
+              <th style="padding: 12px; color: #34d399;">Enterprise Value Proposition</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr style="border-bottom: 1px solid var(--border-subtle);">
+              <td style="padding: 12px;"><strong>MDA / Federal Tenant</strong></td>
+              <td style="padding: 12px; color: #60a5fa;"><strong>Company / Workspace</strong></td>
+              <td style="padding: 12px; color: var(--text-muted);">Standard multi-tenant B2B taxonomy for companies and
+                law firms.</td>
+            </tr>
+            <tr style="border-bottom: 1px solid var(--border-subtle);">
+              <td style="padding: 12px;"><strong>Inter-MDA Sharing (`shareFileInterTenant`)</strong></td>
+              <td style="padding: 12px; color: #60a5fa;"><strong>B2B Partner Connect</strong></td>
+              <td style="padding: 12px; color: var(--text-muted);">Secure company-to-company transfer without untracked
+                email attachments.</td>
+            </tr>
+            <tr style="border-bottom: 1px solid var(--border-subtle);">
+              <td style="padding: 12px;"><strong>Files Pending Acceptance</strong></td>
+              <td style="padding: 12px; color: #60a5fa;"><strong>Inbound Reception Desk</strong></td>
+              <td style="padding: 12px; color: var(--text-muted);">Intake queue to inspect, accept, or decline external
+                auditor/client files.</td>
+            </tr>
+            <tr style="border-bottom: 1px solid var(--border-subtle);">
+              <td style="padding: 12px;"><strong>GovOTP Step-up 2FA</strong></td>
+              <td style="padding: 12px; color: #60a5fa;"><strong>Zero-Trust Step-up OTP</strong></td>
+              <td style="padding: 12px; color: var(--text-muted);">Protects M&amp;A deal rooms, payroll records, and
+                intellectual property.</td>
+            </tr>
+            <tr style="border-bottom: 1px solid var(--border-subtle);">
+              <td style="padding: 12px;"><strong>Historic Files</strong></td>
+              <td style="padding: 12px; color: #60a5fa;"><strong>Compliance Vault / Cold Archive</strong></td>
+              <td style="padding: 12px; color: var(--text-muted);">Immutable storage for corporate tax audits, AGM
+                minutes, and legal holds.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Integrated Sharing Comparison Matrix View -->
+    <div id="view-sharing" class="arch-view">
+      <div style="background: var(--bg-card); border: 1px solid var(--border-subtle); border-radius: var(--radius-lg); padding: 32px; display: flex; flex-direction: column; gap: 24px;">
+        <div>
+          <span class="tag-badge" style="background: rgba(37,99,235,0.2); color: #93c5fd; padding: 4px 8px; border-radius: 4px; font-family: 'JetBrains Mono', monospace; font-size: 11px;">ARCHITECTURE BENCHMARK</span>
+          <h2 style="font-size: 24px; font-weight: 800; margin-top: 8px;">⚖️ Document Sharing Capability: 1Government vs. CICOD Drive (cDrive)</h2>
+          <p style="font-size: 13px; color: var(--text-muted); margin-top: 4px;">
+            How cDrive transforms sovereign bureaucratic custody into a frictionless, zero-trust B2B enterprise collaboration engine.
+          </p>
+        </div>
+
+        <table style="width: 100%; border-collapse: collapse; font-size: 13px;">
+          <thead>
+            <tr style="border-bottom: 1px solid var(--border-subtle); text-align: left;">
+              <th style="padding: 12px; color: var(--text-muted);">Capability Dimension</th>
+              <th style="padding: 12px; color: #f87171;">1Government Drive (cde)</th>
+              <th style="padding: 12px; color: #60a5fa;">CICOD Drive (cDrive)</th>
+              <th style="padding: 12px; color: #34d399;">Enterprise Advantage</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr style="border-bottom: 1px solid var(--border-subtle);">
+              <td style="padding: 12px;"><strong>External Collaboration UX</strong></td>
+              <td style="padding: 12px; color: #94a3b8;">Hidden behind a checkbox (<em>"Other MDA &amp; Service Provider?"</em>).</td>
+              <td style="padding: 12px; color: #60a5fa;">Dedicated <strong>B2B Partner / Client Extranet</strong> tab with tenant directory.</td>
+              <td style="padding: 12px; color: #34d399;">Zero confusion when collaborating with auditors, vendors, or external legal counsel.</td>
+            </tr>
+            <tr style="border-bottom: 1px solid var(--border-subtle);">
+              <td style="padding: 12px;"><strong>Role &amp; Permission Tiers</strong></td>
+              <td style="padding: 12px; color: #94a3b8;">Binary: Editor vs. View Only (Editor hard-disabled for TS/S files).</td>
+              <td style="padding: 12px; color: #60a5fa;"><strong>4-Tier Granular RBAC</strong>: Viewer (Watermarked), Reviewer (Markup), Editor, Co-Owner.</td>
+              <td style="padding: 12px; color: #34d399;">Enables external legal &amp; audit teams to review/comment without altering original text.</td>
+            </tr>
+            <tr style="border-bottom: 1px solid var(--border-subtle);">
+              <td style="padding: 12px;"><strong>Inbound Quarantine Gate</strong></td>
+              <td style="padding: 12px; color: #94a3b8;">Bureaucratic registry queue (<code>findFilesPendingAcceptance</code>).</td>
+              <td style="padding: 12px; color: #60a5fa;">Repurposed as <strong>Inbound Reception Desk</strong> for client deliverables.</td>
+              <td style="padding: 12px; color: #34d399;">Prevents uninspected external files from polluting team drives; formal verify-and-accept step.</td>
+            </tr>
+            <tr style="border-bottom: 1px solid var(--border-subtle);">
+              <td style="padding: 12px;"><strong>Compliance &amp; Audit Logging</strong></td>
+              <td style="padding: 12px; color: #94a3b8;">Requires manual 5-line justification essay (<code>#link-sharing-reason</code>).</td>
+              <td style="padding: 12px; color: #60a5fa;"><strong>Audit Purpose Presets</strong> (PBC Audit, M&amp;A VDR, Customs, Contract Review).</td>
+              <td style="padding: 12px; color: #34d399;">Eliminates user friction while providing structured, machine-searchable SOC 2 audit logs.</td>
+            </tr>
+            <tr style="border-bottom: 1px solid var(--border-subtle);">
+              <td style="padding: 12px;"><strong>Link Expiration Controls</strong></td>
+              <td style="padding: 12px; color: #94a3b8;">Hardcoded 5-day expiration on authenticated links; non-configurable.</td>
+              <td style="padding: 12px; color: #60a5fa;"><strong>Configurable Expiry</strong>: 24h (M&amp;A), 7d, 30d (Client Audit), or Permanent.</td>
+              <td style="padding: 12px; color: #34d399;">Accommodates short-lived M&amp;A bids and long-term client engagements with instant kill-switch.</td>
+            </tr>
+            <tr style="border-bottom: 1px solid var(--border-subtle);">
+              <td style="padding: 12px;"><strong>Link Security Governance</strong></td>
+              <td style="padding: 12px; color: #94a3b8;">Only authenticated 1Gov login or unauthenticated public URL.</td>
+              <td style="padding: 12px; color: #60a5fa;"><strong>SSO Domain Fencing</strong> (<code>@pwc.com</code> only), Password-Protected, or Watermarked.</td>
+              <td style="padding: 12px; color: #34d399;">Eliminates link forwarding leaks and secures external contractor delivery.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </main>
+
+  <div class="toast-box" id="toastBox"></div>
+
+  <!-- Modular Scripts -->
+  <script src="navbar/js/navbar.js"></script>
+  <script>
+    let currentMasterVocab = 'commercial';
+
+    function openModule(modId) {
+      // Update micro-tabs
+      document.querySelectorAll('.tab-btn-mini').forEach(b => {
+        b.classList.toggle('active', b.dataset.module === modId);
+      });
+
+      // Update secondary items in More menu
+      const isSubItem = ['pipeline', 'deepdive', 'sharing'].includes(modId);
+      const moreBtn = document.getElementById('btnMoreDropdown');
+      if (moreBtn) {
+        moreBtn.classList.toggle('active-sub', isSubItem);
+      }
+
+      document.querySelectorAll('.popover-item').forEach(item => {
+        item.classList.toggle('active', item.dataset.module === modId);
+      });
+
+      // Hide all frames and views
+      document.querySelectorAll('.module-frame').forEach(f => f.classList.remove('active'));
+      document.querySelectorAll('.arch-view').forEach(v => v.classList.remove('active'));
+
+      if (modId === 'cdrive') {
+        document.getElementById('frame-cdrive').classList.add('active');
+      } else if (modId === 'cflow') {
+        document.getElementById('frame-cflow').classList.add('active');
+      } else if (modId === 'usecases') {
+        document.getElementById('frame-usecases').classList.add('active');
+      } else if (modId === 'pipeline') {
+        document.getElementById('view-pipeline').classList.add('active');
+      } else if (modId === 'deepdive') {
+        document.getElementById('view-deepdive').classList.add('active');
+      } else if (modId === 'sharing') {
+        document.getElementById('view-sharing').classList.add('active');
+      }
+    }
+
+    function setMasterVocab(mode) {
+      currentMasterVocab = mode;
+      document.body.classList.toggle('mode-gov', mode === 'gov');
+      document.body.classList.toggle('mode-commercial', mode !== 'gov');
+      
+      const btnComm = document.getElementById('btnVocabComm');
+      const btnGov = document.getElementById('btnVocabGov');
+      if (btnComm) btnComm.classList.toggle('active', mode === 'commercial');
+      if (btnGov) btnGov.classList.toggle('active', mode === 'gov');
+
+      // Update compact navbar tokens and labels
+      if (typeof updateNavbarVocab === 'function') {
+        updateNavbarVocab(mode);
+      }
+
+      // Propagate message to embedded child frames
+      const frames = [
+        document.getElementById('frame-cdrive'),
+        document.getElementById('frame-cflow'),
+        document.getElementById('frame-usecases')
+      ];
+      frames.forEach(f => {
+        if (f && f.contentWindow) {
+          f.contentWindow.postMessage({ type: 'SET_MODE', mode: mode }, '*');
+        }
+      });
+
+      showToast(mode === 'gov' ? 'Switched Suite to Government 1Gov Nomenclature' : 'Switched Suite to Commercial cDrive Nomenclature');
+    }
+
+    function syncChildFrame(frame) {
+      if (!frame || !frame.contentWindow) return;
+      const isLight = document.body.classList.contains('theme-light');
+      try {
+        frame.contentWindow.postMessage({ type: 'SET_MODE', mode: currentMasterVocab }, '*');
+        frame.contentWindow.postMessage({ type: 'SET_THEME', theme: isLight ? 'light' : 'dark' }, '*');
+      } catch (e) {}
+    }
+
+    function showToast(msg) {
+      const box = document.getElementById('toastBox');
+      const t = document.createElement('div');
+      t.className = 'toast';
+      t.innerText = msg;
+      box.appendChild(t);
+      setTimeout(() => {
+        t.style.opacity = '0';
+        setTimeout(() => t.remove(), 300);
+      }, 3000);
+    }
+  </script>
+</body>
+
+</html>

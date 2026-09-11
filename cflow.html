@@ -1,0 +1,2005 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CICOD Workflow (cFlow) — Enterprise Digital Minuting &amp; ECMS</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap"
+    rel="stylesheet">
+  <style>
+    :root {
+      --bg-base: #060913;
+      --bg-surface: #0a1122;
+      --bg-card: rgba(15, 23, 42, 0.75);
+      --bg-card-hover: rgba(28, 45, 77, 0.9);
+      --border-subtle: rgba(255, 255, 255, 0.08);
+      --border-accent: rgba(37, 99, 235, 0.4);
+
+      /* Enterprise Commercial Palette: Royal Sapphire Blue */
+      --brand-primary: #2563eb;
+      --brand-primary-light: #60a5fa;
+      --brand-primary-dark: #1d4ed8;
+      --brand-blue: #3b82f6;
+      --brand-purple: #8b5cf6;
+      --brand-amber: #f59e0b;
+      --brand-rose: #f43f5e;
+
+      /* 1Government Public Sector Sovereign Palette */
+      --gov-green: #21714B;
+      --gov-green-light: #2da46a;
+
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --text-dim: #64748b;
+
+      --sidebar-width: 280px;
+      --radius-sm: 8px;
+      --radius-md: 12px;
+      --radius-lg: 18px;
+      --radius-full: 9999px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      background-color: var(--bg-base);
+      color: var(--text-main);
+      line-height: 1.5;
+      min-height: 100vh;
+      display: flex;
+      overflow-x: hidden;
+      background-image:
+        radial-gradient(circle at 15% 20%, rgba(37, 99, 235, 0.12) 0%, transparent 40%),
+        radial-gradient(circle at 85% 30%, rgba(59, 130, 246, 0.08) 0%, transparent 45%);
+      transition: background-color 0.2s ease, color 0.2s ease;
+    }
+
+    body.mode-gov {
+      --brand-primary: var(--gov-green);
+      --brand-primary-light: var(--gov-green-light);
+      --brand-primary-dark: #1e5c3e;
+      --border-accent: rgba(33, 113, 75, 0.4);
+      background-image:
+        radial-gradient(circle at 15% 20%, rgba(33, 113, 75, 0.15) 0%, transparent 40%),
+        radial-gradient(circle at 85% 30%, rgba(16, 185, 129, 0.08) 0%, transparent 45%);
+    }
+
+    /* Light Theme System */
+    body.theme-light {
+      --bg-base: #f8fafc;
+      --bg-surface: #ffffff;
+      --bg-card: #ffffff;
+      --bg-card-hover: #f1f5f9;
+      --border-subtle: #e2e8f0;
+      --text-main: #0f172a;
+      --text-muted: #334155;
+      --text-dim: #64748b;
+      background-color: var(--bg-base);
+      color: var(--text-main);
+      background-image:
+        radial-gradient(circle at 15% 20%, rgba(37, 99, 235, 0.05) 0%, transparent 40%),
+        radial-gradient(circle at 85% 30%, rgba(59, 130, 246, 0.04) 0%, transparent 45%);
+    }
+
+    body.theme-light.mode-gov {
+      background-image:
+        radial-gradient(circle at 15% 20%, rgba(33, 113, 75, 0.06) 0%, transparent 40%),
+        radial-gradient(circle at 85% 30%, rgba(16, 185, 129, 0.04) 0%, transparent 45%);
+    }
+
+    /* Dedicated cFlow Sidebar */
+    .sidebar {
+      width: var(--sidebar-width);
+      background: rgba(10, 16, 31, 0.96);
+      backdrop-filter: blur(20px);
+      border-right: 1px solid var(--border-subtle);
+      display: flex;
+      flex-direction: column;
+      padding: 20px;
+      gap: 20px;
+      flex-shrink: 0;
+      height: 100vh;
+      position: sticky;
+      top: 0;
+      overflow-y: auto;
+    }
+
+    body.theme-light .sidebar {
+      background: #ffffff;
+      border-right-color: #e2e8f0;
+    }
+
+    .brand-section {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .brand-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      background: linear-gradient(135deg, var(--brand-primary), #1d4ed8);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      color: #fff;
+      box-shadow: 0 4px 15px rgba(37, 99, 235, 0.35);
+    }
+
+    body.mode-gov .brand-icon {
+      background: linear-gradient(135deg, var(--gov-green), var(--gov-green-light));
+      box-shadow: 0 4px 15px rgba(33, 113, 75, 0.4);
+    }
+
+    .brand-text h2 {
+      font-size: 16px;
+      font-weight: 800;
+    }
+
+    body.theme-light .brand-text h2 {
+      color: #0f172a;
+    }
+
+    .brand-text p {
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    .btn-create {
+      width: 100%;
+      padding: 12px;
+      border-radius: var(--radius-md);
+      background: linear-gradient(135deg, var(--brand-primary), #1d4ed8);
+      border: none;
+      color: #fff;
+      font-size: 13px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      cursor: pointer;
+      box-shadow: 0 4px 15px rgba(37, 99, 235, 0.35);
+      transition: all 0.2s ease;
+    }
+
+    body.mode-gov .btn-create {
+      background: linear-gradient(135deg, var(--gov-green), var(--gov-green-light));
+      box-shadow: 0 4px 15px rgba(33, 113, 75, 0.35);
+    }
+
+    .btn-create:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(37, 99, 235, 0.45);
+    }
+
+    body.mode-gov .btn-create:hover {
+      box-shadow: 0 6px 20px rgba(33, 113, 75, 0.45);
+    }
+
+    .nav-group {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+
+    .nav-title {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--text-dim);
+      padding: 6px 10px;
+    }
+
+    .nav-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 9px 12px;
+      border-radius: var(--radius-sm);
+      color: var(--text-muted);
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.18s ease;
+    }
+
+    .nav-item:hover {
+      background: rgba(255, 255, 255, 0.05);
+      color: var(--text-main);
+    }
+
+    body.theme-light .nav-item {
+      color: #475569;
+    }
+
+    body.theme-light .nav-item:hover {
+      background: #f1f5f9;
+      color: #0f172a;
+    }
+
+    .nav-item.active {
+      background: rgba(37, 99, 235, 0.18);
+      color: #93c5fd;
+      border-left: 3px solid var(--brand-primary);
+    }
+
+    body.theme-light .nav-item.active {
+      background: rgba(37, 99, 235, 0.12);
+      color: #1d4ed8;
+      border-left: 3px solid var(--brand-primary);
+    }
+
+    body.mode-gov .nav-item.active {
+      background: rgba(33, 113, 75, 0.22);
+      color: #4ade80;
+      border-left: 3px solid var(--brand-primary);
+    }
+
+    body.theme-light.mode-gov .nav-item.active {
+      background: #dcfce7;
+      color: #166534;
+      border-left: 3px solid var(--brand-primary);
+    }
+
+    .badge-count {
+      font-size: 11px;
+      font-weight: 700;
+      background: rgba(255, 255, 255, 0.08);
+      padding: 2px 7px;
+      border-radius: var(--radius-full);
+      color: var(--text-dim);
+    }
+
+    body.theme-light .badge-count {
+      background: #f1f5f9;
+      color: #475569;
+    }
+
+    .badge-count.alert {
+      background: rgba(239, 68, 68, 0.2);
+      color: #f87171;
+      border: 1px solid rgba(239, 68, 68, 0.4);
+    }
+
+    .nav-arrow {
+      font-size: 11px;
+      color: var(--text-dim);
+      transition: transform 0.2s ease;
+      display: flex;
+      align-items: center;
+    }
+
+    .nav-item.open .nav-arrow {
+      transform: rotate(180deg);
+    }
+
+    .nav-submenu {
+      display: none;
+      flex-direction: column;
+      gap: 3px;
+      margin: 3px 0 8px 18px;
+      padding-left: 14px;
+      border-left: 2px solid rgba(255, 255, 255, 0.12);
+    }
+
+    body.theme-light .nav-submenu {
+      border-left-color: #e2e8f0;
+    }
+
+    body.mode-gov .nav-submenu {
+      border-left-color: rgba(33, 113, 75, 0.35);
+    }
+
+    .nav-submenu.open {
+      display: flex;
+    }
+
+    .nav-subitem {
+      font-size: 13px;
+      color: var(--text-muted);
+      padding: 7px 12px;
+      border-radius: var(--radius-md);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      transition: all 0.18s ease;
+    }
+
+    .nav-subitem:hover {
+      background: rgba(255, 255, 255, 0.06);
+      color: #fff;
+    }
+
+    body.theme-light .nav-subitem {
+      color: #64748b;
+    }
+
+    body.theme-light .nav-subitem:hover {
+      background: #f1f5f9;
+      color: #0f172a;
+    }
+
+    .nav-subitem.active {
+      background: rgba(37, 99, 235, 0.18);
+      color: #60a5fa;
+      font-weight: 600;
+    }
+
+    body.theme-light .nav-subitem.active {
+      background: rgba(37, 99, 235, 0.12);
+      color: #1d4ed8;
+      font-weight: 600;
+    }
+
+    body.mode-gov .nav-subitem.active {
+      background: rgba(33, 113, 75, 0.22);
+      color: #4ade80;
+      font-weight: 600;
+    }
+
+    body.theme-light.mode-gov .nav-subitem.active {
+      background: #dcfce7;
+      color: #166534;
+      font-weight: 600;
+    }
+
+    /* Main Workspace */
+    .workspace-main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+      overflow-y: auto;
+    }
+
+    .top-toolbar {
+      padding: 16px 36px;
+      background: rgba(10, 16, 31, 0.85);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border-subtle);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 50;
+    }
+
+    body.theme-light .top-toolbar {
+      background: rgba(255, 255, 255, 0.95);
+      border-bottom-color: #e2e8f0;
+    }
+
+    body.theme-light .top-toolbar strong {
+      color: #0f172a !important;
+    }
+
+    /* Hide inner duplicate controls when embedded in master portal */
+    body.is-embedded #btnCflowTheme,
+    body.is-embedded .top-toolbar button[onclick*="toggleMode"] {
+      display: none !important;
+    }
+
+    .workspace-content {
+      padding: 32px 36px;
+      display: flex;
+      flex-direction: column;
+      gap: 28px;
+    }
+
+    /* Memo Board Grid */
+    .memo-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+    }
+
+    @media (max-width: 1024px) {
+      .memo-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .panel-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    body.theme-light .panel-card {
+      background: #ffffff;
+      border-color: #e2e8f0;
+      box-shadow: 0 4px 18px rgba(0, 0, 0, 0.04);
+    }
+
+    body.theme-light .panel-card h3,
+    body.theme-light .panel-card h4 {
+      color: #0f172a;
+    }
+
+    .memo-card {
+      background: rgba(10, 16, 31, 0.85);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    body.theme-light .memo-card {
+      background: #ffffff;
+      border-color: #e2e8f0;
+      box-shadow: 0 4px 18px rgba(0, 0, 0, 0.04);
+    }
+
+    .memo-card:hover {
+      border-color: var(--brand-primary);
+      transform: translateY(-2px);
+    }
+
+    .memo-card.active {
+      border-color: var(--brand-primary-light);
+      background: rgba(37, 99, 235, 0.08);
+    }
+
+    body.theme-light .memo-card.active {
+      border-color: var(--brand-primary);
+      background: rgba(37, 99, 235, 0.06);
+    }
+
+    body.mode-gov .memo-card.active {
+      border-color: var(--gov-green-light);
+      background: rgba(33, 113, 75, 0.12);
+    }
+
+    .minute-thread {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-top: 10px;
+    }
+
+    .minute-item {
+      background: rgba(255, 255, 255, 0.03);
+      border-left: 3px solid var(--brand-primary);
+      padding: 12px 14px;
+      border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+      font-size: 13px;
+    }
+
+    body.theme-light .minute-item {
+      background: #f8fafc;
+      color: #334155;
+    }
+
+    body.mode-gov .minute-item {
+      border-left-color: var(--gov-green-light);
+    }
+
+    .minute-author {
+      font-weight: 700;
+      color: var(--brand-primary-light);
+      font-size: 12px;
+      margin-bottom: 4px;
+    }
+
+    body.theme-light .minute-author {
+      color: var(--brand-primary);
+    }
+
+    body.mode-gov .minute-author {
+      color: #4ade80;
+    }
+
+    .btn-action {
+      background: var(--brand-primary);
+      border: none;
+      color: #fff;
+      padding: 8px 16px;
+      border-radius: var(--radius-sm);
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.18s ease;
+    }
+
+    .btn-action:hover {
+      opacity: 0.9;
+      transform: translateY(-1px);
+    }
+
+    .theme-switch-btn {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-muted);
+      font-size: 11px;
+      font-weight: 600;
+      padding: 6px 12px;
+      border-radius: var(--radius-full);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.18s ease;
+    }
+
+    .theme-switch-btn:hover {
+      color: #fff;
+      background: rgba(255, 255, 255, 0.14);
+    }
+
+    body.theme-light .theme-switch-btn {
+      background: #f1f5f9;
+      border-color: #cbd5e1;
+      color: #334155;
+    }
+
+    body.theme-light .theme-switch-btn:hover {
+      background: #e2e8f0;
+      color: #0f172a;
+    }
+
+    body.theme-light h2,
+    body.theme-light h3,
+    body.theme-light h4,
+    body.theme-light strong {
+      color: #0f172a;
+    }
+
+    body.theme-light #topHeader {
+      color: #0f172a !important;
+    }
+
+    body.theme-light .top-toolbar {
+      background: rgba(255, 255, 255, 0.95);
+      border-bottom-color: #e2e8f0;
+    }
+
+    /* Form Controls */
+    body.theme-light input,
+    body.theme-light select,
+    body.theme-light textarea {
+      background: #ffffff !important;
+      border: 1px solid #cbd5e1 !important;
+      color: #0f172a !important;
+    }
+
+    body.theme-light input::placeholder,
+    body.theme-light textarea::placeholder {
+      color: #94a3b8 !important;
+    }
+
+    /* Secondary / Ghost Action Buttons (Fix white text on white cards) */
+    body.theme-light .btn-action[style*="rgba(255,255,255"],
+    body.theme-light .btn-action[style*="rgba(255, 255, 255"],
+    body.theme-light button[style*="rgba(255,255,255"],
+    body.theme-light button[style*="rgba(255, 255, 255"],
+    body.theme-light span[style*="rgba(255,255,255"],
+    body.theme-light span[style*="rgba(255, 255, 255"] {
+      background: #f1f5f9 !important;
+      border: 1px solid #cbd5e1 !important;
+      color: #0f172a !important;
+    }
+
+    body.theme-light .btn-action[style*="rgba(255,255,255"]:hover,
+    body.theme-light .btn-action[style*="rgba(255, 255, 255"]:hover,
+    body.theme-light button[style*="rgba(255,255,255"]:hover,
+    body.theme-light button[style*="rgba(255, 255, 255"]:hover {
+      background: #e2e8f0 !important;
+      color: #0f172a !important;
+    }
+
+    /* Panel Cards, Memo Cards, and Containers */
+    body.theme-light .panel-card,
+    body.theme-light .memo-card,
+    body.theme-light .task-card,
+    body.theme-light .wf-card {
+      background: #ffffff;
+      border-color: #e2e8f0;
+      box-shadow: 0 4px 18px rgba(0, 0, 0, 0.04);
+    }
+
+    /* High-Contrast Badges & Count Indicators */
+    body.theme-light .badge-count {
+      background: #f1f5f9;
+      color: #475569;
+    }
+
+    body.theme-light .badge-count.alert,
+    body.theme-light .badge-count[style*="rgba(239,68,68"],
+    body.theme-light .badge-count[style*="rgba(239, 68, 68"],
+    body.theme-light span[style*="#fca5a5"],
+    body.theme-light span[style*="#f87171"] {
+      background: #fef2f2 !important;
+      color: #b91c1c !important;
+      border: 1px solid #fecaca !important;
+    }
+
+    body.theme-light .badge-count[style*="rgba(16,185,129"],
+    body.theme-light .badge-count[style*="rgba(16, 185, 129"],
+    body.theme-light span[style*="#34d399"],
+    body.theme-light strong[style*="#34d399"] {
+      background: #f0fdf4 !important;
+      color: #15803d !important;
+      border: 1px solid #bbf7d0 !important;
+    }
+
+    body.theme-light .badge-count[style*="rgba(59,130,246"],
+    body.theme-light .badge-count[style*="rgba(59, 130, 246"],
+    body.theme-light span[style*="#93c5fd"],
+    body.theme-light span[style*="#60a5fa"],
+    body.theme-light strong[style*="#60a5fa"] {
+      background: #eff6ff !important;
+      color: #1d4ed8 !important;
+      border: 1px solid #bfdbfe !important;
+    }
+
+    body.theme-light .badge-count[style*="rgba(245,158,11"],
+    body.theme-light .badge-count[style*="rgba(245, 158, 11"],
+    body.theme-light span[style*="#fcd34d"],
+    body.theme-light strong[style*="#fcd34d"] {
+      background: #fffbeb !important;
+      color: #b45309 !important;
+      border: 1px solid #fde68a !important;
+    }
+
+    body.theme-light .wf-circle-percent {
+      color: #1d4ed8 !important;
+      border-color: #bfdbfe !important;
+      background: #eff6ff !important;
+    }
+
+    /* Terminal Watchdog Box */
+    body.theme-light div[style*="background: #02070f"] {
+      border: 1px solid #cbd5e1 !important;
+      box-shadow: 0 4px 18px rgba(0, 0, 0, 0.05);
+    }
+
+    /* Stat Cards & KPI Grid (Overview) */
+    .stat-cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 18px;
+    }
+
+    .kpi-card {
+      padding: 20px;
+      border-radius: var(--radius-lg);
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      color: #fff;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+      transition: transform 0.2s ease;
+      cursor: pointer;
+    }
+
+    .kpi-card:hover {
+      transform: translateY(-2px);
+    }
+
+    .kpi-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      flex-shrink: 0;
+    }
+
+    .kpi-num {
+      font-size: 26px;
+      font-weight: 800;
+      line-height: 1.1;
+    }
+
+    .kpi-label {
+      font-size: 12px;
+      font-weight: 600;
+      opacity: 0.9;
+    }
+
+    .kpi-green {
+      background: linear-gradient(135deg, #10b981, #059669);
+    }
+
+    .kpi-blue {
+      background: linear-gradient(135deg, #3b82f6, #2563eb);
+    }
+
+    .kpi-orange {
+      background: linear-gradient(135deg, #f59e0b, #d97706);
+    }
+
+    .kpi-purple {
+      background: linear-gradient(135deg, #a855f7, #7c3aed);
+    }
+
+    /* Workflows Grid */
+    .workflow-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 18px;
+    }
+
+    .wf-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      transition: all 0.2s ease;
+      cursor: pointer;
+    }
+
+    .wf-card:hover {
+      border-color: var(--brand-primary);
+      transform: translateY(-2px);
+    }
+
+    .wf-metric-badge {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    .wf-circle-percent {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      border: 2px solid rgba(255, 255, 255, 0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 11px;
+      color: #34d399;
+    }
+
+    /* Toast */
+    .toast-box {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      z-index: 400;
+    }
+
+    .toast {
+      background: rgba(15, 23, 42, 0.95);
+      border: 1px solid var(--brand-primary);
+      padding: 12px 20px;
+      border-radius: var(--radius-md);
+      color: #fff;
+      font-size: 13px;
+      font-weight: 600;
+    }
+  </style>
+</head>
+
+<body class="mode-commercial">
+
+  <!-- 1. Dedicated cFlow Sidebar -->
+  <aside class="sidebar">
+    <div class="brand-section">
+      <div class="brand-icon" id="flowIcon">📝</div>
+      <div class="brand-text">
+        <h2 id="flowTitle">CICOD Workflow</h2>
+        <p id="flowSub">Enterprise Digital Minuting &amp; ECMS</p>
+      </div>
+    </div>
+
+    <button class="btn-create" onclick="openNewMemo()">
+      <span>➕ New Electronic Memo</span>
+    </button>
+
+    <div class="nav-group">
+      <!-- 1. Overview -->
+      <div class="nav-item active" onclick="showOverviewView(event)">
+        <div style="display: flex; align-items: center; gap: 8px;">
+          <span>🔲</span>
+          <span id="lblOverview">Overview</span>
+        </div>
+      </div>
+
+      <!-- 2. Dashboard -->
+      <div class="nav-item" onclick="toggleSubmenu('sub-dash', event)">
+        <div style="display: flex; align-items: center; gap: 8px;">
+          <span>📊</span>
+          <span id="lblDash">Dashboard</span>
+        </div>
+        <span class="nav-arrow">❯</span>
+      </div>
+      <div class="nav-submenu" id="sub-dash">
+        <div class="nav-subitem" onclick="setSubFilter('Overview Analytics')">Overview</div>
+        <div class="nav-subitem" onclick="setSubFilter('Workflow Dashboard')">Workflow Dashboard</div>
+        <div class="nav-subitem" onclick="setSubFilter('Status & Escalations')">Status Dashboard</div>
+        <div class="nav-subitem" onclick="setSubFilter('Resource Utilization')">Resource Utilization</div>
+      </div>
+
+      <!-- 3. Requests -->
+      <div class="nav-item" onclick="setFilter('requests', event)">
+        <div style="display: flex; align-items: center; gap: 8px;">
+          <span>📄</span>
+          <span id="lblRequests">Requests</span>
+        </div>
+        <span class="badge-count">2</span>
+      </div>
+
+      <!-- 4. Tasks -->
+      <div class="nav-item" onclick="toggleSubmenu('sub-tasks', event)">
+        <div style="display: flex; align-items: center; gap: 8px;">
+          <span>📑</span>
+          <span id="lblTasks">Tasks</span>
+        </div>
+        <span class="nav-arrow">❯</span>
+      </div>
+      <div class="nav-submenu" id="sub-tasks">
+        <div class="nav-subitem" onclick="setSubFilter('Create Task')">Create Task</div>
+        <div class="nav-subitem" onclick="setSubFilter('View Task Approvals')">Task Approvals <span
+            class="badge-count alert">8</span></div>
+        <div class="nav-subitem" onclick="setSubFilter('Starred Tasks')">Starred Tasks</div>
+        <div class="nav-subitem" onclick="setSubFilter('All Tasks')">All Tasks <span class="badge-count">13</span></div>
+      </div>
+
+      <!-- 5. Memos -->
+      <div class="nav-item" onclick="toggleSubmenu('sub-memos', event)">
+        <div style="display: flex; align-items: center; gap: 8px;">
+          <span>📝</span>
+          <span id="lblMemos">Memos</span>
+        </div>
+        <span class="nav-arrow">❯</span>
+      </div>
+      <div class="nav-submenu" id="sub-memos">
+        <div class="nav-subitem" onclick="openNewMemo()">Create Memo</div>
+        <div class="nav-subitem" onclick="showMemoView(event)">View All Memos <span class="badge-count">3</span></div>
+        <div class="nav-subitem" onclick="setSubFilter('Memo Drafts')">Memo Drafts</div>
+        <div class="nav-subitem" onclick="setSubFilter('Draft Reviews')">Draft Reviews</div>
+      </div>
+
+      <!-- 6. Workgroups -->
+      <div class="nav-item" onclick="setFilter('workgroups', event)">
+        <div style="display: flex; align-items: center; gap: 8px;">
+          <span>👥</span>
+          <span id="lblWorkgroup">Workgroups</span>
+        </div>
+      </div>
+
+      <!-- 7. Contacts -->
+      <div class="nav-item" onclick="setFilter('contacts', event)">
+        <div style="display: flex; align-items: center; gap: 8px;">
+          <span>👤</span>
+          <span id="lblContacts">Contacts</span>
+        </div>
+      </div>
+
+      <!-- 8. Users -->
+      <div class="nav-item open" id="navUsers" onclick="toggleSubmenu('sub-users', event)">
+        <div style="display: flex; align-items: center; gap: 8px;">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round">
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+            <circle cx="12" cy="7" r="4" />
+          </svg>
+          <span id="lblUsers">Users</span>
+        </div>
+        <span class="nav-arrow">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <polyline points="6 9 12 15 18 9" />
+          </svg>
+        </span>
+      </div>
+      <div class="nav-submenu open" id="sub-users">
+        <div class="nav-subitem" id="subitem-departments" onclick="showDepartmentsView(event)">
+          <span id="lblSubDepartments">Departments</span>
+        </div>
+      </div>
+
+      <!-- 9. Resources -->
+      <div class="nav-item open" id="navResources" onclick="toggleSubmenu('sub-resources', event)">
+        <div style="display: flex; align-items: center; gap: 8px;">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round">
+            <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
+            <circle cx="9" cy="7" r="4" />
+            <circle cx="19" cy="11" r="2" />
+            <path d="M19 8v1" />
+            <path d="M19 13v1" />
+            <path d="M16.5 9.5l.8.5" />
+            <path d="M20.7 12l.8.5" />
+          </svg>
+          <span id="lblResources">Resources</span>
+        </div>
+        <span class="nav-arrow">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <polyline points="6 9 12 15 18 9" />
+          </svg>
+        </span>
+      </div>
+      <div class="nav-submenu open" id="sub-resources">
+        <div class="nav-subitem" id="subitem-resource-type" onclick="showResourceTypeView(event)">
+          <span id="lblSubResourceType">Resource Type</span>
+        </div>
+        <div class="nav-subitem" id="subitem-resource-shift" onclick="showResourceShiftView(event)">
+          <span id="lblSubResourceShift">Resource Shift</span>
+        </div>
+        <div class="nav-subitem" id="subitem-resource-schedule" onclick="showResourceScheduleView(event)">
+          <span id="lblSubResourceSchedule">Resource Schedule</span>
+        </div>
+      </div>
+
+      <!-- 10. Reports -->
+      <div class="nav-item" onclick="toggleSubmenu('sub-reports', event)">
+        <div style="display: flex; align-items: center; gap: 8px;">
+          <span>📈</span>
+          <span id="lblReports">Reports</span>
+        </div>
+        <span class="nav-arrow">❯</span>
+      </div>
+      <div class="nav-submenu" id="sub-reports">
+        <div class="nav-subitem" onclick="setSubFilter('Reports Analytics')">Reports</div>
+        <div class="nav-subitem" onclick="setSubFilter('Audit Log')">Audit Log</div>
+      </div>
+    </div>
+
+    <!-- Help & Support -->
+    <div class="nav-group" style="margin-top: auto; border-top: 1px solid var(--border-subtle); padding-top: 14px;">
+      <div
+        style="font-size: 11px; font-weight: 700; color: var(--text-dim); text-transform: uppercase; margin-bottom: 6px;">
+        Help &amp; Support</div>
+      <div class="nav-item" onclick="showToast('Connecting to Help Desk...')">
+        <span>ⓘ Get Support</span>
+      </div>
+      <div class="nav-item" onclick="showToast('Launching Interactive Platform Tour...')">
+        <span>🌐 Start Tour</span>
+      </div>
+    </div>
+
+    <!-- Settings -->
+    <div class="nav-group" style="border-top: 1px solid var(--border-subtle); padding-top: 14px;">
+      <div
+        style="font-size: 11px; font-weight: 700; color: var(--text-dim); text-transform: uppercase; margin-bottom: 6px;">
+        Settings</div>
+      <div class="nav-item" onclick="showToast('Opening User Preferences...')">
+        <span>⚙️ Preferences</span>
+      </div>
+      <div class="nav-item" style="color: #f87171;" onclick="showToast('Logging out of secure session...')">
+        <span>🚪 Log out</span>
+      </div>
+    </div>
+  </aside>
+
+  <!-- 2. Main Workspace -->
+  <main class="workspace-main">
+    <div class="top-toolbar">
+      <div style="font-size: 14px; color: var(--text-muted);">
+        <span>cFlow</span> › <strong style="color: #fff;" id="topHeader">Electronic Memos &amp; Digital
+          Minuting</strong>
+      </div>
+      <div style="display: flex; gap: 10px; align-items: center;">
+        <button class="theme-switch-btn" id="btnCflowTheme" onclick="toggleTheme()" title="Toggle Dark/Light Mode">
+          <span>☀️ Light</span>
+        </button>
+        <button class="btn-action" onclick="toggleMode()">🔄 Switch Vocabulary</button>
+      </div>
+    </div>
+
+    <div class="workspace-content">
+
+      <!-- View 1: Modern ECMS Overview (Matching govtest.convergenceondemand.com/ecms/overview) -->
+      <div id="viewOverview" style="display: flex; flex-direction: column; gap: 24px;">
+        <!-- Header Banner -->
+        <div
+          style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 16px;">
+          <div>
+            <h2 style="font-size: 24px; font-weight: 800; display: flex; align-items: center; gap: 8px;">
+              Welcome, <span id="welcomeUser" style="color: var(--brand-primary);">Prince Zana</span> 👋
+            </h2>
+            <p style="font-size: 13px; color: var(--text-muted); margin-top: 4px;">
+              Here's what needs your attention today.
+            </p>
+
+          </div>
+
+          <div style="display: flex; gap: 10px; align-items: center;">
+            <button class="btn-action"
+              style="background: rgba(255,255,255,0.08); border: 1px solid var(--border-subtle); color: #fff;"
+              onclick="showToast('Filtering Starred Tasks...')">
+              ⭐ Starred Tasks
+            </button>
+            <button class="btn-action" style="background: var(--brand-primary); color: #fff;"
+              onclick="showToast('Loading all active tasks...')">
+              📑 All Tasks (13)
+            </button>
+            <button class="btn-action" style="background: var(--brand-blue); color: #fff;" onclick="openNewMemo()">
+              ➕ Quick Actions
+            </button>
+          </div>
+        </div>
+
+        <!-- 4 Real-time KPI Stat Cards -->
+        <div class="stat-cards-grid">
+          <div class="kpi-card kpi-green" onclick="showToast('Filter by My Workflows')">
+            <div class="kpi-icon">🔗</div>
+            <div>
+              <div class="kpi-num">4</div>
+              <div class="kpi-label">My Workflows</div>
+            </div>
+          </div>
+
+          <div class="kpi-card kpi-blue" onclick="showToast('Viewing 13 Tasks Assigned To Me')">
+            <div class="kpi-icon">⚙️</div>
+            <div>
+              <div class="kpi-num">13</div>
+              <div class="kpi-label">Tasks Assigned To Me</div>
+            </div>
+          </div>
+
+          <div class="kpi-card kpi-orange" onclick="showToast('Viewing 8 Tasks Awaiting My Approval')">
+            <div class="kpi-icon">👍</div>
+            <div>
+              <div class="kpi-num">8</div>
+              <div class="kpi-label">Tasks Awaiting My Approval</div>
+            </div>
+          </div>
+
+          <div class="kpi-card kpi-purple" onclick="showToast('Viewing 20 System Notifications')">
+            <div class="kpi-icon">🔔</div>
+            <div>
+              <div class="kpi-num">20</div>
+              <div class="kpi-label">My Notifications</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- My Workflows Grid -->
+        <div class="panel-card">
+          <div style="display: flex; justify-content: space-between; align-items: center;">
+            <h3 style="font-size: 16px; font-weight: 700;">My Workflows</h3>
+            <div style="display: flex; gap: 8px;">
+              <button class="btn-tool"
+                style="padding: 4px 10px; font-size: 11px; background: rgba(255,255,255,0.08); border: 1px solid var(--border-subtle); color: #fff; border-radius: 6px;"
+                onclick="showToast('Switched to Grid view')">Grid</button>
+              <button class="btn-tool"
+                style="padding: 4px 10px; font-size: 11px; background: transparent; border: 1px solid var(--border-subtle); color: var(--text-dim); border-radius: 6px;"
+                onclick="showToast('Switched to List view')">List</button>
+              <button class="btn-tool"
+                style="padding: 4px 10px; font-size: 11px; background: rgba(16,185,129,0.15); border: 1px solid rgba(16,185,129,0.3); color: #34d399; border-radius: 6px;"
+                onclick="showToast('Syncing active workflows with GovDrive...')">↻ Sync</button>
+            </div>
+          </div>
+
+          <div class="workflow-grid">
+            <div class="wf-card" onclick="showToast('Opening Nigeria (Abuja) workflow')">
+              <div>
+                <h4 style="font-size: 15px; font-weight: 700;">Nigeria</h4>
+                <p style="font-size: 12px; color: var(--text-dim);">Abuja Directorate</p>
+              </div>
+              <div style="display: flex; align-items: center; justify-content: space-between;">
+                <div class="wf-circle-percent">0%</div>
+                <div class="wf-metric-badge">
+                  <span><strong>0</strong> Open</span>
+                  <span>•</span>
+                  <span><strong>0</strong> Assigned to me</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="wf-card" onclick="showToast('Opening Complaints (Account set up complaints) workflow')">
+              <div>
+                <h4 style="font-size: 15px; font-weight: 700;">Complaints</h4>
+                <p style="font-size: 12px; color: var(--text-dim);">Account set up complaints</p>
+              </div>
+              <div style="display: flex; align-items: center; justify-content: space-between;">
+                <div class="wf-circle-percent" style="color: #60a5fa; border-color: rgba(96,165,250,0.3);">0%</div>
+                <div class="wf-metric-badge">
+                  <span><strong style="color: #60a5fa;">6</strong> Tasks Open</span>
+                  <span>•</span>
+                  <span><strong>0</strong> Assigned</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="wf-card" onclick="showToast('Opening test (Test QT) workflow')">
+              <div>
+                <h4 style="font-size: 15px; font-weight: 700;">Test Files</h4>
+                <p style="font-size: 12px; color: var(--text-dim);">Gov Test</p>
+              </div>
+              <div style="display: flex; align-items: center; justify-content: space-between;">
+                <div class="wf-circle-percent">0%</div>
+                <div class="wf-metric-badge">
+                  <span><strong>0</strong> Open</span>
+                  <span>•</span>
+                  <span><strong>0</strong> Assigned</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- SLA Escalation Live Watchdog -->
+        <section class="panel-card">
+          <h3 style="font-size: 16px; font-weight: 700;">⏱️ Automated SLA Escalation Matrix Watchdog</h3>
+          <p style="font-size: 13px; color: var(--text-muted);">
+            Active assignments monitored against defined benchmarks: Tier 1 (48h) warning on dormant tasks and Tier 2
+            (96h) automatic reassignment to Line Manager.
+          </p>
+          <div
+            style="font-family: 'JetBrains Mono', monospace; font-size: 12px; background: #02070f; padding: 16px; border-radius: var(--radius-sm); color: #a7f3d0; line-height: 1.7;">
+            • Work Order #15747 — Stage: Account Set Up Complaints (Elapsed: 22h) [On Track]<br>
+            • Work Order #15787 — Stage: Finance Minute Clearance (Elapsed: 49h) <span style="color: #f59e0b;">[Tier 1
+              Breach Alert Sent]</span><br>
+            • Work Order #15896 — Stage: Permanent Secretary Approval (Elapsed: 98h) <span style="color: #ef4444;">[Tier
+              2 Auto-Reassigned to Director]</span>
+          </div>
+        </section>
+      </div>
+
+      <!-- View 2: Memos & Digital Minuting Ledger -->
+      <div id="viewMemos" style="display: none; flex-direction: column; gap: 24px;">
+        <div class="memo-grid">
+          <!-- Active Memos List -->
+          <div class="panel-card">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+              <h3 style="font-size: 16px; font-weight: 700;">Active Memos in Circulation</h3>
+              <span class="badge-count">3 Active</span>
+            </div>
+
+            <div class="memo-card active" onclick="selectMemo(0)">
+              <div style="display: flex; justify-content: space-between;">
+                <strong style="font-size: 13px;">MEMO-2026-004: Statutory Audit Requisition</strong>
+                <span
+                  style="font-family: 'JetBrains Mono'; font-size: 10px; background: rgba(239,68,68,0.2); color: #fca5a5; padding: 2px 6px; border-radius: 4px;">URGENT</span>
+              </div>
+              <p style="font-size: 12px; color: var(--text-muted);">
+                "Forwarded for your perusal and executive sign-off regarding engaging external consultants for the Q3
+                audit."
+              </p>
+              <div style="display: flex; justify-content: space-between; font-size: 11px; color: var(--text-dim);">
+                <span>Initiated by:Prince. (Finance)</span>
+                <span style="color: #34d399;">At: Director of Finance</span>
+              </div>
+            </div>
+
+            <div class="memo-card" onclick="selectMemo(1)">
+              <div style="display: flex; justify-content: space-between;">
+                <strong style="font-size: 13px;">MEMO-2026-007: Cloud Infrastructure Migration</strong>
+                <span
+                  style="font-family: 'JetBrains Mono'; font-size: 10px; background: rgba(59,130,246,0.2); color: #93c5fd; padding: 2px 6px; border-radius: 4px;">ROUTINE</span>
+              </div>
+              <p style="font-size: 12px; color: var(--text-muted);">
+                "Proposal for expansion of private MinIO S3 cluster storage capacity."
+              </p>
+              <div style="display: flex; justify-content: space-between; font-size: 11px; color: var(--text-dim);">
+                <span>Initiated by: IT Directorate</span>
+                <span style="color: #60a5fa;">At: Managing Director</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Minute-Taking Digital Sheet -->
+          <div class="panel-card" id="minuteSheet">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+              <h3 style="font-size: 16px; font-weight: 700;">Minute-Taking Record &amp; Endorsement Ledger</h3>
+              <span style="font-size: 11px; color: #34d399;">● Official Audit Certified</span>
+            </div>
+
+            <div class="minute-thread" id="minuteThread">
+              <div class="minute-item">
+                <div class="minute-author">Minute 1 — Paul Prince (Desk Officer, Finance)</div>
+                <div><em>"Sir, the Q3 statutory audit requires appointment of verified external auditors. Budgetary
+                    estimates are attached from cDrive. Forwarded for your endorsement."</em></div>
+              </div>
+              <div class="minute-item">
+                <div class="minute-author">Minute 2 — Assistant Director (Operations)</div>
+                <div><em>"Recommended as requested. Fund allocation verified against 2026 budget code #8892."</em></div>
+              </div>
+            </div>
+
+            <!-- Add Minute Form -->
+            <div style="margin-top: 14px; display: flex; flex-direction: column; gap: 10px;">
+              <label style="font-size: 12px; font-weight: 700; color: var(--text-muted);">Append Official
+                Minute:</label>
+              <textarea id="newMinuteText"
+                style="width: 100%; height: 70px; background: rgba(10,16,31,0.8); border: 1px solid var(--border-subtle); border-radius: var(--radius-sm); padding: 10px; color: #fff; font-family: inherit; font-size: 13px;"
+                placeholder="Type your minute remarks here..."></textarea>
+              <div style="display: flex; gap: 8px;">
+                <button class="btn-action" onclick="addMinute()">✍️ Append &amp; Endorse</button>
+                <button class="btn-action" style="background: rgba(239,68,68,0.2); color: #f87171;"
+                  onclick="showToast('Query returned to Desk Officer')">Query</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- View 3: Departments (Users > Departments) -->
+      <div id="viewDepartments" style="display: none; flex-direction: column; gap: 24px;">
+        <!-- Header -->
+        <div
+          style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 16px;">
+          <div>
+            <h2 style="font-size: 24px; font-weight: 800; display: flex; align-items: center; gap: 10px;">
+              <span id="deptViewTitle">Ministerial Departments &amp; Directorates</span>
+            </h2>
+            <p style="font-size: 13px; color: var(--text-muted); margin-top: 4px;">
+              Organizational establishment tree, line manager routing hierarchies, and approval authority tiers.
+            </p>
+          </div>
+          <div style="display: flex; gap: 10px;">
+            <button class="btn-action"
+              style="background: rgba(255,255,255,0.08); border: 1px solid var(--border-subtle); color: #fff;"
+              onclick="showToast('Exporting Organizational Hierarchy Chart...')">
+              📊 Export Hierarchy
+            </button>
+            <button class="btn-action" onclick="showToast('Opening New Department Wizard...')">
+              ➕ Add Department
+            </button>
+          </div>
+        </div>
+
+        <!-- Metric Cards -->
+        <div class="stat-cards-grid">
+          <div class="kpi-card kpi-green">
+            <div class="kpi-icon">🏛️</div>
+            <div>
+              <div class="kpi-num">6</div>
+              <div class="kpi-label">Active Directorates</div>
+            </div>
+          </div>
+          <div class="kpi-card kpi-blue">
+            <div class="kpi-icon">👥</div>
+            <div>
+              <div class="kpi-num">109</div>
+              <div class="kpi-label">Total Officers &amp; Staff</div>
+            </div>
+          </div>
+          <div class="kpi-card kpi-orange">
+            <div class="kpi-icon">📝</div>
+            <div>
+              <div class="kpi-num">22</div>
+              <div class="kpi-label">Memos in Active Routing</div>
+            </div>
+          </div>
+          <div class="kpi-card kpi-purple">
+            <div class="kpi-icon">🛡️</div>
+            <div>
+              <div class="kpi-num">100%</div>
+              <div class="kpi-label">Approval Paths Configured</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Commercial vs Gov Matrix Callout -->
+        <div class="panel-card"
+          style="border-left: 4px solid var(--brand-primary); background: rgba(16, 185, 129, 0.05);">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+            <strong style="color: var(--brand-primary-light); font-size: 14px;">⚡ Enterprise Commercial Enhancement:
+              Matrix Pods &amp; CapEx Approval Matrix</strong>
+            <span class="badge-count" style="background: rgba(16,185,129,0.2); color: #34d399;">cFlow Upgrade</span>
+          </div>
+          <p style="font-size: 12px; color: var(--text-muted); line-height: 1.6;">
+            In government, departments are strictly vertical directorates. In commercial <strong>cFlow</strong>, this
+            module upgrades into a <strong>Matrix Organization Engine</strong>: staff belong to functional departments
+            (Engineering, Legal, Finance) while dynamically staffed into cross-functional <em>Product Pods</em> or
+            <em>Client Deal Teams</em>. Furthermore, Line Manager approvals dynamically evaluate invoice values (e.g.
+            &lt;₦1M = Team Lead, &lt;₦10M = Director, &gt;₦10M = MD/Board).
+          </p>
+        </div>
+
+        <!-- Departments Grid -->
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 18px;">
+          <!-- Dept 1 -->
+          <div class="panel-card" style="gap: 12px;">
+            <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+              <div>
+                <h4 style="font-size: 16px; font-weight: 700;">Department of Finance &amp; Accounts (DFA)</h4>
+                <p style="font-size: 12px; color: var(--brand-primary-light);">Code: DFA-MIN-01</p>
+              </div>
+              <span class="badge-count" style="background: rgba(16,185,129,0.2); color: #34d399;">Active</span>
+            </div>
+            <div style="font-size: 12px; color: var(--text-muted); display: flex; flex-direction: column; gap: 6px;">
+              <div><strong>Head of Department (Director):</strong> Prince Zana / Adeola Adeola</div>
+              <div><strong>Staff Establishment:</strong> 18 Personnel (4 Desk Officers, 2 Asst. Directors)</div>
+              <div><strong>CapEx Sign-Off Authority:</strong> Up to ₦50,000,000 / $100,000</div>
+              <div><strong>Active Minute Queues:</strong> 4 Memos awaiting endorsement</div>
+            </div>
+            <div style="display: flex; gap: 8px; margin-top: 6px;">
+              <button class="btn-action" style="padding: 6px 12px; font-size: 11px;"
+                onclick="showToast('Opening DFA Department Roster & Staff List...')">👥 View Staff (18)</button>
+              <button class="btn-action" style="padding: 6px 12px; font-size: 11px; background: rgba(255,255,255,0.08);"
+                onclick="showToast('Configuring Line Manager approval matrix...')">⚙️ Approval Chain</button>
+            </div>
+          </div>
+
+          <!-- Dept 2 -->
+          <div class="panel-card" style="gap: 12px;">
+            <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+              <div>
+                <h4 style="font-size: 16px; font-weight: 700;">Works &amp; Civil Infrastructure</h4>
+                <p style="font-size: 12px; color: var(--brand-blue);">Code: DWI-ENG-02</p>
+              </div>
+              <span class="badge-count" style="background: rgba(59,130,246,0.2); color: #93c5fd;">Active</span>
+            </div>
+            <div style="font-size: 12px; color: var(--text-muted); display: flex; flex-direction: column; gap: 6px;">
+              <div><strong>Head of Department:</strong> Engr. Chinedu Eze (Director of Works)</div>
+              <div><strong>Staff Establishment:</strong> 34 Personnel (15 Field Inspectors, 10 Engineers)</div>
+              <div><strong>Linked Resources:</strong> Civil &amp; Structural Inspectors, Power Specialists</div>
+              <div><strong>Active Work Orders:</strong> 7 Field Inspection Tickets</div>
+            </div>
+            <div style="display: flex; gap: 8px; margin-top: 6px;">
+              <button class="btn-action" style="padding: 6px 12px; font-size: 11px;"
+                onclick="showToast('Viewing Works & Civil Engineers...')">👥 View Staff (34)</button>
+              <button class="btn-action" style="padding: 6px 12px; font-size: 11px; background: rgba(255,255,255,0.08);"
+                onclick="showToast('Viewing Field Dispatch Roster...')">🛠️ Resources</button>
+            </div>
+          </div>
+
+          <!-- Dept 3 -->
+          <div class="panel-card" style="gap: 12px;">
+            <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+              <div>
+                <h4 style="font-size: 16px; font-weight: 700;">Planning, Research &amp; Statistics (PRS)</h4>
+                <p style="font-size: 12px; color: var(--brand-amber);">Code: PRS-POL-03</p>
+              </div>
+              <span class="badge-count" style="background: rgba(245,158,11,0.2); color: #fcd34d;">Active</span>
+            </div>
+            <div style="font-size: 12px; color: var(--text-muted); display: flex; flex-direction: column; gap: 6px;">
+              <div><strong>Head of Department:</strong> Dr. Ibrahim Bello (Director PRS)</div>
+              <div><strong>Staff Establishment:</strong> 12 Analysts &amp; Statisticians</div>
+              <div><strong>Key Mandate:</strong> Policy Formulation, Circulars, Inter-MDA Liason</div>
+              <div><strong>Active Memos:</strong> 2 Policy Briefs</div>
+            </div>
+            <div style="display: flex; gap: 8px; margin-top: 6px;">
+              <button class="btn-action" style="padding: 6px 12px; font-size: 11px;"
+                onclick="showToast('Viewing PRS Analysts...')">👥 View Staff (12)</button>
+              <button class="btn-action" style="padding: 6px 12px; font-size: 11px; background: rgba(255,255,255,0.08);"
+                onclick="showToast('Editing PRS Policy Routing...')">⚙️ Policy Routing</button>
+            </div>
+          </div>
+
+          <!-- Dept 4 -->
+          <div class="panel-card" style="gap: 12px;">
+            <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+              <div>
+                <h4 style="font-size: 16px; font-weight: 700;">Procurement &amp; Tender Evaluation</h4>
+                <p style="font-size: 12px; color: var(--brand-purple);">Code: PROC-TND-04</p>
+              </div>
+              <span class="badge-count" style="background: rgba(168,85,247,0.2); color: #d8b4fe;">Active</span>
+            </div>
+            <div style="font-size: 12px; color: var(--text-muted); display: flex; flex-direction: column; gap: 6px;">
+              <div><strong>Head of Department:</strong> Fatima Aliyu (Director Procurement)</div>
+              <div><strong>Staff Establishment:</strong> 9 Evaluators &amp; Quantity Surveyors</div>
+              <div><strong>Committee Mandate:</strong> Ministerial Tender Board Secretariat</div>
+              <div><strong>Active Tenders:</strong> 5 Contractor Requisitions</div>
+            </div>
+            <div style="display: flex; gap: 8px; margin-top: 6px;">
+              <button class="btn-action" style="padding: 6px 12px; font-size: 11px;"
+                onclick="showToast('Viewing Procurement Committee...')">👥 View Staff (9)</button>
+              <button class="btn-action" style="padding: 6px 12px; font-size: 11px; background: rgba(255,255,255,0.08);"
+                onclick="showToast('Tender Board Approvals...')">📋 Tender Rules</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- View 4: Resource Type (Resources > Resource Type) -->
+      <div id="viewResourceType" style="display: none; flex-direction: column; gap: 24px;">
+        <!-- Header -->
+        <div
+          style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 16px;">
+          <div>
+            <h2 style="font-size: 24px; font-weight: 800;">Resource Types &amp; Skill Classifications</h2>
+            <p style="font-size: 13px; color: var(--text-muted); margin-top: 4px;">
+              Classify workforce roles, certified skill tags, and specialized capabilities for automated task matching.
+            </p>
+          </div>
+          <div style="display: flex; gap: 10px;">
+            <button class="btn-action" onclick="showToast('Creating New Resource Type...')">
+              ➕ Add Resource Type
+            </button>
+          </div>
+        </div>
+
+        <!-- Commercial Upgrade Callout -->
+        <div class="panel-card" style="border-left: 4px solid var(--brand-blue); background: rgba(59, 130, 246, 0.05);">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+            <strong style="color: #93c5fd; font-size: 14px;">⚡ Enterprise Commercial Enhancement: Billable Rates &amp;
+              Contractor Margin Tracking</strong>
+            <span class="badge-count" style="background: rgba(59,130,246,0.2); color: #93c5fd;">cFlow Upgrade</span>
+          </div>
+          <p style="font-size: 12px; color: var(--text-muted); line-height: 1.6;">
+            In enterprise professional services, <strong>Resource Types</strong> govern billable rates ($/hr),
+            cost-per-hour, subcontractor margin tracking, and SOW compliance. When tasks are resolved, time logs
+            automatically generate client billing invoices.
+          </p>
+        </div>
+
+        <!-- Resource Types Grid -->
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 18px;">
+          <div class="panel-card">
+            <div style="display: flex; justify-content: space-between;">
+              <h4 style="font-size: 15px; font-weight: 700;">Civil &amp; Structural Field Inspector</h4>
+              <span class="badge-count" style="background: rgba(16,185,129,0.2); color: #34d399;">12 Officers</span>
+            </div>
+            <p style="font-size: 12px; color: var(--text-muted);">Specialized in structural soundness, foundation stress
+              tests, and roadway corridor clearances.</p>
+            <div style="display: flex; flex-wrap: wrap; gap: 6px; margin: 4px 0;">
+              <span
+                style="font-size: 11px; background: rgba(255,255,255,0.06); padding: 3px 8px; border-radius: 4px;">Tag:
+                COREN Registered</span>
+              <span
+                style="font-size: 11px; background: rgba(255,255,255,0.06); padding: 3px 8px; border-radius: 4px;">Zone:
+                Abuja &amp; Lagos</span>
+              <span
+                style="font-size: 11px; background: rgba(59,130,246,0.15); color: #60a5fa; padding: 3px 8px; border-radius: 4px;">Billable:
+                $120/hr</span>
+            </div>
+            <div
+              style="display: flex; justify-content: space-between; font-size: 11px; color: var(--text-dim); margin-top: 6px;">
+              <span>Standard Load: 4 tasks/officer</span>
+              <span style="color: #34d399;">Capacity: 72% Utilized</span>
+            </div>
+          </div>
+
+          <div class="panel-card">
+            <div style="display: flex; justify-content: space-between;">
+              <h4 style="font-size: 15px; font-weight: 700;">Electrical &amp; Power Systems Specialist</h4>
+              <span class="badge-count" style="background: rgba(59,130,246,0.2); color: #93c5fd;">8 Officers</span>
+            </div>
+            <p style="font-size: 12px; color: var(--text-muted);">Handles high-voltage grid substations, transformer
+              commissioning, and telecommunications tower power audits.</p>
+            <div style="display: flex; flex-wrap: wrap; gap: 6px; margin: 4px 0;">
+              <span
+                style="font-size: 11px; background: rgba(255,255,255,0.06); padding: 3px 8px; border-radius: 4px;">Tag:
+                High-Voltage Tier 3</span>
+              <span
+                style="font-size: 11px; background: rgba(255,255,255,0.06); padding: 3px 8px; border-radius: 4px;">Zone:
+                Nationwide</span>
+              <span
+                style="font-size: 11px; background: rgba(59,130,246,0.15); color: #60a5fa; padding: 3px 8px; border-radius: 4px;">Billable:
+                $145/hr</span>
+            </div>
+            <div
+              style="display: flex; justify-content: space-between; font-size: 11px; color: var(--text-dim); margin-top: 6px;">
+              <span>Standard Load: 3 audits/week</span>
+              <span style="color: #60a5fa;">Capacity: 50% Utilized</span>
+            </div>
+          </div>
+
+          <div class="panel-card">
+            <div style="display: flex; justify-content: space-between;">
+              <h4 style="font-size: 15px; font-weight: 700;">Statutory Minuting &amp; Policy Analyst</h4>
+              <span class="badge-count" style="background: rgba(245,158,11,0.2); color: #fcd34d;">22 Officers</span>
+            </div>
+            <p style="font-size: 12px; color: var(--text-muted);">Authoritative civil service drafting, gazette minute
+              analysis, circular compliance, and ministerial brief prep.</p>
+            <div style="display: flex; flex-wrap: wrap; gap: 6px; margin: 4px 0;">
+              <span
+                style="font-size: 11px; background: rgba(255,255,255,0.06); padding: 3px 8px; border-radius: 4px;">Tag:
+                Public Service Rule</span>
+              <span
+                style="font-size: 11px; background: rgba(255,255,255,0.06); padding: 3px 8px; border-radius: 4px;">Role:
+                Desk Officer / AD</span>
+              <span
+                style="font-size: 11px; background: rgba(59,130,246,0.15); color: #60a5fa; padding: 3px 8px; border-radius: 4px;">Commercial:
+                Corp Secretary</span>
+            </div>
+            <div
+              style="display: flex; justify-content: space-between; font-size: 11px; color: var(--text-dim); margin-top: 6px;">
+              <span>Standard Load: 15 memos/day</span>
+              <span style="color: #34d399;">Capacity: 65% Utilized</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- View 5: Resource Shift (Resources > Resource Shift) -->
+      <div id="viewResourceShift" style="display: none; flex-direction: column; gap: 24px;">
+        <!-- Header -->
+        <div
+          style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 16px;">
+          <div>
+            <h2 style="font-size: 24px; font-weight: 800;">Resource Shift Rosters &amp; SLA Windows</h2>
+            <p style="font-size: 13px; color: var(--text-muted); margin-top: 4px;">
+              Working hours, after-hours minuting coverage, and emergency response shifts tied to automated SLA timers.
+            </p>
+          </div>
+          <div style="display: flex; gap: 10px;">
+            <button class="btn-action" onclick="showToast('Configuring Shift Handoff Rules...')">
+              ➕ Create Shift Roster
+            </button>
+          </div>
+        </div>
+
+        <!-- Commercial Upgrade Callout -->
+        <div class="panel-card"
+          style="border-left: 4px solid var(--brand-amber); background: rgba(245, 158, 11, 0.05);">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+            <strong style="color: #fcd34d; font-size: 14px;">⚡ Enterprise Commercial Enhancement: Follow-the-Sun 24/7
+              Global Shifts</strong>
+            <span class="badge-count" style="background: rgba(245,158,11,0.2); color: #fcd34d;">cFlow Upgrade</span>
+          </div>
+          <p style="font-size: 12px; color: var(--text-muted); line-height: 1.6;">
+            For multinational enterprise operations, <strong>Resource Shifts</strong> enable seamless
+            <strong>Follow-the-Sun handoffs</strong> (EMEA ➔ Americas ➔ APAC). High-priority P1 tickets automatically
+            transition across global teams with automated context handovers so customer SLA countdowns never stall.
+          </p>
+        </div>
+
+        <!-- Shift Cards -->
+        <div style="display: flex; flex-direction: column; gap: 14px;">
+          <div class="panel-card"
+            style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px;">
+            <div>
+              <div style="display: flex; align-items: center; gap: 10px;">
+                <h4 style="font-size: 16px; font-weight: 700;">Standard Public Service Shift (Core Business)</h4>
+                <span class="badge-count" style="background: rgba(16,185,129,0.2); color: #34d399;">Active Now</span>
+              </div>
+              <p style="font-size: 12px; color: var(--text-muted); margin-top: 4px;">
+                Operating Window: <strong>08:00 — 16:00 (Mon – Fri)</strong> • Timezone: WAT (UTC+1)
+              </p>
+              <div style="font-size: 12px; color: var(--text-dim); margin-top: 6px;">
+                Personnel: 64 Active Officers • Benchmark: Tier 1 SLA Warning at 48h / Tier 2 Escalation at 96h
+              </div>
+            </div>
+            <div style="display: flex; gap: 10px;">
+              <button class="btn-action" style="background: rgba(255,255,255,0.08); font-size: 11px;"
+                onclick="showToast('Viewing 64 rostered officers in Core Day shift...')">View Officers (64)</button>
+              <button class="btn-action" style="font-size: 11px;"
+                onclick="showToast('Editing SLA threshold timers...')">Configure SLA</button>
+            </div>
+          </div>
+
+          <div class="panel-card"
+            style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px;">
+            <div>
+              <div style="display: flex; align-items: center; gap: 10px;">
+                <h4 style="font-size: 16px; font-weight: 700;">After-Hours Executive Minuting &amp; Fast-Track</h4>
+                <span class="badge-count" style="background: rgba(59,130,246,0.2); color: #93c5fd;">Starts 16:00</span>
+              </div>
+              <p style="font-size: 12px; color: var(--text-muted); margin-top: 4px;">
+                Operating Window: <strong>16:00 — 22:00 (Mon – Fri)</strong> • Emergency Legislative &amp; Cabinet Memos
+              </p>
+              <div style="font-size: 12px; color: var(--text-dim); margin-top: 6px;">
+                Personnel: 8 Dedicated Officers • Benchmark: Expedited 12-hour Maximum Resolution SLA
+              </div>
+            </div>
+            <div style="display: flex; gap: 10px;">
+              <button class="btn-action" style="background: rgba(255,255,255,0.08); font-size: 11px;"
+                onclick="showToast('Viewing After-Hours Desk Officers...')">View Officers (8)</button>
+              <button class="btn-action" style="font-size: 11px;"
+                onclick="showToast('Editing Executive Fast-Track rules...')">Configure SLA</button>
+            </div>
+          </div>
+
+          <div class="panel-card"
+            style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px;">
+            <div>
+              <div style="display: flex; align-items: center; gap: 10px;">
+                <h4 style="font-size: 16px; font-weight: 700;">24/7 Field &amp; Infrastructure Emergency Response</h4>
+                <span class="badge-count" style="background: rgba(239,68,68,0.2); color: #fca5a5;">24/7
+                  Continuous</span>
+              </div>
+              <p style="font-size: 12px; color: var(--text-muted); margin-top: 4px;">
+                Operating Window: <strong>3 Rotational Shifts (08-16, 16-00, 00-08)</strong> • Critical Incidents
+              </p>
+              <div style="font-size: 12px; color: var(--text-dim); margin-top: 6px;">
+                Personnel: 18 Field Engineers • Benchmark: Strict 2-Hour First Response Ticket SLA
+              </div>
+            </div>
+            <div style="display: flex; gap: 10px;">
+              <button class="btn-action" style="background: rgba(255,255,255,0.08); font-size: 11px;"
+                onclick="showToast('Viewing 24/7 Emergency Field Engineers...')">View Officers (18)</button>
+              <button class="btn-action" style="font-size: 11px;"
+                onclick="showToast('Editing Emergency 2h SLA...')">Configure SLA</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- View 6: Resource Schedule (Resources > Resource Schedule) -->
+      <div id="viewResourceSchedule" style="display: none; flex-direction: column; gap: 24px;">
+        <!-- Header -->
+        <div
+          style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 16px;">
+          <div>
+            <h2 style="font-size: 24px; font-weight: 800;">Resource Schedule &amp; Capacity Planner</h2>
+            <p style="font-size: 13px; color: var(--text-muted); margin-top: 4px;">
+              Real-time Gantt timeline rostering, officer availability status, and automated workload balancing.
+            </p>
+          </div>
+          <div style="display: flex; gap: 10px; align-items: center;">
+            <button class="btn-action"
+              style="background: rgba(255,255,255,0.08); border: 1px solid var(--border-subtle); color: #fff;"
+              onclick="showToast('Viewing timeline by Week...')">
+              📅 Week View
+            </button>
+            <button class="btn-action" style="background: #10b981; color: #fff;"
+              onclick="showToast('AI Smart Dispatch Assistant triggered: finding optimal resource match...')">
+              ⚡ Smart Dispatch Assistant
+            </button>
+          </div>
+        </div>
+
+        <!-- Smart Dispatch Assistant AI Card -->
+        <div class="panel-card" style="border: 1px solid rgba(16,185,129,0.4); background: rgba(16,185,129,0.08);">
+          <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;">
+            <div>
+              <div style="display: flex; align-items: center; gap: 8px;">
+                <span style="font-size: 18px;">⚡</span>
+                <strong style="color: #6ee7b7; font-size: 14px;">Smart Dispatch Recommended Match</strong>
+                <span class="badge-count" style="background: rgba(16,185,129,0.3); color: #a7f3d0;">96% Optimal
+                  Match</span>
+              </div>
+              <p style="font-size: 12px; color: var(--text-muted); margin-top: 4px;">
+                Pending Ticket <strong>#15920: Structural Vibration Anomaly (Abuja Corridor)</strong>
+              </p>
+              <div style="font-size: 12px; color: #e2e8f0; margin-top: 4px;">
+                Recommended Officer: <strong>Engr. Tunde Adeleke</strong> (Civil Certified: Yes • Shift Active: Yes •
+                Available Capacity: 70% free • Distance: 4.2 km)
+              </div>
+            </div>
+            <button class="btn-action"
+              onclick="showToast('Ticket #15920 automatically dispatched to Engr. Tunde Adeleke!')">
+              🚀 Dispatch Instantly
+            </button>
+          </div>
+        </div>
+
+        <!-- Timeline / Roster Table -->
+        <div class="panel-card" style="overflow-x: auto;">
+          <h3 style="font-size: 16px; font-weight: 700; margin-bottom: 12px;">Live Officer Roster &amp; Capacity
+            Utilization (Today)</h3>
+          <table style="width: 100%; border-collapse: collapse; font-size: 13px; text-align: left;">
+            <thead>
+              <tr
+                style="border-bottom: 1px solid var(--border-subtle); color: var(--text-dim); font-size: 11px; text-transform: uppercase;">
+                <th style="padding: 10px 8px;">Officer / Resource</th>
+                <th style="padding: 10px 8px;">Department &amp; Role</th>
+                <th style="padding: 10px 8px;">Assigned Shift</th>
+                <th style="padding: 10px 8px;">Status</th>
+                <th style="padding: 10px 8px;">Active Tasks</th>
+                <th style="padding: 10px 8px;">Capacity Load</th>
+                <th style="padding: 10px 8px;">Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr style="border-bottom: 1px solid rgba(255,255,255,0.05);">
+                <td style="padding: 12px 8px;"><strong>Prince Zana</strong></td>
+                <td style="padding: 12px 8px; color: var(--text-muted);">Finance (Director)</td>
+                <td style="padding: 12px 8px;">Core Day (08:00 - 16:00)</td>
+                <td style="padding: 12px 8px;"><span style="color: #34d399; font-weight: 600;">● On Duty</span></td>
+                <td style="padding: 12px 8px;">3 Memos</td>
+                <td style="padding: 12px 8px;">
+                  <div style="display: flex; align-items: center; gap: 8px;">
+                    <div
+                      style="width: 70px; height: 6px; background: rgba(255,255,255,0.1); border-radius: 3px; overflow: hidden;">
+                      <div style="width: 60%; height: 100%; background: #34d399;"></div>
+                    </div>
+                    <span style="font-size: 11px; color: var(--text-dim);">60%</span>
+                  </div>
+                </td>
+                <td style="padding: 12px 8px;"><button class="btn-action" style="padding: 4px 8px; font-size: 11px;"
+                    onclick="showToast('Viewing Prince Zana active tasks...')">Details</button></td>
+              </tr>
+              <tr style="border-bottom: 1px solid rgba(255,255,255,0.05);">
+                <td style="padding: 12px 8px;"><strong>Engr. Chinedu Eze</strong></td>
+                <td style="padding: 12px 8px; color: var(--text-muted);">Works (Lead Inspector)</td>
+                <td style="padding: 12px 8px;">Field Day Rotation</td>
+                <td style="padding: 12px 8px;"><span style="color: #60a5fa; font-weight: 600;">● On Site (Abuja)</span>
+                </td>
+                <td style="padding: 12px 8px;">4 Inspections</td>
+                <td style="padding: 12px 8px;">
+                  <div style="display: flex; align-items: center; gap: 8px;">
+                    <div
+                      style="width: 70px; height: 6px; background: rgba(255,255,255,0.1); border-radius: 3px; overflow: hidden;">
+                      <div style="width: 88%; height: 100%; background: #f59e0b;"></div>
+                    </div>
+                    <span style="font-size: 11px; color: #f59e0b;">88% (High)</span>
+                  </div>
+                </td>
+                <td style="padding: 12px 8px;"><button class="btn-action" style="padding: 4px 8px; font-size: 11px;"
+                    onclick="showToast('Viewing Engr. Chinedu Eze inspection routes...')">Details</button></td>
+              </tr>
+              <tr style="border-bottom: 1px solid rgba(255,255,255,0.05);">
+                <td style="padding: 12px 8px;"><strong>Fatima Aliyu</strong></td>
+                <td style="padding: 12px 8px; color: var(--text-muted);">Procurement (Director)</td>
+                <td style="padding: 12px 8px;">Core Day (08:00 - 16:00)</td>
+                <td style="padding: 12px 8px;"><span style="color: #34d399; font-weight: 600;">● In Meeting</span></td>
+                <td style="padding: 12px 8px;">2 Tenders</td>
+                <td style="padding: 12px 8px;">
+                  <div style="display: flex; align-items: center; gap: 8px;">
+                    <div
+                      style="width: 70px; height: 6px; background: rgba(255,255,255,0.1); border-radius: 3px; overflow: hidden;">
+                      <div style="width: 40%; height: 100%; background: #34d399;"></div>
+                    </div>
+                    <span style="font-size: 11px; color: var(--text-dim);">40%</span>
+                  </div>
+                </td>
+                <td style="padding: 12px 8px;"><button class="btn-action" style="padding: 4px 8px; font-size: 11px;"
+                    onclick="showToast('Viewing Fatima Aliyu procurement queue...')">Details</button></td>
+              </tr>
+              <tr style="border-bottom: 1px solid rgba(255,255,255,0.05);">
+                <td style="padding: 12px 8px;"><strong>Engr. Tunde Adeleke</strong></td>
+                <td style="padding: 12px 8px; color: var(--text-muted);">Infrastructure (Civil Tech)</td>
+                <td style="padding: 12px 8px;">Emergency 24/7 Shift 1</td>
+                <td style="padding: 12px 8px;"><span style="color: #34d399; font-weight: 600;">● Available</span></td>
+                <td style="padding: 12px 8px;">1 Work Order</td>
+                <td style="padding: 12px 8px;">
+                  <div style="display: flex; align-items: center; gap: 8px;">
+                    <div
+                      style="width: 70px; height: 6px; background: rgba(255,255,255,0.1); border-radius: 3px; overflow: hidden;">
+                      <div style="width: 30%; height: 100%; background: #34d399;"></div>
+                    </div>
+                    <span style="font-size: 11px; color: var(--text-dim);">30% (Free)</span>
+                  </div>
+                </td>
+                <td style="padding: 12px 8px;"><button class="btn-action" style="padding: 4px 8px; font-size: 11px;"
+                    onclick="showToast('Dispatching available work to Engr. Tunde...')">Assign</button></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <div class="toast-box" id="toastBox"></div>
+
+  <script>
+    let isGov = false;
+
+    window.addEventListener('DOMContentLoaded', () => {
+      // Automatically detect if embedded inside suite iframe and hide duplicate controls
+      if (window.self !== window.top) {
+        document.body.classList.add('is-embedded');
+      }
+
+      const urlParams = new URLSearchParams(window.location.search);
+      if (urlParams.get('mode') === 'gov') setGovMode(true);
+
+      let savedTheme = 'dark';
+      try {
+        savedTheme = localStorage.getItem('cicod_theme') || 'dark';
+      } catch (e) {}
+      setTheme(savedTheme, false);
+    });
+
+    window.addEventListener('message', (event) => {
+      if (event.data && event.data.type === 'SET_MODE') {
+        setGovMode(event.data.mode === 'gov');
+      }
+      if (event.data && event.data.type === 'SET_THEME') {
+        setTheme(event.data.theme, false);
+      }
+    });
+
+    function setTheme(theme, broadcast = true) {
+      const isLight = theme === 'light';
+      document.body.classList.toggle('theme-light', isLight);
+      const btn = document.getElementById('btnCflowTheme');
+      if (btn) btn.innerHTML = isLight ? '<span>🌙 Dark</span>' : '<span>☀️ Light</span>';
+      try {
+        localStorage.setItem('cicod_theme', isLight ? 'light' : 'dark');
+      } catch (e) {}
+      if (broadcast && window.parent && window.parent !== window) {
+        try {
+          window.parent.postMessage({ type: 'SET_THEME', theme: isLight ? 'light' : 'dark' }, '*');
+        } catch (e) {}
+      }
+    }
+
+    function toggleTheme() {
+      const isLight = document.body.classList.contains('theme-light');
+      setTheme(isLight ? 'dark' : 'light', true);
+    }
+
+    function toggleMode() {
+      setGovMode(!isGov);
+    }
+
+    function setGovMode(gov) {
+      isGov = gov;
+      document.body.classList.toggle('mode-gov', isGov);
+      document.body.classList.toggle('mode-commercial', !isGov);
+      document.getElementById('flowTitle').innerText = isGov ? '1Gov ECMS' : 'CICOD Workflow';
+      document.getElementById('flowSub').innerText = isGov ? 'Private Database for Public Sector' : 'Enterprise Digital Minuting & ECMS';
+      document.getElementById('lblDash').innerText = isGov ? 'Dashboard' : 'Executive Dashboard';
+      document.getElementById('lblRequests').innerText = isGov ? 'Requests' : 'B2B Requisitions';
+      document.getElementById('lblTasks').innerText = isGov ? 'Tasks' : 'Tasks & Work Orders';
+      document.getElementById('lblMemos').innerText = isGov ? 'Memos' : 'Corporate Memos';
+      document.getElementById('lblWorkgroup').innerText = isGov ? 'Workgroups' : 'Project Teams';
+      document.getElementById('lblContacts').innerText = isGov ? 'Contacts' : 'Client Directory';
+      document.getElementById('lblReports').innerText = isGov ? 'Reports' : 'Analytics & Reports';
+
+      // Users & Resources translation
+      document.getElementById('lblUsers').innerText = isGov ? 'Users' : 'Organization & Users';
+      document.getElementById('lblSubDepartments').innerText = isGov ? 'Departments' : 'Departments & Pods';
+      document.getElementById('lblResources').innerText = isGov ? 'Resources' : 'Resource Management';
+      document.getElementById('lblSubResourceType').innerText = isGov ? 'Resource Type' : 'Skill Types & Roles';
+      document.getElementById('lblSubResourceShift').innerText = isGov ? 'Resource Shift' : 'Shifts & SLA Coverage';
+      document.getElementById('lblSubResourceSchedule').innerText = isGov ? 'Resource Schedule' : 'Schedule & Capacity Planner';
+
+      const deptTitle = document.getElementById('deptViewTitle');
+      if (deptTitle) {
+        deptTitle.innerText = isGov ? 'Ministerial Departments & Directorates' : 'Corporate Departments & Product Pods';
+      }
+
+      showToast(isGov ? 'Switched to Live 1Gov ECMS Nomenclature' : 'Switched to cFlow Enterprise Nomenclature');
+    }
+
+    function toggleSubmenu(id, evt) {
+      if (evt) evt.stopPropagation();
+      const sub = document.getElementById(id);
+      if (!sub) return;
+      const parent = sub.previousElementSibling;
+      const isOpen = sub.classList.contains('open');
+      sub.classList.toggle('open', !isOpen);
+      if (parent) parent.classList.toggle('open', !isOpen);
+    }
+
+    function switchWorkspaceView(viewId) {
+      const views = ['viewOverview', 'viewMemos', 'viewDepartments', 'viewResourceType', 'viewResourceShift', 'viewResourceSchedule'];
+      views.forEach(v => {
+        const el = document.getElementById(v);
+        if (el) el.style.display = (v === viewId) ? 'flex' : 'none';
+      });
+
+      // reset active pill highlights
+      document.querySelectorAll('.nav-subitem').forEach(el => el.classList.remove('active'));
+      document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+    }
+
+    function showOverviewView(event) {
+      if (event) event.stopPropagation();
+      switchWorkspaceView('viewOverview');
+      document.getElementById('topHeader').innerText = 'Executive Overview & Workflows';
+      const navOvw = document.querySelector('.nav-item');
+      if (navOvw) navOvw.classList.add('active');
+    }
+
+    function showMemoView(event) {
+      if (event) event.stopPropagation();
+      switchWorkspaceView('viewMemos');
+      document.getElementById('topHeader').innerText = 'Electronic Memos & Digital Minuting';
+    }
+
+    function showDepartmentsView(event) {
+      if (event) event.stopPropagation();
+      switchWorkspaceView('viewDepartments');
+      document.getElementById('topHeader').innerText = isGov ? 'Users › Departments' : 'Organization › Departments & Pods';
+      const item = document.getElementById('subitem-departments');
+      if (item) item.classList.add('active');
+      const parent = document.getElementById('navUsers');
+      if (parent) parent.classList.add('open');
+      const sub = document.getElementById('sub-users');
+      if (sub) sub.classList.add('open');
+    }
+
+    function showResourceTypeView(event) {
+      if (event) event.stopPropagation();
+      switchWorkspaceView('viewResourceType');
+      document.getElementById('topHeader').innerText = isGov ? 'Resources › Resource Type' : 'Resources › Skill Types & Roles';
+      const item = document.getElementById('subitem-resource-type');
+      if (item) item.classList.add('active');
+      const parent = document.getElementById('navResources');
+      if (parent) parent.classList.add('open');
+      const sub = document.getElementById('sub-resources');
+      if (sub) sub.classList.add('open');
+    }
+
+    function showResourceShiftView(event) {
+      if (event) event.stopPropagation();
+      switchWorkspaceView('viewResourceShift');
+      document.getElementById('topHeader').innerText = isGov ? 'Resources › Resource Shift' : 'Resources › Shifts & SLA Coverage';
+      const item = document.getElementById('subitem-resource-shift');
+      if (item) item.classList.add('active');
+      const parent = document.getElementById('navResources');
+      if (parent) parent.classList.add('open');
+      const sub = document.getElementById('sub-resources');
+      if (sub) sub.classList.add('open');
+    }
+
+    function showResourceScheduleView(event) {
+      if (event) event.stopPropagation();
+      switchWorkspaceView('viewResourceSchedule');
+      document.getElementById('topHeader').innerText = isGov ? 'Resources › Resource Schedule' : 'Resources › Schedule & Capacity Planner';
+      const item = document.getElementById('subitem-resource-schedule');
+      if (item) item.classList.add('active');
+      const parent = document.getElementById('navResources');
+      if (parent) parent.classList.add('open');
+      const sub = document.getElementById('sub-resources');
+      if (sub) sub.classList.add('open');
+    }
+
+    function setSubFilter(name) {
+      document.querySelectorAll('.nav-subitem').forEach(i => i.style.color = 'var(--text-muted)');
+      if (event && event.currentTarget) event.currentTarget.style.color = '#fff';
+      document.getElementById('topHeader').innerText = name;
+      showToast(`Selected: ${name}`);
+    }
+
+    function addMinute() {
+      const text = document.getElementById('newMinuteText').value.trim();
+      if (!text) {
+        showToast('Please type a minute remark first');
+        return;
+      }
+
+      const thread = document.getElementById('minuteThread');
+      const item = document.createElement('div');
+      item.className = 'minute-item';
+      item.innerHTML = `
+        <div class="minute-author">Minute 3 — Director of Finance (Executive Sign-off)</div>
+        <div><em>"${text}"</em></div>
+      `;
+      thread.appendChild(item);
+      document.getElementById('newMinuteText').value = '';
+      showToast('Minute appended and forwarded to Permanent Secretary');
+    }
+
+    function openNewMemo() {
+      showToast('Opening new memo wizard...');
+    }
+
+    function setFilter(cat) {
+      document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
+      event.currentTarget.classList.add('active');
+      showToast(`Filter: ${cat}`);
+    }
+
+    function selectMemo(idx) {
+      document.querySelectorAll('.memo-card').forEach((c, i) => {
+        c.classList.toggle('active', i === idx);
+      });
+      showToast('Loaded memo details and minute ledger');
+    }
+
+    function showToast(msg) {
+      const box = document.getElementById('toastBox');
+      const t = document.createElement('div');
+      t.className = 'toast';
+      t.innerText = msg;
+      box.appendChild(t);
+      setTimeout(() => {
+        t.style.opacity = '0';
+        setTimeout(() => t.remove(), 300);
+      }, 3000);
+    }
+  </script>
+</body>
+
+</html>

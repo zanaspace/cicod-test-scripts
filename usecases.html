@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Use Case Transformation Guide — 1Gov vs. CICOD Suite (Drive &amp; Flow)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <!-- Modular Stylesheet -->
+  <link rel="stylesheet" href="usecases/css/usecases.css">
+</head>
+<body class="mode-commercial">
+
+  <!-- 1. Dedicated Use Cases Sidebar -->
+  <aside class="sidebar">
+    <div class="brand-section">
+      <div class="brand-icon">🎯</div>
+      <div class="brand-text">
+        <h2>Use Cases &amp; Blueprint</h2>
+        <p>Gov vs. CICOD Transformation</p>
+      </div>
+    </div>
+
+    <!-- Core Engines Navigation -->
+    <div class="nav-group">
+      <div class="nav-title">Core Engine Modules</div>
+      <div class="nav-item active" onclick="setSection('all', event)">
+        <span>📑 All Use Cases Matrix</span>
+        <span class="tag-engine">18</span>
+      </div>
+      <div class="nav-item" onclick="setSection('drive', event)">
+        <span>📁 Drive Modules (Gov ⇄ cDrive)</span>
+        <span class="tag-engine">10</span>
+      </div>
+      <div class="nav-item" onclick="setSection('flow', event)">
+        <span>📝 Flow Modules (ECMS ⇄ cFlow)</span>
+        <span class="tag-engine">8</span>
+      </div>
+    </div>
+
+    <!-- Visual Sidebar-to-Sidebar Mappers -->
+    <div class="nav-group">
+      <div class="nav-title">Visual Sidebar Mappers</div>
+      <div class="nav-item" onclick="setSection('mapper-drive', event)">
+        <span>🔀 Drive Sidebar Interactive Map</span>
+      </div>
+      <div class="nav-item" onclick="setSection('mapper-flow', event)">
+        <span>🔀 Flow Sidebar Interactive Map</span>
+      </div>
+    </div>
+
+    <!-- Commercial Industry Playbooks -->
+    <div class="nav-group">
+      <div class="nav-title">Commercial Playbooks</div>
+      <div class="nav-item" onclick="filterPlaybook('audit', event)">
+        <span>📊 Accounting &amp; Audit (PBC)</span>
+      </div>
+      <div class="nav-item" onclick="filterPlaybook('legal', event)">
+        <span>⚖️ Legal M&amp;A (Virtual Deal Rooms)</span>
+      </div>
+      <div class="nav-item" onclick="filterPlaybook('supply', event)">
+        <span>🚢 Supply Chain &amp; Logistics</span>
+      </div>
+      <div class="nav-item" onclick="filterPlaybook('health', event)">
+        <span>🏥 Healthcare &amp; HMO Claims</span>
+      </div>
+      <div class="nav-item" onclick="filterPlaybook('board', event)">
+        <span>🏛️ Corporate Boardrooms</span>
+      </div>
+    </div>
+
+    <!-- Deep Dives & UI Fixes -->
+    <div class="nav-group">
+      <div class="nav-title">Deep Dives &amp; Fixes</div>
+      <div class="nav-item" onclick="setSection('request-module', event)">
+        <span>🏛️ Inter-MDA Requisitions (<code>r=request</code>)</span>
+      </div>
+      <div class="nav-item" onclick="setSection('classified-fix', event)">
+        <span>🔐 Top Secret UI Modal Fix</span>
+      </div>
+      <div class="nav-item" onclick="setSection('scenario-runner', event)">
+        <span>▶ Interactive Scenario Runner</span>
+      </div>
+    </div>
+  </aside>
+
+  <!-- 2. Main Content Canvas -->
+  <main class="workspace-main">
+    <div class="top-toolbar">
+      <div style="font-size: 14px; color: var(--text-muted);">
+        <span>Transformation Guide</span> › <strong style="color: #fff;" id="topLabel">Full Use Case Matrix</strong>
+      </div>
+      <div class="mode-toggle-group" style="display: flex; gap: 8px; align-items: center;">
+        <button class="theme-switch-btn" id="btnUsecasesTheme" onclick="toggleTheme()" title="Toggle Dark/Light Mode">
+          <span>☀️ Light</span>
+        </button>
+        <button class="btn-toggle active" id="btn-both" onclick="switchViewMode('both')">⚡ Side-by-Side</button>
+        <button class="btn-toggle" id="btn-com" onclick="switchViewMode('commercial')">🏢 Commercial</button>
+        <button class="btn-toggle" id="btn-gov" onclick="switchViewMode('gov')">🏛️ Government</button>
+      </div>
+    </div>
+
+    <div class="workspace-content" id="mainContainer">
+      <!-- Content populated dynamically by modular scripts -->
+    </div>
+  </main>
+
+  <div class="toast-box" id="toastBox"></div>
+
+  <!-- Modular Scripts Loaded in Order -->
+  <script src="usecases/js/data.js"></script>
+  <script src="usecases/js/mapper.js"></script>
+  <script src="usecases/js/playbooks.js"></script>
+  <script src="usecases/js/deepdives.js"></script>
+  <script src="usecases/js/runner.js"></script>
+  <script src="usecases/js/app.js"></script>
+</body>
+</html>

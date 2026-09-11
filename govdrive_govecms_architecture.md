@@ -143,5 +143,3 @@ Gov ECMS (Workflow Manager) digitizes civil service processes, operational routi
 
 
 
-git config --global user.email "sellytics@gmail.com"
-  git config --global user.name "zanaspace"

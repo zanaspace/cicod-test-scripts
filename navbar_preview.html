@@ -256,7 +256,11 @@
           </button>
 
           <!-- Floating More Menu Popover -->
-          <div class="popover-menu" id="morePopover" style="left: 0; min-width: 230px;">
+          <div class="popover-menu" id="morePopover" style="left: 0; min-width: 240px;">
+            <button class="popover-item" data-module="wfm" onclick="selectCompactModule('wfm', event)">
+              <span class="popover-item-icon">⚙️</span>
+              <span>Workflow Manager (WFM)</span>
+            </button>
             <button class="popover-item" data-module="pipeline" onclick="selectCompactModule('pipeline', event)">
               <span class="popover-item-icon">🌐</span>
               <span>End-to-End Pipeline</span>

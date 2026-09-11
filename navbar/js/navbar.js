@@ -64,7 +64,7 @@
     });
 
     // Update secondary items in More menu
-    const isSubItem = ['pipeline', 'deepdive', 'sharing'].includes(modId);
+    const isSubItem = ['pipeline', 'deepdive', 'sharing', 'wfm'].includes(modId);
     const moreBtn = document.getElementById('btnMoreDropdown');
     if (moreBtn) {
       moreBtn.classList.toggle('active-sub', isSubItem);

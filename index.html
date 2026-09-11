@@ -234,7 +234,11 @@
           </button>
 
           <!-- Floating More Menu Popover -->
-          <div class="popover-menu" id="morePopover" style="left: 0; min-width: 230px;">
+          <div class="popover-menu" id="morePopover" style="left: 0; min-width: 240px;">
+            <button class="popover-item" data-module="wfm" onclick="selectCompactModule('wfm', event)">
+              <span class="popover-item-icon">⚙️</span>
+              <span>Workflow Manager (WFM)</span>
+            </button>
             <button class="popover-item" data-module="pipeline" onclick="selectCompactModule('pipeline', event)">
               <span class="popover-item-icon">🌐</span>
               <span>End-to-End Pipeline</span>
@@ -356,6 +360,9 @@
 
     <!-- Embedded Use Cases & Transformation Module (Dedicated Sidebar & App) -->
     <iframe id="frame-usecases" class="module-frame" src="usecases.html" onload="syncChildFrame(this)"></iframe>
+
+    <!-- Embedded Workflow Manager (WFM) Architecture & Engine Module -->
+    <iframe id="frame-wfm" class="module-frame" src="wfm.html" onload="syncChildFrame(this)"></iframe>
 
     <!-- Integrated End-to-End Pipeline View -->
     <div id="view-pipeline" class="arch-view">
@@ -569,7 +576,7 @@
       });
 
       // Update secondary items in More menu
-      const isSubItem = ['pipeline', 'deepdive', 'sharing'].includes(modId);
+      const isSubItem = ['pipeline', 'deepdive', 'sharing', 'wfm'].includes(modId);
       const moreBtn = document.getElementById('btnMoreDropdown');
       if (moreBtn) {
         moreBtn.classList.toggle('active-sub', isSubItem);
@@ -589,6 +596,8 @@
         document.getElementById('frame-cflow').classList.add('active');
       } else if (modId === 'usecases') {
         document.getElementById('frame-usecases').classList.add('active');
+      } else if (modId === 'wfm') {
+        document.getElementById('frame-wfm').classList.add('active');
       } else if (modId === 'pipeline') {
         document.getElementById('view-pipeline').classList.add('active');
       } else if (modId === 'deepdive') {
@@ -617,7 +626,8 @@
       const frames = [
         document.getElementById('frame-cdrive'),
         document.getElementById('frame-cflow'),
-        document.getElementById('frame-usecases')
+        document.getElementById('frame-usecases'),
+        document.getElementById('frame-wfm')
       ];
       frames.forEach(f => {
         if (f && f.contentWindow) {

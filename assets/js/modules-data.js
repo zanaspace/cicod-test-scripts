@@ -1,5 +1,5 @@
 /**
- * CICOD & 1Government QA Test Cases & Multi-Module Registry
+ * CICOD User Acceptance Testing & Multi-Module Registry
  * 
  * Contains full definitions for:
  * 1. CICOD Drive: 10 verified sheet test suites, pass rates, embedded report paths & evidence captures.

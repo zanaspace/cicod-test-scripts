@@ -1,5 +1,5 @@
 /**
- * CICOD & 1Government QA Test Portal Controller
+ * CICOD User Acceptance Testing Portal Controller
  * 
  * Handles UI interactions, accordion expansion, report rendering,
  * and test photo modal preview with backward compatibility.

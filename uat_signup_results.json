@@ -1,0 +1,65 @@
+[
+  {
+    "step": 1,
+    "name": "Click on sign up",
+    "expected": "Should direct the user to the Sign up page",
+    "actual": "Clicked but remained on https://govtest.convergenceondemand.com/",
+    "status": "FAILED"
+  },
+  {
+    "step": 2,
+    "name": "Enter a valid email",
+    "expected": "Email should be editable and entry accepted",
+    "actual": "Email field did not accept entry",
+    "status": "FAILED"
+  },
+  {
+    "step": 3,
+    "name": "Enter valid first name",
+    "expected": "The first name field should be editable and the first name entry accepted",
+    "actual": "First name field not found or not rendered in current step",
+    "status": "INVESTIGATE"
+  },
+  {
+    "step": 4,
+    "name": "Enter valid lastname",
+    "expected": "The last name field should be editable and the last name entry accepted",
+    "actual": "Last name field not found or not rendered in current step",
+    "status": "INVESTIGATE"
+  },
+  {
+    "step": 5,
+    "name": "Enter valid phone number",
+    "expected": "Phone number should be accepted",
+    "actual": "Phone field not found in current step",
+    "status": "INVESTIGATE"
+  },
+  {
+    "step": 6,
+    "name": "Enter a valid password",
+    "expected": "The Password field should be enabled and accepted",
+    "actual": "Password field not found in current step",
+    "status": "INVESTIGATE"
+  },
+  {
+    "step": 7,
+    "name": "Enter a valid account name (Alphabet)",
+    "expected": "Account name should be accepted",
+    "actual": "Account name field not found in current step",
+    "status": "INVESTIGATE"
+  },
+  {
+    "step": 8,
+    "name": "Check the agreement box",
+    "expected": "The box should be selected successfully",
+    "actual": "Checkbox not found in current step",
+    "status": "INVESTIGATE"
+  },
+  {
+    "step": 9,
+    "name": "Click on continue button",
+    "expected": "The MDA profile should be created / next verification routed",
+    "actual": "Submit button not found",
+    "status": "FAILED"
+  }
+]

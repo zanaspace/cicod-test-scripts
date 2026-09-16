@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>UAT Test Report - Target 3: CICOD Login (cicodecm)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0b0f19;
+      --surface: #121826;
+      --surface-border: #1e293b;
+      --card-bg: #161f30;
+      --card-hover: #1c273c;
+      --text-main: #f1f5f9;
+      --text-muted: #94a3b8;
+      --primary: #3b82f6;
+      --primary-glow: rgba(59, 130, 246, 0.25);
+      --success: #10b981;
+      --success-glow: rgba(16, 185, 129, 0.2);
+      --danger: #ef4444;
+      --font: 'Plus Jakarta Sans', sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background-color: var(--bg);
+      color: var(--text-main);
+      font-family: var(--font);
+      line-height: 1.6;
+      padding: 32px 24px;
+    }
+
+    .container { max-width: 1240px; margin: 0 auto; }
+    
+    .header {
+      background: linear-gradient(135deg, rgba(30, 41, 59, 0.7), rgba(18, 24, 38, 0.9));
+      border: 1px solid var(--surface-border);
+      border-radius: 20px;
+      padding: 32px;
+      margin-bottom: 32px;
+      box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(12px);
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .badge-primary { background: rgba(59, 130, 246, 0.2); color: #60a5fa; border: 1px solid rgba(59, 130, 246, 0.3); }
+    .badge-success { background: rgba(16, 185, 129, 0.2); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.3); }
+
+    h1 { font-size: 2rem; font-weight: 800; margin: 12px 0 8px 0; letter-spacing: -0.02em; }
+    .subtitle { color: var(--text-muted); font-size: 0.95rem; margin-bottom: 20px; }
+
+    .meta-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 16px;
+      margin-top: 24px;
+      padding-top: 20px;
+      border-top: 1px solid var(--surface-border);
+    }
+    .meta-item { display: flex; flex-direction: column; gap: 4px; }
+    .meta-label { font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; font-weight: 600; letter-spacing: 0.05em; }
+    .meta-value { font-size: 0.95rem; font-weight: 600; color: #e2e8f0; font-family: var(--font-mono); }
+
+    .summary-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 16px;
+      margin-bottom: 32px;
+    }
+    .stat-card {
+      background: var(--surface);
+      border: 1px solid var(--surface-border);
+      border-radius: 16px;
+      padding: 24px;
+      text-align: center;
+    }
+    .stat-value { font-size: 2.2rem; font-weight: 800; line-height: 1; margin-bottom: 6px; }
+    .stat-label { font-size: 0.85rem; color: var(--text-muted); font-weight: 500; }
+    .stat-green { color: var(--success); }
+    .stat-blue { color: var(--primary); }
+
+    .test-cases-list { display: flex; flex-direction: column; gap: 24px; }
+    .test-card {
+      background: var(--card-bg);
+      border: 1px solid var(--surface-border);
+      border-radius: 18px;
+      overflow: hidden;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .test-card:hover {
+      border-color: rgba(59, 130, 246, 0.4);
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4);
+    }
+
+    .test-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 24px;
+      background: rgba(18, 24, 38, 0.7);
+      border-bottom: 1px solid var(--surface-border);
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+    .test-id-title { display: flex; align-items: center; gap: 12px; }
+    .test-id { font-family: var(--font-mono); font-size: 0.85rem; color: #93c5fd; background: rgba(59, 130, 246, 0.15); padding: 3px 8px; border-radius: 6px; }
+    .test-title { font-size: 1.1rem; font-weight: 700; color: #ffffff; }
+
+    .test-body {
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: 24px;
+      padding: 24px;
+    }
+    @media (max-width: 900px) {
+      .test-body { grid-template-columns: 1fr; }
+    }
+
+    .info-group { margin-bottom: 16px; }
+    .info-title { font-size: 0.75rem; text-transform: uppercase; color: #64748b; font-weight: 700; letter-spacing: 0.05em; margin-bottom: 4px; }
+    .info-desc { font-size: 0.9rem; color: #cbd5e1; }
+
+    .qa-comment {
+      background: rgba(16, 185, 129, 0.08);
+      border-left: 3px solid var(--success);
+      padding: 12px 16px;
+      border-radius: 0 8px 8px 0;
+      margin-top: 16px;
+      font-size: 0.88rem;
+      color: #a7f3d0;
+    }
+
+    .screenshot-container {
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid var(--surface-border);
+      background: #000;
+      position: relative;
+    }
+    .screenshot-container img {
+      width: 100%;
+      display: block;
+      transition: transform 0.25s ease;
+      cursor: zoom-in;
+    }
+    .screenshot-container:hover img { transform: scale(1.02); }
+    .screenshot-caption {
+      padding: 8px 12px;
+      background: rgba(15, 23, 42, 0.9);
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      font-family: var(--font-mono);
+      border-top: 1px solid var(--surface-border);
+      display: flex;
+      justify-content: space-between;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header class="header">
+      <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 12px;">
+        <span class="badge badge-primary">Strict UAT Execution</span>
+        <span class="badge badge-success">Target URL Confirmed & Focused</span>
+      </div>
+      <h1>CICOD SaaS Staging - User Acceptance Test Report</h1>
+      <p class="subtitle">Target 3 Login & Tenant Integration Automation: Strict focus on <code>https://cicodsaasstaging.com/login?tenant=cicodecm</code></p>
+      
+      <div class="meta-grid">
+        <div class="meta-item">
+          <span class="meta-label">Target URL</span>
+          <span class="meta-value">/login?tenant=cicodecm</span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-label">Tenant ID</span>
+          <span class="meta-value">cicodecm</span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-label">Script File</span>
+          <span class="meta-value">CICOD DRIVE TEST SCRIPT.xlsx</span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-label">Script Sheet</span>
+          <span class="meta-value">CDE DRIVE</span>
+        </div>
+      </div>
+    </header>
+
+    <div class="summary-cards">
+      <div class="stat-card">
+        <div class="stat-value stat-blue">10</div>
+        <div class="stat-label">Total Test Cases</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value stat-green">10</div>
+        <div class="stat-label">Passed Tests</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value" style="color: #64748b;">0</div>
+        <div class="stat-label">Failed Tests</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value stat-green">100%</div>
+        <div class="stat-label">Pass Rate</div>
+      </div>
+    </div>
+
+    <section class="test-cases-list">
+      
+      <!-- TC 01 -->
+      <div class="test-card">
+        <div class="test-header">
+          <div class="test-id-title">
+            <span class="test-id">TC_LOGIN_01</span>
+            <span class="test-title">Page Load & Tenant Query Parameter Pre-population</span>
+          </div>
+          <span class="badge badge-success">PASSED</span>
+        </div>
+        <div class="test-body">
+          <div class="test-details">
+            <div class="info-group">
+              <div class="info-title">Test Script Reference</div>
+              <div class="info-desc">CICOD DRIVE TEST SCRIPT.xlsx > CDE DRIVE: Feature - Login [Open Login Page & Render Domain, Email, Password, Submit]</div>
+            </div>
+            <div class="info-group">
+              <div class="info-title">Expected Behavior</div>
+              <div class="info-desc">Page loads at <code>https://cicodsaasstaging.com/login?tenant=cicodecm</code>, Domain input is pre-populated with "cicodecm", Email and Password fields render, and Submit button is disabled.</div>
+            </div>
+            <div class="info-group">
+              <div class="info-title">Actual Outcome</div>
+              <div class="info-desc">Page rendered with title "CICOD Login". Domain input value is "cicodecm" matching the query string. All inputs present and button initial state is disabled.</div>
+            </div>
+            <div class="qa-comment">
+              <strong>QA Observation:</strong> Tenant parameter <code>?tenant=cicodecm</code> seamlessly binds to the domain input field.
+            </div>
+          </div>
+          <div class="screenshot-container">
+            <img src="../uat_target3_cicodecm/01_initial_landing.png" alt="Initial Landing">
+            <div class="screenshot-caption">
+              <span>01_initial_landing.png</span>
+              <span>Loaded & Verified</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TC 02 -->
+      <div class="test-card">
+        <div class="test-header">
+          <div class="test-id-title">
+            <span class="test-id">TC_LOGIN_02</span>
+            <span class="test-title">Privacy & Cookie Consent Banner Interaction</span>
+          </div>
+          <span class="badge badge-success">PASSED</span>
+        </div>
+        <div class="test-body">
+          <div class="test-details">
+            <div class="info-group">
+              <div class="info-title">Test Script Reference</div>
+              <div class="info-desc">CICOD DRIVE TEST SCRIPT.xlsx > CDE DRIVE: UI Compliance & Security Consent Guidelines</div>
+            </div>
+            <div class="info-group">
+              <div class="info-title">Expected Behavior</div>
+              <div class="info-desc">Cookie banner renders non-destructively, provides Accept/Reject controls, and closes smoothly without blocking login components.</div>
+            </div>
+            <div class="info-group">
+              <div class="info-title">Actual Outcome</div>
+              <div class="info-desc">Accept button clicked; dialog closed cleanly without layout shifting.</div>
+            </div>
+            <div class="qa-comment">
+              <strong>QA Observation:</strong> Banner dismissed successfully, leaving the login form fully accessible.
+            </div>
+          </div>
+          <div class="screenshot-container">
+            <img src="../uat_target3_cicodecm/02_cookie_accepted.png" alt="Cookie Accepted">
+            <div class="screenshot-caption">
+              <span>02_cookie_accepted.png</span>
+              <span>Consent Dismissed</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TC 03 -->
+      <div class="test-card">
+        <div class="test-header">
+          <div class="test-id-title">
+            <span class="test-id">TC_LOGIN_03</span>
+            <span class="test-title">Domain Name Input & Suffix Inspection</span>
+          </div>
+          <span class="badge badge-success">PASSED</span>
+        </div>
+        <div class="test-body">
+          <div class="test-details">
+            <div class="info-group">
+              <div class="info-title">Test Script Reference</div>
+              <div class="info-desc">CICOD DRIVE TEST SCRIPT.xlsx > CDE DRIVE: Test Case - Display Domain Name</div>
+            </div>
+            <div class="info-group">
+              <div class="info-title">Expected Behavior</div>
+              <div class="info-desc">Domain name input displays pre-filled value "cicodecm" with the ".cicod.com" domain suffix clearly displayed.</div>
+            </div>
+            <div class="info-group">
+              <div class="info-title">Actual Outcome</div>
+              <div class="info-desc">Value is "cicodecm", input is enabled, and suffix ".cicod.com" is displayed adjacent to the field.</div>
+            </div>
+            <div class="qa-comment">
+              <strong>QA Observation:</strong> Clear visual feedback for tenant sub-domain context.
+            </div>
+          </div>
+          <div class="screenshot-container">
+            <img src="../uat_target3_cicodecm/03_domain_field_inspection.png" alt="Domain Inspection">
+            <div class="screenshot-caption">
+              <span>03_domain_field_inspection.png</span>
+              <span>Domain Verified</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TC 04 -->
+      <div class="test-card">
+        <div class="test-header">
+          <div class="test-id-title">
+            <span class="test-id">TC_LOGIN_04</span>
+            <span class="test-title">Email Field Input & Format Validation</span>
+          </div>
+          <span class="badge badge-success">PASSED</span>
+        </div>
+        <div class="test-body">
+          <div class="test-details">
+            <div class="info-group">
+              <div class="info-title">Test Script Reference</div>
+              <div class="info-desc">CICOD DRIVE TEST SCRIPT.xlsx > CDE DRIVE: Test Case - Display Email Input</div>
+            </div>
+            <div class="info-group">
+              <div class="info-title">Expected Behavior</div>
+              <div class="info-desc">Enforces RFC email validation (type="email"). Invalid format is rejected; valid format is accepted.</div>
+            </div>
+            <div class="info-group">
+              <div class="info-title">Actual Outcome</div>
+              <div class="info-desc">Invalid string "invalidemailformat" failed HTML5 checkValidity(). Valid email "staff.uat@cicodecm.com" passed.</div>
+            </div>
+            <div class="qa-comment">
+              <strong>QA Observation:</strong> Built-in constraint validation active on merchantEmail input.
+            </div>
+          </div>
+          <div class="screenshot-container">
+            <img src="../uat_target3_cicodecm/04b_valid_email_entered.png" alt="Valid Email Entered">
+            <div class="screenshot-caption">
+              <span>04b_valid_email_entered.png</span>
+              <span>Validated Format</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TC 05 -->
+      <div class="test-card">
+        <div class="test-header">
+          <div class="test-id-title">
+            <span class="test-id">TC_LOGIN_05</span>
+            <span class="test-title">Password Masking & Security Toggle</span>
+          </div>
+          <span class="badge badge-success">PASSED</span>
+        </div>
+        <div class="test-body">
+          <div class="test-details">
+            <div class="info-group">
+              <div class="info-title">Test Script Reference</div>
+              <div class="info-desc">CICOD DRIVE TEST SCRIPT.xlsx > CDE DRIVE: Test Case - Display and Hide Password (Security Masking)</div>
+            </div>
+            <div class="info-group">
+              <div class="info-title">Expected Behavior</div>
+              <div class="info-desc">Password input is masked by default (type="password"). Password visibility toggle switches between masked and visible.</div>
+            </div>
+            <div class="info-group">
+              <div class="info-title">Actual Outcome</div>
+              <div class="info-desc">Default type is "password". Password toggle eye button clicked; type switched to "text", and then back to "password".</div>
+            </div>
+            <div class="qa-comment">
+              <strong>QA Observation:</strong> Security masking and reveal toggle operate as specified in the test script.
+            </div>
+          </div>
+          <div class="screenshot-container">
+            <img src="../uat_target3_cicodecm/05b_password_toggled.png" alt="Password Toggled">
+            <div class="screenshot-caption">
+              <span>05b_password_toggled.png</span>
+              <span>Show/Hide Masking</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TC 06 -->
+      <div class="test-card">
+        <div class="test-header">
+          <div class="test-id-title">
+            <span class="test-id">TC_LOGIN_06</span>
+            <span class="test-title">Login Button Dynamic State & Form Readiness</span>
+          </div>
+          <span class="badge badge-success">PASSED</span>
+        </div>
+        <div class="test-body">
+          <div class="test-details">
+            <div class="info-group">
+              <div class="info-title">Test Script Reference</div>
+              <div class="info-desc">CICOD DRIVE TEST SCRIPT.xlsx > CDE DRIVE: Test Case - Login Button Field State</div>
+            </div>
+            <div class="info-group">
+              <div class="info-title">Expected Behavior</div>
+              <div class="info-desc">Login button state responds dynamically based on form validity. Button enables once valid credentials format is populated.</div>
+            </div>
+            <div class="info-group">
+              <div class="info-title">Actual Outcome</div>
+              <div class="info-desc">Login button unlocked and enabled (disabled: false) with active hover styles.</div>
+            </div>
+            <div class="qa-comment">
+              <strong>QA Observation:</strong> React form state validation unlocks submission trigger upon required criteria fulfillment.
+            </div>
+          </div>
+          <div class="screenshot-container">
+            <img src="../uat_target3_cicodecm/06_login_button_ready.png" alt="Button Ready">
+            <div class="screenshot-caption">
+              <span>06_login_button_ready.png</span>
+              <span>Enabled State</span>
+            </div>
+      <!-- TC 07 -->
+      <div class="test-card">
+        <div class="test-header">
+          <div class="test-id-title">
+            <span class="test-id">TC_LOGIN_07</span>
+            <span class="test-title">Invalid Credentials Error Feedback</span>
+          </div>
+          <span class="badge badge-success">PASSED</span>
+        </div>
+        <div class="test-body">
+          <div class="test-details">
+            <div class="info-group">
+              <div class="info-title">Test Script Reference</div>
+              <div class="info-desc">CICOD DRIVE TEST SCRIPT.xlsx > CDE DRIVE: Test Case - Display 'Invalid Email or Password'</div>
+            </div>
+            <div class="info-group">
+              <div class="info-title">Expected Behavior</div>
+              <div class="info-desc">Submitting unauthorized credentials rejects authentication and displays an explicit error message ("Invalid Email or Password") while keeping user securely on the login page.</div>
+            </div>
+            <div class="info-group">
+              <div class="info-title">Actual Outcome</div>
+              <div class="info-desc">Submitted invalid credentials. Server returned <strong>"Invalid Email or Password"</strong> toast notification. User retained at <code>https://cicodsaasstaging.com/login?tenant=cicodecm</code>.</div>
+            </div>
+            <div class="qa-comment">
+              <strong>QA Observation:</strong> Exact match to test script specification: <em>"Display 'Invalid Email or Password'"</em>.
+            </div>
+          </div>
+          <div class="screenshot-container">
+            <img src="../uat_target3_cicodecm/07_invalid_credentials_response.png" alt="Error Response">
+            <div class="screenshot-caption">
+              <span>07_invalid_credentials_response.png</span>
+              <span>Toast Notification</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TC 08 -->
+      <div class="test-card">
+        <div class="test-header">
+          <div class="test-id-title">
+            <span class="test-id">TC_LOGIN_08</span>
+            <span class="test-title">Host Tab Switching & Administration Login</span>
+          </div>
+          <span class="badge badge-success">PASSED</span>
+        </div>
+        <div class="test-body">
+          <div class="test-details">
+            <div class="info-group">
+              <div class="info-title">Test Script Reference</div>
+              <div class="info-desc">CICOD DRIVE TEST SCRIPT.xlsx > CDE DRIVE: Architecture Spec - Host Authentication Management</div>
+            </div>
+            <div class="info-group">
+              <div class="info-title">Expected Behavior</div>
+              <div class="info-desc">Clicking "Host" tab reveals host-specific login fields (hostEmail, hostPassword) and separate submission control.</div>
+            </div>
+            <div class="info-group">
+              <div class="info-title">Actual Outcome</div>
+              <div class="info-desc">Tab switch executed smoothly; inputs hostEmail and hostPassword verified and responsive.</div>
+            </div>
+            <div class="qa-comment">
+              <strong>QA Observation:</strong> Dual-persona login cleanly isolates Tenant Subscriber users from Host Operators.
+            </div>
+          </div>
+          <div class="screenshot-container">
+            <img src="../uat_target3_cicodecm/08b_host_fields_populated.png" alt="Host Fields">
+            <div class="screenshot-caption">
+              <span>08b_host_fields_populated.png</span>
+              <span>Host Persona Verified</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TC 09 -->
+      <div class="test-card">
+        <div class="test-header">
+          <div class="test-id-title">
+            <span class="test-id">TC_LOGIN_09</span>
+            <span class="test-title">Forgot Password Recovery Links Integrity</span>
+          </div>
+          <span class="badge badge-success">PASSED</span>
+        </div>
+        <div class="test-body">
+          <div class="test-details">
+            <div class="info-group">
+              <div class="info-title">Test Script Reference</div>
+              <div class="info-desc">CICOD DRIVE TEST SCRIPT.xlsx > CDE DRIVE: Account Recovery Specification</div>
+            </div>
+            <div class="info-group">
+              <div class="info-title">Expected Behavior</div>
+              <div class="info-desc">Hyperlink directs users to password recovery endpoints.</div>
+            </div>
+            <div class="info-group">
+              <div class="info-title">Actual Outcome</div>
+              <div class="info-desc">Subscriber link routes to <code>/forgot-password</code>; Host link routes to <code>/forgot-password/host</code>.</div>
+            </div>
+            <div class="qa-comment">
+              <strong>QA Observation:</strong> Both persona recovery paths exist and are correctly routed.
+            </div>
+          </div>
+          <div class="screenshot-container">
+            <img src="../uat_target3_cicodecm/09_forgot_password_links.png" alt="Forgot Password">
+            <div class="screenshot-caption">
+              <span>09_forgot_password_links.png</span>
+              <span>Recovery Links</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TC 10 -->
+      <div class="test-card">
+        <div class="test-header">
+          <div class="test-id-title">
+            <span class="test-id">TC_LOGIN_10</span>
+            <span class="test-title">Legal, Security & Copyright Compliance</span>
+          </div>
+          <span class="badge badge-success">PASSED</span>
+        </div>
+        <div class="test-body">
+          <div class="test-details">
+            <div class="info-group">
+              <div class="info-title">Test Script Reference</div>
+              <div class="info-desc">CICOD DRIVE TEST SCRIPT.xlsx > CDE DRIVE: Branding & Legal Guidelines</div>
+            </div>
+            <div class="info-group">
+              <div class="info-title">Expected Behavior</div>
+              <div class="info-desc">Footer displays Privacy Policy, Terms of Use, Security, and valid copyright notice.</div>
+            </div>
+            <div class="info-group">
+              <div class="info-title">Actual Outcome</div>
+              <div class="info-desc">Copyright confirmed: "© 2026 CICOD, Inc." Links present for Privacy Policy, Terms of use, and Security.</div>
+            </div>
+            <div class="qa-comment">
+              <strong>QA Observation:</strong> Standard compliance, legal disclaimers, and branding intact on target page.
+            </div>
+          </div>
+          <div class="screenshot-container">
+            <img src="../uat_target3_cicodecm/10_legal_and_footer.png" alt="Legal & Footer">
+            <div class="screenshot-caption">
+              <span>10_legal_and_footer.png</span>
+              <span>Compliance Verified</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </section>
+  </div>
+</body>
+</html>

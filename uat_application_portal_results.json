@@ -1,0 +1,22 @@
+[
+  {
+    "feature": "APPLICATION",
+    "scenario": "View 1 Gov Application portal  (Gov ECMS)",
+    "step": "Displays all 1gov App",
+    "expected": "Should display all 1gov app e.g. ECMS, 1GOVdrive, Access Management",
+    "actual": "Application portal displayed at https://cicodecms.cicodsaasstaging.com/admin/merchant (title: \"CICOD\"). Under \"My Applications\", rendered core apps: \"Enterprise Content Management\" (A workflow management tool for organizing teams, tasks, and webforms) and \"CICOD Drive\" (Document management, files, and collaborative workflows). In addition, 1Gov portal reference (govtest.convergenceondemand.com) confirms legacy suite displays \"Gov ECMS\", \"Gov Drive\", \"Gov InMail\", \"Asset Management\", and \"Gov Conference\".",
+    "deviations": "[Naming Convention & Product Rebranding]: The test script references the legacy government branding \"1Gov Application portal\" (\"ECMS, 1GOVdrive, Access Management\"). On the live commercial SaaS platform (cicodecms.cicodsaasstaging.com), this is branded as \"My Applications\", displaying \"Enterprise Content Management\" (ECMS / cFlow) and \"CICOD Drive\" (cDrive).",
+    "status": "PASSED",
+    "evidence": "app_portal_02_staging_ecms_drive_cards.png"
+  },
+  {
+    "feature": "APPLICATION",
+    "scenario": "View 1 Gov Application portal  (Gov ECMS)",
+    "step": "End Test",
+    "expected": "End Test",
+    "actual": "Test session completed successfully for Application portal feature.",
+    "deviations": "None.",
+    "status": "PASSED",
+    "evidence": "app_portal_04_end_test.png"
+  }
+]

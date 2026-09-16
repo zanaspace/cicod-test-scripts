@@ -1,0 +1,50 @@
+{
+  "stages": [
+    {
+      "stage": "fill",
+      "note": {
+        "email": {
+          "found": true,
+          "value": "uat.realflow2.1789466461929@crowninteractive.com"
+        },
+        "phoneDigits": {
+          "found": true,
+          "value": "8012345678"
+        },
+        "tenant": {
+          "found": true,
+          "value": "uatrealflow1789466461946"
+        }
+      },
+      "testEmail": "uat.realflow2.1789466461929@crowninteractive.com"
+    },
+    {
+      "stage": "plan_click",
+      "note": {
+        "planClick": {
+          "found": true
+        },
+        "radiosNow": []
+      }
+    },
+    {
+      "stage": "submit",
+      "submitClick": {
+        "found": true,
+        "text": "Start Free Trial",
+        "disabled": false
+      },
+      "afterSubmit": {
+        "url": "https://cicodsaasstaging.com/pricing",
+        "title": "CICOD Pricing | Click on the application you'd like to explore",
+        "bodyExcerpt": "Solutions \nWhy CICOD\nPricing\nResources \nAffiliates\nService Provider\nContact Us\nLogin\nStart free trial\n\nSolutions\n\nPRODUCTS\n\nWorkflow Manager\nBoost productivity, reduce errors and get your team focused\nCustomer Order Management\nManage the lifecycle of their goods from order to delivery\nInventory Management System\nManage and track inventory real time, all in one place\nUnified Collections Gateway\nReal-time aggregation of revenue collections for different payment channels\nCICOD Merchant\nConnect with resellers, find suppliers and trade together.\n\nBY BUSINESS NEED\n\nInventory and stock management\nOpe"
+      },
+      "newCalls": []
+    },
+    {
+      "stage": "error_check",
+      "errUi": null
+    }
+  ],
+  "netLog": []
+}

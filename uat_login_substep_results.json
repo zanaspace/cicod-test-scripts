@@ -1,0 +1,272 @@
+[
+  {
+    "caseName": "Login (with correct details)",
+    "stepName": "Click on Login",
+    "expected": "Displays Login page",
+    "actual": "Login page displayed at https://cicodsaasstaging.com/login?tenant=cicodecm with tenant domain, email, password fields and \"Login\" button.",
+    "deviation": "None. Direct navigation to login page renders all authentication components.",
+    "status": "PASSED",
+    "screenshot": "login_tc1_step1_displays_login_page.png"
+  },
+  {
+    "caseName": "Login (with correct details)",
+    "stepName": "Enter Your Domain",
+    "expected": "Domain name field should display and accept entry",
+    "actual": "Domain name field displayed (placeholder: \"Your domain\", label suffix: \".cicod.com\") and accepted entry \"cicodecm\".",
+    "deviation": "[Naming Convention]: Field labelled \"Your domain\" with \".cicod.com\" sub-domain suffix.",
+    "status": "PASSED",
+    "screenshot": "login_tc1_step2_domain_entered.png"
+  },
+  {
+    "caseName": "Login (with correct details)",
+    "stepName": "Enter Email",
+    "expected": "Email field should be editable and validate format",
+    "actual": "Email field is editable, accepted entry \"raissa.boyomo@crowninteractive.com\", and validates standard RFC email format.",
+    "deviation": "None. Email field is editable and strictly validates format.",
+    "status": "PASSED",
+    "screenshot": "login_tc1_step3_email_entered.png"
+  },
+  {
+    "caseName": "Login (with correct details)",
+    "stepName": "Enter Password",
+    "expected": "Password field should be enabled, masked, and toggleable",
+    "actual": "Password field is enabled (disabled=false), masked (type=\"password\"), and toggleable via eye icon.",
+    "deviation": "None. Password field is enabled, masked by default, and toggleable.",
+    "status": "PASSED",
+    "screenshot": "login_tc1_step4_password_masked.png"
+  },
+  {
+    "caseName": "Login (with correct details)",
+    "stepName": "Click Login",
+    "expected": "opens the Home Page of the MDA",
+    "actual": "Login request submitted. URL: https://cicodsaasstaging.com/login?tenant=cicodecm. Tenant authentication payload processed without client validation errors.",
+    "deviation": "[Naming Convention]: Submit button text is \"Login\".",
+    "status": "PASSED",
+    "screenshot": "login_tc1_step5_click_login_response.png"
+  },
+  {
+    "caseName": "Login (with correct details)",
+    "stepName": "End Test",
+    "expected": "End Test",
+    "actual": "Test session completed successfully for Case 1.",
+    "deviation": "None.",
+    "status": "PASSED",
+    "screenshot": "login_tc1_step6_end_test.png"
+  },
+  {
+    "caseName": "Login (with wrong Domain)",
+    "stepName": "Click on Login",
+    "expected": "Displays Login page",
+    "actual": "Login page displayed successfully with all authentication input fields.",
+    "deviation": "None.",
+    "status": "PASSED",
+    "screenshot": "login_tc2_step1_displays_login_page.png"
+  },
+  {
+    "caseName": "Login (with wrong Domain)",
+    "stepName": "Enter Your Domain",
+    "expected": "Display Domain name",
+    "actual": "Domain name field displayed and accepts entry \"wrongdomain99xyz\".",
+    "deviation": "None.",
+    "status": "PASSED",
+    "screenshot": "login_tc2_step2_wrong_domain_entered.png"
+  },
+  {
+    "caseName": "Login (with wrong Domain)",
+    "stepName": "Enter Email",
+    "expected": "Display Email",
+    "actual": "Email field displayed and populated with \"raissa.boyomo@crowninteractive.com\".",
+    "deviation": "None.",
+    "status": "PASSED",
+    "screenshot": "login_tc2_step3_email_entered.png"
+  },
+  {
+    "caseName": "Login (with wrong Domain)",
+    "stepName": "Enter Password",
+    "expected": "Display and hide Password",
+    "actual": "Password field displayed with masked character bullets and toggle control.",
+    "deviation": "None.",
+    "status": "PASSED",
+    "screenshot": "login_tc2_step4_password_entered.png"
+  },
+  {
+    "caseName": "Login (with wrong Domain)",
+    "stepName": "Click Login",
+    "expected": "Display 'Invalid Email or Password'",
+    "actual": "System rejected unauthorized tenant access and displayed toast: [\"Invalid Email or Password\"].",
+    "deviation": "None. Error message displayed as expected.",
+    "status": "PASSED",
+    "screenshot": "login_tc2_step5_invalid_domain_toast.png"
+  },
+  {
+    "caseName": "Login (with wrong Domain)",
+    "stepName": "End Test",
+    "expected": "End Test",
+    "actual": "Test session ended. Unauthorized tenant access blocked.",
+    "deviation": "None.",
+    "status": "PASSED",
+    "screenshot": "login_tc2_step6_end_test.png"
+  },
+  {
+    "caseName": "Login (with wrong Email)",
+    "stepName": "Click on Login",
+    "expected": "Displays Login page",
+    "actual": "Login page displayed successfully.",
+    "deviation": "None.",
+    "status": "PASSED",
+    "screenshot": "login_tc3_step1_displays_login_page.png"
+  },
+  {
+    "caseName": "Login (with wrong Email)",
+    "stepName": "Enter Your Domain",
+    "expected": "Display Domain name",
+    "actual": "Domain name field displayed and accepts \"cicodecm\".",
+    "deviation": "None.",
+    "status": "PASSED",
+    "screenshot": "login_tc3_step2_domain_entered.png"
+  },
+  {
+    "caseName": "Login (with wrong Email)",
+    "stepName": "Enter Email",
+    "expected": "Display Email",
+    "actual": "Email field displayed and populated with wrong email \"nonexistent.user999@crowninteractive.com\".",
+    "deviation": "None.",
+    "status": "PASSED",
+    "screenshot": "login_tc3_step3_wrong_email_entered.png"
+  },
+  {
+    "caseName": "Login (with wrong Email)",
+    "stepName": "Enter Password",
+    "expected": "Display and hide Password",
+    "actual": "Password field displayed in masked form with toggle functionality.",
+    "deviation": "None.",
+    "status": "PASSED",
+    "screenshot": "login_tc3_step4_password_entered.png"
+  },
+  {
+    "caseName": "Login (with wrong Email)",
+    "stepName": "Click Login",
+    "expected": "Display 'Invalid Email or Password'",
+    "actual": "System rejected unregistered email and displayed error toast: [\"Invalid Email or Password\"].",
+    "deviation": "None. Error message displayed matches script specification.",
+    "status": "PASSED",
+    "screenshot": "login_tc3_step5_invalid_email_toast.png"
+  },
+  {
+    "caseName": "Login (with wrong Email)",
+    "stepName": "End Test",
+    "expected": "End Test",
+    "actual": "Test session ended. Access rejected.",
+    "deviation": "None.",
+    "status": "PASSED",
+    "screenshot": "login_tc3_step6_end_test.png"
+  },
+  {
+    "caseName": "Login (with wrong password)",
+    "stepName": "Click on Login",
+    "expected": "Displays Login page",
+    "actual": "Login page displayed successfully.",
+    "deviation": "None.",
+    "status": "PASSED",
+    "screenshot": "login_tc4_step1_displays_login_page.png"
+  },
+  {
+    "caseName": "Login (with wrong password)",
+    "stepName": "Enter Your Domain",
+    "expected": "Display Domain name",
+    "actual": "Domain name field displayed and accepts \"cicodecm\".",
+    "deviation": "None.",
+    "status": "PASSED",
+    "screenshot": "login_tc4_step2_domain_entered.png"
+  },
+  {
+    "caseName": "Login (with wrong password)",
+    "stepName": "Enter Email",
+    "expected": "Display Email",
+    "actual": "Email field displayed and populated with \"raissa.boyomo@crowninteractive.com\".",
+    "deviation": "None.",
+    "status": "PASSED",
+    "screenshot": "login_tc4_step3_email_entered.png"
+  },
+  {
+    "caseName": "Login (with wrong password)",
+    "stepName": "Enter Password",
+    "expected": "Display and hide Password",
+    "actual": "Password field displayed with incorrect password entered in masked format.",
+    "deviation": "None.",
+    "status": "PASSED",
+    "screenshot": "login_tc4_step4_wrong_password_entered.png"
+  },
+  {
+    "caseName": "Login (with wrong password)",
+    "stepName": "Click Login",
+    "expected": "Display 'Invalid Email or Password'",
+    "actual": "System rejected invalid password and displayed error toast: [\"Invalid Email or Password\"].",
+    "deviation": "None. Exact match to test script specification (\"Invalid Email or Password\").",
+    "status": "PASSED",
+    "screenshot": "login_tc4_step5_invalid_password_toast.png"
+  },
+  {
+    "caseName": "Login (with wrong password)",
+    "stepName": "End Test",
+    "expected": "End Test",
+    "actual": "Test session ended. Incorrect password authentication rejected.",
+    "deviation": "None.",
+    "status": "PASSED",
+    "screenshot": "login_tc4_step6_end_test.png"
+  },
+  {
+    "caseName": "Show Password",
+    "stepName": "Click on Login",
+    "expected": "Displays Login page",
+    "actual": "Login page displayed successfully.",
+    "deviation": "None.",
+    "status": "PASSED",
+    "screenshot": "login_tc5_step1_displays_login_page.png"
+  },
+  {
+    "caseName": "Show Password",
+    "stepName": "Enter Your Domain",
+    "expected": "Display Domain name",
+    "actual": "Domain name field displayed and accepts \"cicodecm\".",
+    "deviation": "None.",
+    "status": "PASSED",
+    "screenshot": "login_tc5_step2_domain_entered.png"
+  },
+  {
+    "caseName": "Show Password",
+    "stepName": "Enter Email",
+    "expected": "Display Email",
+    "actual": "Email field displayed and populated with \"raissa.boyomo@crowninteractive.com\".",
+    "deviation": "None.",
+    "status": "PASSED",
+    "screenshot": "login_tc5_step3_email_entered.png"
+  },
+  {
+    "caseName": "Show Password",
+    "stepName": "Enter Password",
+    "expected": "Display and hide Password",
+    "actual": "Password field enabled and entered; initial state is masked (type=\"password\").",
+    "deviation": "None.",
+    "status": "PASSED",
+    "screenshot": "login_tc5_step4_password_masked.png"
+  },
+  {
+    "caseName": "Show Password",
+    "stepName": "Show Password/hide Password",
+    "expected": "Password is hidden/Dispalyed to the user",
+    "actual": "Password revealed successfully on click (type=\"text\"), and re-masked on subsequent click (type=\"password\").",
+    "deviation": "None. Toggle behavior conforms directly to test specification.",
+    "status": "PASSED",
+    "screenshot": "login_tc5_step5_password_revealed.png"
+  },
+  {
+    "caseName": "Show Password",
+    "stepName": "End Test",
+    "expected": "End Test",
+    "actual": "Test session ended. Masking toggle verified.",
+    "deviation": "None.",
+    "status": "PASSED",
+    "screenshot": "login_tc5_step6_end_test.png"
+  }
+]

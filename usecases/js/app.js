@@ -16,6 +16,17 @@ window.addEventListener('DOMContentLoaded', () => {
     savedTheme = localStorage.getItem('cicod_theme') || 'dark';
   } catch (e) {}
   setTheme(savedTheme, false);
+
+  try {
+    if (localStorage.getItem('usecases_sidebar_collapsed') === 'true') {
+      const sidebar = document.getElementById('appSidebar');
+      const toggleBtn = document.getElementById('btnUsecasesSidebarToggle');
+      const toggleIcon = document.getElementById('usecasesSidebarToggleIcon');
+      if (sidebar) sidebar.classList.add('collapsed');
+      if (toggleBtn) toggleBtn.classList.add('collapsed');
+      if (toggleIcon) toggleIcon.innerText = '▶';
+    }
+  } catch (e) {}
 });
 
 // Listen for cross-frame messages from master portal
@@ -221,3 +232,33 @@ function showToast(msg) {
     setTimeout(() => t.remove(), 300);
   }, 3000);
 }
+
+function toggleSidebar() {
+  const sidebar = document.getElementById('appSidebar');
+  const toggleBtn = document.getElementById('btnUsecasesSidebarToggle');
+  const toggleIcon = document.getElementById('usecasesSidebarToggleIcon');
+  if (!sidebar) return;
+
+  const isCollapsed = sidebar.classList.toggle('collapsed');
+  if (toggleBtn) toggleBtn.classList.toggle('collapsed', isCollapsed);
+  if (toggleIcon) toggleIcon.innerText = isCollapsed ? '▶' : '☰';
+
+  try {
+    localStorage.setItem('usecases_sidebar_collapsed', isCollapsed ? 'true' : 'false');
+  } catch (e) {}
+
+  showToast(isCollapsed ? 'Sidebar collapsed to icon rail (Ctrl+B to expand)' : 'Sidebar expanded');
+}
+
+function toggleNavGroup(groupEl) {
+  if (!groupEl) return;
+  groupEl.classList.toggle('collapsed');
+}
+
+// Global keyboard shortcut: Ctrl+B or Cmd+B to toggle sidebar
+window.addEventListener('keydown', (e) => {
+  if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'b') {
+    e.preventDefault();
+    toggleSidebar();
+  }
+});

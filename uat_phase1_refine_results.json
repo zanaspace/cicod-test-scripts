@@ -1,0 +1,45 @@
+[
+  {
+    "label": "wrong_domain",
+    "loginCalls": [],
+    "errUi": null,
+    "pageInfo": {
+      "url": "https://cicodsaasstaging.com/login?tenant=cicodecm",
+      "title": "CICOD Login"
+    }
+  },
+  {
+    "label": "wrong_email",
+    "loginCalls": [],
+    "errUi": null,
+    "pageInfo": {
+      "url": "https://cicodsaasstaging.com/login?tenant=cicodecm",
+      "title": "CICOD Login"
+    }
+  },
+  {
+    "label": "wrong_password",
+    "loginCalls": [
+      {
+        "url": "https://api.cicodsaasstaging.com/sso/auth/login",
+        "status": 400,
+        "body": "{\"status\":\"INVALID_USERNAME_OR_PASSWORD\",\"data\":null,\"page\":null,\"twoFactorAuth\":null,\"token\":null,\"expiry\":null,\"user\":null}"
+      }
+    ],
+    "errUi": {
+      "selector": ".Toastify__toast",
+      "text": "Invalid Email or Password\n✖"
+    },
+    "pageInfo": {
+      "url": "https://cicodsaasstaging.com/login?tenant=cicodecm",
+      "title": "CICOD Login"
+    }
+  },
+  {
+    "label": "correct_login_redirect_check",
+    "finalUrl": "https://cicodsaasstaging.com/login?tenant=cicodecm",
+    "finalTitle": "CICOD Login",
+    "bodyExists": true,
+    "loginApiResult": null
+  }
+]

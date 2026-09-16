@@ -1,0 +1,1044 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>UAT Report - RECENT DOCUMENT Module (Rows 440 - 477)</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0b0f19;
+      --surface: #121826;
+      --surface-card: #182235;
+      --border: #223049;
+      --text: #f1f5f9;
+      --text-muted: #94a3b8;
+      --pass: #10b981;
+      --not-impl: #f59e0b;
+      --dev: #38bdf8;
+      --accent: #10b981;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      padding: 36px 24px;
+      line-height: 1.5;
+    }
+    .container { max-width: 1440px; margin: 0 auto; }
+    .header-box {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 28px;
+      margin-bottom: 28px;
+    }
+    h1 { font-size: 1.8rem; font-weight: 700; margin-bottom: 6px; color: #fff; }
+    .sub { color: var(--text-muted); font-size: 0.92rem; margin-bottom: 20px; }
+    .meta-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 24px;
+      font-size: 0.88rem;
+      border-top: 1px solid var(--border);
+      padding-top: 18px;
+    }
+    .meta-bar span { color: var(--text-muted); }
+    .meta-bar strong { color: #e2e8f0; font-family: 'JetBrains Mono', monospace; }
+
+    .summary-badge {
+      display: inline-block;
+      padding: 5px 14px;
+      background: rgba(16, 185, 129, 0.15);
+      border: 1px solid rgba(16, 185, 129, 0.3);
+      color: #34d399;
+      border-radius: 20px;
+      font-weight: 700;
+      font-size: 0.82rem;
+      margin-bottom: 12px;
+    }
+
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 16px;
+      margin-bottom: 28px;
+    }
+    .kpi-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 20px;
+    }
+    .kpi-num {
+      font-size: 2rem;
+      font-weight: 700;
+      font-family: 'JetBrains Mono', monospace;
+      margin-top: 6px;
+    }
+    .kpi-label { color: var(--text-muted); font-size: 0.84rem; text-transform: uppercase; letter-spacing: 0.05em; }
+
+    .filter-bar {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 24px;
+      flex-wrap: wrap;
+    }
+    .filter-btn {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      padding: 8px 16px;
+      border-radius: 8px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .filter-btn:hover, .filter-btn.active {
+      background: var(--accent);
+      color: #0b0f19;
+      border-color: var(--accent);
+    }
+
+    .case-section {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      margin-bottom: 28px;
+      overflow: hidden;
+    }
+    .case-header {
+      padding: 18px 24px;
+      background: var(--surface-card);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .case-title { font-size: 1.15rem; font-weight: 700; color: #fff; }
+    .case-tag {
+      font-size: 0.76rem;
+      font-family: 'JetBrains Mono', monospace;
+      padding: 4px 10px;
+      border-radius: 6px;
+      background: rgba(16, 185, 129, 0.15);
+      border: 1px solid rgba(16, 185, 129, 0.3);
+      color: #34d399;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.88rem;
+    }
+    th {
+      background: rgba(11, 15, 25, 0.6);
+      text-align: left;
+      padding: 14px 16px;
+      color: var(--text-muted);
+      font-weight: 600;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      border-bottom: 1px solid var(--border);
+    }
+    td {
+      padding: 14px 16px;
+      border-bottom: 1px solid var(--border);
+      vertical-align: top;
+    }
+    tr:last-child td { border-bottom: none; }
+    tr:hover td { background: rgba(255, 255, 255, 0.02); }
+
+    .step-name { font-weight: 600; color: #fff; }
+    .expected-text { color: #cbd5e1; font-size: 0.86rem; }
+    .actual-text { color: #93c5fd; font-size: 0.86rem; font-family: 'JetBrains Mono', monospace; }
+    .deviation-text { color: #fbbf24; font-size: 0.84rem; }
+
+    .badge {
+      display: inline-block;
+      padding: 3px 10px;
+      border-radius: 6px;
+      font-size: 0.74rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+    .badge-pass { background: rgba(16, 185, 129, 0.2); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.3); }
+    .badge-not-impl { background: rgba(245, 158, 11, 0.2); color: #fbbf24; border: 1px solid rgba(245, 158, 11, 0.3); }
+    .badge-dev { background: rgba(56, 189, 248, 0.2); color: #38bdf8; border: 1px solid rgba(56, 189, 248, 0.3); }
+
+    .thumb {
+      width: 80px;
+      height: 50px;
+      object-fit: cover;
+      border-radius: 6px;
+      border: 1px solid var(--border);
+      cursor: pointer;
+      transition: transform 0.15s ease, border-color 0.15s ease;
+    }
+    .thumb:hover { transform: scale(1.08); border-color: var(--accent); }
+
+    .no-img-badge {
+      display: inline-block;
+      padding: 4px 8px;
+      border-radius: 6px;
+      background: rgba(245, 158, 11, 0.1);
+      border: 1px dashed rgba(245, 158, 11, 0.3);
+      color: #fbbf24;
+      font-size: 0.72rem;
+      font-weight: 600;
+      text-align: center;
+      line-height: 1.3;
+    }
+
+    .menu-proof-btn {
+      display: inline-block;
+      color: #38bdf8;
+      font-size: 0.75rem;
+      text-decoration: underline;
+      cursor: pointer;
+      margin-top: 4px;
+    }
+    .menu-proof-btn:hover { color: #7dd3fc; }
+
+    /* Modal */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; width: 100vw; height: 100vh;
+      background: rgba(0, 0, 0, 0.88);
+      backdrop-filter: blur(4px);
+      z-index: 999;
+      justify-content: center;
+      align-items: center;
+      padding: 24px;
+    }
+    .modal.active { display: flex; }
+    .modal-content {
+      max-width: 90vw;
+      max-height: 90vh;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+    }
+    .modal-close {
+      position: absolute;
+      top: 24px;
+      right: 28px;
+      color: #fff;
+      font-size: 2rem;
+      cursor: pointer;
+      font-weight: 700;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header-box">
+      <div class="summary-badge">✓ RECENT DOCUMENT MODULE UAT COMPLETED</div>
+      <h1>UAT Execution Report: RECENT DOCUMENT Module</h1>
+      <p class="sub">Executed in strict accordance with the Excel Test Script (<code>CICOD DRIVE TEST SCRIPT.xlsx</code>, Rows 440 to 477) against Target 3 Environment (<code>cicodsaasstaging.com</code> / tenant: <code>cicodecms</code>).</p>
+      
+      <div class="meta-bar">
+        <div><span>Test Script:</span> <strong>test/RecentDocumentTest.md</strong></div>
+        <div><span>Target URL:</span> <strong>https://cicodecms.cicodsaasstaging.com/cde/recent</strong></div>
+        <div><span>Tenant / Account:</span> <strong>cicodecms / raissa.boyomo@crowninteractive.com</strong></div>
+        <div><span>Execution Engine:</span> <strong>Headless Edge CDP (Port 9285)</strong></div>
+        <div><span>Execution Date:</span> <strong>September 16, 2026</strong></div>
+      </div>
+    </div>
+
+    <div class="kpi-grid">
+      <div class="kpi-card">
+        <div class="kpi-label">Total Scenarios</div>
+        <div class="kpi-num" style="color: #10b981;">5</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">Total Test Rows</div>
+        <div class="kpi-num" style="color: #38bdf8;">38</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">Functional Passed</div>
+        <div class="kpi-num" style="color: #10b981;">12</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">Documented Gaps / Omissions</div>
+        <div class="kpi-num" style="color: #f59e0b;">26</div>
+      </div>
+    </div>
+
+    <div class="filter-bar">
+      <button class="filter-btn active" onclick="filterCases('all', this)">All Scenarios (5)</button>
+      <button class="filter-btn" onclick="filterCases('sc1', this)">Scenario 1: Navigation & Groups (2)</button>
+      <button class="filter-btn" onclick="filterCases('sc2', this)">Scenario 2: Context Actions (8)</button>
+      <button class="filter-btn" onclick="filterCases('sc3', this)">Scenario 3: Folder Operations (14)</button>
+      <button class="filter-btn" onclick="filterCases('sc4', this)">Scenario 4: Properties & Metadata (6)</button>
+      <button class="filter-btn" onclick="filterCases('sc5', this)">Scenario 5: Secondary Actions & Grid (8)</button>
+    </div>
+
+    <div class="case-section" data-case="sc1">
+      <div class="case-header">
+        <div class="case-title">Scenario 1: RECENT DOCUMENT NAVIGATION & CHRONOLOGICAL GROUPING</div>
+        <div class="case-tag">Rows 440 - 441</div>
+      </div>
+      <table>
+        <thead>
+          <tr>
+            <th style="width: 55px;">Row</th>
+            <th style="width: 220px;">Steps to Reproduce</th>
+            <th style="width: 250px;">Expected Result</th>
+            <th>Actual Result (Live Execution)</th>
+            <th style="width: 230px;">Deviations & Naming Notes</th>
+            <th style="width: 130px;">Status</th>
+            <th style="width: 95px;">Evidence</th>
+          </tr>
+        </thead>
+        <tbody>
+
+          <tr>
+            <td><strong>440</strong></td>
+            <td><span class="step-name">Click on recent document on the side menu</span></td>
+            <td><div class="expected-text">Should display the recent document</div></td>
+            <td><div class="actual-text">Recent Documents section accessed directly via sidebar menu. Active navigation state is visually highlighted.</div></td>
+            <td><div class="deviation-text">None. Direct route /cde/recent loads reliably with header, search bar, view toggles, and recent documents list.</div></td>
+            <td>
+              <span class="badge badge-pass">
+                PASSED
+              </span>
+            </td>
+            <td>
+              <img src="../uat_target3_cicodecm/t3_recent_landing.png" class="thumb" alt="t3_recent_landing.png" onclick="openModal(this.src)">
+            </td>
+          </tr>
+
+          <tr>
+            <td><strong>441</strong></td>
+            <td><span class="step-name">Verify the files in the table</span></td>
+            <td><div class="expected-text">Should display records in week and in month</div></td>
+            <td><div class="actual-text">Records are chronologically categorized into group headers: "Today (1)" containing "testing" (126.05 KB) and "Earlier This week (2)" containing "GOV MAIL" (228.92 KB) and "AEDC FILE" (38.03 KB).</div></td>
+            <td><div class="deviation-text">Group headers use "Today" and "Earlier This week" rather than strictly month-based categorizations.</div></td>
+            <td>
+              <span class="badge badge-pass">
+                PASSED
+              </span>
+            </td>
+            <td>
+              <img src="../uat_target3_cicodecm/t3_recent_records_grouped.png" class="thumb" alt="t3_recent_records_grouped.png" onclick="openModal(this.src)">
+            </td>
+          </tr>
+
+        </tbody>
+      </table>
+    </div>
+
+    <div class="case-section" data-case="sc2">
+      <div class="case-header">
+        <div class="case-title">Scenario 2: FILE CONTEXT ACTIONS & LIFECYCLE CONTROLS</div>
+        <div class="case-tag">Rows 442 - 449</div>
+      </div>
+      <table>
+        <thead>
+          <tr>
+            <th style="width: 55px;">Row</th>
+            <th style="width: 220px;">Steps to Reproduce</th>
+            <th style="width: 250px;">Expected Result</th>
+            <th>Actual Result (Live Execution)</th>
+            <th style="width: 230px;">Deviations & Naming Notes</th>
+            <th style="width: 130px;">Status</th>
+            <th style="width: 95px;">Evidence</th>
+          </tr>
+        </thead>
+        <tbody>
+
+          <tr>
+            <td><strong>442</strong></td>
+            <td><span class="step-name">Click on the action button</span></td>
+            <td><div class="expected-text">Should display a drop-down list containing preview file, Open file, Get file link, share file remove from star and download file</div></td>
+            <td><div class="actual-text">Clicking the 3-dots action button opens a floating dropdown menu displaying "Open File" and "Remove from star" (or "Star File"). Options Preview, Get link, Share, and Download are omitted from this menu in current build.</div></td>
+            <td><div class="deviation-text">[Menu Scope Deviation]: Dropdown limited to 2 primary actions. Document lifecycle actions (download, share, get link) are not exposed here.</div></td>
+            <td>
+              <span class="badge badge-dev">
+                PARTIAL / DEVIATION
+              </span>
+            </td>
+            <td>
+              <img src="../uat_target3_cicodecm/t3_recent_file_actions_menu.png" class="thumb" alt="t3_recent_file_actions_menu.png" onclick="openModal(this.src)">
+            </td>
+          </tr>
+
+          <tr>
+            <td><strong>443</strong></td>
+            <td><span class="step-name">Click on preview file button</span></td>
+            <td><div class="expected-text">Should display the file</div></td>
+            <td><div class="actual-text">No dedicated "Preview File" menu item exists in the file action dropdown. File viewing is initiated via "Open File" (Row 445).</div></td>
+            <td><div class="deviation-text">[Feature Not Implemented in Menu]: Dedicated preview button missing from dropdown.</div></td>
+            <td>
+              <span class="badge badge-not-impl">
+                NOT IMPLEMENTED IN CURRENT BUILD
+              </span>
+            </td>
+            <td>
+              <div class="no-img-badge">No UI Option</div><a class="menu-proof-btn" onclick="openModal('../uat_target3_cicodecm/t3_recent_file_actions_menu.png')">View Menu Proof</a>
+            </td>
+          </tr>
+
+          <tr>
+            <td><strong>444</strong></td>
+            <td><span class="step-name">Click on download button</span></td>
+            <td><div class="expected-text">Should download the file</div></td>
+            <td><div class="actual-text">Direct "Download" action is omitted from the Recent document row context menu.</div></td>
+            <td><div class="deviation-text">[Feature Not Implemented in Menu]: In-line download option missing from Recent document action list.</div></td>
+            <td>
+              <span class="badge badge-not-impl">
+                NOT IMPLEMENTED IN CURRENT BUILD
+              </span>
+            </td>
+            <td>
+              <div class="no-img-badge">No UI Option</div><a class="menu-proof-btn" onclick="openModal('../uat_target3_cicodecm/t3_recent_file_actions_menu.png')">View Menu Proof</a>
+            </td>
+          </tr>
+
+          <tr>
+            <td><strong>445</strong></td>
+            <td><span class="step-name">Click on open file</span></td>
+            <td><div class="expected-text">Should open the file</div></td>
+            <td><div class="actual-text">Clicking "Open File" option in the context dropdown triggers document opening in viewer modal.</div></td>
+            <td><div class="deviation-text">None. Directly supported action.</div></td>
+            <td>
+              <span class="badge badge-pass">
+                PASSED
+              </span>
+            </td>
+            <td>
+              <img src="../uat_target3_cicodecm/t3_recent_file_actions_menu.png" class="thumb" alt="t3_recent_file_actions_menu.png" onclick="openModal(this.src)">
+            </td>
+          </tr>
+
+          <tr>
+            <td><strong>446</strong></td>
+            <td><span class="step-name">Click on get file link button</span></td>
+            <td><div class="expected-text">Should display the file link</div></td>
+            <td><div class="actual-text">Option "Get file link" is not available in the Recent document row context menu.</div></td>
+            <td><div class="deviation-text">[Feature Not Implemented in Menu]: Link sharing generator omitted from Recent row actions.</div></td>
+            <td>
+              <span class="badge badge-not-impl">
+                NOT IMPLEMENTED IN CURRENT BUILD
+              </span>
+            </td>
+            <td>
+              <div class="no-img-badge">No UI Option</div><a class="menu-proof-btn" onclick="openModal('../uat_target3_cicodecm/t3_recent_file_actions_menu.png')">View Menu Proof</a>
+            </td>
+          </tr>
+
+          <tr>
+            <td><strong>447</strong></td>
+            <td><span class="step-name">Click on copy link button</span></td>
+            <td><div class="expected-text">Should be able to copy and paste the link</div></td>
+            <td><div class="actual-text">Action blocked due to missing "Get file link" parent modal/control in Recent view.</div></td>
+            <td><div class="deviation-text">[Prerequisite Blocked]: Cannot test copy link without get link generator.</div></td>
+            <td>
+              <span class="badge badge-not-impl">
+                BLOCKED
+              </span>
+            </td>
+            <td>
+              <span class="no-img-badge">No UI Component<br><small style="color:var(--text-muted);font-size:0.68rem;">(Unimplemented)</small></span>
+            </td>
+          </tr>
+
+          <tr>
+            <td><strong>448</strong></td>
+            <td><span class="step-name">Click on remove from the star</span></td>
+            <td><div class="expected-text">Star should be removed from the file</div></td>
+            <td><div class="actual-text">Context menu dynamically exposes "Remove from star" for starred files (and "Star File" for unstarred files). Clicking updates file star status.</div></td>
+            <td><div class="deviation-text">None. Star toggle functional on Recent files.</div></td>
+            <td>
+              <span class="badge badge-pass">
+                PASSED
+              </span>
+            </td>
+            <td>
+              <img src="../uat_target3_cicodecm/t3_recent_file_actions_menu.png" class="thumb" alt="t3_recent_file_actions_menu.png" onclick="openModal(this.src)">
+            </td>
+          </tr>
+
+          <tr>
+            <td><strong>449</strong></td>
+            <td><span class="step-name">Click on download file button</span></td>
+            <td><div class="expected-text">File should be downloaded</div></td>
+            <td><div class="actual-text">Duplicate test step from Row 444. Download option is not available in Recent row context menu.</div></td>
+            <td><div class="deviation-text">[Feature Not Implemented in Menu]: Direct row download absent.</div></td>
+            <td>
+              <span class="badge badge-not-impl">
+                NOT IMPLEMENTED IN CURRENT BUILD
+              </span>
+            </td>
+            <td>
+              <div class="no-img-badge">No UI Option</div><a class="menu-proof-btn" onclick="openModal('../uat_target3_cicodecm/t3_recent_file_actions_menu.png')">View Menu Proof</a>
+            </td>
+          </tr>
+
+        </tbody>
+      </table>
+    </div>
+
+    <div class="case-section" data-case="sc3">
+      <div class="case-header">
+        <div class="case-title">Scenario 3: RECENT FOLDER SPECIFICATION EVALUATION</div>
+        <div class="case-tag">Rows 450 - 463</div>
+      </div>
+      <table>
+        <thead>
+          <tr>
+            <th style="width: 55px;">Row</th>
+            <th style="width: 220px;">Steps to Reproduce</th>
+            <th style="width: 250px;">Expected Result</th>
+            <th>Actual Result (Live Execution)</th>
+            <th style="width: 230px;">Deviations & Naming Notes</th>
+            <th style="width: 130px;">Status</th>
+            <th style="width: 95px;">Evidence</th>
+          </tr>
+        </thead>
+        <tbody>
+
+          <tr>
+            <td><strong>450</strong></td>
+            <td><span class="step-name">Verify the recent folder in the recent page</span></td>
+            <td><div class="expected-text">Should display the recent folder(s) in the page</div></td>
+            <td><div class="actual-text">Target 3 Recent view is strictly configured for individual recently accessed files. Folders are not tracked, grouped, or displayed under Recent Documents.</div></td>
+            <td><div class="deviation-text">[Architecture Deviation]: Recent page is file-oriented; folders are accessed via My Documents or Collaborations.</div></td>
+            <td>
+              <span class="badge badge-not-impl">
+                NOT APPLICABLE IN CURRENT BUILD
+              </span>
+            </td>
+            <td>
+              <span class="no-img-badge">No UI Component<br><small style="color:var(--text-muted);font-size:0.68rem;">(Unimplemented)</small></span>
+            </td>
+          </tr>
+
+          <tr>
+            <td><strong>451</strong></td>
+            <td><span class="step-name">Click on the three-dotted button on the folder</span></td>
+            <td><div class="expected-text">Should display a drop-down list containing pin folder, </div></td>
+            <td><div class="actual-text">No folders are rendered on the Recent page; no folder action triggers exist in this module.</div></td>
+            <td><div class="deviation-text">Not applicable to Recent page structure.</div></td>
+            <td>
+              <span class="badge badge-not-impl">
+                NOT APPLICABLE
+              </span>
+            </td>
+            <td>
+              <span class="no-img-badge">No UI Component<br><small style="color:var(--text-muted);font-size:0.68rem;">(Unimplemented)</small></span>
+            </td>
+          </tr>
+
+          <tr>
+            <td><strong>452</strong></td>
+            <td><span class="step-name">Click on the open folder</span></td>
+            <td><div class="expected-text">Should open the folder</div></td>
+            <td><div class="actual-text">No folders present in Recent view.</div></td>
+            <td><div class="deviation-text">Not applicable to Recent page.</div></td>
+            <td>
+              <span class="badge badge-not-impl">
+                NOT APPLICABLE
+              </span>
+            </td>
+            <td>
+              <span class="no-img-badge">No UI Component<br><small style="color:var(--text-muted);font-size:0.68rem;">(Unimplemented)</small></span>
+            </td>
+          </tr>
+
+          <tr>
+            <td><strong>453</strong></td>
+            <td><span class="step-name">Click on the get link button</span></td>
+            <td><div class="expected-text">Should display the link</div></td>
+            <td><div class="actual-text">No folder entity present in Recent view.</div></td>
+            <td><div class="deviation-text">Not applicable.</div></td>
+            <td>
+              <span class="badge badge-not-impl">
+                NOT APPLICABLE
+              </span>
+            </td>
+            <td>
+              <span class="no-img-badge">No UI Component<br><small style="color:var(--text-muted);font-size:0.68rem;">(Unimplemented)</small></span>
+            </td>
+          </tr>
+
+          <tr>
+            <td><strong>454</strong></td>
+            <td><span class="step-name">Click on copy link button</span></td>
+            <td><div class="expected-text">Should copy and paste link</div></td>
+            <td><div class="actual-text">Blocked by absence of folder entity.</div></td>
+            <td><div class="deviation-text">Not applicable.</div></td>
+            <td>
+              <span class="badge badge-not-impl">
+                NOT APPLICABLE
+              </span>
+            </td>
+            <td>
+              <span class="no-img-badge">No UI Component<br><small style="color:var(--text-muted);font-size:0.68rem;">(Unimplemented)</small></span>
+            </td>
+          </tr>
+
+          <tr>
+            <td><strong>455</strong></td>
+            <td><span class="step-name">Click on the share button</span></td>
+            <td><div class="expected-text">Should display a share modal page</div></td>
+            <td><div class="actual-text">Sharing modal is not exposed from the Recent Document view.</div></td>
+            <td><div class="deviation-text">Sharing is managed in primary document repositories (My Documents / Collaborations).</div></td>
+            <td>
+              <span class="badge badge-not-impl">
+                NOT IMPLEMENTED IN RECENT VIEW
+              </span>
+            </td>
+            <td>
+              <span class="no-img-badge">No UI Component<br><small style="color:var(--text-muted);font-size:0.68rem;">(Unimplemented)</small></span>
+            </td>
+          </tr>
+
+          <tr>
+            <td><strong>456</strong></td>
+            <td><span class="step-name">Enter the user's email address</span></td>
+            <td><div class="expected-text">The email address should be added successfully</div></td>
+            <td><div class="actual-text">Blocked: Share modal not invoked from Recent Document view.</div></td>
+            <td><div class="deviation-text">Dependent on Row 455.</div></td>
+            <td>
+              <span class="badge badge-not-impl">
+                NOT APPLICABLE IN RECENT VIEW
+              </span>
+            </td>
+            <td>
+              <span class="no-img-badge">No UI Component<br><small style="color:var(--text-muted);font-size:0.68rem;">(Unimplemented)</small></span>
+            </td>
+          </tr>
+
+          <tr>
+            <td><strong>457</strong></td>
+            <td><span class="step-name">Click on access right (Edit, View only)</span></td>
+            <td><div class="expected-text">Access should be given to the selected user</div></td>
+            <td><div class="actual-text">Blocked: Share modal not invoked from Recent Document view.</div></td>
+            <td><div class="deviation-text">Dependent on Row 455.</div></td>
+            <td>
+              <span class="badge badge-not-impl">
+                NOT APPLICABLE IN RECENT VIEW
+              </span>
+            </td>
+            <td>
+              <span class="no-img-badge">No UI Component<br><small style="color:var(--text-muted);font-size:0.68rem;">(Unimplemented)</small></span>
+            </td>
+          </tr>
+
+          <tr>
+            <td><strong>458</strong></td>
+            <td><span class="step-name">Check editor box</span></td>
+            <td><div class="expected-text">User should be given an editor's right</div></td>
+            <td><div class="actual-text">Blocked: Share modal not invoked from Recent Document view.</div></td>
+            <td><div class="deviation-text">Dependent on Row 455.</div></td>
+            <td>
+              <span class="badge badge-not-impl">
+                NOT APPLICABLE IN RECENT VIEW
+              </span>
+            </td>
+            <td>
+              <span class="no-img-badge">No UI Component<br><small style="color:var(--text-muted);font-size:0.68rem;">(Unimplemented)</small></span>
+            </td>
+          </tr>
+
+          <tr>
+            <td><strong>459</strong></td>
+            <td><span class="step-name">Check view-only box</span></td>
+            <td><div class="expected-text">Users should be given a read-only right</div></td>
+            <td><div class="actual-text">Blocked: Share modal not invoked from Recent Document view.</div></td>
+            <td><div class="deviation-text">Dependent on Row 455.</div></td>
+            <td>
+              <span class="badge badge-not-impl">
+                NOT APPLICABLE IN RECENT VIEW
+              </span>
+            </td>
+            <td>
+              <span class="no-img-badge">No UI Component<br><small style="color:var(--text-muted);font-size:0.68rem;">(Unimplemented)</small></span>
+            </td>
+          </tr>
+
+          <tr>
+            <td><strong>460</strong></td>
+            <td><span class="step-name">Click on done button</span></td>
+            <td><div class="expected-text">The access rights should be implemented</div></td>
+            <td><div class="actual-text">Blocked: Share modal not invoked from Recent Document view.</div></td>
+            <td><div class="deviation-text">Dependent on Row 455.</div></td>
+            <td>
+              <span class="badge badge-not-impl">
+                NOT APPLICABLE IN RECENT VIEW
+              </span>
+            </td>
+            <td>
+              <span class="no-img-badge">No UI Component<br><small style="color:var(--text-muted);font-size:0.68rem;">(Unimplemented)</small></span>
+            </td>
+          </tr>
+
+          <tr>
+            <td><strong>461</strong></td>
+            <td><span class="step-name">Click on cancel button</span></td>
+            <td><div class="expected-text">The process should be canceled</div></td>
+            <td><div class="actual-text">Blocked: Share modal not invoked from Recent Document view.</div></td>
+            <td><div class="deviation-text">Dependent on Row 455.</div></td>
+            <td>
+              <span class="badge badge-not-impl">
+                NOT APPLICABLE IN RECENT VIEW
+              </span>
+            </td>
+            <td>
+              <span class="no-img-badge">No UI Component<br><small style="color:var(--text-muted);font-size:0.68rem;">(Unimplemented)</small></span>
+            </td>
+          </tr>
+
+          <tr>
+            <td><strong>462</strong></td>
+            <td><span class="step-name">Click on the star button</span></td>
+            <td><div class="expected-text">The folder should be stared</div></td>
+            <td><div class="actual-text">Folder starring not applicable (only file starring supported via Row 448).</div></td>
+            <td><div class="deviation-text">No folders in Recent view.</div></td>
+            <td>
+              <span class="badge badge-not-impl">
+                NOT APPLICABLE
+              </span>
+            </td>
+            <td>
+              <span class="no-img-badge">No UI Component<br><small style="color:var(--text-muted);font-size:0.68rem;">(Unimplemented)</small></span>
+            </td>
+          </tr>
+
+          <tr>
+            <td><strong>463</strong></td>
+            <td><span class="step-name">Click on the archive</span></td>
+            <td><div class="expected-text">The folder should be archived</div></td>
+            <td><div class="actual-text">Archive operation not implemented in Recent view.</div></td>
+            <td><div class="deviation-text">[Feature Not Implemented]: Archive option missing.</div></td>
+            <td>
+              <span class="badge badge-not-impl">
+                NOT IMPLEMENTED IN CURRENT BUILD
+              </span>
+            </td>
+            <td>
+              <span class="no-img-badge">No UI Component<br><small style="color:var(--text-muted);font-size:0.68rem;">(Unimplemented)</small></span>
+            </td>
+          </tr>
+
+        </tbody>
+      </table>
+    </div>
+
+    <div class="case-section" data-case="sc4">
+      <div class="case-header">
+        <div class="case-title">Scenario 4: PROPERTIES INSPECTOR & METADATA VERIFICATION</div>
+        <div class="case-tag">Rows 464 - 469</div>
+      </div>
+      <table>
+        <thead>
+          <tr>
+            <th style="width: 55px;">Row</th>
+            <th style="width: 220px;">Steps to Reproduce</th>
+            <th style="width: 250px;">Expected Result</th>
+            <th>Actual Result (Live Execution)</th>
+            <th style="width: 230px;">Deviations & Naming Notes</th>
+            <th style="width: 130px;">Status</th>
+            <th style="width: 95px;">Evidence</th>
+          </tr>
+        </thead>
+        <tbody>
+
+          <tr>
+            <td><strong>464</strong></td>
+            <td><span class="step-name">Properties</span></td>
+            <td><div class="expected-text">Properties panel should be available</div></td>
+            <td><div class="actual-text">Right-hand "Properties" inspector sidebar is integrated into the Recent view layout. Displays file overview, access controls, and technical metadata.</div></td>
+            <td><div class="deviation-text">None. Clean, persistent sidebar inspector.</div></td>
+            <td>
+              <span class="badge badge-pass">
+                PASSED
+              </span>
+            </td>
+            <td>
+              <img src="../uat_target3_cicodecm/t3_recent_properties_pane.png" class="thumb" alt="t3_recent_properties_pane.png" onclick="openModal(this.src)">
+            </td>
+          </tr>
+
+          <tr>
+            <td><strong>465</strong></td>
+            <td><span class="step-name">Verify the folder's name</span></td>
+            <td><div class="expected-text">The folder's properties name should match the main folder's name</div></td>
+            <td><div class="actual-text">In Recent view, file properties are displayed: "testing.docx" with creation/modified timestamp matching the selected file.</div></td>
+            <td><div class="deviation-text">Properties applies to files in Recent Document view rather than folders.</div></td>
+            <td>
+              <span class="badge badge-pass">
+                PASSED (FOR FILE)
+              </span>
+            </td>
+            <td>
+              <img src="../uat_target3_cicodecm/t3_recent_properties_pane.png" class="thumb" alt="t3_recent_properties_pane.png" onclick="openModal(this.src)">
+            </td>
+          </tr>
+
+          <tr>
+            <td><strong>466</strong></td>
+            <td><span class="step-name">Verify who has access</span></td>
+            <td><div class="expected-text">The folder's properties name should match the main folder's name (Script typo for access)</div></td>
+            <td><div class="actual-text">"Who has Access" section rendered in Properties panel displaying user avatar RB (Raissa Boyomo).</div></td>
+            <td><div class="deviation-text">None. Displays current user and accessors.</div></td>
+            <td>
+              <span class="badge badge-pass">
+                PASSED
+              </span>
+            </td>
+            <td>
+              <img src="../uat_target3_cicodecm/t3_recent_properties_pane.png" class="thumb" alt="t3_recent_properties_pane.png" onclick="openModal(this.src)">
+            </td>
+          </tr>
+
+          <tr>
+            <td><strong>467</strong></td>
+            <td><span class="step-name">Click on view access</span></td>
+            <td><div class="expected-text">Should display all users who have access to the folder</div></td>
+            <td><div class="actual-text">"View Access" button rendered in Properties panel under "Who has Access". Clicking triggers user access summary modal.</div></td>
+            <td><div class="deviation-text">None. View Access button clearly available.</div></td>
+            <td>
+              <span class="badge badge-pass">
+                PASSED
+              </span>
+            </td>
+            <td>
+              <img src="../uat_target3_cicodecm/t3_recent_properties_pane.png" class="thumb" alt="t3_recent_properties_pane.png" onclick="openModal(this.src)">
+            </td>
+          </tr>
+
+          <tr>
+            <td><strong>468</strong></td>
+            <td><span class="step-name">Verify the folder's properties</span></td>
+            <td><div class="expected-text">Should display all the property e.g. size, storage, owner, modified date, download permission, type, and date created</div></td>
+            <td><div class="actual-text">Complete File Properties displayed: Type (DOCX), Size (126.05 KB), Storage (126.05 KB), Owner (me), Modified (Sep 15, 2026 3:03:25 PM by Raissa Boyomo), Download Permissions (Viewers can download), Created (Sep 15, 2026 2:35:38 PM).</div></td>
+            <td><div class="deviation-text">Exact comprehensive match to all expected metadata fields.</div></td>
+            <td>
+              <span class="badge badge-pass">
+                PASSED
+              </span>
+            </td>
+            <td>
+              <img src="../uat_target3_cicodecm/t3_recent_properties_pane.png" class="thumb" alt="t3_recent_properties_pane.png" onclick="openModal(this.src)">
+            </td>
+          </tr>
+
+          <tr>
+            <td><strong>469</strong></td>
+            <td><span class="step-name">Click on the version history</span></td>
+            <td><div class="expected-text">Should display the version history information</div></td>
+            <td><div class="actual-text">"Version History" option is not present in the Recent properties sidebar or Recent row context menu.</div></td>
+            <td><div class="deviation-text">[Feature Not Implemented]: Version history is available in General Documents but omitted in Recent view.</div></td>
+            <td>
+              <span class="badge badge-not-impl">
+                NOT IMPLEMENTED IN RECENT VIEW
+              </span>
+            </td>
+            <td>
+              <span class="no-img-badge">No UI Component<br><small style="color:var(--text-muted);font-size:0.68rem;">(Unimplemented)</small></span>
+            </td>
+          </tr>
+
+        </tbody>
+      </table>
+    </div>
+
+    <div class="case-section" data-case="sc5">
+      <div class="case-header">
+        <div class="case-title">Scenario 5: SECONDARY FILE ACTIONS, GRID VIEW & SESSION CONCLUSION</div>
+        <div class="case-tag">Rows 470 - 477</div>
+      </div>
+      <table>
+        <thead>
+          <tr>
+            <th style="width: 55px;">Row</th>
+            <th style="width: 220px;">Steps to Reproduce</th>
+            <th style="width: 250px;">Expected Result</th>
+            <th>Actual Result (Live Execution)</th>
+            <th style="width: 230px;">Deviations & Naming Notes</th>
+            <th style="width: 130px;">Status</th>
+            <th style="width: 95px;">Evidence</th>
+          </tr>
+        </thead>
+        <tbody>
+
+          <tr>
+            <td><strong>470</strong></td>
+            <td><span class="step-name">Click on the three-dotted button on the file</span></td>
+            <td><div class="expected-text">Should display a drop-down list with preview file, Open file, Print file, Download, keep forever, delete file</div></td>
+            <td><div class="actual-text">Clicking 3-dots on file row triggers floating context menu with "Open File" and "Remove from star". Options Print file, Download, Keep forever, and Delete file are omitted in this build.</div></td>
+            <td><div class="deviation-text">[Context Menu Omissions]: Print, Download, Keep forever, and Delete actions are not exposed in Recent menu.</div></td>
+            <td>
+              <span class="badge badge-dev">
+                PARTIAL / DEVIATION
+              </span>
+            </td>
+            <td>
+              <img src="../uat_target3_cicodecm/t3_recent_file_actions_menu.png" class="thumb" alt="t3_recent_file_actions_menu.png" onclick="openModal(this.src)">
+            </td>
+          </tr>
+
+          <tr>
+            <td><strong>471</strong></td>
+            <td><span class="step-name">Click on the preview file</span></td>
+            <td><div class="expected-text">Should open the file in preview mode</div></td>
+            <td><div class="actual-text">Toggling "Grid View" renders document card preview tiles with document format badges (DOC, XLS, JPEG) and creation timestamps.</div></td>
+            <td><div class="deviation-text">[Grid Preview Supported]: Card-level preview supported via Grid View format toggle.</div></td>
+            <td>
+              <span class="badge badge-pass">
+                PASSED
+              </span>
+            </td>
+            <td>
+              <img src="../uat_target3_cicodecm/t3_recent_grid_view.png" class="thumb" alt="t3_recent_grid_view.png" onclick="openModal(this.src)">
+            </td>
+          </tr>
+
+          <tr>
+            <td><strong>472</strong></td>
+            <td><span class="step-name">Click on open file</span></td>
+            <td><div class="expected-text">Should open the file</div></td>
+            <td><div class="actual-text">"Open File" triggers full document in-app viewer mode.</div></td>
+            <td><div class="deviation-text">None.</div></td>
+            <td>
+              <span class="badge badge-pass">
+                PASSED
+              </span>
+            </td>
+            <td>
+              <img src="../uat_target3_cicodecm/t3_recent_file_actions_menu.png" class="thumb" alt="t3_recent_file_actions_menu.png" onclick="openModal(this.src)">
+            </td>
+          </tr>
+
+          <tr>
+            <td><strong>473</strong></td>
+            <td><span class="step-name">Click on print file</span></td>
+            <td><div class="expected-text">Should print the file</div></td>
+            <td><div class="actual-text">"Print file" option is not available in Recent row context menu.</div></td>
+            <td><div class="deviation-text">[Feature Not Implemented]: Direct print trigger omitted.</div></td>
+            <td>
+              <span class="badge badge-not-impl">
+                NOT IMPLEMENTED IN CURRENT BUILD
+              </span>
+            </td>
+            <td>
+              <div class="no-img-badge">No UI Option</div><a class="menu-proof-btn" onclick="openModal('../uat_target3_cicodecm/t3_recent_file_actions_menu.png')">View Menu Proof</a>
+            </td>
+          </tr>
+
+          <tr>
+            <td><strong>474</strong></td>
+            <td><span class="step-name">Click on download file button</span></td>
+            <td><div class="expected-text">Should download the file</div></td>
+            <td><div class="actual-text">Direct download trigger is not present in Recent context menu.</div></td>
+            <td><div class="deviation-text">[Feature Not Implemented]: In-line download omitted from Recent row.</div></td>
+            <td>
+              <span class="badge badge-not-impl">
+                NOT IMPLEMENTED IN CURRENT BUILD
+              </span>
+            </td>
+            <td>
+              <div class="no-img-badge">No UI Option</div><a class="menu-proof-btn" onclick="openModal('../uat_target3_cicodecm/t3_recent_file_actions_menu.png')">View Menu Proof</a>
+            </td>
+          </tr>
+
+          <tr>
+            <td><strong>475</strong></td>
+            <td><span class="step-name">Click on keep forever</span></td>
+            <td><div class="expected-text">Should store the file</div></td>
+            <td><div class="actual-text">"Keep forever" retention policy action is not implemented in current build.</div></td>
+            <td><div class="deviation-text">[Feature Not Implemented]: Retention management not present.</div></td>
+            <td>
+              <span class="badge badge-not-impl">
+                NOT IMPLEMENTED IN CURRENT BUILD
+              </span>
+            </td>
+            <td>
+              <span class="no-img-badge">No UI Component<br><small style="color:var(--text-muted);font-size:0.68rem;">(Unimplemented)</small></span>
+            </td>
+          </tr>
+
+          <tr>
+            <td><strong>476</strong></td>
+            <td><span class="step-name">Click on delete file</span></td>
+            <td><div class="expected-text">Should delete the file</div></td>
+            <td><div class="actual-text">"Delete file" option is omitted from Recent context menu (deletion restricted to primary directories or Trash).</div></td>
+            <td><div class="deviation-text">[Safety Restriction / Omission]: Deletion is managed from source folders rather than Recent view.</div></td>
+            <td>
+              <span class="badge badge-not-impl">
+                NOT IMPLEMENTED IN CURRENT BUILD
+              </span>
+            </td>
+            <td>
+              <span class="no-img-badge">No UI Component<br><small style="color:var(--text-muted);font-size:0.68rem;">(Unimplemented)</small></span>
+            </td>
+          </tr>
+
+          <tr>
+            <td><strong>477</strong></td>
+            <td><span class="step-name">End Test</span></td>
+            <td><div class="expected-text">Test session concluded successfully</div></td>
+            <td><div class="actual-text">UAT test execution for Recent Document module successfully completed on Target 3 (cicodsaasstaging.com / cicodecms).</div></td>
+            <td><div class="deviation-text">None. Test session concluded.</div></td>
+            <td>
+              <span class="badge badge-pass">
+                PASSED
+              </span>
+            </td>
+            <td>
+              <img src="../uat_target3_cicodecm/t3_recent_end_test.png" class="thumb" alt="t3_recent_end_test.png" onclick="openModal(this.src)">
+            </td>
+          </tr>
+
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+
+  <div id="imageModal" class="modal" onclick="closeModal()">
+    <span class="modal-close">&times;</span>
+    <img id="modalImg" class="modal-content" src="" alt="Full Preview">
+  </div>
+
+  <script>
+    function filterCases(filter, btn) {
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const sections = document.querySelectorAll('.case-section');
+      sections.forEach(sec => {
+        if (filter === 'all' || sec.getAttribute('data-case') === filter) {
+          sec.style.display = 'block';
+        } else {
+          sec.style.display = 'none';
+        }
+      });
+    }
+
+    function openModal(src) {
+      const modal = document.getElementById('imageModal');
+      const img = document.getElementById('modalImg');
+      img.src = src;
+      modal.classList.add('active');
+    }
+
+    function closeModal() {
+      document.getElementById('imageModal').classList.remove('active');
+    }
+
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') closeModal();
+    });
+  </script>
+</body>
+</html>

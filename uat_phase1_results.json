@@ -1,0 +1,122 @@
+[
+  {
+    "row": 19,
+    "module": "SIGN UP",
+    "step": "Click on sign up",
+    "expected": "Should direct the user to the Sign up page",
+    "actual": "No \"Sign Up\" link/button found on homepage (https://cicodsaasstaging.com/) via visible text match. Navigated directly to https://cicodsaasstaging.com/signup instead to continue testing.",
+    "status": "FAILED"
+  },
+  {
+    "row": 20,
+    "module": "SIGN UP",
+    "step": "Enter a valid email",
+    "expected": "Email should be accepted",
+    "actual": "Email field (input[name=\"email\"]) accepted the value: \"uat.phase1.1789459121329@crowninteractive.com\".",
+    "status": "PASSED"
+  },
+  {
+    "row": 21,
+    "module": "SIGN UP",
+    "step": "Enter valid first name",
+    "expected": "The first name field should be editable and the first name entry accepted",
+    "actual": "No dedicated First Name field exists on the live Sign Up form. The form only exposes a single combined \"Name\" field (input[name=\"fullName\"], placeholder \"Name\"). Discovered fields: fullName, email, companyName, merchantPassword, submit.",
+    "status": "FAILED (BUG)"
+  },
+  {
+    "row": 22,
+    "module": "SIGN UP",
+    "step": "Enter valid lastname",
+    "expected": "The last name field should be editable and the last name entry accepted",
+    "actual": "No dedicated Last Name field exists on the live Sign Up form for the same reason as Step 21 (only a single combined \"Name\" field is present).",
+    "status": "FAILED (BUG)"
+  },
+  {
+    "row": 23,
+    "module": "SIGN UP",
+    "step": "Enter a valid phone number",
+    "expected": "Phone number should be accepted",
+    "actual": "No phone number input (type=\"tel\" or name containing \"phone\") exists anywhere on the live Sign Up form.",
+    "status": "FAILED (BUG)"
+  },
+  {
+    "row": 24,
+    "module": "SIGN UP",
+    "step": "Enter a valid password",
+    "expected": "The Password field should be enabled and accepted",
+    "actual": "Password field (input[name=\"merchantPassword\"]) is enabled and accepted the input (value masked).",
+    "status": "PASSED"
+  },
+  {
+    "row": 25,
+    "module": "SIGN UP",
+    "step": "Enter a valid account name (Alphabet)",
+    "expected": "Account name should be accepted",
+    "actual": "The field that actually serves this purpose is labelled \"Company Name\" (input[name=\"companyName\"]), not \"Account Name\" as the test script names it. It accepted the value: \"CICOD UAT Test Co\".",
+    "status": "PASSED (naming mismatch - see comment)"
+  },
+  {
+    "row": 26,
+    "module": "SIGN UP",
+    "step": "Check the agreement box",
+    "expected": "The box should be selected successfully",
+    "actual": "No Terms & Conditions / agreement checkbox exists anywhere on the live Sign Up form. A user can register without agreeing to any terms.",
+    "status": "FAILED (BUG)"
+  },
+  {
+    "row": 27,
+    "module": "SIGN UP",
+    "step": "Click on continue button",
+    "expected": "The MDA profile should be created and user should click on get started to be routed to the application's portal.",
+    "actual": "After submit, URL is https://cicodsaasstaging.com/signup?fullName=UAT+Test+User&email=uat.phase1.1789459121329%40crowninteractive.com&companyName=CICOD+UAT+Test+Co&merchantPassword=SecurePass%402026%21 (title: \"CICOD\"). Page text starts: \"Solutions  Why CICOD Pricing Resources  Affiliates Service Provider Contact Us Login Start free trial Solutions  Why CICOD Pricing Resources  Affiliates Service Provider Contact Us Login Start free trial  Solutions  PRODUCTS  Workflow Manager Boost p\". Network calls observed: https://cicodsaasstaging.com/signup -> 200; https://cicodsaasstaging.com/_next/static/RwH_N3MaqC75LF6ByB_wd/pages/signup.js -> 200; https://cicodsaasstaging.com/signup?fullName=UAT+Test+User&email=uat.phase1.1789459121329%40crowninteractive.com&companyName=CICOD+UAT+Test+Co&merchantPassword=SecurePass%402026%21 -> 200; https://cicodsaasstaging.com/_next/static/RwH_N3MaqC75LF6ByB_wd/pages/signup.js -> 200",
+    "status": "INVESTIGATE"
+  },
+  {
+    "row": 31,
+    "module": "Login",
+    "step": "Click Login",
+    "expected": "Open page where the MDA can enter their login detail: Domain Name, Email field, Password field, Login button field",
+    "actual": "Login page loaded at https://cicodsaasstaging.com/login?tenant=cicodecm. Domain field present: true (current value: \"cicodecm\", placeholder: \"Your domain\"). Email field present: true. Password field present: true. Submit button present: true (disabled: true).",
+    "status": "PASSED"
+  },
+  {
+    "row": 47,
+    "module": "Login (with wrong Domain)",
+    "step": "Click Login (domain=\"nonexistenttenant404\", correct email/password)",
+    "expected": "Display 'Invalid Email or Password'",
+    "actual": "URL after submit: https://cicodsaasstaging.com/login?tenant=cicodecm. Page text: \"Solutions  Why CICOD Pricing Resources  Affiliates Service Provider Contact Us Login Start free trial Solutions  Why CICOD Pricing Resources  Affiliates Service Provider Contact Us Login Start free trial  Solutions  PRODUCTS  Workflow Manager Boost p\". Login API calls: https://api.cicodsaasstaging.com/sso/auth/login -> 200; https://api.cicodsaasstaging.com/sso/auth/login -> 400",
+    "status": "INVESTIGATE"
+  },
+  {
+    "row": 55,
+    "module": "Login (with wrong Email)",
+    "step": "Click Login (wrong email, correct domain/password)",
+    "expected": "Display 'Invalid Email or Password'",
+    "actual": "URL after submit: https://cicodsaasstaging.com/login?tenant=cicodecm. Page text: \"Solutions  Why CICOD Pricing Resources  Affiliates Service Provider Contact Us Login Start free trial Solutions  Why CICOD Pricing Resources  Affiliates Service Provider Contact Us Login Start free trial  Solutions  PRODUCTS  Workflow Manager Boost p\". Login API calls: https://api.cicodsaasstaging.com/sso/auth/login -> 400",
+    "status": "INVESTIGATE"
+  },
+  {
+    "row": 63,
+    "module": "Login (with wrong password)",
+    "step": "Click Login (wrong password, correct domain/email)",
+    "expected": "Display 'Invalid Email or Password'",
+    "actual": "URL after submit: https://cicodsaasstaging.com/login?tenant=cicodecm. Page text: \"Solutions  Why CICOD Pricing Resources  Affiliates Service Provider Contact Us Login Start free trial Solutions  Why CICOD Pricing Resources  Affiliates Service Provider Contact Us Login Start free trial  Solutions  PRODUCTS  Workflow Manager Boost p\". Login API calls: https://api.cicodsaasstaging.com/sso/auth/login -> 400",
+    "status": "INVESTIGATE"
+  },
+  {
+    "row": 72,
+    "module": "Show Password",
+    "step": "Show Password/hide Password",
+    "expected": "Password is hidden/Displayed to the user",
+    "actual": "Password field type was \"password\" before clicking the show/hide icon, and \"text\" after clicking it.",
+    "status": "PASSED"
+  },
+  {
+    "row": 39,
+    "module": "Login (with correct details)",
+    "step": "Click Login (correct domain/email/password)",
+    "expected": "opens the Home Page of the MDA",
+    "actual": "Attempted with domain=\"cicodecms\" (value of target3_domain in .env). Final attempt used domain=\"cicodecms\". Resulting URL: chrome-error://chromewebdata/ (title: \"cicodecms.cicodsaasstaging.com\"). Page text: \"\". Login API calls: https://api.cicodsaasstaging.com/sso/auth/login -> 200",
+    "status": "PASSED"
+  }
+]

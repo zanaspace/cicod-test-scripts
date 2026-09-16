@@ -13,27 +13,33 @@
 <body class="mode-commercial">
 
   <!-- 1. Dedicated Use Cases Sidebar -->
-  <aside class="sidebar">
+  <aside class="sidebar" id="appSidebar">
     <div class="brand-section">
       <div class="brand-icon">🎯</div>
       <div class="brand-text">
         <h2>Use Cases &amp; Blueprint</h2>
         <p>Gov vs. CICOD Transformation</p>
       </div>
+      <button class="btn-sidebar-collapse" id="btnSidebarCollapse" onclick="toggleSidebar()" title="Collapse Sidebar (Ctrl+B)">
+        ◀
+      </button>
     </div>
 
     <!-- Core Engines Navigation -->
     <div class="nav-group">
-      <div class="nav-title">Core Engine Modules</div>
-      <div class="nav-item active" onclick="setSection('all', event)">
+      <div class="nav-title" onclick="toggleNavGroup(this.parentElement)">
+        <span>Core Engine Modules</span>
+        <span class="chevron">▼</span>
+      </div>
+      <div class="nav-item active" onclick="setSection('all', event)" data-tooltip="All Use Cases Matrix">
         <span>📑 All Use Cases Matrix</span>
         <span class="tag-engine">18</span>
       </div>
-      <div class="nav-item" onclick="setSection('drive', event)">
+      <div class="nav-item" onclick="setSection('drive', event)" data-tooltip="Drive Modules (Gov ⇄ cDrive)">
         <span>📁 Drive Modules (Gov ⇄ cDrive)</span>
         <span class="tag-engine">10</span>
       </div>
-      <div class="nav-item" onclick="setSection('flow', event)">
+      <div class="nav-item" onclick="setSection('flow', event)" data-tooltip="Flow Modules (ECMS ⇄ cFlow)">
         <span>📝 Flow Modules (ECMS ⇄ cFlow)</span>
         <span class="tag-engine">8</span>
       </div>
@@ -41,45 +47,54 @@
 
     <!-- Visual Sidebar-to-Sidebar Mappers -->
     <div class="nav-group">
-      <div class="nav-title">Visual Sidebar Mappers</div>
-      <div class="nav-item" onclick="setSection('mapper-drive', event)">
+      <div class="nav-title" onclick="toggleNavGroup(this.parentElement)">
+        <span>Visual Sidebar Mappers</span>
+        <span class="chevron">▼</span>
+      </div>
+      <div class="nav-item" onclick="setSection('mapper-drive', event)" data-tooltip="Drive Sidebar Interactive Map">
         <span>🔀 Drive Sidebar Interactive Map</span>
       </div>
-      <div class="nav-item" onclick="setSection('mapper-flow', event)">
+      <div class="nav-item" onclick="setSection('mapper-flow', event)" data-tooltip="Flow Sidebar Interactive Map">
         <span>🔀 Flow Sidebar Interactive Map</span>
       </div>
     </div>
 
     <!-- Commercial Industry Playbooks -->
     <div class="nav-group">
-      <div class="nav-title">Commercial Playbooks</div>
-      <div class="nav-item" onclick="filterPlaybook('audit', event)">
+      <div class="nav-title" onclick="toggleNavGroup(this.parentElement)">
+        <span>Commercial Playbooks</span>
+        <span class="chevron">▼</span>
+      </div>
+      <div class="nav-item" onclick="filterPlaybook('audit', event)" data-tooltip="Accounting &amp; Audit (PBC)">
         <span>📊 Accounting &amp; Audit (PBC)</span>
       </div>
-      <div class="nav-item" onclick="filterPlaybook('legal', event)">
+      <div class="nav-item" onclick="filterPlaybook('legal', event)" data-tooltip="Legal M&amp;A (Virtual Deal Rooms)">
         <span>⚖️ Legal M&amp;A (Virtual Deal Rooms)</span>
       </div>
-      <div class="nav-item" onclick="filterPlaybook('supply', event)">
+      <div class="nav-item" onclick="filterPlaybook('supply', event)" data-tooltip="Supply Chain &amp; Logistics">
         <span>🚢 Supply Chain &amp; Logistics</span>
       </div>
-      <div class="nav-item" onclick="filterPlaybook('health', event)">
+      <div class="nav-item" onclick="filterPlaybook('health', event)" data-tooltip="Healthcare &amp; HMO Claims">
         <span>🏥 Healthcare &amp; HMO Claims</span>
       </div>
-      <div class="nav-item" onclick="filterPlaybook('board', event)">
+      <div class="nav-item" onclick="filterPlaybook('board', event)" data-tooltip="Corporate Boardrooms">
         <span>🏛️ Corporate Boardrooms</span>
       </div>
     </div>
 
     <!-- Deep Dives & UI Fixes -->
     <div class="nav-group">
-      <div class="nav-title">Deep Dives &amp; Fixes</div>
-      <div class="nav-item" onclick="setSection('request-module', event)">
+      <div class="nav-title" onclick="toggleNavGroup(this.parentElement)">
+        <span>Deep Dives &amp; Fixes</span>
+        <span class="chevron">▼</span>
+      </div>
+      <div class="nav-item" onclick="setSection('request-module', event)" data-tooltip="Inter-MDA Requisitions">
         <span>🏛️ Inter-MDA Requisitions (<code>r=request</code>)</span>
       </div>
-      <div class="nav-item" onclick="setSection('classified-fix', event)">
+      <div class="nav-item" onclick="setSection('classified-fix', event)" data-tooltip="Top Secret UI Modal Fix">
         <span>🔐 Top Secret UI Modal Fix</span>
       </div>
-      <div class="nav-item" onclick="setSection('scenario-runner', event)">
+      <div class="nav-item" onclick="setSection('scenario-runner', event)" data-tooltip="Interactive Scenario Runner">
         <span>▶ Interactive Scenario Runner</span>
       </div>
     </div>
@@ -88,8 +103,13 @@
   <!-- 2. Main Content Canvas -->
   <main class="workspace-main">
     <div class="top-toolbar">
-      <div style="font-size: 14px; color: var(--text-muted);">
-        <span>Transformation Guide</span> › <strong style="color: #fff;" id="topLabel">Full Use Case Matrix</strong>
+      <div style="display: flex; align-items: center; gap: 14px;">
+        <button class="btn-sidebar-toggle" id="btnUsecasesSidebarToggle" onclick="toggleSidebar()" title="Toggle Sidebar (Ctrl+B)">
+          <span class="toggle-icon" id="usecasesSidebarToggleIcon">☰</span>
+        </button>
+        <div style="font-size: 14px; color: var(--text-muted);">
+          <span>Transformation Guide</span> › <strong id="topLabel">Full Use Case Matrix</strong>
+        </div>
       </div>
       <div class="mode-toggle-group" style="display: flex; gap: 8px; align-items: center;">
         <button class="theme-switch-btn" id="btnUsecasesTheme" onclick="toggleTheme()" title="Toggle Dark/Light Mode">

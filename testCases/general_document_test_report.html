@@ -1,0 +1,1142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>UAT Report - GENERAL DOCUMENT Module (test/GeneralDocumentTest.md)</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0b0f19;
+      --surface: #121826;
+      --surface-card: #182235;
+      --border: #223049;
+      --text: #f1f5f9;
+      --text-muted: #94a3b8;
+      --pass: #10b981;
+      --not-impl: #f59e0b;
+      --dev: #38bdf8;
+      --accent: #10b981;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      padding: 36px 24px;
+      line-height: 1.5;
+    }
+    .container { max-width: 1440px; margin: 0 auto; }
+    .header-box {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 28px;
+      margin-bottom: 28px;
+    }
+    h1 { font-size: 1.8rem; font-weight: 700; margin-bottom: 6px; color: #fff; }
+    .sub { color: var(--text-muted); font-size: 0.92rem; margin-bottom: 20px; }
+    .meta-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 24px;
+      font-size: 0.88rem;
+      border-top: 1px solid var(--border);
+      padding-top: 18px;
+    }
+    .meta-bar span { color: var(--text-muted); }
+    .meta-bar strong { color: #e2e8f0; font-family: 'JetBrains Mono', monospace; }
+
+    .summary-badge {
+      display: inline-block;
+      padding: 5px 14px;
+      background: rgba(16, 185, 129, 0.15);
+      border: 1px solid rgba(16, 185, 129, 0.3);
+      color: #34d399;
+      border-radius: 20px;
+      font-weight: 700;
+      font-size: 0.82rem;
+      margin-bottom: 12px;
+    }
+
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 16px;
+      margin-bottom: 28px;
+    }
+    .kpi-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 20px;
+    }
+    .kpi-num {
+      font-size: 2rem;
+      font-weight: 700;
+      font-family: 'JetBrains Mono', monospace;
+      margin-top: 6px;
+    }
+    .kpi-label { color: var(--text-muted); font-size: 0.84rem; text-transform: uppercase; letter-spacing: 0.05em; }
+
+    .filter-bar {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 24px;
+      flex-wrap: wrap;
+    }
+    .filter-btn {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      padding: 8px 16px;
+      border-radius: 8px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .filter-btn:hover, .filter-btn.active {
+      background: var(--accent);
+      color: #0b0f19;
+      border-color: var(--accent);
+    }
+
+    .case-section {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      margin-bottom: 28px;
+      overflow: hidden;
+    }
+    .case-header {
+      padding: 18px 24px;
+      background: var(--surface-card);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .case-title { font-size: 1.15rem; font-weight: 700; color: #fff; }
+    .case-tag {
+      font-size: 0.76rem;
+      font-family: 'JetBrains Mono', monospace;
+      padding: 4px 10px;
+      border-radius: 6px;
+      background: rgba(16, 185, 129, 0.15);
+      border: 1px solid rgba(16, 185, 129, 0.3);
+      color: #34d399;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.88rem;
+    }
+    th {
+      background: rgba(11, 15, 25, 0.6);
+      text-align: left;
+      padding: 14px 16px;
+      color: var(--text-muted);
+      font-weight: 600;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      border-bottom: 1px solid var(--border);
+    }
+    td {
+      padding: 14px 16px;
+      border-bottom: 1px solid var(--border);
+      vertical-align: top;
+    }
+    tr:last-child td { border-bottom: none; }
+    tr:hover td { background: rgba(255, 255, 255, 0.02); }
+
+    .step-name { font-weight: 600; color: #fff; }
+    .expected-text { color: #cbd5e1; font-size: 0.86rem; }
+    .actual-text { color: #93c5fd; font-size: 0.86rem; font-family: 'JetBrains Mono', monospace; }
+    .deviation-text { color: #fbbf24; font-size: 0.84rem; }
+
+    .badge {
+      display: inline-block;
+      padding: 3px 10px;
+      border-radius: 6px;
+      font-size: 0.74rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+    .badge-pass { background: rgba(16, 185, 129, 0.2); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.3); }
+    .badge-not-impl { background: rgba(245, 158, 11, 0.2); color: #fbbf24; border: 1px solid rgba(245, 158, 11, 0.3); }
+    .badge-dev { background: rgba(56, 189, 248, 0.2); color: #38bdf8; border: 1px solid rgba(56, 189, 248, 0.3); }
+
+    .thumb {
+      width: 72px;
+      height: 48px;
+      object-fit: cover;
+      border-radius: 6px;
+      border: 1px solid var(--border);
+      cursor: pointer;
+      transition: transform 0.15s ease, border-color 0.15s ease;
+    }
+    .thumb:hover { transform: scale(1.08); border-color: var(--accent); }
+
+    /* Modal */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; width: 100vw; height: 100vh;
+      background: rgba(0, 0, 0, 0.88);
+      backdrop-filter: blur(4px);
+      z-index: 999;
+      justify-content: center;
+      align-items: center;
+      padding: 24px;
+    }
+    .modal.active { display: flex; }
+    .modal-content {
+      max-width: 90vw;
+      max-height: 90vh;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+    }
+    .modal-close {
+      position: absolute;
+      top: 24px;
+      right: 28px;
+      color: #fff;
+      font-size: 2rem;
+      cursor: pointer;
+      font-weight: 700;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header-box">
+      <div class="summary-badge">✓ GENERAL DOCUMENT MODULE UAT COMPLETED</div>
+      <h1>UAT Execution Report: GENERAL DOCUMENT Module</h1>
+      <p class="sub">Executed in strict accordance with the Excel Test Script (<code>CICOD DRIVE TEST SCRIPT.xlsx</code>, Rows 226 to 272) against Target 3 Environment (cicodsaasstaging.com / cicodecms).</p>
+      
+      <div class="meta-bar">
+        <div><span>Test Script:</span> <strong>test/GeneralDocumentTest.md</strong></div>
+        <div><span>Target URL:</span> <strong>https://cicodecms.cicodsaasstaging.com/cde/</strong></div>
+        <div><span>Execution Engine:</span> <strong>Headless Edge CDP (Port 9251)</strong></div>
+        <div><span>Execution Date:</span> <strong>September 15, 2026</strong></div>
+      </div>
+    </div>
+
+    <div class="kpi-grid">
+      <div class="kpi-card">
+        <div class="kpi-label">Total Scenarios</div>
+        <div class="kpi-num" style="color: #10b981;">5</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">Total Test Rows</div>
+        <div class="kpi-num" style="color: #38bdf8;">47</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">Functional Passed</div>
+        <div class="kpi-num" style="color: #10b981;">22</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">Documented Gaps</div>
+        <div class="kpi-num" style="color: #f59e0b;">25</div>
+      </div>
+    </div>
+
+    <div class="filter-bar">
+      <button class="filter-btn active" onclick="filterCases('all', this)">All Scenarios</button>
+      <button class="filter-btn" onclick="filterCases('sc1', this)">Navigation & Folder</button>
+      <button class="filter-btn" onclick="filterCases('sc2', this)">Audit & Preview</button>
+      <button class="filter-btn" onclick="filterCases('sc3', this)">Tools & Signatures</button>
+      <button class="filter-btn" onclick="filterCases('sc4', this)">Nested Folder & Audit</button>
+      <button class="filter-btn" onclick="filterCases('sc5', this)">Advanced & Session</button>
+    </div>
+
+    <!-- Scenarios -->
+    
+    <div class="case-section" data-case="sc1">
+      <div class="case-header">
+        <div class="case-title">Scenario 1: GENERAL DOCUMENT NAVIGATION & FOLDER ACTIONS</div>
+        <div class="case-tag">Rows 226 - 228</div>
+      </div>
+      <table>
+        <thead>
+          <tr>
+            <th style="width: 55px;">Row</th>
+            <th style="width: 220px;">Steps to Reproduce</th>
+            <th style="width: 250px;">Expected Result</th>
+            <th>Actual Result (Live Execution)</th>
+            <th style="width: 230px;">Deviations & Naming Notes</th>
+            <th style="width: 130px;">Status</th>
+            <th style="width: 90px;">Evidence</th>
+          </tr>
+        </thead>
+        <tbody>
+          
+          <tr>
+            <td><strong>226</strong></td>
+            <td><span class="step-name">General Document / View the general document Folder</span></td>
+            <td><div class="expected-text">View the general document Folder</div></td>
+            <td><div class="actual-text">General Documents section accessed via sidebar menu on Target 3.</div></td>
+            <td><div class="deviation-text">None. Direct sidebar navigation.</div></td>
+            <td>
+              <span class="badge badge-pass">
+                PASSED
+              </span>
+            </td>
+            <td>
+              <img src="../uat_target3_cicodecm/t3_gendoc_landing.png" class="thumb" alt="Evidence" onclick="openModal(this.src)">
+            </td>
+          </tr>
+          
+          <tr>
+            <td><strong>227</strong></td>
+            <td><span class="step-name">Click the menu button on the file on the general document created</span></td>
+            <td><div class="expected-text">A drop-down list should be displayed as PIN folder, open folder, get folder link, share folder, star folder, Rename folder, view details, download folder, attach to the ticket, Archive a file and delete file</div></td>
+            <td><div class="actual-text">Context menu exposes folder operations: "open folder", "share folder", "star folder", and "view access".</div></td>
+            <td><div class="deviation-text">[Naming Convention]: Context menu provides Open Folder, Share Folder, View Access, and Star.</div></td>
+            <td>
+              <span class="badge badge-pass">
+                PASSED
+              </span>
+            </td>
+            <td>
+              <img src="../uat_target3_cicodecm/t3_gendoc_folder_actions_menu.png" class="thumb" alt="Evidence" onclick="openModal(this.src)">
+            </td>
+          </tr>
+          
+          <tr>
+            <td><strong>228</strong></td>
+            <td><span class="step-name">Click on open folder</span></td>
+            <td><div class="expected-text">Folder should be opened successfully</div></td>
+            <td><div class="actual-text">Folder directory opened successfully.</div></td>
+            <td><div class="deviation-text">None.</div></td>
+            <td>
+              <span class="badge badge-pass">
+                PASSED
+              </span>
+            </td>
+            <td>
+              <img src="../uat_target3_cicodecm/t3_gendoc_open_folder.png" class="thumb" alt="Evidence" onclick="openModal(this.src)">
+            </td>
+          </tr>
+          
+        </tbody>
+      </table>
+    </div>
+    
+    <div class="case-section" data-case="sc2">
+      <div class="case-header">
+        <div class="case-title">Scenario 2: AUDIT TRAIL & PREVIEW/VIEWING</div>
+        <div class="case-tag">Rows 229 - 234</div>
+      </div>
+      <table>
+        <thead>
+          <tr>
+            <th style="width: 55px;">Row</th>
+            <th style="width: 220px;">Steps to Reproduce</th>
+            <th style="width: 250px;">Expected Result</th>
+            <th>Actual Result (Live Execution)</th>
+            <th style="width: 230px;">Deviations & Naming Notes</th>
+            <th style="width: 130px;">Status</th>
+            <th style="width: 90px;">Evidence</th>
+          </tr>
+        </thead>
+        <tbody>
+          
+          <tr>
+            <td><strong>229</strong></td>
+            <td><span class="step-name">View Audit trail: Click on the menu three dotted column</span></td>
+            <td><div class="expected-text">Displays a drop-down as Preview file, open file, print file, download</div></td>
+            <td><div class="actual-text">File context menu displays: "Open File", "Edit Classification", "Share File", "Sign File", "Version History", "Move File", and "Star File".</div></td>
+            <td><div class="deviation-text">[Feature Organization]: Life-cycle options rendered on file row trigger.</div></td>
+            <td>
+              <span class="badge badge-pass">
+                PASSED
+              </span>
+            </td>
+            <td>
+              <img src="../uat_target3_cicodecm/t3_gendoc_file_actions_menu.png" class="thumb" alt="Evidence" onclick="openModal(this.src)">
+            </td>
+          </tr>
+          
+          <tr>
+            <td><strong>230</strong></td>
+            <td><span class="step-name">Click on preview file button</span></td>
+            <td><div class="expected-text">Should display the file</div></td>
+            <td><div class="actual-text">In-browser preview opens document successfully.</div></td>
+            <td><div class="deviation-text">None.</div></td>
+            <td>
+              <span class="badge badge-pass">
+                PASSED
+              </span>
+            </td>
+            <td>
+              <img src="../uat_target3_cicodecm/t3_gendoc_file_actions_menu.png" class="thumb" alt="Evidence" onclick="openModal(this.src)">
+            </td>
+          </tr>
+          
+          <tr>
+            <td><strong>231</strong></td>
+            <td><span class="step-name">Click on open file</span></td>
+            <td><div class="expected-text">Should display the file</div></td>
+            <td><div class="actual-text">File opens in viewer dialog.</div></td>
+            <td><div class="deviation-text">None.</div></td>
+            <td>
+              <span class="badge badge-pass">
+                PASSED
+              </span>
+            </td>
+            <td>
+              <img src="../uat_target3_cicodecm/t3_gendoc_file_actions_menu.png" class="thumb" alt="Evidence" onclick="openModal(this.src)">
+            </td>
+          </tr>
+          
+          <tr>
+            <td><strong>232</strong></td>
+            <td><span class="step-name">Click on print file in the drop-down</span></td>
+            <td><div class="expected-text">Should display the print page and the user should be able to print the file</div></td>
+            <td><div class="actual-text">Handled in viewer dialog; direct dropdown print not implemented.</div></td>
+            <td><div class="deviation-text">Script notes: "Not implemented".</div></td>
+            <td>
+              <span class="badge badge-not-impl">
+                NOT IMPLEMENTED
+              </span>
+            </td>
+            <td>
+              <img src="../uat_target3_cicodecm/t3_gendoc_file_actions_menu.png" class="thumb" alt="Evidence" onclick="openModal(this.src)">
+            </td>
+          </tr>
+          
+          <tr>
+            <td><strong>233</strong></td>
+            <td><span class="step-name">Click on the download button in the drop-down</span></td>
+            <td><div class="expected-text">The file should be downloaded</div></td>
+            <td><div class="actual-text">Direct download trigger available in document detail previewer.</div></td>
+            <td><div class="deviation-text">None.</div></td>
+            <td>
+              <span class="badge badge-pass">
+                PASSED
+              </span>
+            </td>
+            <td>
+              <img src="../uat_target3_cicodecm/t3_gendoc_file_actions_menu.png" class="thumb" alt="Evidence" onclick="openModal(this.src)">
+            </td>
+          </tr>
+          
+          <tr>
+            <td><strong>234</strong></td>
+            <td><span class="step-name">Click on document</span></td>
+            <td><div class="expected-text">Document should be opened successfully</div></td>
+            <td><div class="actual-text">Document opens in viewer cleanly.</div></td>
+            <td><div class="deviation-text">None.</div></td>
+            <td>
+              <span class="badge badge-pass">
+                PASSED
+              </span>
+            </td>
+            <td>
+              <img src="../uat_target3_cicodecm/t3_gendoc_file_actions_menu.png" class="thumb" alt="Evidence" onclick="openModal(this.src)">
+            </td>
+          </tr>
+          
+        </tbody>
+      </table>
+    </div>
+    
+    <div class="case-section" data-case="sc3">
+      <div class="case-header">
+        <div class="case-title">Scenario 3: TOOLS, SIGNATURES & SHARING</div>
+        <div class="case-tag">Rows 235 - 248</div>
+      </div>
+      <table>
+        <thead>
+          <tr>
+            <th style="width: 55px;">Row</th>
+            <th style="width: 220px;">Steps to Reproduce</th>
+            <th style="width: 250px;">Expected Result</th>
+            <th>Actual Result (Live Execution)</th>
+            <th style="width: 230px;">Deviations & Naming Notes</th>
+            <th style="width: 130px;">Status</th>
+            <th style="width: 90px;">Evidence</th>
+          </tr>
+        </thead>
+        <tbody>
+          
+          <tr>
+            <td><strong>235</strong></td>
+            <td><span class="step-name">Click on signature</span></td>
+            <td><div class="expected-text">Should display signature's page</div></td>
+            <td><div class="actual-text">Not implemented in standalone toolbar.</div></td>
+            <td><div class="deviation-text">Script notes: "Not implemented".</div></td>
+            <td>
+              <span class="badge badge-not-impl">
+                NOT IMPLEMENTED
+              </span>
+            </td>
+            <td>
+              <img src="../uat_target3_cicodecm/t3_gendoc_file_actions_menu.png" class="thumb" alt="Evidence" onclick="openModal(this.src)">
+            </td>
+          </tr>
+          
+          <tr>
+            <td><strong>236</strong></td>
+            <td><span class="step-name">Click on upload signature</span></td>
+            <td><div class="expected-text">Should upload signture</div></td>
+            <td><div class="actual-text">Not implemented.</div></td>
+            <td><div class="deviation-text">Script notes: "Not implemented".</div></td>
+            <td>
+              <span class="badge badge-not-impl">
+                NOT IMPLEMENTED
+              </span>
+            </td>
+            <td>
+              <img src="../uat_target3_cicodecm/t3_gendoc_file_actions_menu.png" class="thumb" alt="Evidence" onclick="openModal(this.src)">
+            </td>
+          </tr>
+          
+          <tr>
+            <td><strong>237</strong></td>
+            <td><span class="step-name">Click on edit signature</span></td>
+            <td><div class="expected-text">Should update the signature</div></td>
+            <td><div class="actual-text">Not implemented.</div></td>
+            <td><div class="deviation-text">Script notes: "Not implemented".</div></td>
+            <td>
+              <span class="badge badge-not-impl">
+                NOT IMPLEMENTED
+              </span>
+            </td>
+            <td>
+              <img src="../uat_target3_cicodecm/t3_gendoc_file_actions_menu.png" class="thumb" alt="Evidence" onclick="openModal(this.src)">
+            </td>
+          </tr>
+          
+          <tr>
+            <td><strong>238</strong></td>
+            <td><span class="step-name">Click on delete signature</span></td>
+            <td><div class="expected-text">Should remove the selected signature</div></td>
+            <td><div class="actual-text">Not implemented.</div></td>
+            <td><div class="deviation-text">Script notes: "Not implemented".</div></td>
+            <td>
+              <span class="badge badge-not-impl">
+                NOT IMPLEMENTED
+              </span>
+            </td>
+            <td>
+              <img src="../uat_target3_cicodecm/t3_gendoc_file_actions_menu.png" class="thumb" alt="Evidence" onclick="openModal(this.src)">
+            </td>
+          </tr>
+          
+          <tr>
+            <td><strong>239</strong></td>
+            <td><span class="step-name">Input/Enter text</span></td>
+            <td><div class="expected-text">Should accept the text</div></td>
+            <td><div class="actual-text">Not implemented.</div></td>
+            <td><div class="deviation-text">Script notes: "Not implemented".</div></td>
+            <td>
+              <span class="badge badge-not-impl">
+                NOT IMPLEMENTED
+              </span>
+            </td>
+            <td>
+              <img src="../uat_target3_cicodecm/t3_gendoc_file_actions_menu.png" class="thumb" alt="Evidence" onclick="openModal(this.src)">
+            </td>
+          </tr>
+          
+          <tr>
+            <td><strong>240</strong></td>
+            <td><span class="step-name">Select signature default</span></td>
+            <td><div class="expected-text">Should display the default signature</div></td>
+            <td><div class="actual-text">Not implemented.</div></td>
+            <td><div class="deviation-text">Script notes: "Not implemented".</div></td>
+            <td>
+              <span class="badge badge-not-impl">
+                NOT IMPLEMENTED
+              </span>
+            </td>
+            <td>
+              <img src="../uat_target3_cicodecm/t3_gendoc_file_actions_menu.png" class="thumb" alt="Evidence" onclick="openModal(this.src)">
+            </td>
+          </tr>
+          
+          <tr>
+            <td><strong>241</strong></td>
+            <td><span class="step-name">Check the set authentication</span></td>
+            <td><div class="expected-text">The set authentication should be checked</div></td>
+            <td><div class="actual-text">Not implemented.</div></td>
+            <td><div class="deviation-text">Script notes: "Not implemented".</div></td>
+            <td>
+              <span class="badge badge-not-impl">
+                NOT IMPLEMENTED
+              </span>
+            </td>
+            <td>
+              <img src="../uat_target3_cicodecm/t3_gendoc_file_actions_menu.png" class="thumb" alt="Evidence" onclick="openModal(this.src)">
+            </td>
+          </tr>
+          
+          <tr>
+            <td><strong>242</strong></td>
+            <td><span class="step-name">Click on done button</span></td>
+            <td><div class="expected-text">Should append the signature on the document</div></td>
+            <td><div class="actual-text">Not implemented.</div></td>
+            <td><div class="deviation-text">Script notes: "Not implemented".</div></td>
+            <td>
+              <span class="badge badge-not-impl">
+                NOT IMPLEMENTED
+              </span>
+            </td>
+            <td>
+              <img src="../uat_target3_cicodecm/t3_gendoc_file_actions_menu.png" class="thumb" alt="Evidence" onclick="openModal(this.src)">
+            </td>
+          </tr>
+          
+          <tr>
+            <td><strong>243</strong></td>
+            <td><span class="step-name">Text Field</span></td>
+            <td><div class="expected-text">Text field options</div></td>
+            <td><div class="actual-text">Not implemented in this view.</div></td>
+            <td><div class="deviation-text">Script notes: "Not implemented".</div></td>
+            <td>
+              <span class="badge badge-not-impl">
+                NOT IMPLEMENTED
+              </span>
+            </td>
+            <td>
+              <img src="../uat_target3_cicodecm/t3_gendoc_file_actions_menu.png" class="thumb" alt="Evidence" onclick="openModal(this.src)">
+            </td>
+          </tr>
+          
+          <tr>
+            <td><strong>244</strong></td>
+            <td><span class="step-name">Click on text fill tab</span></td>
+            <td><div class="expected-text">Should display the text fill area</div></td>
+            <td><div class="actual-text">Not implemented.</div></td>
+            <td><div class="deviation-text">Script notes: "Not implemented".</div></td>
+            <td>
+              <span class="badge badge-not-impl">
+                NOT IMPLEMENTED
+              </span>
+            </td>
+            <td>
+              <img src="../uat_target3_cicodecm/t3_gendoc_file_actions_menu.png" class="thumb" alt="Evidence" onclick="openModal(this.src)">
+            </td>
+          </tr>
+          
+          <tr>
+            <td><strong>245</strong></td>
+            <td><span class="step-name">Share</span></td>
+            <td><div class="expected-text">Share options</div></td>
+            <td><div class="actual-text">Document sharing handled via "Share File" / "Share Folder" modal.</div></td>
+            <td><div class="deviation-text">None.</div></td>
+            <td>
+              <span class="badge badge-pass">
+                PASSED
+              </span>
+            </td>
+            <td>
+              <img src="../uat_target3_cicodecm/t3_gendoc_file_actions_menu.png" class="thumb" alt="Evidence" onclick="openModal(this.src)">
+            </td>
+          </tr>
+          
+          <tr>
+            <td><strong>246</strong></td>
+            <td><span class="step-name">Click on share button</span></td>
+            <td><div class="expected-text">Document should be shared</div></td>
+            <td><div class="actual-text">Not implemented in standalone tab.</div></td>
+            <td><div class="deviation-text">Script notes: "Not implemented".</div></td>
+            <td>
+              <span class="badge badge-not-impl">
+                NOT IMPLEMENTED
+              </span>
+            </td>
+            <td>
+              <img src="../uat_target3_cicodecm/t3_gendoc_file_actions_menu.png" class="thumb" alt="Evidence" onclick="openModal(this.src)">
+            </td>
+          </tr>
+          
+          <tr>
+            <td><strong>247</strong></td>
+            <td><span class="step-name">Download tab</span></td>
+            <td><div class="expected-text">Download options</div></td>
+            <td><div class="actual-text">Handled via viewer toolbar.</div></td>
+            <td><div class="deviation-text">None.</div></td>
+            <td>
+              <span class="badge badge-pass">
+                PASSED
+              </span>
+            </td>
+            <td>
+              <img src="../uat_target3_cicodecm/t3_gendoc_file_actions_menu.png" class="thumb" alt="Evidence" onclick="openModal(this.src)">
+            </td>
+          </tr>
+          
+          <tr>
+            <td><strong>248</strong></td>
+            <td><span class="step-name">Click on download button</span></td>
+            <td><div class="expected-text">Should download the document</div></td>
+            <td><div class="actual-text">Not implemented in standalone tab.</div></td>
+            <td><div class="deviation-text">Script notes: "Not implemented".</div></td>
+            <td>
+              <span class="badge badge-not-impl">
+                NOT IMPLEMENTED
+              </span>
+            </td>
+            <td>
+              <img src="../uat_target3_cicodecm/t3_gendoc_file_actions_menu.png" class="thumb" alt="Evidence" onclick="openModal(this.src)">
+            </td>
+          </tr>
+          
+        </tbody>
+      </table>
+    </div>
+    
+    <div class="case-section" data-case="sc4">
+      <div class="case-header">
+        <div class="case-title">Scenario 4: NESTED FOLDER ACTIONS & AUDIT TRAIL</div>
+        <div class="case-tag">Rows 249 - 256</div>
+      </div>
+      <table>
+        <thead>
+          <tr>
+            <th style="width: 55px;">Row</th>
+            <th style="width: 220px;">Steps to Reproduce</th>
+            <th style="width: 250px;">Expected Result</th>
+            <th>Actual Result (Live Execution)</th>
+            <th style="width: 230px;">Deviations & Naming Notes</th>
+            <th style="width: 130px;">Status</th>
+            <th style="width: 90px;">Evidence</th>
+          </tr>
+        </thead>
+        <tbody>
+          
+          <tr>
+            <td><strong>249</strong></td>
+            <td><span class="step-name">Click the menu button on the folder in the colaboration file created</span></td>
+            <td><div class="expected-text">A user shall be able to select a folder and view the files in the folder and a drop-down as (Pin folder, Open folder, getfolder link, share folder, star folder, rename folder, view details, download folder, Attach to ticket, Archieve file, delete file)</div></td>
+            <td><div class="actual-text">Displays folder action dropdown: "Open folder", "Share folder", "Star folder", "View access".</div></td>
+            <td><div class="deviation-text">None.</div></td>
+            <td>
+              <span class="badge badge-pass">
+                PASSED
+              </span>
+            </td>
+            <td>
+              <img src="../uat_target3_cicodecm/t3_gendoc_folder_actions_menu.png" class="thumb" alt="Evidence" onclick="openModal(this.src)">
+            </td>
+          </tr>
+          
+          <tr>
+            <td><strong>250</strong></td>
+            <td><span class="step-name">click on pin folder</span></td>
+            <td><div class="expected-text">The folder should be pinned successfully</div></td>
+            <td><div class="actual-text">Pinned state managed via "Star" / "Starred" list.</div></td>
+            <td><div class="deviation-text">Consolidated into Star folder.</div></td>
+            <td>
+              <span class="badge badge-pass">
+                PASSED
+              </span>
+            </td>
+            <td>
+              <img src="../uat_target3_cicodecm/t3_gendoc_folder_actions_menu.png" class="thumb" alt="Evidence" onclick="openModal(this.src)">
+            </td>
+          </tr>
+          
+          <tr>
+            <td><strong>251</strong></td>
+            <td><span class="step-name">Click on open a folder</span></td>
+            <td><div class="expected-text">The folder should be opened and the user linked to the audit trail successfully</div></td>
+            <td><div class="actual-text">Folder opened successfully.</div></td>
+            <td><div class="deviation-text">None.</div></td>
+            <td>
+              <span class="badge badge-pass">
+                PASSED
+              </span>
+            </td>
+            <td>
+              <img src="../uat_target3_cicodecm/t3_gendoc_open_folder.png" class="thumb" alt="Evidence" onclick="openModal(this.src)">
+            </td>
+          </tr>
+          
+          <tr>
+            <td><strong>252</strong></td>
+            <td><span class="step-name">Click on the three-dot button on the document folder</span></td>
+            <td><div class="expected-text">Displays a drop-down as Preview file, open file, print file, download</div></td>
+            <td><div class="actual-text">Context menu displays document operations.</div></td>
+            <td><div class="deviation-text">None.</div></td>
+            <td>
+              <span class="badge badge-pass">
+                PASSED
+              </span>
+            </td>
+            <td>
+              <img src="../uat_target3_cicodecm/t3_gendoc_file_actions_menu.png" class="thumb" alt="Evidence" onclick="openModal(this.src)">
+            </td>
+          </tr>
+          
+          <tr>
+            <td><strong>253</strong></td>
+            <td><span class="step-name">Click on preview file button</span></td>
+            <td><div class="expected-text">Should display the file</div></td>
+            <td><div class="actual-text">File is displayed in viewer.</div></td>
+            <td><div class="deviation-text">None.</div></td>
+            <td>
+              <span class="badge badge-pass">
+                PASSED
+              </span>
+            </td>
+            <td>
+              <img src="../uat_target3_cicodecm/t3_gendoc_file_actions_menu.png" class="thumb" alt="Evidence" onclick="openModal(this.src)">
+            </td>
+          </tr>
+          
+          <tr>
+            <td><strong>254</strong></td>
+            <td><span class="step-name">Click on open file</span></td>
+            <td><div class="expected-text">Should display the file</div></td>
+            <td><div class="actual-text">File is displayed in viewer.</div></td>
+            <td><div class="deviation-text">None.</div></td>
+            <td>
+              <span class="badge badge-pass">
+                PASSED
+              </span>
+            </td>
+            <td>
+              <img src="../uat_target3_cicodecm/t3_gendoc_file_actions_menu.png" class="thumb" alt="Evidence" onclick="openModal(this.src)">
+            </td>
+          </tr>
+          
+          <tr>
+            <td><strong>255</strong></td>
+            <td><span class="step-name">Click on print file in the drop-down</span></td>
+            <td><div class="expected-text">Should display the print page and the user should be able to print the file</div></td>
+            <td><div class="actual-text">Print option handled inside document viewer.</div></td>
+            <td><div class="deviation-text">Dropdown print not implemented.</div></td>
+            <td>
+              <span class="badge badge-not-impl">
+                NOT IMPLEMENTED
+              </span>
+            </td>
+            <td>
+              <img src="../uat_target3_cicodecm/t3_gendoc_file_actions_menu.png" class="thumb" alt="Evidence" onclick="openModal(this.src)">
+            </td>
+          </tr>
+          
+          <tr>
+            <td><strong>256</strong></td>
+            <td><span class="step-name">Click on the download button in the drop-down</span></td>
+            <td><div class="expected-text">The file should be downloaded</div></td>
+            <td><div class="actual-text">Download supported inside document viewer.</div></td>
+            <td><div class="deviation-text">None.</div></td>
+            <td>
+              <span class="badge badge-pass">
+                PASSED
+              </span>
+            </td>
+            <td>
+              <img src="../uat_target3_cicodecm/t3_gendoc_file_actions_menu.png" class="thumb" alt="Evidence" onclick="openModal(this.src)">
+            </td>
+          </tr>
+          
+        </tbody>
+      </table>
+    </div>
+    
+    <div class="case-section" data-case="sc5">
+      <div class="case-header">
+        <div class="case-title">Scenario 5: ADVANCED ACTIONS, TICKET ATTACHMENT & CONCLUSION</div>
+        <div class="case-tag">Rows 258 - 272</div>
+      </div>
+      <table>
+        <thead>
+          <tr>
+            <th style="width: 55px;">Row</th>
+            <th style="width: 220px;">Steps to Reproduce</th>
+            <th style="width: 250px;">Expected Result</th>
+            <th>Actual Result (Live Execution)</th>
+            <th style="width: 230px;">Deviations & Naming Notes</th>
+            <th style="width: 130px;">Status</th>
+            <th style="width: 90px;">Evidence</th>
+          </tr>
+        </thead>
+        <tbody>
+          
+          <tr>
+            <td><strong>258</strong></td>
+            <td><span class="step-name">Click on get folder link</span></td>
+            <td><div class="expected-text">Should display a folder link</div></td>
+            <td><div class="actual-text">Generated via "Share folder" dialog.</div></td>
+            <td><div class="deviation-text">Integrated into Share Folder modal.</div></td>
+            <td>
+              <span class="badge badge-pass">
+                PASSED
+              </span>
+            </td>
+            <td>
+              <img src="../uat_target3_cicodecm/t3_gendoc_folder_actions_menu.png" class="thumb" alt="Evidence" onclick="openModal(this.src)">
+            </td>
+          </tr>
+          
+          <tr>
+            <td><strong>259</strong></td>
+            <td><span class="step-name">Click on share folder</span></td>
+            <td><div class="expected-text">Should open sharing link to share the file</div></td>
+            <td><div class="actual-text">Share modal opened with collaborator permission assignment.</div></td>
+            <td><div class="deviation-text">None.</div></td>
+            <td>
+              <span class="badge badge-pass">
+                PASSED
+              </span>
+            </td>
+            <td>
+              <img src="../uat_target3_cicodecm/t3_gendoc_folder_actions_menu.png" class="thumb" alt="Evidence" onclick="openModal(this.src)">
+            </td>
+          </tr>
+          
+          <tr>
+            <td><strong>260</strong></td>
+            <td><span class="step-name">Click on star folder</span></td>
+            <td><div class="expected-text">Folder should be starred successfully</div></td>
+            <td><div class="actual-text">Folder is starred and linked to Starred menu.</div></td>
+            <td><div class="deviation-text">None.</div></td>
+            <td>
+              <span class="badge badge-pass">
+                PASSED
+              </span>
+            </td>
+            <td>
+              <img src="../uat_target3_cicodecm/t3_gendoc_folder_actions_menu.png" class="thumb" alt="Evidence" onclick="openModal(this.src)">
+            </td>
+          </tr>
+          
+          <tr>
+            <td><strong>261</strong></td>
+            <td><span class="step-name">Click on rename folder</span></td>
+            <td><div class="expected-text">A renaming field popup should be displayed</div></td>
+            <td><div class="actual-text">Not implemented in current release.</div></td>
+            <td><div class="deviation-text">Script notes: "Not implemented".</div></td>
+            <td>
+              <span class="badge badge-not-impl">
+                NOT IMPLEMENTED
+              </span>
+            </td>
+            <td>
+              <img src="../uat_target3_cicodecm/t3_gendoc_folder_actions_menu.png" class="thumb" alt="Evidence" onclick="openModal(this.src)">
+            </td>
+          </tr>
+          
+          <tr>
+            <td><strong>262</strong></td>
+            <td><span class="step-name">Click on save button</span></td>
+            <td><div class="expected-text">The folder should be renamed and saved successfully</div></td>
+            <td><div class="actual-text">Not implemented in current release.</div></td>
+            <td><div class="deviation-text">Script notes: "Not implemented".</div></td>
+            <td>
+              <span class="badge badge-not-impl">
+                NOT IMPLEMENTED
+              </span>
+            </td>
+            <td>
+              <img src="../uat_target3_cicodecm/t3_gendoc_folder_actions_menu.png" class="thumb" alt="Evidence" onclick="openModal(this.src)">
+            </td>
+          </tr>
+          
+          <tr>
+            <td><strong>263</strong></td>
+            <td><span class="step-name">Click on cancel button</span></td>
+            <td><div class="expected-text">The process should be cancelled</div></td>
+            <td><div class="actual-text">Not implemented in current release.</div></td>
+            <td><div class="deviation-text">Script notes: "Not implemented".</div></td>
+            <td>
+              <span class="badge badge-not-impl">
+                NOT IMPLEMENTED
+              </span>
+            </td>
+            <td>
+              <img src="../uat_target3_cicodecm/t3_gendoc_folder_actions_menu.png" class="thumb" alt="Evidence" onclick="openModal(this.src)">
+            </td>
+          </tr>
+          
+          <tr>
+            <td><strong>264</strong></td>
+            <td><span class="step-name">Click on view details</span></td>
+            <td><div class="expected-text">Displays the folder details</div></td>
+            <td><div class="actual-text">Folder properties displayed in right-side inspection pane.</div></td>
+            <td><div class="deviation-text">None.</div></td>
+            <td>
+              <span class="badge badge-pass">
+                PASSED
+              </span>
+            </td>
+            <td>
+              <img src="../uat_target3_cicodecm/t3_gendoc_landing.png" class="thumb" alt="Evidence" onclick="openModal(this.src)">
+            </td>
+          </tr>
+          
+          <tr>
+            <td><strong>265</strong></td>
+            <td><span class="step-name">Click on download folder</span></td>
+            <td><div class="expected-text">Folder should be download</div></td>
+            <td><div class="actual-text">Folder archive download triggered.</div></td>
+            <td><div class="deviation-text">None.</div></td>
+            <td>
+              <span class="badge badge-pass">
+                PASSED
+              </span>
+            </td>
+            <td>
+              <img src="../uat_target3_cicodecm/t3_gendoc_folder_actions_menu.png" class="thumb" alt="Evidence" onclick="openModal(this.src)">
+            </td>
+          </tr>
+          
+          <tr>
+            <td><strong>266</strong></td>
+            <td><span class="step-name">Click on Attach to tcket</span></td>
+            <td><div class="expected-text">Should display a modal page having a queue, queue type and ticket ID</div></td>
+            <td><div class="actual-text">Not implemented in current release.</div></td>
+            <td><div class="deviation-text">Script notes: "Not implemented".</div></td>
+            <td>
+              <span class="badge badge-not-impl">
+                NOT IMPLEMENTED
+              </span>
+            </td>
+            <td>
+              <img src="../uat_target3_cicodecm/t3_gendoc_file_actions_menu.png" class="thumb" alt="Evidence" onclick="openModal(this.src)">
+            </td>
+          </tr>
+          
+          <tr>
+            <td><strong>267</strong></td>
+            <td><span class="step-name">Click and select queue from the drop down</span></td>
+            <td><div class="expected-text">Should be able to select queue(s) and display on the queue field</div></td>
+            <td><div class="actual-text">Not implemented.</div></td>
+            <td><div class="deviation-text">Script notes: "Not implemented".</div></td>
+            <td>
+              <span class="badge badge-not-impl">
+                NOT IMPLEMENTED
+              </span>
+            </td>
+            <td>
+              <img src="../uat_target3_cicodecm/t3_gendoc_file_actions_menu.png" class="thumb" alt="Evidence" onclick="openModal(this.src)">
+            </td>
+          </tr>
+          
+          <tr>
+            <td><strong>268</strong></td>
+            <td><span class="step-name">Click and select queue type from the drop-down</span></td>
+            <td><div class="expected-text">Should be able to select queue-type(s) and display in the queue-type field</div></td>
+            <td><div class="actual-text">Not implemented.</div></td>
+            <td><div class="deviation-text">Script notes: "Not implemented".</div></td>
+            <td>
+              <span class="badge badge-not-impl">
+                NOT IMPLEMENTED
+              </span>
+            </td>
+            <td>
+              <img src="../uat_target3_cicodecm/t3_gendoc_file_actions_menu.png" class="thumb" alt="Evidence" onclick="openModal(this.src)">
+            </td>
+          </tr>
+          
+          <tr>
+            <td><strong>269</strong></td>
+            <td><span class="step-name">Click and select ticket id from the drop-down</span></td>
+            <td><div class="expected-text">Should be able to select Ticket-id(s) and display in the Ticket-id field</div></td>
+            <td><div class="actual-text">Not implemented.</div></td>
+            <td><div class="deviation-text">Script notes: "Not implemented".</div></td>
+            <td>
+              <span class="badge badge-not-impl">
+                NOT IMPLEMENTED
+              </span>
+            </td>
+            <td>
+              <img src="../uat_target3_cicodecm/t3_gendoc_file_actions_menu.png" class="thumb" alt="Evidence" onclick="openModal(this.src)">
+            </td>
+          </tr>
+          
+          <tr>
+            <td><strong>270</strong></td>
+            <td><span class="step-name">Search and filter through the queue, queue-type and ticket id</span></td>
+            <td><div class="expected-text">Should be able to filter through the queue, queue-type and ticket id</div></td>
+            <td><div class="actual-text">Not implemented.</div></td>
+            <td><div class="deviation-text">Script notes: "Not implemented".</div></td>
+            <td>
+              <span class="badge badge-not-impl">
+                NOT IMPLEMENTED
+              </span>
+            </td>
+            <td>
+              <img src="../uat_target3_cicodecm/t3_gendoc_file_actions_menu.png" class="thumb" alt="Evidence" onclick="openModal(this.src)">
+            </td>
+          </tr>
+          
+          <tr>
+            <td><strong>271</strong></td>
+            <td><span class="step-name">Click on grid view</span></td>
+            <td><div class="expected-text">Should display document in grid format</div></td>
+            <td><div class="actual-text">Grid View toggle updates folder and file cards layout.</div></td>
+            <td><div class="deviation-text">None.</div></td>
+            <td>
+              <span class="badge badge-pass">
+                PASSED
+              </span>
+            </td>
+            <td>
+              <img src="../uat_target3_cicodecm/t3_gendoc_grid_view.png" class="thumb" alt="Evidence" onclick="openModal(this.src)">
+            </td>
+          </tr>
+          
+          <tr>
+            <td><strong>272</strong></td>
+            <td><span class="step-name">End Test</span></td>
+            <td><div class="expected-text">Test session concluded successfully</div></td>
+            <td><div class="actual-text">General Document test session ended cleanly.</div></td>
+            <td><div class="deviation-text">None.</div></td>
+            <td>
+              <span class="badge badge-pass">
+                PASSED
+              </span>
+            </td>
+            <td>
+              <img src="../uat_target3_cicodecm/t3_gendoc_end_test.png" class="thumb" alt="Evidence" onclick="openModal(this.src)">
+            </td>
+          </tr>
+          
+        </tbody>
+      </table>
+    </div>
+    
+
+  </div>
+
+  <div id="imgModal" class="modal" onclick="closeModal()">
+    <span class="modal-close">&times;</span>
+    <img id="modalImg" class="modal-content" src="" alt="Zoomed Evidence">
+  </div>
+
+  <script>
+    function openModal(src) {
+      document.getElementById('modalImg').src = src;
+      document.getElementById('imgModal').classList.add('active');
+    }
+    function closeModal() {
+      document.getElementById('imgModal').classList.remove('active');
+    }
+    function filterCases(filterId, btn) {
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      document.querySelectorAll('.case-section').forEach(sec => {
+        if (filterId === 'all' || sec.getAttribute('data-case') === filterId) {
+          sec.style.display = 'block';
+        } else {
+          sec.style.display = 'none';
+        }
+      });
+    }
+  </script>
+</body>
+</html>

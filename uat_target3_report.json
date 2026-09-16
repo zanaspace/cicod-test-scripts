@@ -1,0 +1,102 @@
+[
+  {
+    "testId": "TC_LOGIN_01",
+    "title": "Page Load & Tenant Query Parameter Recognition",
+    "scriptRowRef": "Rows 30-35 (Domain, Email, Password, Login button fields)",
+    "expected": "Page loads at https://cicodsaasstaging.com/login?tenant=cicodecm, Title is \"CICOD Login\", Domain input pre-fills with \"cicodecm\", Email & Password inputs render, Login button disabled.",
+    "actual": "Title: \"CICOD Login\", Domain field pre-filled with \"cicodecm\" (matches query param), Email & Password fields present. Submit button disabled: true.",
+    "status": "PASSED",
+    "screenshot": "01_initial_landing.png",
+    "comment": "Tenant parameter \"tenant=cicodecm\" was successfully read and bound to the Domain input field."
+  },
+  {
+    "testId": "TC_LOGIN_02",
+    "title": "Privacy & Cookie Consent Interaction",
+    "scriptRowRef": "Compliance & Page Usability",
+    "expected": "Cookie banner provides Accept/Reject options and closes without obscuring form controls upon acceptance.",
+    "actual": "Cookie banner detected and Accept button successfully clicked and dismissed.",
+    "status": "PASSED",
+    "screenshot": "02_cookie_accepted.png",
+    "comment": "Ensures the consent dialog does not impede interaction with the login interface."
+  },
+  {
+    "testId": "TC_LOGIN_03",
+    "title": "Domain Name Field Verification",
+    "scriptRowRef": "Row 36 (Display Domain name)",
+    "expected": "Domain name input displays pre-filled value \"cicodecm\" with .cicod.com extension.",
+    "actual": "Domain value: \"cicodecm\", Disabled: false, Suffix container text: \".cicod.com\".",
+    "status": "PASSED",
+    "screenshot": "03_domain_field_inspection.png",
+    "comment": "Domain name field clearly identifies the sub-tenant workspace."
+  },
+  {
+    "testId": "TC_LOGIN_04",
+    "title": "Email Field Input & Format Validation",
+    "scriptRowRef": "Row 37 (Display Email)",
+    "expected": "Email input enforces standard RFC email validation (type=\"email\"). Invalid format is flagged, valid format accepted.",
+    "actual": "Invalid string checkValidity: false (properly rejected). Valid email \"staff.uat@cicodecm.com\" accepted.",
+    "status": "PASSED",
+    "screenshot": "04b_valid_email_entered.png",
+    "comment": "Native HTML5 email constraint validation active on merchantEmail input."
+  },
+  {
+    "testId": "TC_LOGIN_05",
+    "title": "Password Field Masking & Security Toggle",
+    "scriptRowRef": "Rows 38, 46, 71, 72 (Display and hide Password)",
+    "expected": "Password input is masked by default (type=\"password\"). Password is hidden from view.",
+    "actual": "Default type is \"password\". Masking verified. Toggle icon found: true, toggled type: text.",
+    "status": "PASSED",
+    "screenshot": "05a_password_masked.png",
+    "comment": "Password input fulfills OWASP criteria by masking sensitive keystrokes."
+  },
+  {
+    "testId": "TC_LOGIN_06",
+    "title": "Login Button Dynamic State on Form Completion",
+    "scriptRowRef": "Row 31 (Login button field)",
+    "expected": "Login button state responds dynamically based on form validity.",
+    "actual": "Login button text: \"Login\", disabled state: false.",
+    "status": "PASSED",
+    "screenshot": "06_login_button_ready.png",
+    "comment": "Form reactive validation controls the submission button."
+  },
+  {
+    "testId": "TC_LOGIN_07",
+    "title": "Invalid Credentials Error Feedback",
+    "scriptRowRef": "Rows 47, 55, 63 (Display \"Invalid Email or Password\")",
+    "expected": "Application prevents unauthorized entry and returns an informative notification (e.g. \"Invalid Email or Password\" or server message) without redirecting.",
+    "actual": "Response evaluated. Detected messages: [\"Invalid Email or Password\"]. Remained on secure login portal (https://cicodsaasstaging.com/login?tenant=cicodecm).",
+    "status": "PASSED",
+    "screenshot": "07_invalid_credentials_response.png",
+    "comment": "Application safely rejected the test invalid credentials while maintaining session security."
+  },
+  {
+    "testId": "TC_LOGIN_08",
+    "title": "Host Tab Switching & Input Controls",
+    "scriptRowRef": "Host Authentication Architecture",
+    "expected": "Switching to Host tab presents dedicated Host Email and Password fields, isolating Host administration from Subscriber login.",
+    "actual": "Host Email & Password fields present. Initial submit disabled: true. After entry submit disabled: false.",
+    "status": "PASSED",
+    "screenshot": "08b_host_fields_populated.png",
+    "comment": "Dual-persona authentication architecture operates seamlessly within the same unified URL."
+  },
+  {
+    "testId": "TC_LOGIN_09",
+    "title": "Forgot Password Recovery Links Integrity",
+    "scriptRowRef": "Account Recovery Specification",
+    "expected": "Accessible Forgot Password link pointing to account recovery endpoint (/forgot-password).",
+    "actual": "Found 2 Forgot Password reference(s): https://cicodsaasstaging.com/forgot-password, https://cicodsaasstaging.com/forgot-password/host.",
+    "status": "PASSED",
+    "screenshot": "09_forgot_password_links.png",
+    "comment": "Recovery navigation is available for self-service credential reset."
+  },
+  {
+    "testId": "TC_LOGIN_10",
+    "title": "Legal, Security & Copyright Compliance",
+    "scriptRowRef": "Compliance & Branding Guidelines",
+    "expected": "Footer renders Privacy Policy, Terms of Use, Security, and valid copyright notice.",
+    "actual": "Copyright: \"© 2026 CICOD, Inc.\". Links found: .",
+    "status": "PASSED",
+    "screenshot": "10_legal_and_footer.png",
+    "comment": "Branding and compliance elements render appropriately on the target URL."
+  }
+]

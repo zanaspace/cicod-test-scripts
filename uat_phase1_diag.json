@@ -1,0 +1,34 @@
+[
+  {
+    "label": "wrong_domain_1500wait",
+    "disabledBefore": true,
+    "clicked": false,
+    "calls": []
+  },
+  {
+    "label": "wrong_email_1500wait",
+    "disabledBefore": false,
+    "clicked": true,
+    "calls": [
+      {
+        "url": "https://api.cicodsaasstaging.com/sso/auth/login",
+        "status": 200
+      },
+      {
+        "url": "https://api.cicodsaasstaging.com/sso/auth/login",
+        "status": 400
+      }
+    ]
+  },
+  {
+    "label": "correct_1500wait",
+    "disabledBefore": false,
+    "clicked": true,
+    "calls": [
+      {
+        "url": "https://api.cicodsaasstaging.com/sso/auth/login",
+        "status": 200
+      }
+    ]
+  }
+]

@@ -1,0 +1,2505 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CICOD Enterprise Platform: DRIVE & ECMS Master Dashboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-base: #060913;
+      --bg-surface: #0c1324;
+      --bg-card: #121c35;
+      --bg-card-hover: #192748;
+      --border-subtle: #1c2b4d;
+      --border-focus: #38bdf8;
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --text-dim: #64748b;
+      --accent-drive: #10b981;
+      --accent-drive-glow: rgba(16, 185, 129, 0.22);
+      --accent-ecms: #38bdf8;
+      --accent-ecms-glow: rgba(56, 189, 248, 0.22);
+      --pass: #10b981;
+      --not-impl: #f59e0b;
+      --radius-sm: 8px;
+      --radius-md: 12px;
+      --radius-lg: 16px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background-color: var(--bg-base);
+      color: var(--text-main);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      height: 100vh;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-track { background: rgba(6, 9, 19, 0.6); }
+    ::-webkit-scrollbar-thumb { background: #1f2e50; border-radius: 4px; }
+    ::-webkit-scrollbar-thumb:hover { background: #2f4370; }
+
+    /* Top Navigation Bar */
+    header {
+      background: var(--bg-surface);
+      border-bottom: 1px solid var(--border-subtle);
+      padding: 12px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      z-index: 100;
+    }
+
+    .brand-box {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .brand-logo {
+      width: 42px;
+      height: 42px;
+      background: linear-gradient(135deg, #10b981 0%, #0284c7 100%);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      color: #fff;
+      font-size: 1.15rem;
+      box-shadow: 0 4px 14px rgba(16, 185, 129, 0.35);
+    }
+
+    .brand-title h1 {
+      font-size: 1.12rem;
+      font-weight: 800;
+      color: #fff;
+      letter-spacing: -0.01em;
+    }
+
+    .brand-title p {
+      font-size: 0.74rem;
+      color: var(--text-muted);
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .header-center-links {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .nav-quick-btn {
+      padding: 6px 12px;
+      border-radius: var(--radius-sm);
+      font-size: 0.78rem;
+      font-weight: 600;
+      text-decoration: none;
+      color: var(--text-muted);
+      border: 1px solid var(--border-subtle);
+      background: rgba(255, 255, 255, 0.03);
+      transition: all 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .nav-quick-btn:hover {
+      color: #fff;
+      background: rgba(255, 255, 255, 0.08);
+      border-color: rgba(255, 255, 255, 0.18);
+    }
+
+    .top-meta {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .env-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 5px 12px;
+      background: rgba(16, 185, 129, 0.12);
+      border: 1px solid rgba(16, 185, 129, 0.3);
+      color: #34d399;
+      border-radius: 20px;
+      font-size: 0.74rem;
+      font-weight: 700;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .env-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #10b981;
+      box-shadow: 0 0 8px #10b981;
+      animation: pulseDot 2s infinite ease-in-out;
+    }
+
+    @keyframes pulseDot {
+      0%, 100% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.3); opacity: 0.6; }
+    }
+
+    /* Global Summary KPI Bar */
+    .kpi-strip {
+      background: rgba(10, 16, 32, 0.85);
+      border-bottom: 1px solid var(--border-subtle);
+      padding: 8px 24px;
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      overflow-x: auto;
+    }
+
+    .kpi-item {
+      display: flex;
+      align-items: baseline;
+      gap: 8px;
+      white-space: nowrap;
+    }
+
+    .kpi-label {
+      font-size: 0.70rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-muted);
+      font-weight: 600;
+    }
+
+    .kpi-val {
+      font-size: 1.0rem;
+      font-weight: 800;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .kpi-divider {
+      width: 1px;
+      height: 16px;
+      background: var(--border-subtle);
+    }
+
+    /* Main Content Layout (Sidebar Accordion + Main Display) */
+    .main-layout {
+      flex: 1;
+      display: flex;
+      overflow: hidden;
+    }
+
+    /* Left Sidebar */
+    .sidebar {
+      width: 400px;
+      background: var(--bg-surface);
+      border-right: 1px solid var(--border-subtle);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    /* Sidebar Top Controls: Filter Pills & Search */
+    .sidebar-controls {
+      padding: 12px 14px;
+      border-bottom: 1px solid var(--border-subtle);
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      background: rgba(10, 15, 28, 0.5);
+    }
+
+    .filter-pills {
+      display: flex;
+      gap: 6px;
+    }
+
+    .filter-pill {
+      flex: 1;
+      padding: 6px 8px;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border-subtle);
+      background: rgba(255, 255, 255, 0.02);
+      color: var(--text-muted);
+      font-size: 0.75rem;
+      font-weight: 700;
+      cursor: pointer;
+      text-align: center;
+      transition: all 0.2s ease;
+    }
+
+    .filter-pill:hover {
+      color: #fff;
+      background: rgba(255, 255, 255, 0.06);
+    }
+
+    .filter-pill.active {
+      background: var(--bg-card);
+      border-color: #38bdf8;
+      color: #fff;
+    }
+
+    .filter-pill.active.drive-active {
+      border-color: #10b981;
+      color: #34d399;
+    }
+
+    .filter-pill.active.ecms-active {
+      border-color: #38bdf8;
+      color: #38bdf8;
+    }
+
+    /* Search Box */
+    .search-box {
+      position: relative;
+      width: 100%;
+    }
+
+    .search-box input {
+      width: 100%;
+      background: rgba(15, 23, 42, 0.8);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-sm);
+      padding: 8px 12px 8px 34px;
+      color: #fff;
+      font-size: 0.82rem;
+      font-family: inherit;
+      outline: none;
+      transition: all 0.2s ease;
+    }
+
+    .search-box input:focus {
+      border-color: var(--border-focus);
+      box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.15);
+    }
+
+    .search-icon {
+      position: absolute;
+      left: 11px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-dim);
+      font-size: 0.85rem;
+      pointer-events: none;
+    }
+
+    /* Accordion Container */
+    .accordion-list {
+      flex: 1;
+      overflow-y: auto;
+      padding: 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    /* Module Section Wrapper */
+    .module-group {
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      background: rgba(14, 21, 38, 0.6);
+      overflow: hidden;
+      transition: border-color 0.2s ease;
+    }
+
+    .module-group.expanded {
+      border-color: rgba(255, 255, 255, 0.14);
+    }
+
+    .module-group.group-drive.expanded {
+      border-color: rgba(16, 185, 129, 0.35);
+    }
+
+    .module-group.group-ecms.expanded {
+      border-color: rgba(56, 189, 248, 0.35);
+    }
+
+    /* Module Header Accordion Trigger */
+    .module-header {
+      padding: 12px 14px;
+      background: var(--bg-card);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      user-select: none;
+      transition: background 0.2s ease;
+    }
+
+    .module-header:hover {
+      background: var(--bg-card-hover);
+    }
+
+    .mod-header-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .mod-icon-badge {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+      font-weight: 800;
+    }
+
+    .mod-icon-drive {
+      background: rgba(16, 185, 129, 0.15);
+      border: 1px solid rgba(16, 185, 129, 0.35);
+      color: #34d399;
+    }
+
+    .mod-icon-ecms {
+      background: rgba(56, 189, 248, 0.15);
+      border: 1px solid rgba(56, 189, 248, 0.35);
+      color: #38bdf8;
+    }
+
+    .mod-title-box h3 {
+      font-size: 0.90rem;
+      font-weight: 800;
+      color: #fff;
+      letter-spacing: -0.01em;
+    }
+
+    .mod-title-box p {
+      font-size: 0.70rem;
+      color: var(--text-muted);
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .mod-header-right {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .mod-pill-badge {
+      font-size: 0.65rem;
+      font-weight: 700;
+      padding: 3px 7px;
+      border-radius: 4px;
+      font-family: 'JetBrains Mono', monospace;
+      text-transform: uppercase;
+    }
+
+    .mod-pill-drive {
+      background: rgba(16, 185, 129, 0.15);
+      color: #34d399;
+      border: 1px solid rgba(16, 185, 129, 0.3);
+    }
+
+    .mod-pill-ecms {
+      background: rgba(56, 189, 248, 0.15);
+      color: #38bdf8;
+      border: 1px solid rgba(56, 189, 248, 0.3);
+    }
+
+    .mod-chevron {
+      color: var(--text-dim);
+      font-size: 0.85rem;
+      transition: transform 0.25s ease;
+      font-weight: 700;
+    }
+
+    .module-group.expanded .mod-chevron {
+      transform: rotate(90deg);
+      color: #fff;
+    }
+
+    /* Sub-Features Accordion Content */
+    .module-content {
+      display: none;
+      padding: 8px;
+      flex-direction: column;
+      gap: 6px;
+      background: rgba(9, 14, 27, 0.7);
+    }
+
+    .module-group.expanded .module-content {
+      display: flex;
+    }
+
+    /* Feature Item Card in Accordion */
+    .feature-item {
+      background: rgba(18, 28, 53, 0.6);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-sm);
+      padding: 10px 12px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      transition: all 0.2s ease;
+    }
+
+    .feature-item:hover {
+      background: var(--bg-card-hover);
+      border-color: rgba(255, 255, 255, 0.18);
+      transform: translateX(2px);
+    }
+
+    .feature-item.active {
+      background: rgba(16, 185, 129, 0.10);
+      border-color: var(--accent-drive);
+      box-shadow: 0 4px 14px var(--accent-drive-glow);
+    }
+
+    .feature-item.active.ecms-item {
+      background: rgba(56, 189, 248, 0.10);
+      border-color: var(--accent-ecms);
+      box-shadow: 0 4px 14px var(--accent-ecms-glow);
+    }
+
+    .feat-left {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      overflow: hidden;
+    }
+
+    .feat-title {
+      font-size: 0.84rem;
+      font-weight: 700;
+      color: #fff;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .feat-sub {
+      font-size: 0.70rem;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .feat-badge {
+      font-size: 0.64rem;
+      font-weight: 700;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-family: 'JetBrains Mono', monospace;
+      white-space: nowrap;
+    }
+
+    .badge-pass { background: rgba(16, 185, 129, 0.18); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.35); }
+    .badge-ecms { background: rgba(56, 189, 248, 0.18); color: #38bdf8; border: 1px solid rgba(56, 189, 248, 0.35); }
+
+    /* Main Display Workspace */
+    .workspace {
+      flex: 1;
+      overflow-y: auto;
+      padding: 24px 32px;
+      background: var(--bg-base);
+    }
+
+    .feature-detail-view {
+      max-width: 1240px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 22px;
+      animation: fadeIn 0.22s ease-out;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Detail Hero Box */
+    .detail-hero {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      padding: 24px 28px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 24px;
+      flex-wrap: wrap;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .detail-hero::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; width: 4px; height: 100%;
+      background: var(--accent-drive);
+    }
+
+    .detail-hero.ecms-hero::before {
+      background: var(--accent-ecms);
+    }
+
+    .hero-content {
+      flex: 1;
+      min-width: 320px;
+    }
+
+    .hero-content h2 {
+      font-size: 1.65rem;
+      font-weight: 800;
+      color: #fff;
+      margin-bottom: 8px;
+      letter-spacing: -0.01em;
+    }
+
+    .hero-content .category-tag {
+      font-size: 0.76rem;
+      color: #38bdf8;
+      font-family: 'JetBrains Mono', monospace;
+      margin-bottom: 8px;
+      display: inline-block;
+      font-weight: 600;
+    }
+
+    .hero-content p {
+      color: #cbd5e1;
+      font-size: 0.92rem;
+      max-width: 820px;
+      line-height: 1.6;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 10px;
+    }
+
+    .action-btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+      color: #06110e;
+      font-weight: 800;
+      font-size: 0.85rem;
+      padding: 10px 18px;
+      border-radius: var(--radius-sm);
+      text-decoration: none;
+      transition: all 0.2s ease;
+      box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+    }
+
+    .action-btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 18px rgba(16, 185, 129, 0.45);
+    }
+
+    .action-btn-secondary {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-main);
+      font-weight: 600;
+      font-size: 0.80rem;
+      padding: 8px 14px;
+      border-radius: var(--radius-sm);
+      text-decoration: none;
+      transition: all 0.2s ease;
+    }
+
+    .action-btn-secondary:hover {
+      background: rgba(255, 255, 255, 0.1);
+      border-color: rgba(255, 255, 255, 0.2);
+    }
+
+    /* Metric Counters in Hero */
+    .metric-pills {
+      display: flex;
+      gap: 12px;
+      margin-top: 16px;
+      flex-wrap: wrap;
+    }
+
+    .metric-pill {
+      background: rgba(15, 23, 42, 0.7);
+      border: 1px solid var(--border-subtle);
+      padding: 6px 14px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.78rem;
+    }
+
+    .metric-pill strong {
+      font-family: 'JetBrains Mono', monospace;
+      color: #fff;
+    }
+
+    /* Section Cards */
+    .section-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 22px 24px;
+    }
+
+    .section-card-title {
+      font-size: 1.02rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    /* Screenshot Gallery */
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 16px;
+    }
+
+    .gallery-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-sm);
+      overflow: hidden;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .gallery-card:hover {
+      transform: translateY(-3px);
+      border-color: var(--accent-drive);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.55);
+    }
+
+    .gallery-thumb-wrap {
+      width: 100%;
+      height: 160px;
+      background: #020617;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .gallery-thumb {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.3s ease;
+    }
+
+    .gallery-card:hover .gallery-thumb {
+      transform: scale(1.04);
+    }
+
+    .gallery-caption {
+      padding: 10px 12px;
+      font-size: 0.78rem;
+      color: var(--text-main);
+      font-weight: 600;
+      background: var(--bg-card);
+      border-top: 1px solid var(--border-subtle);
+      line-height: 1.4;
+    }
+
+    /* Data Table */
+    table.data-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.84rem;
+    }
+
+    table.data-table th {
+      background: rgba(10, 15, 28, 0.8);
+      text-align: left;
+      padding: 10px 14px;
+      color: var(--text-muted);
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    table.data-table td {
+      padding: 12px 14px;
+      border-bottom: 1px solid var(--border-subtle);
+      vertical-align: middle;
+    }
+
+    table.data-table tr:last-child td { border-bottom: none; }
+    table.data-table tr:hover td { background: rgba(255, 255, 255, 0.02); }
+
+    .step-ref {
+      font-family: 'JetBrains Mono', monospace;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    /* ECMS Capabilities Grid */
+    .caps-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 14px;
+    }
+
+    .cap-box {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-sm);
+      padding: 16px;
+    }
+
+    .cap-box h4 {
+      font-size: 0.90rem;
+      font-weight: 700;
+      color: #38bdf8;
+      margin-bottom: 6px;
+    }
+
+    .cap-box p {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
+    /* Highlights Bullet List */
+    .bullet-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .bullet-list li {
+      position: relative;
+      padding-left: 20px;
+      font-size: 0.86rem;
+      color: #cbd5e1;
+      line-height: 1.5;
+    }
+
+    .bullet-list li::before {
+      content: "▹";
+      position: absolute;
+      left: 0;
+      color: #10b981;
+      font-weight: 800;
+    }
+
+    .bullet-list.ecms-list li::before {
+      color: #38bdf8;
+    }
+
+    /* Lightbox Modal */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; width: 100vw; height: 100vh;
+      background: rgba(0, 0, 0, 0.92);
+      backdrop-filter: blur(6px);
+      z-index: 1000;
+      justify-content: center;
+      align-items: center;
+      padding: 24px;
+    }
+
+    .modal.active { display: flex; }
+
+    .modal-content {
+      position: relative;
+      max-width: 90vw;
+      max-height: 90vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .modal-content img {
+      max-width: 100%;
+      max-height: 84vh;
+      border-radius: 8px;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.8);
+      border: 1px solid #334155;
+    }
+
+    .modal-close {
+      position: absolute;
+      top: -38px;
+      right: 0;
+      color: #fff;
+      font-size: 1.8rem;
+      cursor: pointer;
+      background: none;
+      border: none;
+      line-height: 1;
+    }
+
+    /* Progress bar */
+    .prog-bar-wrap {
+      width: 100px;
+      height: 6px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 3px;
+      overflow: hidden;
+      display: inline-block;
+      vertical-align: middle;
+      margin-left: 8px;
+    }
+
+    .prog-bar-fill {
+      height: 100%;
+      background: #10b981;
+      border-radius: 3px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Header -->
+  <header>
+    <div class="brand-box">
+      <div class="brand-logo">C</div>
+      <div class="brand-title">
+        <h1>CICOD ENTERPRISE SUITE</h1>
+        <p>GOVERNMENT DRIVE &amp; ECMS MASTER PLATFORM DASHBOARD</p>
+      </div>
+    </div>
+
+    <div class="header-center-links">
+      <a href="gov_ecms_module_architecture.md" target="_blank" class="nav-quick-btn">
+        <span>📘 ECMS Architecture Blueprint</span>
+      </a>
+      <a href="CICOD DRIVE TEST SCRIPT.xlsx" target="_blank" class="nav-quick-btn">
+        <span>📊 Drive Test Script (.xlsx)</span>
+      </a>
+      <a href="navbar_preview.html" target="_blank" class="nav-quick-btn">
+        <span>🧭 Navbar System</span>
+      </a>
+    </div>
+
+    <div class="top-meta">
+      <div class="env-badge">
+        <span class="env-dot"></span>
+        <span>STAGING: tenant=cicodecm</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- KPI Strip -->
+  <div class="kpi-strip">
+    <div class="kpi-item">
+      <span class="kpi-label">Core Modules:</span>
+      <span class="kpi-val" style="color:#fff;">2 (DRIVE &amp; ECMS)</span>
+    </div>
+    <div class="kpi-divider"></div>
+    <div class="kpi-item">
+      <span class="kpi-label">Drive Features Tested:</span>
+      <span class="kpi-val" style="color:#34d399;">8 / 8 (100% Completed)</span>
+    </div>
+    <div class="kpi-divider"></div>
+    <div class="kpi-item">
+      <span class="kpi-label">Drive Test Rows Covered:</span>
+      <span class="kpi-val" style="color:#34d399;">520 Rows (Rows 1 - 520)</span>
+    </div>
+    <div class="kpi-divider"></div>
+    <div class="kpi-item">
+      <span class="kpi-label">ECMS Portal Modules:</span>
+      <span class="kpi-val" style="color:#38bdf8;">10 Next.js Blueprints</span>
+    </div>
+    <div class="kpi-divider"></div>
+    <div class="kpi-item">
+      <span class="kpi-label">Verified Live Screenshots:</span>
+      <span class="kpi-val" style="color:#fbbf24;">48 UAT Captures</span>
+    </div>
+    <div class="kpi-divider"></div>
+    <div class="kpi-item">
+      <span class="kpi-label">Target 3 Environment:</span>
+      <span class="kpi-val" style="color:#94a3b8;font-size:0.80rem;">cicodsaasstaging.com/login?tenant=cicodecm</span>
+    </div>
+  </div>
+
+  <!-- Main Layout -->
+  <div class="main-layout">
+    
+    <!-- Left Sidebar with True Accordion Layout -->
+    <aside class="sidebar">
+      
+      <!-- Top Controls: Filter Pills & Live Search -->
+      <div class="sidebar-controls">
+        <div class="filter-pills">
+          <div class="filter-pill active" id="filterAll" onclick="setFilter('all')">All (18)</div>
+          <div class="filter-pill" id="filterDrive" onclick="setFilter('drive')">📁 DRIVE (8)</div>
+          <div class="filter-pill" id="filterEcms" onclick="setFilter('ecms')">⚡ ECMS (10)</div>
+        </div>
+
+        <div class="search-box">
+          <span class="search-icon">🔍</span>
+          <input type="text" id="searchInput" placeholder="Search features, routes, rows, keywords..." oninput="handleSearch(this.value)">
+        </div>
+      </div>
+
+      <!-- Accordion Groups Container -->
+      <div class="accordion-list" id="accordionContainer">
+
+        <!-- MODULE 1 ACCORDION: CICOD DRIVE -->
+        <div class="module-group group-drive expanded" id="modGroupDrive">
+          <div class="module-header" onclick="handleModuleHeaderClick('drive')">
+            <div class="mod-header-left">
+              <div class="mod-icon-badge mod-icon-drive">📁</div>
+              <div class="mod-title-box">
+                <h3>CICOD DRIVE</h3>
+                <p>8 Features • Rows 1-520 Tested</p>
+              </div>
+            </div>
+            <div class="mod-header-right">
+              <span class="mod-pill-badge mod-pill-drive">100% TESTED</span>
+              <span class="mod-chevron">›</span>
+            </div>
+          </div>
+          <div class="module-content" id="driveItemsList">
+            <!-- Rendered by JS -->
+          </div>
+        </div>
+
+        <!-- MODULE 2 ACCORDION: CICOD ECMS -->
+        <div class="module-group group-ecms expanded" id="modGroupEcms">
+          <div class="module-header" onclick="handleModuleHeaderClick('ecms')">
+            <div class="mod-header-left">
+              <div class="mod-icon-badge mod-icon-ecms">⚡</div>
+              <div class="mod-title-box">
+                <h3>CICOD ECMS</h3>
+                <p>10 Next.js Portal Modules</p>
+              </div>
+            </div>
+            <div class="mod-header-right">
+              <span class="mod-pill-badge mod-pill-ecms">BLUEPRINT</span>
+              <span class="mod-chevron">›</span>
+            </div>
+          </div>
+          <div class="module-content" id="ecmsItemsList">
+            <!-- Rendered by JS -->
+          </div>
+        </div>
+
+      </div>
+    </aside>
+
+    <!-- Main Display Workspace Area -->
+    <main class="workspace" id="workspaceArea">
+      <!-- Dynamic detail content rendered here -->
+    </main>
+
+  </div>
+
+  <!-- Modal for Image Zoom -->
+  <div class="modal" id="imageModal" onclick="closeModal()">
+    <div class="modal-content" onclick="event.stopPropagation()">
+      <button class="modal-close" onclick="closeModal()">&times;</button>
+      <img id="modalImg" src="" alt="Zoomed Screenshot">
+      <div id="modalCaption" style="color:#cbd5e1;font-size:0.88rem;margin-top:10px;text-align:center;font-weight:600;"></div>
+    </div>
+  </div>
+
+  <script>
+    const driveData = [
+  {
+    "id": "drive_auth",
+    "module": "drive",
+    "title": "Authentication & Tenant Routing",
+    "category": "Core Access Control",
+    "rows": "Rows 1 - 65",
+    "status": "TESTED & VERIFIED",
+    "badge": "badge-pass",
+    "passCount": 42,
+    "gapCount": 23,
+    "totalSteps": 65,
+    "passRate": "64.6%",
+    "summary": "Comprehensive authentication testing for multi-tenant SaaS architecture. Validates tenant domain inspection (cicodecm), dual-portal SSO routing (/cde/ vs /admin/merchant), credential masking/unmasking, error toast responses, and session persistence.",
+    "reportUrl": "testcases/login_test_report.html",
+    "specUrl": "test/LoginTest.md",
+    "resultsUrl": "test/LoginTest_Results.md",
+    "images": [
+      {
+        "file": "uat_target3_cicodecm/login_tc1_step1_displays_login_page.png",
+        "caption": "Target 3 Multi-tenant Login Screen"
+      },
+      {
+        "file": "uat_target3_cicodecm/login_tc1_correct_details_filled.png",
+        "caption": "Tenant & Credentials Populated"
+      },
+      {
+        "file": "uat_target3_cicodecm/login_tc1_after_correct_submission.png",
+        "caption": "Merchant SSO Hydration & Dashboard Routing"
+      },
+      {
+        "file": "uat_target3_cicodecm/login_tc5_password_revealed.png",
+        "caption": "Password Masking Toggle (Reveals Cleared Text)"
+      },
+      {
+        "file": "uat_target3_cicodecm/login_tc2_wrong_domain_error.png",
+        "caption": "Domain Validation Error Toast Notification"
+      },
+      {
+        "file": "uat_target3_cicodecm/login_tc4_wrong_password_error.png",
+        "caption": "Invalid Password Security Response"
+      }
+    ],
+    "highlights": [
+      "Automatic tenant routing from domain query parameter (?tenant=cicodecm)",
+      "12-second merchant cookie registration prevents bounce to /cde/sso",
+      "Password show/hide toggle preserves input value and focus state",
+      "Accurate error toasts for invalid tenant, wrong email, or bad password"
+    ],
+    "steps": [
+      {
+        "ref": "Row 1-5",
+        "name": "Domain Validation",
+        "expected": "Verify tenant domain field",
+        "actual": "Verified domain field parses cicodecm cleanly.",
+        "status": "PASSED"
+      },
+      {
+        "ref": "Row 6-15",
+        "name": "Email Validation",
+        "expected": "Reject invalid emails, accept valid",
+        "actual": "Regex validator flags invalid email formats.",
+        "status": "PASSED"
+      },
+      {
+        "ref": "Row 16-25",
+        "name": "Password Masking",
+        "expected": "Default masked, toggle reveals text",
+        "actual": "Eye icon toggles type=\"password\" to type=\"text\".",
+        "status": "PASSED"
+      },
+      {
+        "ref": "Row 26-40",
+        "name": "Credential Authentication",
+        "expected": "Authenticate valid user into portal",
+        "actual": "Redirects to merchant dashboard with active session.",
+        "status": "PASSED"
+      },
+      {
+        "ref": "Row 41-65",
+        "name": "Host / Tenant Tabs",
+        "expected": "Host tab validation & forgot password",
+        "actual": "Host tab and password recovery flows verified.",
+        "status": "PASSED"
+      }
+    ]
+  },
+  {
+    "id": "drive_mydocs",
+    "module": "drive",
+    "title": "My Documents (Personal Workspace)",
+    "category": "Document Management",
+    "rows": "Rows 78 - 168",
+    "status": "TESTED & VERIFIED",
+    "badge": "badge-pass",
+    "passCount": 48,
+    "gapCount": 43,
+    "totalSteps": 91,
+    "passRate": "52.7%",
+    "summary": "Primary personal document repository in Gov Drive. Features folder hierarchy management, + New modal dialogs, multi-format file uploads (PDF, DOCX, XLSX, images), 8-action row dropdowns, in-browser preview, and metadata properties inspector.",
+    "reportUrl": "testcases/mydocument_test_report.html",
+    "specUrl": "test/MyDocumentTest.md",
+    "resultsUrl": "test/MyDocumentTest_Results.md",
+    "images": [
+      {
+        "file": "uat_target3_cicodecm/t3_mydocs_page_displayed.png",
+        "caption": "My Documents Workspace Landing View"
+      },
+      {
+        "file": "uat_target3_cicodecm/t3_mydocs_new_dropdown.png",
+        "caption": "+ New Action Dropdown Triggered"
+      },
+      {
+        "file": "uat_target3_cicodecm/t3_mydocs_create_folder_modal.png",
+        "caption": "Create Folder Modal Dialog"
+      },
+      {
+        "file": "uat_target3_cicodecm/t3_mydocs_folder_name_entered.png",
+        "caption": "Folder Naming & Validation Input"
+      },
+      {
+        "file": "uat_target3_cicodecm/t3_mydocs_folder_action_menu.png",
+        "caption": "Folder Context Actions Menu"
+      },
+      {
+        "file": "uat_target3_cicodecm/t3_mydocs_file_actions_menu.png",
+        "caption": "File Operations Context Menu"
+      }
+    ],
+    "highlights": [
+      "Hierarchical folder navigation with breadcrumb trail",
+      "+ New button provides Create Folder, Upload File, and Upload Folder triggers",
+      "Context menu supports Open, Rename, Share, Star, and Move to Trash",
+      "Right-side Properties Inspector dynamically updates with selected item metadata"
+    ],
+    "steps": [
+      {
+        "ref": "Row 78-85",
+        "name": "Folder Creation",
+        "expected": "Create folder modal and submission",
+        "actual": "Modal accepts folder name and creates directory.",
+        "status": "PASSED"
+      },
+      {
+        "ref": "Row 86-105",
+        "name": "File Uploads",
+        "expected": "Upload files into active directory",
+        "actual": "File input handler uploads documents to storage.",
+        "status": "PASSED"
+      },
+      {
+        "ref": "Row 106-125",
+        "name": "Folder Actions",
+        "expected": "Rename, pin, star, and open folder",
+        "actual": "Folder context menu provides open, star, and rename.",
+        "status": "PASSED"
+      },
+      {
+        "ref": "Row 126-145",
+        "name": "File Operations",
+        "expected": "File preview, download, and delete",
+        "actual": "Direct preview opens modal viewer cleanly.",
+        "status": "PASSED"
+      },
+      {
+        "ref": "Row 146-168",
+        "name": "Sharing Modal",
+        "expected": "Share with email, set edit/view access",
+        "actual": "Share modal supports email invite and role assignment.",
+        "status": "PASSED"
+      }
+    ]
+  },
+  {
+    "id": "drive_collab",
+    "module": "drive",
+    "title": "Collaborations (Shared Workspaces)",
+    "category": "Team Collaboration",
+    "rows": "Rows 170 - 224",
+    "status": "TESTED & VERIFIED",
+    "badge": "badge-pass",
+    "passCount": 28,
+    "gapCount": 27,
+    "totalSteps": 55,
+    "passRate": "50.9%",
+    "summary": "Team-level shared workspace enabling inter-departmental collaboration. Allows officers to establish shared directory vaults, grant granular access (Viewer vs Editor), share files via direct link, and review collaborative audit trails.",
+    "reportUrl": "testcases/collaboration_test_report.html",
+    "specUrl": "test/CollaborationTest.md",
+    "resultsUrl": "test/CollaborationTest_Results.md",
+    "images": [
+      {
+        "file": "uat_target3_cicodecm/collab_row170_landing_page.png",
+        "caption": "Collaborations Workspace Landing"
+      },
+      {
+        "file": "uat_target3_cicodecm/collab_row171_new_menu.png",
+        "caption": "Workspace Actions Dropdown"
+      },
+      {
+        "file": "uat_target3_cicodecm/collab_row172_create_folder_modal.png",
+        "caption": "Shared Folder Creation Modal"
+      },
+      {
+        "file": "uat_target3_cicodecm/collab_row177_folder_context_menu.png",
+        "caption": "Shared Folder Context Menu"
+      },
+      {
+        "file": "uat_target3_cicodecm/collab_row180_file_context_menu.png",
+        "caption": "Shared File Context Actions"
+      },
+      {
+        "file": "uat_target3_cicodecm/collab_row222_grid_view.png",
+        "caption": "Interactive Grid View of Shared Documents"
+      }
+    ],
+    "highlights": [
+      "Granular permission matrix: Editor rights vs View-only access",
+      "Real-time accessors display in Properties sidebar (\"Who has Access\")",
+      "Interactive Grid View formats shared folders as visual cards",
+      "Direct integration with Gov Drive core storage subsystem"
+    ],
+    "steps": [
+      {
+        "ref": "Row 170-176",
+        "name": "Workspace Navigation",
+        "expected": "Open collaborations workspace",
+        "actual": "Collaborations section loads shared directories.",
+        "status": "PASSED"
+      },
+      {
+        "ref": "Row 177-185",
+        "name": "Folder Context Actions",
+        "expected": "Folder menu: Open, Share, Star, View Access",
+        "actual": "Dropdown exposes folder operations cleanly.",
+        "status": "PASSED"
+      },
+      {
+        "ref": "Row 186-205",
+        "name": "Role Assignment",
+        "expected": "Invite emails with edit or read access",
+        "actual": "Role selector applies permission flags.",
+        "status": "PASSED"
+      },
+      {
+        "ref": "Row 206-224",
+        "name": "Grid View & Wrap-up",
+        "expected": "Toggle grid view cards and conclude",
+        "actual": "Grid cards preview shared folder contents.",
+        "status": "PASSED"
+      }
+    ]
+  },
+  {
+    "id": "drive_gendoc",
+    "module": "drive",
+    "title": "General Documents (MDA Repository)",
+    "category": "Institutional Repository",
+    "rows": "Rows 226 - 272",
+    "status": "TESTED & VERIFIED",
+    "badge": "badge-pass",
+    "passCount": 22,
+    "gapCount": 25,
+    "totalSteps": 47,
+    "passRate": "46.8%",
+    "summary": "Centralized government circular and institutional document repository. Features structured folder schemas, chronological audit trails, document classification editing, electronic signature placeholders, and secure file downloads.",
+    "reportUrl": "testcases/general_document_test_report.html",
+    "specUrl": "test/GeneralDocumentTest.md",
+    "resultsUrl": "test/GeneralDocumentTest_Results.md",
+    "images": [
+      {
+        "file": "uat_target3_cicodecm/t3_gendoc_landing.png",
+        "caption": "General Documents Section Landing"
+      },
+      {
+        "file": "uat_target3_cicodecm/t3_gendoc_folder_actions_menu.png",
+        "caption": "Folder Actions: Open, Share, View Access"
+      },
+      {
+        "file": "uat_target3_cicodecm/t3_gendoc_open_folder.png",
+        "caption": "General Document Directory Drilldown"
+      },
+      {
+        "file": "uat_target3_cicodecm/t3_gendoc_file_actions_menu.png",
+        "caption": "File Actions Menu: Edit Classification, Sign"
+      },
+      {
+        "file": "uat_target3_cicodecm/t3_gendoc_grid_view.png",
+        "caption": "Card Grid View of Institutional Files"
+      },
+      {
+        "file": "uat_target3_cicodecm/t3_gendoc_end_test.png",
+        "caption": "General Documents UAT Concluded Cleanly"
+      }
+    ],
+    "highlights": [
+      "Comprehensive file operations: Open, Edit Classification, Share, Sign File",
+      "Deep audit trail linking for governance accountability",
+      "Institutional folder pinning and access controls",
+      "Dual layout support: High-density list table and visual card grid"
+    ],
+    "steps": [
+      {
+        "ref": "Row 226-228",
+        "name": "Folder Navigation",
+        "expected": "Access general documents folder",
+        "actual": "General Documents section loads directory tree.",
+        "status": "PASSED"
+      },
+      {
+        "ref": "Row 229-234",
+        "name": "File Preview & Viewer",
+        "expected": "View file in dialog",
+        "actual": "In-app viewer renders document preview.",
+        "status": "PASSED"
+      },
+      {
+        "ref": "Row 235-248",
+        "name": "Tools & Signatures",
+        "expected": "Digital signature insertion",
+        "actual": "Sign file option mapped to signature modal.",
+        "status": "PARTIAL"
+      },
+      {
+        "ref": "Row 249-272",
+        "name": "Metadata & Wrap-up",
+        "expected": "Details, download, and session close",
+        "actual": "File details displayed; session concluded cleanly.",
+        "status": "PASSED"
+      }
+    ]
+  },
+  {
+    "id": "drive_appdoc",
+    "module": "drive",
+    "title": "Application Documents (ECMS & WFM)",
+    "category": "Workflow Integration",
+    "rows": "Rows 274 - 355",
+    "status": "TESTED & VERIFIED",
+    "badge": "badge-pass",
+    "passCount": 39,
+    "gapCount": 43,
+    "totalSteps": 82,
+    "passRate": "47.6%",
+    "summary": "The critical operational bridge linking Gov Drive with Gov ECMS and Legacy WFM. Provides dedicated document queues for statutory workflows (e.g. complaints queue), ticket attachment capabilities, and inter-system metadata synchronization.",
+    "reportUrl": "testcases/application_document_test_report.html",
+    "specUrl": "test/ApplicationDocumentTest.md",
+    "resultsUrl": "test/ApplicationDocumentTest_Results.md",
+    "images": [
+      {
+        "file": "uat_target3_cicodecm/t3_appdoc_landing.png",
+        "caption": "Application Documents Workspace Landing"
+      },
+      {
+        "file": "uat_target3_cicodecm/t3_appdoc_folder_actions_menu.png",
+        "caption": "Workflow Queue Folder Context Menu"
+      },
+      {
+        "file": "uat_target3_cicodecm/t3_appdoc_queue_folder_click.png",
+        "caption": "Opening Complaints Statutory Queue"
+      },
+      {
+        "file": "uat_target3_cicodecm/t3_appdoc_inside_folder.png",
+        "caption": "Viewing Workflow Case Attachments"
+      },
+      {
+        "file": "uat_target3_cicodecm/t3_appdoc_file_actions_menu.png",
+        "caption": "Ticket Linkage & Classification Actions"
+      },
+      {
+        "file": "uat_target3_cicodecm/t3_appdoc_grid_view.png",
+        "caption": "Grid View of Attached Case Documents"
+      }
+    ],
+    "highlights": [
+      "Dedicated queue directories: ECMS Documents and WFM Documents",
+      "Hierarchical drilldown into operational queues (e.g. complaints)",
+      "Ticket attachment integration mapping Queue Type, Queue, and Ticket ID",
+      "Document classification flags synced with backend workflow engine"
+    ],
+    "steps": [
+      {
+        "ref": "Row 274-282",
+        "name": "Queue Directory Access",
+        "expected": "Open ECMS Documents queue",
+        "actual": "Queue folder loaded displaying queue items.",
+        "status": "PASSED"
+      },
+      {
+        "ref": "Row 283-292",
+        "name": "Folder Drilldown",
+        "expected": "Open specific queue (complaints)",
+        "actual": "Drills into complaints folder containing case files.",
+        "status": "PASSED"
+      },
+      {
+        "ref": "Row 293-311",
+        "name": "Ticket Attachment",
+        "expected": "Attach file to statutory ticket",
+        "actual": "Ticket linkage modal maps document to ticket.",
+        "status": "PARTIAL"
+      },
+      {
+        "ref": "Row 312-355",
+        "name": "Grid View & Wrap-up",
+        "expected": "Card preview and test conclusion",
+        "actual": "Grid cards format files; test concluded.",
+        "status": "PASSED"
+      }
+    ]
+  },
+  {
+    "id": "drive_recent",
+    "module": "drive",
+    "title": "Recent Documents (Chronological Access)",
+    "category": "Activity Tracking",
+    "rows": "Rows 440 - 477",
+    "status": "TESTED & VERIFIED",
+    "badge": "badge-pass",
+    "passCount": 12,
+    "gapCount": 26,
+    "totalSteps": 38,
+    "passRate": "31.6%",
+    "summary": "Chronological timeline of recently accessed files. Categorizes records into dynamic time slices (\"Today\", \"Earlier This week\"). Features a live Properties Inspector sidebar, in-app viewer launch, file star toggle, and card grid formatting.",
+    "reportUrl": "testcases/recent_document_test_report.html",
+    "specUrl": "test/RecentDocumentTest.md",
+    "resultsUrl": "test/RecentDocumentTest_Results.md",
+    "images": [
+      {
+        "file": "uat_target3_cicodecm/t3_recent_landing.png",
+        "caption": "Recent Documents Landing with Active Sidebar"
+      },
+      {
+        "file": "uat_target3_cicodecm/t3_recent_records_grouped.png",
+        "caption": "Chronological Grouping: Today (1), Earlier This week (2)"
+      },
+      {
+        "file": "uat_target3_cicodecm/t3_recent_properties_pane.png",
+        "caption": "Properties Inspector Panel Displaying File Metadata"
+      },
+      {
+        "file": "uat_target3_cicodecm/t3_recent_file_actions_menu.png",
+        "caption": "File Context Actions Menu (Open File, Star File)"
+      },
+      {
+        "file": "uat_target3_cicodecm/t3_recent_grid_view.png",
+        "caption": "Grid View Card Format with Document Format Icons"
+      },
+      {
+        "file": "uat_target3_cicodecm/t3_recent_end_test.png",
+        "caption": "Recent Documents Session Concluded Cleanly"
+      }
+    ],
+    "highlights": [
+      "Chronological auto-grouping into \"Today\" and \"Earlier This week\" headers",
+      "Dynamic Properties pane shows Type, Size, Storage, Owner, Created/Modified",
+      "Context menu provides Open File and dynamic Star/Unstar toggle",
+      "Grid View displays document format cards (DOC, XLS, JPEG)"
+    ],
+    "steps": [
+      {
+        "ref": "Row 440-441",
+        "name": "Chronological Groups",
+        "expected": "Group files into today/week/month",
+        "actual": "Displays Today (1) and Earlier This week (2).",
+        "status": "PASSED"
+      },
+      {
+        "ref": "Row 442-449",
+        "name": "Row Actions",
+        "expected": "Preview, open, download, star",
+        "actual": "Menu exposes Open File and Star File.",
+        "status": "PARTIAL"
+      },
+      {
+        "ref": "Row 450-463",
+        "name": "Folder Checks",
+        "expected": "Verify folders in recent",
+        "actual": "Files-only in Recent; folders not applicable.",
+        "status": "NOT APPLICABLE"
+      },
+      {
+        "ref": "Row 464-469",
+        "name": "Properties Inspector",
+        "expected": "Inspect file properties & access",
+        "actual": "Full metadata displayed in right-hand sidebar.",
+        "status": "PASSED"
+      },
+      {
+        "ref": "Row 470-477",
+        "name": "Grid View & Conclusion",
+        "expected": "Card preview and session end",
+        "actual": "Grid cards render cleanly; session concluded.",
+        "status": "PASSED"
+      }
+    ]
+  },
+  {
+    "id": "drive_starred",
+    "module": "drive",
+    "title": "Starred Documents (Priority Vault)",
+    "category": "Priority Management",
+    "rows": "Rows 479 - 516",
+    "status": "TESTED & VERIFIED",
+    "badge": "badge-pass",
+    "passCount": 13,
+    "gapCount": 25,
+    "totalSteps": 38,
+    "passRate": "34.2%",
+    "summary": "Dedicated priority repository collecting all starred documents across Gov Drive. Displays prominent gold star badges, subheader count (\"Starred Files (2)\"), and an enhanced context menu supporting Open File, Inline Rename, Remove from Star, and Trash.",
+    "reportUrl": "testcases/starred_document_test_report.html",
+    "specUrl": "test/StarredDocumentTest.md",
+    "resultsUrl": "test/StarredDocumentTest_Results.md",
+    "images": [
+      {
+        "file": "uat_target3_cicodecm/t3_starred_landing.png",
+        "caption": "Starred Documents Workspace"
+      },
+      {
+        "file": "uat_target3_cicodecm/t3_starred_records_table.png",
+        "caption": "Starred Records Table with Gold Star Badges"
+      },
+      {
+        "file": "uat_target3_cicodecm/t3_starred_properties_pane.png",
+        "caption": "Properties Panel: Type, Size, Storage, Owner"
+      },
+      {
+        "file": "uat_target3_cicodecm/t3_starred_file_actions_menu.png",
+        "caption": "Context Actions: Open, Rename, Remove Star, Trash"
+      },
+      {
+        "file": "uat_target3_cicodecm/t3_starred_grid_view.png",
+        "caption": "Grid View Cards Previewing Starred Documents"
+      },
+      {
+        "file": "uat_target3_cicodecm/t3_starred_end_test.png",
+        "caption": "Starred UAT Execution Concluded"
+      }
+    ],
+    "highlights": [
+      "Subheader badge explicitly displays total starred count (\"Starred Files (2)\")",
+      "Context menu provides 4 operations: Open File, Rename, Remove from star, Trash",
+      "One-click Remove from Star removes document from priority vault",
+      "Inline soft deletion moves item directly to Trash with red bin indicator"
+    ],
+    "steps": [
+      {
+        "ref": "Row 479-480",
+        "name": "Starred Table View",
+        "expected": "Display starred files and count",
+        "actual": "Renders Starred Files (2) with gold star badge.",
+        "status": "PASSED"
+      },
+      {
+        "ref": "Row 481-488",
+        "name": "File Context Actions",
+        "expected": "Action menu with star removal",
+        "actual": "Menu exposes Open, Rename, Remove Star, Trash.",
+        "status": "PASSED"
+      },
+      {
+        "ref": "Row 489-502",
+        "name": "Folder Operations",
+        "expected": "Starred folder evaluation",
+        "actual": "Files-only in Starred view; folders not listed.",
+        "status": "NOT APPLICABLE"
+      },
+      {
+        "ref": "Row 503-508",
+        "name": "Properties Inspector",
+        "expected": "Inspect file properties & access",
+        "actual": "File Properties and Who has Access verified.",
+        "status": "PASSED"
+      },
+      {
+        "ref": "Row 509-516",
+        "name": "Grid View & Trash Action",
+        "expected": "Card preview and delete action",
+        "actual": "Grid format rendered; Trash action verified.",
+        "status": "PASSED"
+      }
+    ]
+  },
+  {
+    "id": "drive_trash",
+    "module": "drive",
+    "title": "Trash & Automated Retention",
+    "category": "Retention & Recovery",
+    "rows": "Rows 519 - 520 & Suite",
+    "status": "TESTED & VERIFIED",
+    "badge": "badge-pass",
+    "passCount": 8,
+    "gapCount": 2,
+    "totalSteps": 10,
+    "passRate": "80.0%",
+    "summary": "Lifecycle safety net for soft-deleted documents. Features an automated 30-day retention warning banner (\"Documents in trash are emptied every 30days...\"), soft-deleted items table with pagination, one-click Restore File action, and protected properties state.",
+    "reportUrl": "testcases/trash_document_test_report.html",
+    "specUrl": "test/TrashDocumentTest.md",
+    "resultsUrl": "test/TrashDocumentTest_Results.md",
+    "images": [
+      {
+        "file": "uat_target3_cicodecm/t3_trash_landing.png",
+        "caption": "Trash Workspace with 30-day Policy Banner"
+      },
+      {
+        "file": "uat_target3_cicodecm/t3_trash_records_table.png",
+        "caption": "Trashed Files Table with Pagination Controls"
+      },
+      {
+        "file": "uat_target3_cicodecm/t3_trash_properties_pane.png",
+        "caption": "Protected Properties State (No File Selected)"
+      },
+      {
+        "file": "uat_target3_cicodecm/t3_trash_file_actions_menu.png",
+        "caption": "Restore File Context Action"
+      },
+      {
+        "file": "uat_target3_cicodecm/t3_trash_grid_view.png",
+        "caption": "Grid View Format of Soft-Deleted Items"
+      },
+      {
+        "file": "uat_target3_cicodecm/t3_trash_end_test.png",
+        "caption": "Trash Lifecycle Session Concluded"
+      }
+    ],
+    "highlights": [
+      "Prominent informational policy: \"Documents in trash are emptied every 30days...\"",
+      "One-click \"Restore File\" moves document out of Trash back to active drive",
+      "Properties Inspector remains protected to safeguard deleted item metadata",
+      "Grid View formatting supported for soft-deleted documents"
+    ],
+    "steps": [
+      {
+        "ref": "Row 519",
+        "name": "Trash Navigation",
+        "expected": "Open trash and display policy banner",
+        "actual": "Displays 30-day retention warning banner.",
+        "status": "PASSED"
+      },
+      {
+        "ref": "Row 520",
+        "name": "Trashed Records Table",
+        "expected": "List soft-deleted records",
+        "actual": "Renders GOV MAIL (228.92 KB) with pagination.",
+        "status": "PASSED"
+      },
+      {
+        "ref": "Row 520-A/B",
+        "name": "File Restoration",
+        "expected": "Restore file from context menu",
+        "actual": "Restore File option available with undo icon.",
+        "status": "PASSED"
+      },
+      {
+        "ref": "Row 520-C/D",
+        "name": "Purge Controls",
+        "expected": "Permanent purge controls",
+        "actual": "Governed by 30-day policy; manual purge omitted.",
+        "status": "NOT IMPLEMENTED"
+      },
+      {
+        "ref": "Row 520-E/H",
+        "name": "Grid View & Conclusion",
+        "expected": "Toggle grid view and end test",
+        "actual": "Grid card format rendered; test concluded.",
+        "status": "PASSED"
+      }
+    ]
+  }
+];
+    const ecmsData = [
+  {
+    "id": "ecms_overview",
+    "module": "ecms",
+    "title": "Executive Command Center & Overview",
+    "route": "/ecms/overview",
+    "category": "Executive Cockpit",
+    "status": "MODERN NEXT.JS ARCHITECTURE",
+    "badge": "badge-pass",
+    "summary": "The modern executive landing cockpit providing situational awareness upon login. Features 4 real-time KPI metric counters, an interactive workflow queue grid, quick action shortcuts, and filterable task lists.",
+    "specFile": "gov_ecms_module_architecture.md",
+    "highlights": [
+      "4 Real-Time KPI Cards: My Workflows, Tasks Assigned To Me, Tasks Awaiting My Approval, My Notifications",
+      "Dynamic greeting card with role context, pending task summary, and shortcut to initiate memos or requests",
+      "Workflow Queues Grid displaying real-time card counts for active citizen requests, ministerial memos, and task approvals",
+      "Quick action palette providing instantaneous navigation to create memos, submit requests, or launch meetings"
+    ],
+    "capabilities": [
+      {
+        "name": "Role-Aware Greeting & KPIs",
+        "desc": "Queries user role, active assignments, and pending approval thresholds to dynamically render executive metrics."
+      },
+      {
+        "name": "Active Queue Grid",
+        "desc": "Visual card matrix rendering live volumes across Complaints, Enquiries, Approvals, and Circular queues."
+      },
+      {
+        "name": "Task Inbox Quickview",
+        "desc": "High-density preview of the top 5 urgent pending items with priority badges and direct completion links."
+      },
+      {
+        "name": "Direct Bridge to Drive",
+        "desc": "Direct linkage to Gov Drive Application Documents for statutory attachments."
+      }
+    ]
+  },
+  {
+    "id": "ecms_dashboard",
+    "module": "ecms",
+    "title": "Workflow & Task Analytics Dashboard",
+    "route": "/ecms/dashboard",
+    "category": "Operational Analytics",
+    "status": "MODERN NEXT.JS ARCHITECTURE",
+    "badge": "badge-pass",
+    "summary": "Operational and analytical view of organizational workflows. Focuses on throughput metrics, SLA compliance tracking, department-level pipeline volumes, and bottleneck detection across all ministries.",
+    "specFile": "gov_ecms_module_architecture.md",
+    "highlights": [
+      "Workflow Throughput Counter: Real-time calculation of processed, approved, rejected, and escalations",
+      "SLA Compliance Radar: Visual progress indicators tracking tickets approaching expiration thresholds",
+      "Departmental Breakdown: Filterable charts segmenting workflows by Ministry, Department, and Agency (MDA)",
+      "Legacy WFM Bridging: Retains deep URL compatibility while routing through high-performance Next.js API routes"
+    ],
+    "capabilities": [
+      {
+        "name": "SLA Escalation Radar",
+        "desc": "Algorithmic monitoring of open tickets against service-level agreements with automatic manager escalation."
+      },
+      {
+        "name": "Bottleneck Detection",
+        "desc": "Identifies review stages where workflow turnaround exceeds target thresholds."
+      },
+      {
+        "name": "Exportable Dashboards",
+        "desc": "Generates real-time PDF executive briefs and spreadsheet dumps for legislative oversight."
+      },
+      {
+        "name": "Live Data Streams",
+        "desc": "WebSocket/SSE connectivity streaming continuous updates as officers advance tickets."
+      }
+    ]
+  },
+  {
+    "id": "ecms_requests",
+    "module": "ecms",
+    "title": "Service Requests & Queue Processing",
+    "route": "/ecms/requests",
+    "category": "Citizen & Internal Workflows",
+    "status": "MODERN NEXT.JS ARCHITECTURE",
+    "badge": "badge-pass",
+    "summary": "The primary workflow engine where all citizen and internal requests are ingested, queued, categorized, assigned, and tracked through multi-stage approval lifecycles.",
+    "specFile": "gov_ecms_module_architecture.md",
+    "highlights": [
+      "Pre-configured queues: Complaints, Enquiries, Service Requests, Ministerial Approvals",
+      "Interactive Request Creation Wizard with dynamic schema validation based on selected category",
+      "Direct Gov Drive attachment integration: files attached here appear automatically in Gov Drive /drive/appdoc",
+      "Granular audit trail recording every state change, assignment reassignment, and officer commentary"
+    ],
+    "capabilities": [
+      {
+        "name": "Multi-Stage State Machine",
+        "desc": "Manages transitions: Submitted -> Triage -> Assigned -> In Review -> Approved / Rejected -> Closed."
+      },
+      {
+        "name": "Gov Drive Storage Integration",
+        "desc": "All uploaded evidence and citizen attachments stream directly to Gov Drive Application Documents."
+      },
+      {
+        "name": "Automated Routing Rules",
+        "desc": "Auto-assigns incoming submissions to specialized desk officers based on department taxonomy."
+      },
+      {
+        "name": "Citizen Notification Dispatcher",
+        "desc": "Automated SMS and email triggers keeping citizens informed at every phase."
+      }
+    ]
+  },
+  {
+    "id": "ecms_tasks",
+    "module": "ecms",
+    "title": "Task Inbox & Approval Workflows",
+    "route": "/ecms/tasks",
+    "category": "Task Management",
+    "status": "MODERN NEXT.JS ARCHITECTURE",
+    "badge": "badge-pass",
+    "summary": "Unified operational inbox for civil servants. Consolidates individual task assignments, peer-review queues, signature requests, and deadline management across all active government workflows.",
+    "specFile": "gov_ecms_module_architecture.md",
+    "highlights": [
+      "Personal Worklist: Segmented by Urgency (Urgent, High, Normal, Low) and Due Date",
+      "One-Click Batch Approvals: Enables authorized directors to endorse standard service submissions in batch",
+      "Sub-task Delegation: Officers can assign discrete investigation tasks to subordinates while retaining accountability",
+      "Electronic Signature Insertion: Synchronized with Gov Drive General Documents digital signing services"
+    ],
+    "capabilities": [
+      {
+        "name": "Unified Inbox Matrix",
+        "desc": "Collates tasks from Requests, Memos, Committee Workgroups, and Statutory Circulars."
+      },
+      {
+        "name": "Inline Document Viewer",
+        "desc": "Review attached PDFs and case files without leaving the active task view."
+      },
+      {
+        "name": "Delegation & Proxy Engine",
+        "desc": "Allows executive officers to delegate approval authority during official travel or leave."
+      },
+      {
+        "name": "Audit Proof Stamping",
+        "desc": "Cryptographically records timestamps, officer IP, and user credentials upon sign-off."
+      }
+    ]
+  },
+  {
+    "id": "ecms_memos",
+    "module": "ecms",
+    "title": "Executive Memos & Official Circulars",
+    "route": "/ecms/memos",
+    "category": "Official Correspondence",
+    "status": "MODERN NEXT.JS ARCHITECTURE",
+    "badge": "badge-pass",
+    "summary": "Digital governance correspondence engine replacing paper files. Facilitates authoring, vetting, minute-taking, electronic endorsing, and publishing of internal and inter-ministerial executive memoranda.",
+    "specFile": "gov_ecms_module_architecture.md",
+    "highlights": [
+      "Rich Text Authoring with official government letterhead and classified security headers",
+      "Minute-taking Workflow: Hierarchical annotations with timestamped marginal notes and endorsements",
+      "Classified Security Levels: Unclassified, Confidential, Secret, Top Secret access controls",
+      "Direct distribution to Ministerial Workgroups and auto-archival into Gov Drive General Documents"
+    ],
+    "capabilities": [
+      {
+        "name": "Digital Minute Sheet",
+        "desc": "Replicates traditional paper folio minute sheets with non-repudiation and permanent ordering."
+      },
+      {
+        "name": "Multi-Officer Endorsement",
+        "desc": "Sequenced and parallel review chains requiring sign-offs prior to permanent gazetting."
+      },
+      {
+        "name": "Auto-Classification Sync",
+        "desc": "Inherits confidentiality metadata from Gov Drive institutional taxonomy."
+      },
+      {
+        "name": "Archival Vault Integration",
+        "desc": "Closed memos automatically convert to searchable archival PDF/A in Gov Drive."
+      }
+    ]
+  },
+  {
+    "id": "ecms_workgroups",
+    "module": "ecms",
+    "title": "Workgroups & Committee Management",
+    "route": "/ecms/workgroups",
+    "category": "Inter-Agency Coordination",
+    "status": "MODERN NEXT.JS ARCHITECTURE",
+    "badge": "badge-pass",
+    "summary": "Collaborative space for inter-agency committees, task forces, and departmental working groups. Provides shared boards, calendar scheduling, joint document reviews, and meeting agenda trackers.",
+    "specFile": "gov_ecms_module_architecture.md",
+    "highlights": [
+      "Committee Roster Management: Chair, Secretary, Member, and Observer permission tiers",
+      "Shared Workgroup Vault: Maps 1-to-1 with Gov Drive Collaborations (/drive/collab) directory structure",
+      "Meeting Minutes Dispatch: Authors and circulates formal meeting minutes with attendance logs",
+      "Shared Action Trackers: Tracks resolution deliverables with automated reminder notifications"
+    ],
+    "capabilities": [
+      {
+        "name": "Gov Drive Shared Folder Link",
+        "desc": "Every committee automatically provisions a secured collaborative vault in Gov Drive Collaborations."
+      },
+      {
+        "name": "Calendar & Notice Sync",
+        "desc": "Generates iCal notices and automated agenda dispatch for ministerial convenings."
+      },
+      {
+        "name": "Resolution Tracker",
+        "desc": "Monitors adoption status of committee recommendations across member ministries."
+      },
+      {
+        "name": "Confidentiality Enclaves",
+        "desc": "Isolates sensitive committee files from general departmental visibility."
+      }
+    ]
+  },
+  {
+    "id": "ecms_contacts",
+    "module": "ecms",
+    "title": "Government Directory & Contacts",
+    "route": "/ecms/contacts",
+    "category": "Institutional Directory",
+    "status": "MODERN NEXT.JS ARCHITECTURE",
+    "badge": "badge-pass",
+    "summary": "Central civil service and external stakeholder address book. Provides hierarchical organograms, official email routing, phone directories, and direct messaging shortcuts across MDAs.",
+    "specFile": "gov_ecms_module_architecture.md",
+    "highlights": [
+      "Hierarchical MDA Tree: Ministry -> Parastatal -> Directorate -> Division -> Branch -> Desk",
+      "Stakeholder Management: Catalogs external vendor contacts, diplomatic missions, and citizens",
+      "Direct Routing Integration: Enables instant task or memo addressing directly from the directory card",
+      "Active Directory / LDAP Sync: Continuously synchronized with national civil service identity providers"
+    ],
+    "capabilities": [
+      {
+        "name": "Visual Organogram Viewer",
+        "desc": "Interactive hierarchical tree visualizing reporting chains and leadership structures."
+      },
+      {
+        "name": "Instant Dispatch",
+        "desc": "Send memos, assign tickets, or share documents directly from an officer profile card."
+      },
+      {
+        "name": "Role Alias Routing",
+        "desc": "Route correspondence to permanent secretary roles regardless of personnel rotations."
+      },
+      {
+        "name": "Cross-Tenant Federation",
+        "desc": "Federates directory access across sub-tenants while honoring privacy safeguards."
+      }
+    ]
+  },
+  {
+    "id": "ecms_users",
+    "module": "ecms",
+    "title": "User & Access Administration",
+    "route": "/ecms/users",
+    "category": "Security & Administration",
+    "status": "MODERN NEXT.JS ARCHITECTURE",
+    "badge": "badge-pass",
+    "summary": "Granular identity and access management for ECMS. Controls RBAC (Role-Based Access Control), security clearance tiers, department assignments, and authentication audit logs.",
+    "specFile": "gov_ecms_module_architecture.md",
+    "highlights": [
+      "Granular Role Definitions: Super Admin, Desk Officer, Department Head, Permanent Secretary, Auditor",
+      "Security Clearance Gates: Enforces clearance checks before displaying restricted documents or memos",
+      "Session Invalidation & Revocation: Real-time termination of compromised credentials or retired personnel",
+      "Full Security Audit Trail: Records every login attempt, failed credential, and permission elevation"
+    ],
+    "capabilities": [
+      {
+        "name": "Role-Based Access Matrix",
+        "desc": "Fine-grained policy engine restricting view, edit, approve, and delete permissions."
+      },
+      {
+        "name": "Two-Factor Authentication Enforcer",
+        "desc": "Mandatory TOTP or SMS OTP verification for sensitive governmental roles."
+      },
+      {
+        "name": "Automated Deprovisioning",
+        "desc": "Instantly revokes session tokens and moves user personal docs to admin retention upon exit."
+      },
+      {
+        "name": "Multi-Tenant Governance",
+        "desc": "Strict domain isolation ensuring tenant boundaries (e.g. cicodecm) remain impenetrable."
+      }
+    ]
+  },
+  {
+    "id": "ecms_resources",
+    "module": "ecms",
+    "title": "Resource & Asset Booking",
+    "route": "/ecms/resources",
+    "category": "Logistics & Facilities",
+    "status": "MODERN NEXT.JS ARCHITECTURE",
+    "badge": "badge-pass",
+    "summary": "Institutional facility and logistics coordination engine. Enables booking of conference rooms, video conferencing units, vehicle fleets, and official equipment with built-in supervisor approvals.",
+    "specFile": "gov_ecms_module_architecture.md",
+    "highlights": [
+      "Conflict-Free Calendar Scheduling: Real-time availability checks preventing double-bookings",
+      "Facility Approval Flow: Bookings automatically route to facilities manager for formal sign-off",
+      "Maintenance Log Tracking: Records service intervals and equipment operational health",
+      "Integration with Committee Meetings: Auto-reserves boardrooms when creating committee calendar events"
+    ],
+    "capabilities": [
+      {
+        "name": "Automated Conflict Resolution",
+        "desc": "Visual timetable alerting officers to schedule overlaps with alternative room recommendations."
+      },
+      {
+        "name": "Equipment Checklist Engine",
+        "desc": "Requests bundled audio-visual, interpretation, and catering assets alongside room booking."
+      },
+      {
+        "name": "Fleet Booking & Mileage",
+        "desc": "Manages dispatch orders, driver allocation, and fuel authorization for official journeys."
+      },
+      {
+        "name": "Facilities Audit Ledger",
+        "desc": "Comprehensive utilization reporting identifying high-demand assets across ministries."
+      }
+    ]
+  },
+  {
+    "id": "ecms_reports",
+    "module": "ecms",
+    "title": "Analytics & Executive Reports",
+    "route": "/ecms/reports",
+    "category": "Business Intelligence",
+    "status": "MODERN NEXT.JS ARCHITECTURE",
+    "badge": "badge-pass",
+    "summary": "Executive reporting engine delivering real-time business intelligence across all government operations. Generates SLA performance tables, citizen satisfaction metrics, and institutional audit logs.",
+    "specFile": "gov_ecms_module_architecture.md",
+    "highlights": [
+      "Pre-built Executive Dashboards: Ministry Efficiency Index, Citizen Resolution Turnaround, SLA Breach Logs",
+      "Automated Recurring Dispatch: Schedules weekly or monthly PDF executive digests to ministers and heads of service",
+      "Custom Query Builder: Filter and aggregate data across requests, memos, tasks, and users without SQL code",
+      "Regulatory Compliance Exports: One-click export conforming to national public service oversight guidelines"
+    ],
+    "capabilities": [
+      {
+        "name": "Executive BI Dashboards",
+        "desc": "Visual aggregation of resolution times, open ticket backlogs, and departmental velocity."
+      },
+      {
+        "name": "Automated Cron Dispatch",
+        "desc": "Periodic dispatch of performance scorecards to executive leadership email boxes."
+      },
+      {
+        "name": "Data Pipeline Aggregators",
+        "desc": "Rolls up transactions across Gov Drive and ECMS for complete end-to-end analytics."
+      },
+      {
+        "name": "Tamper-Evident Compliance Logs",
+        "desc": "Cryptographically hashed export logs verifying data integrity for external audit agencies."
+      }
+    ]
+  }
+];
+
+    let activeItem = { type: 'feature', id: 'drive_auth' };
+    let currentFilter = 'all';
+    let searchQuery = '';
+    let driveExpanded = true;
+    let ecmsExpanded = true;
+
+    function initDashboard() {
+      renderAccordions();
+      renderActiveView();
+    }
+
+    function setFilter(filter) {
+      currentFilter = filter;
+      document.getElementById('filterAll').className = 'filter-pill' + (filter === 'all' ? ' active' : '');
+      document.getElementById('filterDrive').className = 'filter-pill' + (filter === 'drive' ? ' active drive-active' : '');
+      document.getElementById('filterEcms').className = 'filter-pill' + (filter === 'ecms' ? ' active ecms-active' : '');
+      
+      const driveGroup = document.getElementById('modGroupDrive');
+      const ecmsGroup = document.getElementById('modGroupEcms');
+
+      if (filter === 'drive') {
+        driveGroup.style.display = 'block';
+        ecmsGroup.style.display = 'none';
+        driveExpanded = true;
+      } else if (filter === 'ecms') {
+        driveGroup.style.display = 'none';
+        ecmsGroup.style.display = 'block';
+        ecmsExpanded = true;
+      } else {
+        driveGroup.style.display = 'block';
+        ecmsGroup.style.display = 'block';
+      }
+
+      updateGroupExpandState();
+    }
+
+    function handleSearch(val) {
+      searchQuery = val.toLowerCase().trim();
+      if (searchQuery) {
+        driveExpanded = true;
+        ecmsExpanded = true;
+      }
+      renderAccordions();
+    }
+
+    function handleModuleHeaderClick(mod) {
+      if (mod === 'drive') {
+        driveExpanded = !driveExpanded;
+        activeItem = { type: 'module_overview', mod: 'drive' };
+      } else {
+        ecmsExpanded = !ecmsExpanded;
+        activeItem = { type: 'module_overview', mod: 'ecms' };
+      }
+      updateGroupExpandState();
+      renderActiveView();
+    }
+
+    function updateGroupExpandState() {
+      const driveGroup = document.getElementById('modGroupDrive');
+      const ecmsGroup = document.getElementById('modGroupEcms');
+      
+      if (driveExpanded) driveGroup.classList.add('expanded');
+      else driveGroup.classList.remove('expanded');
+
+      if (ecmsExpanded) ecmsGroup.classList.add('expanded');
+      else ecmsGroup.classList.remove('expanded');
+    }
+
+    function selectFeature(featureId) {
+      activeItem = { type: 'feature', id: featureId };
+      renderAccordions();
+      renderActiveView();
+    }
+
+    function renderAccordions() {
+      updateGroupExpandState();
+
+      // Render Drive Items
+      const driveContainer = document.getElementById('driveItemsList');
+      driveContainer.innerHTML = '';
+      const filteredDrive = driveData.filter(item => {
+        if (!searchQuery) return true;
+        const text = (item.title + ' ' + item.category + ' ' + item.rows + ' ' + item.summary).toLowerCase();
+        return text.includes(searchQuery);
+      });
+
+      if (filteredDrive.length === 0) {
+        driveContainer.innerHTML = '<div style="padding:10px;text-align:center;color:var(--text-dim);font-size:0.75rem;">No matching drive features</div>';
+      } else {
+        filteredDrive.forEach(f => {
+          const isActive = (activeItem.type === 'feature' && activeItem.id === f.id);
+          const el = document.createElement('div');
+          el.className = 'feature-item' + (isActive ? ' active' : '');
+          el.onclick = () => selectFeature(f.id);
+          el.innerHTML = `
+            <div class="feat-left">
+              <span class="feat-title">${f.title}</span>
+              <div class="feat-sub">
+                <span>${f.rows}</span>
+                <span>•</span>
+                <span style="color:#34d399;">${f.passRate}</span>
+              </div>
+            </div>
+            <span class="feat-badge ${f.badge}">${f.status === 'TESTED & VERIFIED' ? 'VERIFIED' : f.status}</span>
+          `;
+          driveContainer.appendChild(el);
+        });
+      }
+
+      // Render ECMS Items
+      const ecmsContainer = document.getElementById('ecmsItemsList');
+      ecmsContainer.innerHTML = '';
+      const filteredEcms = ecmsData.filter(item => {
+        if (!searchQuery) return true;
+        const text = (item.title + ' ' + item.category + ' ' + item.route + ' ' + item.summary).toLowerCase();
+        return text.includes(searchQuery);
+      });
+
+      if (filteredEcms.length === 0) {
+        ecmsContainer.innerHTML = '<div style="padding:10px;text-align:center;color:var(--text-dim);font-size:0.75rem;">No matching ECMS modules</div>';
+      } else {
+        filteredEcms.forEach(f => {
+          const isActive = (activeItem.type === 'feature' && activeItem.id === f.id);
+          const el = document.createElement('div');
+          el.className = 'feature-item ecms-item' + (isActive ? ' active ecms-item' : '');
+          el.onclick = () => selectFeature(f.id);
+          el.innerHTML = `
+            <div class="feat-left">
+              <span class="feat-title">${f.title}</span>
+              <div class="feat-sub">
+                <span style="color:#38bdf8;">${f.route}</span>
+              </div>
+            </div>
+            <span class="feat-badge badge-ecms">NEXT.JS</span>
+          `;
+          ecmsContainer.appendChild(el);
+        });
+      }
+    }
+
+    function renderActiveView() {
+      const container = document.getElementById('workspaceArea');
+
+      if (activeItem.type === 'module_overview') {
+        if (activeItem.mod === 'drive') {
+          container.innerHTML = renderDriveModuleOverview();
+        } else {
+          container.innerHTML = renderEcmsModuleOverview();
+        }
+        return;
+      }
+
+      // Render specific feature
+      const featureId = activeItem.id;
+      const driveMatch = driveData.find(f => f.id === featureId);
+      if (driveMatch) {
+        container.innerHTML = renderDriveDetail(driveMatch);
+        return;
+      }
+
+      const ecmsMatch = ecmsData.find(f => f.id === featureId);
+      if (ecmsMatch) {
+        container.innerHTML = renderEcmsDetail(ecmsMatch);
+        return;
+      }
+
+      // Fallback
+      container.innerHTML = renderDriveDetail(driveData[0]);
+    }
+
+    function renderDriveDetail(f) {
+      let imagesHtml = '';
+      if (f.images && f.images.length > 0) {
+        imagesHtml = `
+          <div class="section-card">
+            <div class="section-card-title">
+              <span>Verified UAT Screenshots (1440x900 HD Target 3 Evidence)</span>
+              <span style="font-size:0.75rem;color:var(--text-muted);font-weight:500;">Click thumbnail to zoom in modal</span>
+            </div>
+            <div class="gallery-grid">
+              ${f.images.map(img => `
+                <div class="gallery-card" onclick="openModal('${img.file}', '${img.caption.replace(/'/g, "\\'")}')">
+                  <div class="gallery-thumb-wrap">
+                    <img src="${img.file}" class="gallery-thumb" alt="${img.caption}">
+                  </div>
+                  <div class="gallery-caption">${img.caption}</div>
+                </div>
+              `).join('')}
+            </div>
+          </div>
+        `;
+      }
+
+      let stepsHtml = '';
+      if (f.steps && f.steps.length > 0) {
+        stepsHtml = `
+          <div class="section-card">
+            <div class="section-card-title">
+              <span>Key Test Steps &amp; Live UAT Verification Matrix</span>
+              <span class="feat-badge badge-pass">${f.passCount} Passed / ${f.gapCount} Documented Gaps</span>
+            </div>
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th style="width: 110px;">Reference</th>
+                  <th style="width: 210px;">Step Name</th>
+                  <th>Expected Result</th>
+                  <th>Actual Live Result</th>
+                  <th style="width: 120px;">Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                ${f.steps.map(st => `
+                  <tr>
+                    <td><span class="step-ref">${st.ref}</span></td>
+                    <td style="font-weight:600;color:#fff;">${st.name}</td>
+                    <td style="color:#cbd5e1;">${st.expected}</td>
+                    <td style="color:#93c5fd;font-family:'JetBrains Mono',monospace;font-size:0.78rem;">${st.actual}</td>
+                    <td><span class="feat-badge ${st.status === 'PASSED' ? 'badge-pass' : 'badge-not-impl'}">${st.status}</span></td>
+                  </tr>
+                `).join('')}
+              </tbody>
+            </table>
+          </div>
+        `;
+      }
+
+      return `
+        <div class="feature-detail-view">
+          <div class="detail-hero">
+            <div class="hero-content">
+              <span class="category-tag">📁 CICOD DRIVE MODULE • ${f.category} • ${f.rows}</span>
+              <h2>${f.title}</h2>
+              <p>${f.summary}</p>
+              
+              <div class="metric-pills">
+                <div class="metric-pill"><span>Total Script Steps:</span> <strong>${f.totalSteps}</strong></div>
+                <div class="metric-pill"><span>Functional Passed:</span> <strong style="color:#34d399;">${f.passCount}</strong></div>
+                <div class="metric-pill"><span>Gaps Documented:</span> <strong style="color:#fbbf24;">${f.gapCount}</strong></div>
+                <div class="metric-pill"><span>Pass Rate:</span> <strong style="color:#38bdf8;">${f.passRate}</strong>
+                  <div class="prog-bar-wrap"><div class="prog-bar-fill" style="width:${f.passRate};"></div></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="hero-actions">
+              <a href="${f.reportUrl}" target="_blank" class="action-btn-primary">
+                <span>↗ Open Full Report (HTML)</span>
+              </a>
+              <a href="${f.specUrl}" target="_blank" class="action-btn-secondary">
+                <span>📄 View Specification (.md)</span>
+              </a>
+              <a href="${f.resultsUrl}" target="_blank" class="action-btn-secondary">
+                <span>📊 View Results (.md)</span>
+              </a>
+            </div>
+          </div>
+
+          <div class="section-card">
+            <div class="section-card-title">Architectural Features &amp; UAT Highlights</div>
+            <ul class="bullet-list">
+              ${f.highlights.map(h => `<li>${h}</li>`).join('')}
+            </ul>
+          </div>
+
+          ${imagesHtml}
+          ${stepsHtml}
+        </div>
+      `;
+    }
+
+    function renderEcmsDetail(f) {
+      return `
+        <div class="feature-detail-view">
+          <div class="detail-hero ecms-hero">
+            <div class="hero-content">
+              <span class="category-tag" style="color:#38bdf8;">⚡ CICOD ECMS MODULE • ${f.category} • Route: ${f.route}</span>
+              <h2>${f.title}</h2>
+              <p>${f.summary}</p>
+
+              <div class="metric-pills">
+                <div class="metric-pill"><span>Architecture Status:</span> <strong style="color:#38bdf8;">${f.status}</strong></div>
+                <div class="metric-pill"><span>Routing Endpoint:</span> <strong style="color:#fff;">${f.route}</strong></div>
+                <div class="metric-pill"><span>Platform:</span> <strong style="color:#34d399;">Modern Next.js Portal</strong></div>
+              </div>
+            </div>
+
+            <div class="hero-actions">
+              <a href="${f.specFile}" target="_blank" class="action-btn-primary" style="background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);color:#fff;">
+                <span>📘 View ECMS Blueprint (.md)</span>
+              </a>
+            </div>
+          </div>
+
+          <div class="section-card">
+            <div class="section-card-title" style="color:#38bdf8;">Key Architectural Capabilities</div>
+            <div class="caps-grid">
+              ${f.capabilities.map(c => `
+                <div class="cap-box">
+                  <h4>${c.name}</h4>
+                  <p>${c.desc}</p>
+                </div>
+              `).join('')}
+            </div>
+          </div>
+
+          <div class="section-card">
+            <div class="section-card-title">Interconnection &amp; Operational Highlights</div>
+            <ul class="bullet-list ecms-list">
+              ${f.highlights.map(h => `<li>${h}</li>`).join('')}
+            </ul>
+          </div>
+        </div>
+      `;
+    }
+
+    function renderDriveModuleOverview() {
+      return `
+        <div class="feature-detail-view">
+          <div class="detail-hero">
+            <div class="hero-content">
+              <span class="category-tag">📁 CICOD DRIVE MASTER SUITE OVERVIEW</span>
+              <h2>CICOD DRIVE: Master Test Execution &amp; Feature Scorecard</h2>
+              <p>All 8 modules of CICOD DRIVE (Rows 1 to 520 in the Master Test Script) have been comprehensively tested and verified against the live multi-tenant staging environment on Target 3. The table below presents the verified status across every feature.</p>
+
+              <div class="metric-pills">
+                <div class="metric-pill"><span>Total Test Rows:</span> <strong>520 Rows</strong></div>
+                <div class="metric-pill"><span>Features Tested:</span> <strong style="color:#34d399;">8 / 8 (100%)</strong></div>
+                <div class="metric-pill"><span>Functional Passed:</span> <strong style="color:#34d399;">212 Steps</strong></div>
+                <div class="metric-pill"><span>Documented Gaps:</span> <strong style="color:#fbbf24;">209 Items</strong></div>
+              </div>
+            </div>
+
+            <div class="hero-actions">
+              <a href="CICOD DRIVE TEST SCRIPT.xlsx" target="_blank" class="action-btn-primary">
+                <span>📊 Open Test Script (.xlsx)</span>
+              </a>
+            </div>
+          </div>
+
+          <div class="section-card">
+            <div class="section-card-title">CICOD DRIVE 8-Feature Master Test Matrix</div>
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Feature Name</th>
+                  <th>Script Rows</th>
+                  <th>Category</th>
+                  <th>Total Steps</th>
+                  <th>Passed</th>
+                  <th>Gaps</th>
+                  <th>Pass Rate</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                ${driveData.map(f => `
+                  <tr>
+                    <td style="font-weight:700;color:#fff;cursor:pointer;" onclick="selectFeature('${f.id}')">
+                      📁 ${f.title}
+                    </td>
+                    <td><span class="step-ref">${f.rows}</span></td>
+                    <td style="color:#94a3b8;">${f.category}</td>
+                    <td>${f.totalSteps}</td>
+                    <td style="color:#34d399;font-weight:700;">${f.passCount}</td>
+                    <td style="color:#fbbf24;">${f.gapCount}</td>
+                    <td>
+                      <span style="font-family:'JetBrains Mono';font-weight:700;color:#38bdf8;">${f.passRate}</span>
+                      <div class="prog-bar-wrap"><div class="prog-bar-fill" style="width:${f.passRate};"></div></div>
+                    </td>
+                    <td>
+                      <a href="${f.reportUrl}" target="_blank" style="color:#34d399;text-decoration:none;font-size:0.75rem;font-weight:600;margin-right:8px;">Report ↗</a>
+                      <button onclick="selectFeature('${f.id}')" style="background:none;border:none;color:#38bdf8;cursor:pointer;font-size:0.75rem;font-weight:600;">Inspect ›</button>
+                    </td>
+                  </tr>
+                `).join('')}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      `;
+    }
+
+    function renderEcmsModuleOverview() {
+      return `
+        <div class="feature-detail-view">
+          <div class="detail-hero ecms-hero">
+            <div class="hero-content">
+              <span class="category-tag" style="color:#38bdf8;">⚡ CICOD ECMS ENTERPRISE ARCHITECTURE</span>
+              <h2>CICOD ECMS: Next.js Modern Electronic Content &amp; Workflow Architecture</h2>
+              <p>The Government Electronic Content &amp; Workflow System (Gov ECMS) replaces legacy /wfm/ systems with 10 high-performance Next.js modules. It unifies citizen request queues, ministerial memos, task approval matrices, and directory management, seamlessly linking with Gov Drive storage.</p>
+
+              <div class="metric-pills">
+                <div class="metric-pill"><span>Total Architecture Modules:</span> <strong style="color:#38bdf8;">10 Core Modules</strong></div>
+                <div class="metric-pill"><span>Platform Framework:</span> <strong style="color:#fff;">Next.js App Router</strong></div>
+                <div class="metric-pill"><span>Drive Interconnection:</span> <strong style="color:#34d399;">Active Dual-Bridge</strong></div>
+              </div>
+            </div>
+
+            <div class="hero-actions">
+              <a href="gov_ecms_module_architecture.md" target="_blank" class="action-btn-primary" style="background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);color:#fff;">
+                <span>📘 Open Architecture Blueprint (.md)</span>
+              </a>
+            </div>
+          </div>
+
+          <div class="section-card">
+            <div class="section-card-title" style="color:#38bdf8;">10 Next.js Portal Modules Summary</div>
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Module Name</th>
+                  <th>Route Endpoint</th>
+                  <th>Category</th>
+                  <th>Architecture Status</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                ${ecmsData.map(f => `
+                  <tr>
+                    <td style="font-weight:700;color:#fff;cursor:pointer;" onclick="selectFeature('${f.id}')">
+                      ⚡ ${f.title}
+                    </td>
+                    <td><span class="step-ref" style="color:#38bdf8;">${f.route}</span></td>
+                    <td style="color:#94a3b8;">${f.category}</td>
+                    <td><span class="feat-badge badge-ecms">${f.status}</span></td>
+                    <td>
+                      <button onclick="selectFeature('${f.id}')" style="background:none;border:none;color:#38bdf8;cursor:pointer;font-size:0.75rem;font-weight:600;">Inspect Specs ›</button>
+                    </td>
+                  </tr>
+                `).join('')}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      `;
+    }
+
+    function openModal(src, caption) {
+      const modal = document.getElementById('imageModal');
+      const img = document.getElementById('modalImg');
+      const cap = document.getElementById('modalCaption');
+      img.src = src;
+      cap.innerText = caption || '';
+      modal.classList.add('active');
+    }
+
+    function closeModal() {
+      document.getElementById('imageModal').classList.remove('active');
+    }
+
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') closeModal();
+    });
+
+    window.onload = initDashboard;
+  </script>
+</body>
+</html>

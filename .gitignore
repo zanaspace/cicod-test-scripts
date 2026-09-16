@@ -13,6 +13,9 @@
 *.key
 *.cert
 *.pfx
+*oauth*.json
+*.keys.json
+*credentials*.json
 
 # Allow .env.example template
 !.env.example
@@ -22,6 +25,8 @@ scratch/
 scratch_*
 *.tmp
 *.bak
+refresh_gdrive_token.ps1
+.mcp.json
 *.swp
 *.swo
 

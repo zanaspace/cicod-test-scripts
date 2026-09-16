@@ -1,0 +1,106 @@
+{
+  "stages": [
+    {
+      "stage": 1,
+      "name": "Homepage",
+      "note": "Loaded https://cicodsaasstaging.com/, dismissed cookie banner.",
+      "screenshot": "flow_01_homepage.png"
+    },
+    {
+      "stage": 2,
+      "name": "Click \"Start free trial\"",
+      "note": "Clicked: true. Landed on: https://cicodsaasstaging.com/pricing",
+      "screenshot": "flow_02_after_start_trial.png"
+    },
+    {
+      "stage": 3,
+      "name": "Pricing page fully rendered",
+      "note": "Input fields detected after polling: 36",
+      "screenshot": "flow_03_pricing_loaded.png"
+    },
+    {
+      "stage": 4,
+      "name": "Plan selection buttons discovered",
+      "note": "[\"Sign up\"]"
+    },
+    {
+      "stage": 5,
+      "name": "Filled plan lead form",
+      "note": "{\"email\":{\"found\":true,\"value\":\"uat.realflow.1789466339779@crowninteractive.com\"},\"phone\":{\"found\":true,\"value\":\"+7 (021) 234-56-7\"},\"contact\":{\"found\":true,\"value\":\"UAT Test Contact\"},\"tenant\":{\"found\":true,\"value\":\"uatrealflow1789466339790\"},\"referral\":{\"found\":true,\"value\":\"\"}}",
+      "testEmail": "uat.realflow.1789466339779@crowninteractive.com"
+    },
+    {
+      "stage": 6,
+      "name": "Submitted plan lead form",
+      "note": "submitResult={\"found\":true,\"buttonText\":\"Start Free Trial\"}, urlAfter=https://cicodsaasstaging.com/pricing, netCalls=[]",
+      "screenshot": "flow_05_after_lead_submit.png"
+    },
+    {
+      "stage": 7,
+      "name": "Post-submission page state",
+      "note": "{\"url\":\"https://cicodsaasstaging.com/pricing\",\"title\":\"CICOD Pricing | Click on the application you'd like to explore\",\"inputs\":[{\"name\":\"email\",\"type\":\"text\",\"placeholder\":\"\"},{\"name\":\"\",\"type\":\"tel\",\"placeholder\":\"1 (702) 123-4567\"},{\"name\":\"contactPersonNumber\",\"type\":\"text\",\"placeholder\":\"\"},{\"name\":\"tenantId\",\"type\":\"text\",\"placeholder\":\"eg: mybusinessname\"},{\"name\":\"referralCode\",\"type\":\"text\",\"placeholder\":\"\"},{\"name\":\"email\",\"type\":\"text\",\"placeholder\":\"\"},{\"name\":\"\",\"type\":\"tel\",\"placeholder\":\"1 (702) 123-4567\"},{\"name\":\"contactPersonNumber\",\"type\":\"text\",\"placeholder\":\"\"},{\"name\":\"tenantId\",\"type\":\"text\",\"placeholder\":\"eg: mybusinessname\"},{\"name\":\"referralCode\",\"type\":\"text\",\"placeholder\":\"\"},{\"name\":\"email\",\"type\":\"text\",\"placeholder\":\"\"},{\"name\":\"\",\"type\":\"tel\",\"placeholder\":\"1 (702) 123-4567\"},{\"name\":\"contactPersonNumber\",\"type\":\"text\",\"placeholder\":\"\"},{\"name\":\"tenantId\",\"type\":\"text\",\"placeholder\":\"eg: mybusinessname\"},{\"name\":\"referralCode\",\"type\":\"text\",\"placeholder\":\"\"},{\"name\":\"email\",\"type\":\"text\",\"placeholder\":\"\"},{\"name\":\"\",\"type\":\"tel\",\"placeholder\":\"1 (702) 123-4567\"},{\"name\":\"contactPersonNumber\",\"type\":\"text\",\"placeholder\":\"\"},{\"name\":\"tenantId\",\"type\":\"text\",\"placeholder\":\"eg: mybusinessname\"},{\"name\":\"referralCode\",\"type\":\"text\",\"placeholder\":\"\"},{\"name\":\"email\",\"type\":\"text\",\"placeholder\":\"\"},{\"name\":\"\",\"type\":\"tel\",\"placeholder\":\"1 (702) 123-4567\"},{\"name\":\"contactPersonNumber\",\"type\":\"text\",\"placeholder\":\"\"},{\"name\":\"tenantId\",\"type\":\"text\",\"placeholder\":\"eg: mybusinessname\"},{\"name\":\"referralCode\",\"type\":\"text\",\"placeholder\":\"\"},{\"name\":\"\",\"type\":\"radio\",\"placeholder\":\"\"},{\"name\":\"\",\"type\":\"radio\",\"placeholder\":\"\"},{\"name\":\"\",\"type\":\"radio\",\"placeholder\":\"\"},{\"name\":\"email\",\"type\":\"text\",\"placeholder\":\"\"},{\"name\":\"\",\"type\":\"tel\",\"placeholder\":\"1 (702) 123-4567\"},{\"name\":\"contactPersonNumber\",\"type\":\"text\",\"placeholder\":\"\"},{\"name\":\"tenantId\",\"type\":\"text\",\"placeholder\":\"eg: mybusinessname\"},{\"name\":\"referralCode\",\"type\":\"text\",\"placeholder\":\"\"},{\"name\":\"\",\"type\":\"radio\",\"placeholder\":\"\"},{\"name\":\"\",\"type\":\"radio\",\"placeholder\":\"\"},{\"name\":\"\",\"type\":\"radio\",\"placeholder\":\"\"}],\"bodyExcerpt\":\"Solutions \\nWhy CICOD\\nPricing\\nResources \\nAffiliates\\nService Provider\\nContact Us\\nLogin\\nStart free trial\\n\\nSolutions\\n\\nPRODUCTS\\n\\nWorkflow Manager\\nBoost productivity, reduce errors and get your team focused\\nCustomer Order Management\\nManage the lifecycle of their goods from order to delivery\\nInventory Management System\\nManage and track inventory real time, all in one place\\nUnified Collections Gateway\\nReal-time aggregation of revenue collections for different payment channels\\nCICOD Merchant\\nConnect with\"}"
+    }
+  ],
+  "netLog": [
+    {
+      "url": "https://api.cicodsaasstaging.com/crm/integration/fetchProductBundles?group=cicod_merchant",
+      "status": 200,
+      "type": "Fetch"
+    },
+    {
+      "url": "https://api.cicodsaasstaging.com/crm/integration/fetchProductOffers?name=ucg",
+      "status": 200,
+      "type": "Fetch"
+    },
+    {
+      "url": "https://api.cicodsaasstaging.com/crm/integration/fetchProductOffers?name=wfm",
+      "status": 200,
+      "type": "Fetch"
+    },
+    {
+      "url": "https://api.cicodsaasstaging.com/crm/integration/fetchProductOffers?name=com",
+      "status": 200,
+      "type": "Fetch"
+    },
+    {
+      "url": "https://api.cicodsaasstaging.com/crm/integration/fetchProductOffers?name=ims",
+      "status": 200,
+      "type": "Fetch"
+    },
+    {
+      "url": "https://api.cicodsaasstaging.com/crm/integration/fetchProductBundles?group=cicod_ecommerce",
+      "status": 200,
+      "type": "Fetch"
+    },
+    {
+      "url": "https://api.cicodsaasstaging.com/crm/integration/fetchProductBundles?group=supply_chain",
+      "status": 200,
+      "type": "Fetch"
+    },
+    {
+      "url": "https://api.cicodsaasstaging.com/crm/integration/fetchProductBundles?group=cicod_merchant",
+      "status": 200,
+      "type": "Fetch"
+    },
+    {
+      "url": "https://api.cicodsaasstaging.com/crm/integration/fetchProductBundles?group=cicod_ecommerce",
+      "status": 200,
+      "type": "Fetch"
+    },
+    {
+      "url": "https://api.cicodsaasstaging.com/crm/integration/fetchProductBundles?group=cicod_merchant",
+      "status": 200,
+      "type": "Fetch"
+    },
+    {
+      "url": "https://api.cicodsaasstaging.com/crm/integration/fetchProductBundles?group=supply_chain",
+      "status": 200,
+      "type": "Fetch"
+    },
+    {
+      "url": "https://api.cicodsaasstaging.com/crm/integration/fetchProductBundles?group=cicod_merchant",
+      "status": 200,
+      "type": "Fetch"
+    }
+  ]
+}

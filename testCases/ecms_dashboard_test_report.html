@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>UAT Report - ECMS Workflow Dashboard (ECMS TEST SCRIPT RECENT VERSION.xlsx)</title>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #070a14;
+      --surface: #0c1224;
+      --card: #111a33;
+      --border: rgba(255, 255, 255, 0.08);
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+      --text-dim: #64748b;
+      --pass: #10b981;
+      --warn: #f59e0b;
+      --danger: #ef4444;
+      --accent: #38bdf8;
+      --radius-sm: 6px;
+      --radius-md: 10px;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      padding: 32px 24px;
+      line-height: 1.5;
+    }
+    .container { max-width: 1400px; margin: 0 auto; }
+    
+    .header-box {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 26px;
+      margin-bottom: 22px;
+    }
+    h1 { font-size: 1.65rem; font-weight: 800; margin-bottom: 6px; color: #fff; }
+    .sub { color: var(--text-muted); font-size: 0.88rem; margin-bottom: 18px; }
+    
+    .summary-badge-warn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 12px;
+      background: rgba(245, 158, 11, 0.15);
+      border: 1px solid rgba(245, 158, 11, 0.35);
+      color: #fbbf24;
+      border-radius: 20px;
+      font-weight: 700;
+      font-size: 0.78rem;
+      font-family: 'JetBrains Mono', monospace;
+      margin-bottom: 14px;
+    }
+
+    .meta-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      font-size: 0.84rem;
+      border-top: 1px solid var(--border);
+      padding-top: 16px;
+    }
+    .meta-bar span { color: var(--text-dim); }
+    .meta-bar strong { color: #e2e8f0; font-family: 'JetBrains Mono', monospace; }
+
+    /* Alert Box */
+    .alert-block {
+      background: rgba(239, 68, 68, 0.08);
+      border: 1px solid rgba(239, 68, 68, 0.3);
+      border-left: 4px solid var(--danger);
+      border-radius: var(--radius-sm);
+      padding: 16px 20px;
+      margin-bottom: 24px;
+      font-size: 0.86rem;
+      line-height: 1.6;
+    }
+    .alert-title {
+      font-weight: 800;
+      color: #f87171;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 6px;
+      font-size: 0.95rem;
+    }
+
+    /* KPI Cards */
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      margin-bottom: 24px;
+    }
+    @media (max-width: 800px) { .kpi-grid { grid-template-columns: repeat(2, 1fr); } }
+    .kpi-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 14px 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .kpi-title {
+      font-size: 0.72rem;
+      font-weight: 600;
+      color: var(--text-dim);
+      text-transform: uppercase;
+      font-family: 'JetBrains Mono', monospace;
+    }
+    .kpi-val {
+      font-size: 1.4rem;
+      font-weight: 800;
+      font-family: 'JetBrains Mono', monospace;
+      color: #fff;
+    }
+
+    /* Table */
+    .table-container {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      overflow-x: auto;
+      margin-bottom: 28px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+      font-size: 0.86rem;
+    }
+    th {
+      background: rgba(0, 0, 0, 0.25);
+      color: var(--text-dim);
+      font-weight: 700;
+      text-transform: uppercase;
+      font-size: 0.72rem;
+      letter-spacing: 0.05em;
+      padding: 14px 16px;
+      border-bottom: 1px solid var(--border);
+      white-space: nowrap;
+      font-family: 'JetBrains Mono', monospace;
+    }
+    td {
+      padding: 14px 16px;
+      border-bottom: 1px solid var(--border);
+      vertical-align: top;
+    }
+    tr:last-child td { border-bottom: none; }
+    tr:hover { background: rgba(255, 255, 255, 0.02); }
+
+    .feature-tag {
+      font-weight: 700;
+      color: #38bdf8;
+      background: rgba(56, 189, 248, 0.12);
+      padding: 3px 8px;
+      border-radius: 4px;
+      display: inline-block;
+      font-size: 0.74rem;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .badge-blocked {
+      background: rgba(245, 158, 11, 0.15);
+      color: #fbbf24;
+      border: 1px solid rgba(245, 158, 11, 0.35);
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-weight: 700;
+      font-size: 0.72rem;
+      font-family: 'JetBrains Mono', monospace;
+      display: inline-block;
+    }
+    .badge-passed {
+      background: rgba(16, 185, 129, 0.15);
+      color: #34d399;
+      border: 1px solid rgba(16, 185, 129, 0.3);
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-weight: 700;
+      font-size: 0.72rem;
+      font-family: 'JetBrains Mono', monospace;
+      display: inline-block;
+    }
+
+    .obs-box {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      line-height: 1.4;
+      margin-top: 4px;
+      border-left: 2px solid rgba(255, 255, 255, 0.1);
+      padding-left: 8px;
+    }
+
+    /* Photo Gallery */
+    .gallery-title {
+      font-size: 1.1rem;
+      font-weight: 800;
+      color: #fff;
+      margin-bottom: 14px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 16px;
+    }
+    .thumb-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      overflow: hidden;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .thumb-card:hover {
+      border-color: var(--accent);
+      transform: translateY(-2px);
+    }
+    .thumb-img {
+      width: 100%;
+      height: 160px;
+      overflow: hidden;
+      background: #000;
+    }
+    .thumb-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .thumb-caption {
+      padding: 10px 12px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--text-muted);
+    }
+
+    /* Lightbox Modal */
+    .lightbox {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.88);
+      backdrop-filter: blur(6px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+      padding: 24px;
+    }
+    .lightbox.active { display: flex; }
+    .lightbox-box {
+      max-width: 90vw;
+      max-height: 90vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      position: relative;
+    }
+    .lightbox-box img {
+      max-width: 100%;
+      max-height: 82vh;
+      object-fit: contain;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+    }
+    .lightbox-caption {
+      margin-top: 10px;
+      color: #fff;
+      font-size: 0.88rem;
+      font-weight: 600;
+    }
+    .lightbox-close {
+      position: absolute;
+      top: -14px;
+      right: -14px;
+      width: 32px;
+      height: 32px;
+      background: #ef4444;
+      color: #fff;
+      border-radius: 50%;
+      border: 2px solid #fff;
+      font-size: 1.1rem;
+      font-weight: 800;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+
+  <!-- Header -->
+  <div class="header-box">
+    <div class="summary-badge-warn">⚠ STAGING ENVIRONMENT GAP IDENTIFIED</div>
+    <h1>UAT Test Report: ECMS Workflow Dashboard</h1>
+    <div class="sub">Verification execution against official sheet specifications on staging tenant: <code>cicodecms.cicodsaasstaging.com</code></div>
+
+    <div class="meta-bar">
+      <div><span>Source Sheet: </span><strong>ECMS TEST SCRIPT RECENT VERSION.xlsx (DASHBOARD)</strong></div>
+      <div><span>Target URL: </span><strong>https://cicodecms.cicodsaasstaging.com/</strong></div>
+      <div><span>Tenant ID: </span><strong>cicodecms</strong></div>
+      <div><span>Tester User: </span><strong>raissa.boyomo@crowninteractive.com</strong></div>
+      <div><span>Execution Date: </span><strong>September 16, 2026</strong></div>
+    </div>
+  </div>
+
+  <!-- Alert Block -->
+  <div class="alert-block">
+    <div class="alert-title">
+      <span>🚨 Staging SSO Authorization Loop Detected (ERR_TOO_MANY_REDIRECTS)</span>
+    </div>
+    <p>
+      Multi-tenant authentication on <code>https://cicodecms.cicodsaasstaging.com/admin/merchant</code> was verified successfully. However, launching the <strong>Enterprise Content Management</strong> application (<code>/ecms/</code>) initiates an SSO token exchange with <code>api.cicodsaasstaging.com</code>, which currently responds with <strong>502 Bad Gateway</strong>. This causes the browser to bounce in a continuous redirect loop (<code>/ecms/index.php?r=site/login</code> ⇄ <code>/login?returnUrl=...</code>).
+    </p>
+  </div>
+
+  <!-- KPI Grid -->
+  <div class="kpi-grid">
+    <div class="kpi-card">
+      <span class="kpi-title">Total Test Steps</span>
+      <span class="kpi-val" style="color:#38bdf8;">17 Steps</span>
+    </div>
+    <div class="kpi-card">
+      <span class="kpi-title">Tenant Auth</span>
+      <span class="kpi-val" style="color:#34d399;">Passed</span>
+    </div>
+    <div class="kpi-card">
+      <span class="kpi-title">ECMS Dispatch</span>
+      <span class="kpi-val" style="color:#fbbf24;">Blocked (502)</span>
+    </div>
+    <div class="kpi-card">
+      <span class="kpi-title">Evidence Files</span>
+      <span class="kpi-val" style="color:#a855f7;">2 Captured</span>
+    </div>
+  </div>
+
+  <!-- Results Table -->
+  <div class="table-container">
+    <table>
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Feature</th>
+          <th>Steps to Reproduce</th>
+          <th>Expected Results (from Script)</th>
+          <th>Actual Live Behavior (cicodecms.cicodsaasstaging.com)</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>0</strong></td>
+          <td><span class="feature-tag">PORTAL LAUNCH</span></td>
+          <td>Click <strong>Enterprise Content Management</strong> card on merchant dashboard</td>
+          <td>ECMS portal loads with left sidebar navigation menu</td>
+          <td>
+            Card exists on <code>/admin/merchant</code>. Clicking triggers redirect to <code>/ecms/index.php?r=site/login&authorize=...</code>, entering an infinite loop due to 502 Bad Gateway on <code>api.cicodsaasstaging.com</code>.
+            <div class="obs-box">SSO token handoff failure prevents access to child application.</div>
+          </td>
+          <td><span class="badge-blocked">BLOCKED</span></td>
+        </tr>
+        <tr>
+          <td><strong>1</strong></td>
+          <td><span class="feature-tag">DASHBOARD</span></td>
+          <td>From the left menu, click <strong>Dashboard</strong></td>
+          <td>Dashboard Page Expands</td>
+          <td>Blocked by SSO redirect loop at <code>/ecms/</code> entry point.</td>
+          <td><span class="badge-blocked">BLOCKED</span></td>
+        </tr>
+        <tr>
+          <td><strong>2</strong></td>
+          <td><span class="feature-tag">DASHBOARD</span></td>
+          <td>Click <strong>Workflow Dashboard</strong></td>
+          <td>Workflow Dashboard loads successfully</td>
+          <td>Blocked by SSO redirect loop at <code>/ecms/</code> entry point.</td>
+          <td><span class="badge-blocked">BLOCKED</span></td>
+        </tr>
+        <tr>
+          <td><strong>3</strong></td>
+          <td><span class="feature-tag">DASHBOARD</span></td>
+          <td>Hover over the green <strong>“New Ticket”</strong> tab under Ticket Status</td>
+          <td>Tooltip appears showing: <em>“This refers to new tickets created on a particular day.”</em></td>
+          <td>Blocked by SSO redirect loop at <code>/ecms/</code> entry point.</td>
+          <td><span class="badge-blocked">BLOCKED</span></td>
+        </tr>
+        <tr>
+          <td><strong>4</strong></td>
+          <td><span class="feature-tag">DASHBOARD</span></td>
+          <td>Click <strong>Today</strong> filter</td>
+          <td>Ticket Status updates to show today’s ticket statistics</td>
+          <td>Blocked by SSO redirect loop at <code>/ecms/</code> entry point.</td>
+          <td><span class="badge-blocked">BLOCKED</span></td>
+        </tr>
+        <tr>
+          <td><strong>5</strong></td>
+          <td><span class="feature-tag">DASHBOARD</span></td>
+          <td>Click <strong>Week</strong> filter</td>
+          <td>Ticket Status updates to show ticket statistics for the current week</td>
+          <td>Blocked by SSO redirect loop at <code>/ecms/</code> entry point.</td>
+          <td><span class="badge-blocked">BLOCKED</span></td>
+        </tr>
+        <tr>
+          <td><strong>6</strong></td>
+          <td><span class="feature-tag">DASHBOARD</span></td>
+          <td>Click <strong>Month</strong> filter</td>
+          <td>Ticket Status updates to show statistics for the current month</td>
+          <td>Blocked by SSO redirect loop at <code>/ecms/</code> entry point.</td>
+          <td><span class="badge-blocked">BLOCKED</span></td>
+        </tr>
+        <tr>
+          <td><strong>7</strong></td>
+          <td><span class="feature-tag">DASHBOARD</span></td>
+          <td>Select a custom date range from the date filter</td>
+          <td>Ticket Status updates based on the selected date range</td>
+          <td>Blocked by SSO redirect loop at <code>/ecms/</code> entry point.</td>
+          <td><span class="badge-blocked">BLOCKED</span></td>
+        </tr>
+        <tr>
+          <td><strong>8</strong></td>
+          <td><span class="feature-tag">DASHBOARD</span></td>
+          <td>Verify that Open, In Progress, and Closed ticket counts update correctly</td>
+          <td>Values update dynamically according to applied filters</td>
+          <td>Blocked by SSO redirect loop at <code>/ecms/</code> entry point.</td>
+          <td><span class="badge-blocked">BLOCKED</span></td>
+        </tr>
+        <tr>
+          <td><strong>9</strong></td>
+          <td><span class="feature-tag">DASHBOARD</span></td>
+          <td>Scroll to <strong>Workflow Ticket Summary</strong> (Bar Chart)</td>
+          <td>Chart loads correctly with bars for each workflow</td>
+          <td>Blocked by SSO redirect loop at <code>/ecms/</code> entry point.</td>
+          <td><span class="badge-blocked">BLOCKED</span></td>
+        </tr>
+        <tr>
+          <td><strong>10</strong></td>
+          <td><span class="feature-tag">DASHBOARD</span></td>
+          <td>Hover over a bar in the chart</td>
+          <td>Tooltip displays workflow name + count of Open / In Progress / Closed tickets</td>
+          <td>Blocked by SSO redirect loop at <code>/ecms/</code> entry point.</td>
+          <td><span class="badge-blocked">BLOCKED</span></td>
+        </tr>
+        <tr>
+          <td><strong>11</strong></td>
+          <td><span class="feature-tag">DASHBOARD</span></td>
+          <td>Click <strong>Open</strong> status Badge (legend)</td>
+          <td>Only In-Progress and Closed bars are displayed</td>
+          <td>Blocked by SSO redirect loop at <code>/ecms/</code> entry point.</td>
+          <td><span class="badge-blocked">BLOCKED</span></td>
+        </tr>
+        <tr>
+          <td><strong>12</strong></td>
+          <td><span class="feature-tag">DASHBOARD</span></td>
+          <td>Click <strong>In progress</strong> Badge</td>
+          <td>Only Closed bars are displayed</td>
+          <td>Blocked by SSO redirect loop at <code>/ecms/</code> entry point.</td>
+          <td><span class="badge-blocked">BLOCKED</span></td>
+        </tr>
+        <tr>
+          <td><strong>13</strong></td>
+          <td><span class="feature-tag">DASHBOARD</span></td>
+          <td>Click <strong>Closed</strong> Badge</td>
+          <td>No bar is displayed</td>
+          <td>Blocked by SSO redirect loop at <code>/ecms/</code> entry point.</td>
+          <td><span class="badge-blocked">BLOCKED</span></td>
+        </tr>
+        <tr>
+          <td><strong>14</strong></td>
+          <td><span class="feature-tag">DASHBOARD</span></td>
+          <td>Click multiple statuses at once (e.g., Open + In Progress + Closed)</td>
+          <td>Combined status view is displayed</td>
+          <td>Blocked by SSO redirect loop at <code>/ecms/</code> entry point.</td>
+          <td><span class="badge-blocked">BLOCKED</span></td>
+        </tr>
+        <tr>
+          <td><strong>15</strong></td>
+          <td><span class="feature-tag">DASHBOARD</span></td>
+          <td>Validate that all chart labels and legends are readable</td>
+          <td>UI elements render correctly, no overlaps</td>
+          <td>Blocked by SSO redirect loop at <code>/ecms/</code> entry point.</td>
+          <td><span class="badge-blocked">BLOCKED</span></td>
+        </tr>
+        <tr>
+          <td><strong>16</strong></td>
+          <td><span class="feature-tag">DASHBOARD</span></td>
+          <td>Click on any queue (e.g., Complaints, QA, Correspondence)</td>
+          <td>Workflow Ticket Summary updates to display ticket distribution for selected queue</td>
+          <td>Blocked by SSO redirect loop at <code>/ecms/</code> entry point.</td>
+          <td><span class="badge-blocked">BLOCKED</span></td>
+        </tr>
+        <tr>
+          <td><strong>17</strong></td>
+          <td><span class="feature-tag">DASHBOARD</span></td>
+          <td>Hover over the bar for the selected queue</td>
+          <td>Tooltip shows correct workflow summary for that queue</td>
+          <td>Blocked by SSO redirect loop at <code>/ecms/</code> entry point.</td>
+          <td><span class="badge-blocked">BLOCKED</span></td>
+        </tr>
+        <tr>
+          <td><strong>18</strong></td>
+          <td><span class="feature-tag">SESSION</span></td>
+          <td>End Test</td>
+          <td>Session concluded</td>
+          <td>Verified multi-tenant merchant dashboard remains stable.</td>
+          <td><span class="badge-passed">PASSED</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Photographic Evidence Gallery -->
+  <div class="gallery-title">
+    <span>📸 Live Photographic Evidence Captured on Staging</span>
+  </div>
+  <div class="gallery-grid">
+    <div class="thumb-card" onclick="openLightbox('../uat_target3_cicodecm/cicodecms_01_after_login.png', 'Step 0: Authenticated Multi-tenant Merchant Dashboard (cicodecms.cicodsaasstaging.com/admin/merchant)')">
+      <div class="thumb-img">
+        <img src="../uat_target3_cicodecm/cicodecms_01_after_login.png" alt="Merchant Dashboard" loading="lazy">
+      </div>
+      <div class="thumb-caption">01. Merchant Dashboard &amp; ECMS App Card</div>
+    </div>
+    <div class="thumb-card" onclick="openLightbox('../uat_target3_cicodecm/cicodecms_02_ecms_entry.png', 'Step 0: ERR_TOO_MANY_REDIRECTS when clicking Enterprise Content Management card')">
+      <div class="thumb-img">
+        <img src="../uat_target3_cicodecm/cicodecms_02_ecms_entry.png" alt="Redirect Loop" loading="lazy">
+      </div>
+      <div class="thumb-caption">02. Staging 502 SSO Redirect Loop (ERR_TOO_MANY_REDIRECTS)</div>
+    </div>
+  </div>
+
+</div>
+
+<!-- Lightbox -->
+<div class="lightbox" id="lightbox" onclick="closeLightbox()">
+  <div class="lightbox-box" onclick="event.stopPropagation()">
+    <button class="lightbox-close" onclick="closeLightbox()">&times;</button>
+    <img id="lightboxImg" src="" alt="Evidence Full Resolution">
+    <div class="lightbox-caption" id="lightboxCaption"></div>
+  </div>
+</div>
+
+<script>
+  function openLightbox(src, cap) {
+    document.getElementById('lightboxImg').src = src;
+    document.getElementById('lightboxCaption').innerText = cap || '';
+    document.getElementById('lightbox').classList.add('active');
+  }
+  function closeLightbox() {
+    document.getElementById('lightbox').classList.remove('active');
+  }
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
+</script>
+
+</body>
+</html>

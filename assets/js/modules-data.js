@@ -217,15 +217,19 @@ const appModules = [
       {
         id: 'ecms_dashboard',
         sheetName: 'Dashboard',
-        passRate: 'Queued',
-        passCount: 0,
-        gapCount: 0,
-        totalSteps: 18,
-        status: 'QUEUED FOR TESTING',
-        isUpcoming: true,
-        summary: 'Deep operational analytics: SLA watchdog, department turnaround time (TAT) heatmaps, and staff workload distribution tracking.',
+        reportUrl: 'testCases/ecms_dashboard_test_report.html',
+        passRate: 'Blocked',
+        passCount: 1,
+        gapCount: 17,
+        totalSteps: 17,
+        status: 'STAGING SSO LOOP (502)',
+        isUpcoming: false,
+        summary: 'Workflow Dashboard: Real-time ticket status metrics (Today, Week, Month, Custom date ranges), Open/In Progress/Closed distribution, and Workflow Ticket Summary interactive bar charts.',
         targetRoute: '/ecms/dashboard',
-        images: []
+        images: [
+          { file: 'uat_target3_cicodecm/cicodecms_01_after_login.png', caption: 'Step 0: Authenticated Multi-tenant Merchant Dashboard (cicodecms.cicodsaasstaging.com/admin/merchant)' },
+          { file: 'uat_target3_cicodecm/cicodecms_02_ecms_entry.png', caption: 'Step 0: ERR_TOO_MANY_REDIRECTS when clicking Enterprise Content Management card' }
+        ]
       },
       {
         id: 'ecms_requests',

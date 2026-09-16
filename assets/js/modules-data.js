@@ -12,7 +12,7 @@ const appModules = [
     name: 'CICOD Drive',
     icon: '📁',
     badge: '10 Features',
-    expanded: true,
+    expanded: false,
     features: [
       {
         id: 'login',

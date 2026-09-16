@@ -22,6 +22,9 @@
    */
   function init() {
     restoreSidebarState();
+    // Accordions are closed by default on initial load
+    const modules = window.appModules || [];
+    modules.forEach(m => { m.expanded = false; });
     renderSidebar();
     renderContent();
   }
@@ -74,7 +77,12 @@
     const modules = window.appModules || [];
     const mod = modules.find(m => m.id === modId);
     if (!mod) return;
-    mod.expanded = !mod.expanded;
+    const willExpand = !mod.expanded;
+    if (willExpand) {
+      // Close other accordions for clean single-expanded behavior
+      modules.forEach(m => { if (m.id !== modId) m.expanded = false; });
+    }
+    mod.expanded = willExpand;
     renderSidebar();
   }
 

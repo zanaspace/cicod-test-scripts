@@ -21,8 +21,49 @@
    * Initializes portal state and renders default views.
    */
   function init() {
+    restoreSidebarState();
     renderSidebar();
     renderContent();
+  }
+
+  /**
+   * Toggles the entire sidebar visibility between expanded and collapsed.
+   */
+  function toggleSidebar() {
+    const sidebar = document.getElementById('sidebar');
+    const toggleBtn = document.getElementById('sidebarToggle');
+    if (!sidebar) return;
+
+    sidebar.classList.toggle('collapsed');
+    const isCollapsed = sidebar.classList.contains('collapsed');
+
+    if (toggleBtn) {
+      toggleBtn.classList.toggle('collapsed', isCollapsed);
+      toggleBtn.title = isCollapsed ? 'Expand Sidebar (Ctrl+B)' : 'Collapse Sidebar (Ctrl+B)';
+      toggleBtn.setAttribute('aria-expanded', !isCollapsed);
+    }
+
+    try {
+      localStorage.setItem('portal_sidebar_collapsed', isCollapsed ? '1' : '0');
+    } catch (e) {}
+  }
+
+  /**
+   * Restores sidebar state from localStorage if available.
+   */
+  function restoreSidebarState() {
+    try {
+      if (localStorage.getItem('portal_sidebar_collapsed') === '1') {
+        const sidebar = document.getElementById('sidebar');
+        const toggleBtn = document.getElementById('sidebarToggle');
+        if (sidebar) sidebar.classList.add('collapsed');
+        if (toggleBtn) {
+          toggleBtn.classList.add('collapsed');
+          toggleBtn.title = 'Expand Sidebar (Ctrl+B)';
+          toggleBtn.setAttribute('aria-expanded', 'false');
+        }
+      }
+    } catch (e) {}
   }
 
   /**
@@ -212,13 +253,18 @@
     if (imageModal) imageModal.classList.remove('active');
   }
 
-  // Keyboard shortcut: close modal on Escape
+  // Keyboard shortcuts: Escape to close modal, Ctrl+B to toggle sidebar
   document.addEventListener('keydown', function(e) {
     if (e.key === 'Escape') closeModal();
+    if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'b') {
+      e.preventDefault();
+      toggleSidebar();
+    }
   });
 
   // Export functions to window scope for 100% backward compatibility
   window.init = init;
+  window.toggleSidebar = toggleSidebar;
   window.toggleModule = toggleModule;
   window.selectFeature = selectFeature;
   window.renderSidebar = renderSidebar;

@@ -385,15 +385,24 @@ const appModules = [
         id: 'ecms_workflows',
         sheetName: 'Workflows',
         reportUrl: 'testCases/workflow_test_report.html',
-        passRate: '100.0%',
-        passCount: 20,
-        gapCount: 0,
-        totalSteps: 20,
-        status: '100% VERIFIED',
+        passRate: '66.7%',
+        passCount: 28,
+        gapCount: 14,
+        totalSteps: 42,
+        status: 'PARTIAL — 5 CONFIRMED BUGS',
         isUpcoming: false,
-        summary: 'Core workflow configuration engine.',
+        summary: 'Core workflow configuration engine: Create Workflow wizard (Process/Form/Escalation/Approval), Queue/Queue Type/Status setup, My Workflows list, and Department linking. 42 checkpoints verified across 8 scenarios (28 passed, 3 deviations, 5 confirmed bugs). One defect (Department-link Folder Path) is a full feature outage (P0); a systemic wrong-menu bug additionally blocks ~60 of the ~208 full script rows, which remain untested pending a fix.',
         targetRoute: '/ecms/workflows',
-        images: []
+        images: [
+          { file: 'uat_target3_cicodecm/wf_step2b_process_tab.png', caption: 'Create Workflow — Process Tab (Queue/Queue Type/Status)' },
+          { file: 'uat_target3_cicodecm/wf_step11b_approval_add_form.png', caption: 'Approval Level Form (Undocumented Branching)' },
+          { file: 'uat_target3_cicodecm/wf_step17_finish_clicked.png', caption: 'Workflow Created — Grant Access Prompt' },
+          { file: 'uat_target3_cicodecm/wf_step18c_role_table_empty_bug.png', caption: 'BUG: Grant-Access Role List Renders Zero Rows' },
+          { file: 'uat_target3_cicodecm/wf_step23_queue_wrong_menu_bug.png', caption: 'BUG: Wrong Action Menu on Queue/Queue Type/Status Tabs' },
+          { file: 'uat_target3_cicodecm/wf_step19b_suspend_result.png', caption: 'Suspend Workflow — Active/Suspended Counters Update Correctly' },
+          { file: 'uat_target3_cicodecm/wf2_step9c_govdrive_stuck.png', caption: 'P0 BUG: Department-Link Folder Path — Gov Drive Session Expired' },
+          { file: 'uat_target3_cicodecm/wf2_step38_final_state.png', caption: 'My Workflows — Confirms Department Link Never Applied (Departments: No)' }
+        ]
       },
       {
         id: 'ecms_workgroups',

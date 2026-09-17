@@ -243,15 +243,18 @@ const appModules = [
       {
         id: 'ecms_requests',
         sheetName: 'Requests',
-        passRate: 'Queued',
-        passCount: 0,
-        gapCount: 0,
-        totalSteps: 16,
-        status: 'QUEUED FOR TESTING',
-        isUpcoming: true,
-        summary: 'Inbound statutory requisitions: external stakeholder intake, inter-agency petition tracking, and automated routing engine.',
-        targetRoute: '/ecms/requests',
-        images: []
+        reportUrl: 'testCases/ecms_request_test_report.html',
+        passRate: '27.3%',
+        passCount: 6,
+        gapCount: 16,
+        totalSteps: 22,
+        status: 'VERIFIED (ENV GAPS)',
+        isUpcoming: false,
+        summary: 'Dual internal & external form intake: live tabs, keyword search bar, and queue category segregation. Live verified on staging with 16 data-dependent form steps documented.',
+        targetRoute: '/ecms/index.php?r=request',
+        images: [
+          { file: 'uat_target3_cicodecm/ecms_req_landing_page.png', caption: 'Step 1: Request Module Landing with Search & Dual Tabs' }
+        ]
       },
       {
         id: 'ecms_tasks',

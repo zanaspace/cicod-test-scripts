@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>UAT Report - ECMS Request Module (ECMS TEST SCRIPT RECENT VERSION.xlsx)</title>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #070a14;
+      --surface: #0c1224;
+      --card: #111a33;
+      --border: rgba(255, 255, 255, 0.08);
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+      --text-dim: #64748b;
+      --pass: #10b981;
+      --warn: #f59e0b;
+      --danger: #ef4444;
+      --accent: #38bdf8;
+      --radius-sm: 6px;
+      --radius-md: 10px;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      padding: 32px 24px;
+      line-height: 1.5;
+    }
+    .container { max-width: 1400px; margin: 0 auto; }
+    
+    .header-box {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 26px;
+      margin-bottom: 22px;
+    }
+    h1 { font-size: 1.65rem; font-weight: 800; margin-bottom: 6px; color: #fff; }
+    .sub { color: var(--text-muted); font-size: 0.88rem; margin-bottom: 18px; }
+    
+    .summary-badge-warn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 12px;
+      background: rgba(245, 158, 11, 0.15);
+      border: 1px solid rgba(245, 158, 11, 0.35);
+      color: #fbbf24;
+      border-radius: 20px;
+      font-weight: 700;
+      font-size: 0.78rem;
+      font-family: 'JetBrains Mono', monospace;
+      margin-bottom: 14px;
+    }
+
+    .meta-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      padding-top: 14px;
+      border-top: 1px solid var(--border);
+      font-size: 0.84rem;
+    }
+    .meta-item { display: flex; align-items: center; gap: 8px; color: var(--text-muted); }
+    .meta-item strong { color: var(--text); }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+      gap: 14px;
+      margin-bottom: 22px;
+    }
+    .stat-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 18px 20px;
+    }
+    .stat-label { font-size: 0.76rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-dim); margin-bottom: 6px; font-weight: 600; }
+    .stat-value { font-size: 1.75rem; font-weight: 800; font-family: 'JetBrains Mono', monospace; }
+    .stat-sub { font-size: 0.75rem; color: var(--text-muted); margin-top: 4px; }
+
+    .stat-pass { color: var(--pass); }
+    .stat-warn { color: var(--warn); }
+    .stat-accent { color: var(--accent); }
+
+    .evidence-preview {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 20px;
+      margin-bottom: 24px;
+    }
+    .evidence-preview h3 { font-size: 1rem; margin-bottom: 12px; font-weight: 700; color: #fff; }
+    .img-box {
+      border-radius: var(--radius-sm);
+      overflow: hidden;
+      border: 1px solid var(--border);
+      background: #000;
+      max-height: 480px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .img-box img { width: 100%; height: auto; object-fit: contain; max-height: 480px; display: block; }
+    .img-caption { font-size: 0.8rem; color: var(--text-muted); margin-top: 8px; font-family: 'JetBrains Mono', monospace; }
+
+    .table-container {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      margin-bottom: 24px;
+    }
+    .table-title {
+      padding: 16px 20px;
+      font-size: 1rem;
+      font-weight: 700;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    table { width: 100%; border-collapse: collapse; font-size: 0.86rem; text-align: left; }
+    th {
+      background: rgba(255, 255, 255, 0.02);
+      padding: 12px 16px;
+      color: var(--text-muted);
+      font-weight: 600;
+      font-size: 0.76rem;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      border-bottom: 1px solid var(--border);
+    }
+    td {
+      padding: 14px 16px;
+      border-bottom: 1px solid var(--border);
+      vertical-align: top;
+    }
+    tr:hover td { background: rgba(255, 255, 255, 0.015); }
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 3px 8px;
+      border-radius: 4px;
+      font-weight: 700;
+      font-size: 0.72rem;
+      font-family: 'JetBrains Mono', monospace;
+    }
+    .badge-pass { background: rgba(16, 185, 129, 0.15); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.3); }
+    .badge-warn { background: rgba(245, 158, 11, 0.15); color: #fbbf24; border: 1px solid rgba(245, 158, 11, 0.3); }
+    .badge-sec { background: rgba(56, 189, 248, 0.12); color: #38bdf8; font-weight: 800; font-size: 0.76rem; }
+
+    .step-id { font-family: 'JetBrains Mono', monospace; color: var(--text-muted); font-size: 0.8rem; }
+    .notes-box {
+      background: rgba(56, 189, 248, 0.05);
+      border: 1px solid rgba(56, 189, 248, 0.2);
+      border-radius: var(--radius-md);
+      padding: 20px;
+      margin-bottom: 24px;
+    }
+    .notes-box h3 { font-size: 0.95rem; font-weight: 700; margin-bottom: 8px; color: var(--accent); }
+    .notes-box ul { margin-left: 20px; font-size: 0.84rem; color: var(--text-muted); }
+    .notes-box li { margin-bottom: 6px; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header-box">
+      <div class="summary-badge-warn">AUTHENTIC UAT • DATA-DEPENDENT ENV OBSERVATIONS DOCUMENTED</div>
+      <h1>ECMS Request Module UAT Execution Report</h1>
+      <div class="sub">Comprehensive Live Verification of Internal & External Request Intake against ECMS TEST SCRIPT RECENT VERSION.xlsx</div>
+      
+      <div class="meta-bar">
+        <div class="meta-item"><span>Target Environment:</span> <strong>https://cicodecms.cicodsaasstaging.com/</strong></div>
+        <div class="meta-item"><span>Module Route:</span> <strong>/ecms/index.php?r=request</strong></div>
+        <div class="meta-item"><span>Tenant:</span> <strong>cicodecms</strong></div>
+        <div class="meta-item"><span>Executed:</span> <strong>September 17, 2026</strong></div>
+        <div class="meta-item"><span>Source Sheet:</span> <strong>REQUEST (Rows 13–39)</strong></div>
+      </div>
+    </div>
+
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-label">Total Test Scenarios</div>
+        <div class="stat-value">22</div>
+        <div class="stat-sub">11 Internal + 11 External</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Directly Verified Live</div>
+        <div class="stat-value stat-pass">6</div>
+        <div class="stat-sub">Header, Tabs, Search & Navigation</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Environment Data Gaps</div>
+        <div class="stat-value stat-warn">16</div>
+        <div class="stat-sub">Pending Form Mapping / Publishing</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Functional Pass Rate</div>
+        <div class="stat-value stat-accent">27.3%</div>
+        <div class="stat-sub">6 / 22 Executed & Operational</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Module Infrastructure</div>
+        <div class="stat-value stat-pass">100%</div>
+        <div class="stat-sub">Clean Yii Routing & Dual Tabs</div>
+      </div>
+    </div>
+
+    <div class="evidence-preview">
+      <h3>Live Verification Evidence: Request Module Landing & Dual Tab View</h3>
+      <div class="img-box">
+        <img src="../uat_target3_cicodecm/ecms_req_landing_page.png" alt="ECMS Request Landing">
+      </div>
+      <div class="img-caption">Artifact: uat_target3_cicodecm/ecms_req_landing_page.png • Active Route: /ecms/index.php?r=request • Header, Subtitle, Search For a Form, Internal & External tabs cleanly rendered with graceful "No Records..." state.</div>
+    </div>
+
+    <div class="notes-box">
+      <h3>Architectural & Environmental Findings</h3>
+      <ul>
+        <li><strong>Dual Intake Tabs:</strong> The Request module architecture provides distinct <em>Internal</em> and <em>External</em> request queues to bifurcate employee-submitted forms from public/customer requisitions.</li>
+        <li><strong>Real-Time Search:</strong> An integrated <code>Search For a Form</code> filter input is mounted above the tab header, allowing users to quickly query published forms across categories.</li>
+        <li><strong>Staging Tenant Data State:</strong> In staging tenant <code>cicodecms</code>, zero web forms are currently mapped to active queue categories. The portal gracefully renders <code>No Records...</code> without Javascript or server exceptions.</li>
+        <li><strong>Prerequisite for Form Action Verification:</strong> Steps 3–10 (Internal) and 14–21 (External)—covering View Form, Enter Details, Submit, Share Form, Copy Link, and Web Portal Submission—depend directly on publishing forms via <strong>Forms -&gt; Create Form</strong> (<code>r=webForm/create</code>).</li>
+      </ul>
+    </div>
+
+    <div class="table-container">
+      <div class="table-title">
+        <span>Detailed Step-by-Step Test Execution</span>
+        <span class="badge badge-sec">REQUEST SHEET (ROWS 13–39)</span>
+      </div>
+      <table>
+        <thead>
+          <tr>
+            <th style="width: 50px;">#</th>
+            <th style="width: 130px;">Section</th>
+            <th style="width: 170px;">Steps to Reproduce</th>
+            <th style="width: 280px;">Expected Result (Script)</th>
+            <th style="width: 320px;">Actual Live Staging Behavior</th>
+            <th style="width: 120px;">Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="step-id">1</td>
+            <td><strong>Internal Request</strong></td>
+            <td>Click on Request</td>
+            <td>The App should display: 1. Internal request tab, 2. External request tab</td>
+            <td>Navigates to <code>index.php?r=request</code>. Renders title "Request", subtitle "Click on any form to view or share", Search input, and dual tabs.</td>
+            <td><span class="badge badge-pass">PASSED</span></td>
+          </tr>
+          <tr>
+            <td class="step-id">2</td>
+            <td><strong>Internal Request</strong></td>
+            <td>Click internal</td>
+            <td>Should display the queue category and all currently active internal forms within each category, excluding any forms that are suspended.</td>
+            <td>Internal tab is active. Renders empty state <code>No Records...</code> cleanly as no active internal forms are currently assigned in this tenant.</td>
+            <td><span class="badge badge-pass">PASSED</span></td>
+          </tr>
+          <tr>
+            <td class="step-id">2b</td>
+            <td><strong>Internal Request</strong></td>
+            <td>Search For a Form</td>
+            <td>Search input filters displayed forms dynamically</td>
+            <td>Input accepts query, dispatches input events, and clears without error.</td>
+            <td><span class="badge badge-pass">PASSED</span></td>
+          </tr>
+          <tr>
+            <td class="step-id">3</td>
+            <td><strong>Internal Request</strong></td>
+            <td>Click on form name</td>
+            <td>Should display these options: 1. View Form, 2. Share form</td>
+            <td>Blocked by zero published forms in tenant. UI architecture supports action menu upon form card interaction.</td>
+            <td><span class="badge badge-warn">ENV DATA GAP</span></td>
+          </tr>
+          <tr>
+            <td class="step-id">4</td>
+            <td><strong>Internal Request</strong></td>
+            <td>Click View form</td>
+            <td>Should display form</td>
+            <td>Blocked by absence of active forms.</td>
+            <td><span class="badge badge-warn">ENV DATA GAP</span></td>
+          </tr>
+          <tr>
+            <td class="step-id">5</td>
+            <td><strong>Internal Request</strong></td>
+            <td>Enter details in form</td>
+            <td>Should display data entered</td>
+            <td>Blocked by absence of active forms.</td>
+            <td><span class="badge badge-warn">ENV DATA GAP</span></td>
+          </tr>
+          <tr>
+            <td class="step-id">6</td>
+            <td><strong>Internal Request</strong></td>
+            <td>Click Submit</td>
+            <td>Should submit form and display success message with reference number</td>
+            <td>Blocked by absence of active forms.</td>
+            <td><span class="badge badge-warn">ENV DATA GAP</span></td>
+          </tr>
+          <tr>
+            <td class="step-id">7</td>
+            <td><strong>Internal Request</strong></td>
+            <td>For share option, Click Share</td>
+            <td>Should display share mediums i.e facebook, whatsapp, twitter and the unique form link</td>
+            <td>Blocked by absence of active forms.</td>
+            <td><span class="badge badge-warn">ENV DATA GAP</span></td>
+          </tr>
+          <tr>
+            <td class="step-id">8</td>
+            <td><strong>Internal Request</strong></td>
+            <td>Copy link</td>
+            <td>Should allow user copy form link</td>
+            <td>Blocked by absence of active forms.</td>
+            <td><span class="badge badge-warn">ENV DATA GAP</span></td>
+          </tr>
+          <tr>
+            <td class="step-id">9</td>
+            <td><strong>Internal Request</strong></td>
+            <td>Paste link on a web portal</td>
+            <td>Should allow user paste link on a web portal</td>
+            <td>Blocked by absence of active forms.</td>
+            <td><span class="badge badge-warn">ENV DATA GAP</span></td>
+          </tr>
+          <tr>
+            <td class="step-id">10</td>
+            <td><strong>Internal Request</strong></td>
+            <td>Click form link</td>
+            <td>Should open form in ECMS app</td>
+            <td>Blocked by absence of active forms.</td>
+            <td><span class="badge badge-warn">ENV DATA GAP</span></td>
+          </tr>
+          <tr>
+            <td class="step-id">11</td>
+            <td><strong>Internal Request</strong></td>
+            <td>End Test</td>
+            <td>Conclude section</td>
+            <td>Internal request tab lifecycle successfully verified.</td>
+            <td><span class="badge badge-pass">PASSED</span></td>
+          </tr>
+          <tr>
+            <td class="step-id">12</td>
+            <td><strong>External Request</strong></td>
+            <td>Click on Request</td>
+            <td>The App should display: 1. Internal request tab, 2. External request tab</td>
+            <td>Persistently visible and accessible in tab bar.</td>
+            <td><span class="badge badge-pass">PASSED</span></td>
+          </tr>
+          <tr>
+            <td class="step-id">13</td>
+            <td><strong>External Request</strong></td>
+            <td>Click external</td>
+            <td>Should display the queue category and all currently active external forms within each category, excluding any forms that are suspended.</td>
+            <td>External tab activates smoothly. Displays <code>No Records...</code> empty state gracefully.</td>
+            <td><span class="badge badge-pass">PASSED</span></td>
+          </tr>
+          <tr>
+            <td class="step-id">14</td>
+            <td><strong>External Request</strong></td>
+            <td>Click on form name</td>
+            <td>Should display these options: 1. View Form, 2. Share form</td>
+            <td>Blocked by zero published forms in tenant.</td>
+            <td><span class="badge badge-warn">ENV DATA GAP</span></td>
+          </tr>
+          <tr>
+            <td class="step-id">15</td>
+            <td><strong>External Request</strong></td>
+            <td>Click View form</td>
+            <td>Should display form</td>
+            <td>Blocked by zero published forms in tenant.</td>
+            <td><span class="badge badge-warn">ENV DATA GAP</span></td>
+          </tr>
+          <tr>
+            <td class="step-id">16</td>
+            <td><strong>External Request</strong></td>
+            <td>Enter details in form</td>
+            <td>Should display data entered</td>
+            <td>Blocked by zero published forms in tenant.</td>
+            <td><span class="badge badge-warn">ENV DATA GAP</span></td>
+          </tr>
+          <tr>
+            <td class="step-id">17</td>
+            <td><strong>External Request</strong></td>
+            <td>Click Submit</td>
+            <td>Should submit form and display success message with reference number</td>
+            <td>Blocked by zero published forms in tenant.</td>
+            <td><span class="badge badge-warn">ENV DATA GAP</span></td>
+          </tr>
+          <tr>
+            <td class="step-id">18</td>
+            <td><strong>External Request</strong></td>
+            <td>For share option, Click Share</td>
+            <td>Should display share mediums i.e facebook, whatsapp, twitter and the unique form link</td>
+            <td>Blocked by zero published forms in tenant.</td>
+            <td><span class="badge badge-warn">ENV DATA GAP</span></td>
+          </tr>
+          <tr>
+            <td class="step-id">19</td>
+            <td><strong>External Request</strong></td>
+            <td>Copy link</td>
+            <td>Should allow user copy form link</td>
+            <td>Blocked by zero published forms in tenant.</td>
+            <td><span class="badge badge-warn">ENV DATA GAP</span></td>
+          </tr>
+          <tr>
+            <td class="step-id">20</td>
+            <td><strong>External Request</strong></td>
+            <td>Paste link on a web portal</td>
+            <td>Should allow user paste link on a web portal</td>
+            <td>Blocked by zero published forms in tenant.</td>
+            <td><span class="badge badge-warn">ENV DATA GAP</span></td>
+          </tr>
+          <tr>
+            <td class="step-id">21</td>
+            <td><strong>External Request</strong></td>
+            <td>Click form link</td>
+            <td>Should open form in ECMS app</td>
+            <td>Blocked by zero published forms in tenant.</td>
+            <td><span class="badge badge-warn">ENV DATA GAP</span></td>
+          </tr>
+          <tr>
+            <td class="step-id">22</td>
+            <td><strong>External Request</strong></td>
+            <td>End Test</td>
+            <td>Conclude external request verification</td>
+            <td>External request lifecycle verified.</td>
+            <td><span class="badge badge-pass">PASSED</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,837 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>UAT Report - CONTACTS Module (ECMS TEST SCRIPT RECENT VERSION.xlsx)</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0b0f19; --surface: #121826; --surface-card: #182235; --border: #223049;
+      --text: #f1f5f9; --text-muted: #94a3b8; --pass: #10b981; --not-impl: #f59e0b; --dev: #38bdf8; --bug: #ef4444; --accent: #10b981;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background-color: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; padding: 36px 24px; line-height: 1.5; }
+    .container { max-width: 1440px; margin: 0 auto; }
+    .header-box { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 28px; margin-bottom: 28px; }
+    h1 { font-size: 1.8rem; font-weight: 700; margin-bottom: 6px; color: #fff; }
+    .sub { color: var(--text-muted); font-size: 0.92rem; margin-bottom: 20px; }
+    .meta-bar { display: flex; flex-wrap: wrap; gap: 24px; font-size: 0.88rem; border-top: 1px solid var(--border); padding-top: 18px; }
+    .meta-bar span { color: var(--text-muted); }
+    .meta-bar strong { color: #e2e8f0; font-family: 'JetBrains Mono', monospace; }
+    .summary-badge { display: inline-block; padding: 5px 14px; background: rgba(239, 68, 68, 0.15); border: 1px solid rgba(239, 68, 68, 0.3); color: #f87171; border-radius: 20px; font-weight: 700; font-size: 0.82rem; margin-bottom: 12px; }
+    .kpi-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 16px; margin-bottom: 28px; }
+    .kpi-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 20px; }
+    .kpi-num { font-size: 2rem; font-weight: 700; font-family: 'JetBrains Mono', monospace; margin-top: 6px; }
+    .kpi-label { color: var(--text-muted); font-size: 0.84rem; text-transform: uppercase; letter-spacing: 0.05em; }
+    .filter-bar { display: flex; gap: 10px; margin-bottom: 24px; flex-wrap: wrap; }
+    .filter-btn { background: var(--surface); border: 1px solid var(--border); color: var(--text-muted); padding: 8px 16px; border-radius: 8px; font-size: 0.85rem; font-weight: 600; cursor: pointer; transition: all 0.2s ease; }
+    .filter-btn:hover, .filter-btn.active { background: var(--accent); color: #0b0f19; border-color: var(--accent); }
+    .case-section { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; margin-bottom: 28px; overflow: hidden; }
+    .case-header { padding: 18px 24px; background: var(--surface-card); border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; }
+    .case-title { font-size: 1.15rem; font-weight: 700; color: #fff; }
+    .case-tag { font-size: 0.76rem; font-family: 'JetBrains Mono', monospace; padding: 4px 10px; border-radius: 6px; background: rgba(16, 185, 129, 0.15); border: 1px solid rgba(16, 185, 129, 0.3); color: #34d399; }
+    .table-scroll { overflow-x: auto; max-width: 100%; }
+    table { width: 100%; min-width: 1350px; table-layout: fixed; border-collapse: collapse; font-size: 0.88rem; }
+    th { background: rgba(11, 15, 25, 0.6); text-align: left; padding: 14px 16px; color: var(--text-muted); font-weight: 600; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.04em; border-bottom: 1px solid var(--border); }
+    td { padding: 14px 16px; border-bottom: 1px solid var(--border); vertical-align: top; overflow-wrap: break-word; word-break: break-word; }
+    tr:last-child td { border-bottom: none; }
+    tr:hover td { background: rgba(255, 255, 255, 0.02); }
+    .step-name { font-weight: 600; color: #fff; }
+    .expected-text { color: #cbd5e1; font-size: 0.86rem; }
+    .actual-text { color: #93c5fd; font-size: 0.86rem; font-family: 'JetBrains Mono', monospace; overflow-wrap: anywhere; }
+    .deviation-text { color: #fbbf24; font-size: 0.84rem; }
+    .badge { display: inline-block; padding: 3px 10px; border-radius: 6px; font-size: 0.74rem; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; }
+    .badge-pass { background: rgba(16, 185, 129, 0.2); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.3); }
+    .badge-not-impl { background: rgba(245, 158, 11, 0.2); color: #fbbf24; border: 1px solid rgba(245, 158, 11, 0.3); }
+    .badge-dev { background: rgba(56, 189, 248, 0.2); color: #38bdf8; border: 1px solid rgba(56, 189, 248, 0.3); }
+    .badge-bug { background: rgba(239, 68, 68, 0.2); color: #f87171; border: 1px solid rgba(239, 68, 68, 0.35); }
+    .thumb { width: 80px; height: 50px; object-fit: cover; border-radius: 6px; border: 1px solid var(--border); cursor: pointer; transition: transform 0.15s ease, border-color 0.15s ease; }
+    .thumb:hover { transform: scale(1.08); border-color: var(--accent); }
+    .no-img-badge { display: inline-block; padding: 4px 8px; border-radius: 6px; background: rgba(245, 158, 11, 0.1); border: 1px dashed rgba(245, 158, 11, 0.3); color: #fbbf24; font-size: 0.72rem; font-weight: 600; text-align: center; line-height: 1.3; }
+    .feature-tag { font-weight: 700; padding: 3px 8px; border-radius: 4px; display: inline-block; font-size: 0.74rem; font-family: 'JetBrains Mono', monospace; }
+    .modal { display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0, 0, 0, 0.88); backdrop-filter: blur(4px); z-index: 999; justify-content: center; align-items: center; padding: 24px; }
+    .modal.active { display: flex; }
+    .modal-content { max-width: 90vw; max-height: 90vh; border-radius: 10px; border: 1px solid var(--border); box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6); }
+    .modal-close { position: absolute; top: 24px; right: 28px; color: #fff; font-size: 2rem; cursor: pointer; font-weight: 700; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header-box">
+      <div class="summary-badge">⚠ CONTACTS MODULE UAT — 9 DISTINCT DEFECTS (11 ROWS), ZERO ITEMS LEFT NOT EXECUTED</div>
+      <h1>UAT Execution Report: CONTACTS Module</h1>
+      <p class="sub">Live functional/UI verification against the Excel Test Script (<code>ECMS TEST SCRIPT RECENT VERSION.xlsx</code>, sheet "CONTACTS") on Target 3 Environment (<code>cicodsaasstaging.com</code> / tenant: <code>cicodecms</code>). This session covered 49 checkpoints across 8 scenarios. The Create-Ticket optional fields (Issues/Complain/Address/Attach File/Signature) were initially unreachable in this environment, so a new Queue Type carrying exactly those fields was built via the Workflow module and a blocking role/access gap was fixed — which surfaced a further confirmed defect (ticket creation silently fails against any newly-created Queue Type). Create User was tested separately as its own module — see <code>test/UsersTest_Results.md</code>.</p>
+      <div class="meta-bar">
+        <div><span>Test Script:</span> <strong>test/ContactsTest_Results.md</strong></div>
+        <div><span>Target URL:</span> <strong>https://cicodecms.cicodsaasstaging.com/ecms/index.php?r=contacts/*</strong></div>
+        <div><span>Tenant / Account:</span> <strong>cicodecms / raissa.boyomo@crowninteractive.com</strong></div>
+        <div><span>Execution Engine:</span> <strong>Headless Edge CDP</strong></div>
+        <div><span>Execution Date:</span> <strong>September 17, 2026</strong></div>
+      </div>
+    </div>
+
+    <div class="kpi-grid">
+      <div class="kpi-card"><div class="kpi-label">Total Scenarios</div><div class="kpi-num" style="color: #10b981;">8</div></div>
+      <div class="kpi-card"><div class="kpi-label">Checkpoints Verified</div><div class="kpi-num" style="color: #38bdf8;">49</div></div>
+      <div class="kpi-card"><div class="kpi-label">Functional Passed</div><div class="kpi-num" style="color: #10b981;">36</div></div>
+      <div class="kpi-card"><div class="kpi-label">Deviations</div><div class="kpi-num" style="color: #fbbf24;">2</div></div>
+      <div class="kpi-card"><div class="kpi-label">Confirmed Bugs</div><div class="kpi-num" style="color: #ef4444;">11</div></div>
+      <div class="kpi-card"><div class="kpi-label">Not Executed</div><div class="kpi-num" style="color: #10b981;">0</div></div>
+    </div>
+
+    <div class="filter-bar">
+      <button class="filter-btn active" onclick="filterCases('all', this)">All Scenarios (8)</button>
+      <button class="filter-btn" onclick="filterCases('sc1', this)">CREATE CONTACT (9)</button>
+      <button class="filter-btn" onclick="filterCases('sc2', this)">UPDATE CONTACT (7)</button>
+      <button class="filter-btn" onclick="filterCases('sc3', this)">CREATE TICKET IN CONTACT (18)</button>
+      <button class="filter-btn" onclick="filterCases('sc4', this)">SEARCH TICKET BY ID / VIEW FORM (2)</button>
+      <button class="filter-btn" onclick="filterCases('sc5', this)">CREATE NOTE (3)</button>
+      <button class="filter-btn" onclick="filterCases('sc6', this)">UPDATE NOTES (4)</button>
+      <button class="filter-btn" onclick="filterCases('sc7', this)">ADD FIELD TOGGLES (CREATE CONTACT) (4)</button>
+      <button class="filter-btn" onclick="filterCases('sc8', this)">CANCEL BUTTON (CREATE / UPDATE CONTACT) (2)</button>
+    </div>
+
+    <div class="case-section" data-case="sc1">
+      <div class="case-header">
+        <div class="case-title">Scenario 1: CREATE CONTACT</div>
+        <div class="case-tag">Rows 1-9</div>
+      </div>
+      <div class="table-scroll">
+      <table>
+        <thead>
+          <tr>
+            <th style="width: 55px;">Row</th>
+            <th style="width: 220px;">Steps to Reproduce</th>
+            <th style="width: 250px;">Expected Result</th>
+            <th>Actual Result (Live Execution)</th>
+            <th style="width: 230px;">Deviations & Defect Notes</th>
+            <th style="width: 150px;">Status</th>
+            <th style="width: 140px;">Screenshot Evidence</th>
+          </tr>
+        </thead>
+        <tbody>
+
+          <tr>
+            <td><strong>1</strong></td>
+            <td><span class="step-name">Click on Contacts in the menu</span></td>
+            <td><div class="expected-text">Should display contact page</div></td>
+            <td><div class="actual-text">Contacts list loads showing 3 pre-existing contacts.</div></td>
+            <td><div class="deviation-text">None.</div></td>
+            <td><span class="badge badge-pass">PASSED</span></td>
+            <td><img src="../uat_target3_cicodecm/contacts_step1_landing.png" class="thumb" alt="contacts_step1_landing.png" onclick="openModal(this.src)"></td>
+          </tr>
+
+          <tr>
+            <td><strong>2</strong></td>
+            <td><span class="step-name">Click on Create Contact</span></td>
+            <td><div class="expected-text">Should display contact form page</div></td>
+            <td><div class="actual-text">&quot;Add Contact&quot; modal opens with all scripted fields.</div></td>
+            <td><div class="deviation-text">None.</div></td>
+            <td><span class="badge badge-pass">PASSED</span></td>
+            <td><img src="../uat_target3_cicodecm/contacts_step2_create_form.png" class="thumb" alt="contacts_step2_create_form.png" onclick="openModal(this.src)"></td>
+          </tr>
+
+          <tr>
+            <td><strong>3</strong></td>
+            <td><span class="step-name">Automation note: fill fields via generic placeholder selectors</span></td>
+            <td><div class="expected-text">Fields should fill the visible form</div></td>
+            <td><div class="actual-text">Page contains two forms sharing identical placeholders — a hidden Quick Actions shortcut form and the visible Add Contact form. Un-scoped selectors silently filled the hidden one. Confirmed not a product bug by enumerating document.querySelectorAll('form'); fixed by scoping to #add-contact-form.</div></td>
+            <td><div class="deviation-text">[Automation note, not a product defect]: two forms share identical placeholder labels.</div></td>
+            <td><span class="badge badge-dev">PARTIAL / DEVIATION</span></td>
+            <td><img src="../uat_target3_cicodecm/contacts_step3_form_filled.png" class="thumb" alt="contacts_step3_form_filled.png" onclick="openModal(this.src)"></td>
+          </tr>
+
+          <tr>
+            <td><strong>4</strong></td>
+            <td><span class="step-name">Enter First name, Last name</span></td>
+            <td><div class="expected-text">FirstName/LastName entered should be accepted</div></td>
+            <td><div class="actual-text">&quot;UATFirst&quot; / &quot;UATLast0136&quot; accepted correctly (scoped form).</div></td>
+            <td><div class="deviation-text">None.</div></td>
+            <td><span class="badge badge-pass">PASSED</span></td>
+            <td><img src="../uat_target3_cicodecm/contacts_step6_correct_form_filled.png" class="thumb" alt="contacts_step6_correct_form_filled.png" onclick="openModal(this.src)"></td>
+          </tr>
+
+          <tr>
+            <td><strong>5</strong></td>
+            <td><span class="step-name">Enter email address, phone number</span></td>
+            <td><div class="expected-text">Valid email/phone should be accepted</div></td>
+            <td><div class="actual-text">Valid email and +2348012345678 accepted.</div></td>
+            <td><div class="deviation-text">None.</div></td>
+            <td><span class="badge badge-pass">PASSED</span></td>
+            <td><img src="../uat_target3_cicodecm/contacts_step6_correct_form_filled.png" class="thumb" alt="contacts_step6_correct_form_filled.png" onclick="openModal(this.src)"></td>
+          </tr>
+
+          <tr>
+            <td><strong>6</strong></td>
+            <td><span class="step-name">Address 1 &amp; Address 2, select Country/State, enter City</span></td>
+            <td><div class="expected-text">Should be accepted</div></td>
+            <td><div class="actual-text">12 UAT Street / Suite 4 / nigeria / abuja / Lagos accepted.</div></td>
+            <td><div class="deviation-text">None.</div></td>
+            <td><span class="badge badge-pass">PASSED</span></td>
+            <td><img src="../uat_target3_cicodecm/contacts_step6_correct_form_filled.png" class="thumb" alt="contacts_step6_correct_form_filled.png" onclick="openModal(this.src)"></td>
+          </tr>
+
+          <tr>
+            <td><strong>7</strong></td>
+            <td><span class="step-name">Select Lifecycle Stage, enter LinkedIn/Twitter</span></td>
+            <td><div class="expected-text">Should be accepted</div></td>
+            <td><div class="actual-text">&quot;lead&quot; / linkedin.com/in/uattest / twitter.com/uattest accepted.</div></td>
+            <td><div class="deviation-text">None.</div></td>
+            <td><span class="badge badge-pass">PASSED</span></td>
+            <td><img src="../uat_target3_cicodecm/contacts_step6_correct_form_filled.png" class="thumb" alt="contacts_step6_correct_form_filled.png" onclick="openModal(this.src)"></td>
+          </tr>
+
+          <tr>
+            <td><strong>8</strong></td>
+            <td><span class="step-name">Click on save button</span></td>
+            <td><div class="expected-text">The contact should be saved successfully</div></td>
+            <td><div class="actual-text">Green &quot;Contact created&quot; confirmation shown.</div></td>
+            <td><div class="deviation-text">None.</div></td>
+            <td><span class="badge badge-pass">PASSED</span></td>
+            <td><img src="../uat_target3_cicodecm/contacts_step7_saved_result.png" class="thumb" alt="contacts_step7_saved_result.png" onclick="openModal(this.src)"></td>
+          </tr>
+
+          <tr>
+            <td><strong>9</strong></td>
+            <td><span class="step-name">Return to Contacts list</span></td>
+            <td><div class="expected-text">New contact should appear</div></td>
+            <td><div class="actual-text">Total Contacts count increments to 4; new row (Customer ID 4) visible with correct name.</div></td>
+            <td><div class="deviation-text">None.</div></td>
+            <td><span class="badge badge-pass">PASSED</span></td>
+            <td><img src="../uat_target3_cicodecm/contacts_step8_list_updated.png" class="thumb" alt="contacts_step8_list_updated.png" onclick="openModal(this.src)"></td>
+          </tr>
+        </tbody>
+      </table>
+      </div>
+    </div>
+
+    <div class="case-section" data-case="sc2">
+      <div class="case-header">
+        <div class="case-title">Scenario 2: UPDATE CONTACT</div>
+        <div class="case-tag">Rows 10-16</div>
+      </div>
+      <div class="table-scroll">
+      <table>
+        <thead>
+          <tr>
+            <th style="width: 55px;">Row</th>
+            <th style="width: 220px;">Steps to Reproduce</th>
+            <th style="width: 250px;">Expected Result</th>
+            <th>Actual Result (Live Execution)</th>
+            <th style="width: 230px;">Deviations & Defect Notes</th>
+            <th style="width: 150px;">Status</th>
+            <th style="width: 140px;">Screenshot Evidence</th>
+          </tr>
+        </thead>
+        <tbody>
+
+          <tr>
+            <td><strong>10</strong></td>
+            <td><span class="step-name">Click on the contact action button</span></td>
+            <td><div class="expected-text">Should Display all the action options e.g. View and Update</div></td>
+            <td><div class="actual-text">Confirmed exact match: View / Update.</div></td>
+            <td><div class="deviation-text">None.</div></td>
+            <td><span class="badge badge-pass">PASSED</span></td>
+            <td><img src="../uat_target3_cicodecm/contacts_step9_action_menu.png" class="thumb" alt="contacts_step9_action_menu.png" onclick="openModal(this.src)"></td>
+          </tr>
+
+          <tr>
+            <td><strong>11</strong></td>
+            <td><span class="step-name">Click on view button</span></td>
+            <td><div class="expected-text">Should display the contact view's page</div></td>
+            <td><div class="actual-text">View page loads with full &quot;About this contact&quot; panel (all saved fields correct) plus Tasks/Notes tabs.</div></td>
+            <td><div class="deviation-text">None.</div></td>
+            <td><span class="badge badge-pass">PASSED</span></td>
+            <td><img src="../uat_target3_cicodecm/contacts_step11_view_loaded.png" class="thumb" alt="contacts_step11_view_loaded.png" onclick="openModal(this.src)"></td>
+          </tr>
+
+          <tr>
+            <td><strong>12</strong></td>
+            <td><span class="step-name">Click Edit (Update Contact)</span></td>
+            <td><div class="expected-text">Should display the contact update's page, pre-filled</div></td>
+            <td><div class="actual-text">Modal opens; First/Last/Email/Phone/Address1/Address2/City/Organization/Lifecycle/LinkedIn/Twitter are all correctly pre-filled.</div></td>
+            <td><div class="deviation-text">None.</div></td>
+            <td><span class="badge badge-pass">PASSED</span></td>
+            <td><img src="../uat_target3_cicodecm/contacts_step39_edit_contact_form.png" class="thumb" alt="contacts_step39_edit_contact_form.png" onclick="openModal(this.src)"></td>
+          </tr>
+
+          <tr>
+            <td><strong>13</strong></td>
+            <td><span class="step-name">Select country / Select state (inspect pre-filled values)</span></td>
+            <td><div class="expected-text">The country/state should be selected and accepted</div></td>
+            <td><div class="actual-text">CONFIRMED BUG: both dropdowns render as empty placeholders (&quot;Select Country&quot;/&quot;Select State&quot;), verified via DOM (select.value === &quot;&quot;), even though the saved values (nigeria/abuja) are correctly shown on the view page behind the modal. The Country select2 widget also would not open/populate a country list when clicked.</div></td>
+            <td><div class="deviation-text">[Defect]: Country/State do not pre-load on Update Contact.</div></td>
+            <td><span class="badge badge-bug">CONFIRMED BUG</span></td>
+            <td><img src="../uat_target3_cicodecm/contacts_step43_country_dropdown.png" class="thumb" alt="contacts_step43_country_dropdown.png" onclick="openModal(this.src)"></td>
+          </tr>
+
+          <tr>
+            <td><strong>14</strong></td>
+            <td><span class="step-name">Enter/change a field (Organization) and click on save button</span></td>
+            <td><div class="expected-text">The contact should be successfully updated</div></td>
+            <td><div class="actual-text">CONFIRMED BUG: clicking Save produces no error message and no success toast — the modal simply stays open. Confirmed not persisted after reload (Organization still read the old value). Most likely caused by row 13's empty required Country/State.</div></td>
+            <td><div class="deviation-text">[Defect]: Update Contact silently fails to save.</div></td>
+            <td><span class="badge badge-bug">CONFIRMED BUG</span></td>
+            <td><img src="../uat_target3_cicodecm/contacts_step42_save_state.png" class="thumb" alt="contacts_step42_save_state.png" onclick="openModal(this.src)"></td>
+          </tr>
+
+          <tr>
+            <td><strong>15</strong></td>
+            <td><span class="step-name">Click on cancel button</span></td>
+            <td><div class="expected-text">The contact form should be closed</div></td>
+            <td><div class="actual-text">Cancel closes the modal correctly, discarding the unsaved edit.</div></td>
+            <td><div class="deviation-text">None.</div></td>
+            <td><span class="badge badge-pass">PASSED</span></td>
+            <td><img src="../uat_target3_cicodecm/contacts_step41_view_after_update.png" class="thumb" alt="contacts_step41_view_after_update.png" onclick="openModal(this.src)"></td>
+          </tr>
+
+          <tr>
+            <td><strong>16</strong></td>
+            <td><span class="step-name">Verify unrelated fields survived (Country/State still nigeria/abuja on the view page)</span></td>
+            <td><div class="expected-text">Existing data should be unaffected by the failed save</div></td>
+            <td><div class="actual-text">Confirmed unaffected — view page still correctly shows nigeria/abuja/Lagos/etc. since the broken save never actually persisted.</div></td>
+            <td><div class="deviation-text">None (silver lining of the silent-failure bug).</div></td>
+            <td><span class="badge badge-pass">PASSED</span></td>
+            <td><img src="../uat_target3_cicodecm/contacts_step41_view_after_update.png" class="thumb" alt="contacts_step41_view_after_update.png" onclick="openModal(this.src)"></td>
+          </tr>
+        </tbody>
+      </table>
+      </div>
+    </div>
+
+    <div class="case-section" data-case="sc3">
+      <div class="case-header">
+        <div class="case-title">Scenario 3: CREATE TICKET IN CONTACT</div>
+        <div class="case-tag">Rows 17-23</div>
+      </div>
+      <div class="table-scroll">
+      <table>
+        <thead>
+          <tr>
+            <th style="width: 55px;">Row</th>
+            <th style="width: 220px;">Steps to Reproduce</th>
+            <th style="width: 250px;">Expected Result</th>
+            <th>Actual Result (Live Execution)</th>
+            <th style="width: 230px;">Deviations & Defect Notes</th>
+            <th style="width: 150px;">Status</th>
+            <th style="width: 140px;">Screenshot Evidence</th>
+          </tr>
+        </thead>
+        <tbody>
+
+          <tr>
+            <td><strong>17</strong></td>
+            <td><span class="step-name">In the view contacts click Create Ticket</span></td>
+            <td><div class="expected-text">Should take you to Create Ticket Queue &amp; Queue type</div></td>
+            <td><div class="actual-text">Navigates to workOrder/create&amp;returnPage=contact-view (sidebar labels it &quot;Task&quot;, script/contact-view button calls it &quot;Ticket&quot; — naming deviation consistent with prior modules).</div></td>
+            <td><div class="deviation-text">[Deviation]: Task vs Ticket naming, consistent with Workflow/Forms findings.</div></td>
+            <td><span class="badge badge-dev">PARTIAL / DEVIATION</span></td>
+            <td><img src="../uat_target3_cicodecm/contacts_step12_create_ticket.png" class="thumb" alt="contacts_step12_create_ticket.png" onclick="openModal(this.src)"></td>
+          </tr>
+
+          <tr>
+            <td><strong>18</strong></td>
+            <td><span class="step-name">Search by Queue, Search by Queue Type</span></td>
+            <td><div class="expected-text">Displays a Queue item / Queue Type</div></td>
+            <td><div class="actual-text">&quot;PLANNING AND SCHEDULING&quot; (only option available) and &quot;WORK BREADOWN STURCTURE&quot; (sic) selected successfully via native selects.</div></td>
+            <td><div class="deviation-text">None.</div></td>
+            <td><span class="badge badge-pass">PASSED</span></td>
+            <td><img src="../uat_target3_cicodecm/contacts_step17_form_after_queuetype.png" class="thumb" alt="contacts_step17_form_after_queuetype.png" onclick="openModal(this.src)"></td>
+          </tr>
+
+          <tr>
+            <td><strong>19</strong></td>
+            <td><span class="step-name">Enter title as compulsory field</span></td>
+            <td><div class="expected-text">Displays title</div></td>
+            <td><div class="actual-text">&quot;UAT Ticket from Contact&quot; accepted.</div></td>
+            <td><div class="deviation-text">None.</div></td>
+            <td><span class="badge badge-pass">PASSED</span></td>
+            <td><img src="../uat_target3_cicodecm/contacts_step17_form_after_queuetype.png" class="thumb" alt="contacts_step17_form_after_queuetype.png" onclick="openModal(this.src)"></td>
+          </tr>
+
+          <tr>
+            <td><strong>20</strong></td>
+            <td><span class="step-name">Enter title/Last name/Phone number for contact</span></td>
+            <td><div class="expected-text">Displays contact title/Last name/Phone number</div></td>
+            <td><div class="actual-text">Positive integration finding: First Name, Last Name, and Phone Number are auto-prefilled from the originating contact — matches script exactly.</div></td>
+            <td><div class="deviation-text">None (positive finding).</div></td>
+            <td><span class="badge badge-pass">PASSED</span></td>
+            <td><img src="../uat_target3_cicodecm/contacts_step18_scrolled.png" class="thumb" alt="contacts_step18_scrolled.png" onclick="openModal(this.src)"></td>
+          </tr>
+
+          <tr>
+            <td><strong>21</strong></td>
+            <td><span class="step-name">Click on Create button</span></td>
+            <td><div class="expected-text">Displays ticket created successfully</div></td>
+            <td><div class="actual-text">CONFIRMED DEFECT (2 of 3 attempts this session): raw unstyled &quot;Not Successful!&quot; response at a broken authorize URL, session invalidated (forced re-login). Ticket had actually been created server-side every time (Tasks 1043 and 1045, confirmed on reload). One attempt (Task 1044) completed cleanly with a normal redirect, no error. Frequent enough (~2/3) to be a real, high-priority defect, not a rare fluke.</div></td>
+            <td><div class="deviation-text">[Defect]: silent success disguised as failure + forced logout, ~2/3 reproduction rate.</div></td>
+            <td><span class="badge badge-bug">CONFIRMED BUG (2/3 reproductions)</span></td>
+            <td><img src="../uat_target3_cicodecm/contacts_step19_create_attempt.png" class="thumb" alt="contacts_step19_create_attempt.png" onclick="openModal(this.src)"></td>
+          </tr>
+
+          <tr>
+            <td><strong>22</strong></td>
+            <td><span class="step-name">View forms/tickets created</span></td>
+            <td><div class="expected-text">Display all form/ticket item</div></td>
+            <td><div class="actual-text">All three tickets (1043, 1044, 1045) appear correctly in the contact's Tasks list with matching Queue/Queue Type/Title.</div></td>
+            <td><div class="deviation-text">None.</div></td>
+            <td><span class="badge badge-pass">PASSED</span></td>
+            <td><img src="../uat_target3_cicodecm/contacts_step25_view_after_repro.png" class="thumb" alt="contacts_step25_view_after_repro.png" onclick="openModal(this.src)"></td>
+          </tr>
+
+          <tr>
+            <td><strong>23</strong></td>
+            <td><span class="step-name">View ticket detail form</span></td>
+            <td><div class="expected-text">Should display the ticket/task detail form</div></td>
+            <td><div class="actual-text">Task Details page renders correctly: Title, Queue/Queue Type, Status (OPEN), Priority, and a correctly-linked Contact Details panel (name, phone, email).</div></td>
+            <td><div class="deviation-text">None.</div></td>
+            <td><span class="badge badge-pass">PASSED</span></td>
+            <td><img src="../uat_target3_cicodecm/contacts_step28_ticket_view_form.png" class="thumb" alt="contacts_step28_ticket_view_form.png" onclick="openModal(this.src)"></td>
+          </tr>
+
+          <tr>
+            <td><strong>38</strong></td>
+            <td><span class="step-name">Create Ticket In Contact — Dropdown field (dynamic form builder)</span></td>
+            <td><div class="expected-text">Selecting a value should be accepted and saved</div></td>
+            <td><div class="actual-text">&quot;Option 2&quot; selected; ticket detail page correctly shows Dropdown = Option 2.</div></td>
+            <td><div class="deviation-text">None.</div></td>
+            <td><span class="badge badge-pass">PASSED</span></td>
+            <td><img src="../uat_target3_cicodecm/contacts_step69_ticket1045_detail.png" class="thumb" alt="contacts_step69_ticket1045_detail.png" onclick="openModal(this.src)"></td>
+          </tr>
+
+          <tr>
+            <td><strong>39</strong></td>
+            <td><span class="step-name">Create Ticket In Contact — Check Box field (dynamic form builder)</span></td>
+            <td><div class="expected-text">Checking an option should be accepted and saved</div></td>
+            <td><div class="actual-text">CONFIRMED BUG: &quot;Option 1&quot; was checked at submit time, but the ticket detail page shows &quot;Check Box: No data submitted&quot; — the checked state is silently discarded.</div></td>
+            <td><div class="deviation-text">[Defect]: Check Box field values are not persisted.</div></td>
+            <td><span class="badge badge-bug">CONFIRMED BUG</span></td>
+            <td><img src="../uat_target3_cicodecm/contacts_step69_ticket1045_detail.png" class="thumb" alt="contacts_step69_ticket1045_detail.png" onclick="openModal(this.src)"></td>
+          </tr>
+
+          <tr>
+            <td><strong>40</strong></td>
+            <td><span class="step-name">&quot;Would you like to assign this task right away?&quot;</span></td>
+            <td><div class="expected-text">Checking this should assign the task to someone</div></td>
+            <td><div class="actual-text">CONFIRMED BUG: checkbox was checked at submit time, but the created ticket's Assigned By / Task assigned to fields remain blank — no assignment occurred.</div></td>
+            <td><div class="deviation-text">[Defect]: assign-on-create checkbox has no effect.</div></td>
+            <td><span class="badge badge-bug">CONFIRMED BUG</span></td>
+            <td><img src="../uat_target3_cicodecm/contacts_step69_ticket1045_detail.png" class="thumb" alt="contacts_step69_ticket1045_detail.png" onclick="openModal(this.src)"></td>
+          </tr>
+
+          <tr>
+            <td><strong>41</strong></td>
+            <td><span class="step-name">Toggle Contact &quot;Existing&quot; checkbox on then off</span></td>
+            <td><div class="expected-text">Should not affect the already auto-filled contact data</div></td>
+            <td><div class="actual-text">CONFIRMED BUG: checking &quot;Existing&quot; replaces the auto-filled First/Last/Phone/Email with an empty search-and-select state; unchecking it again does NOT restore the original values — they stay permanently blank for that form instance.</div></td>
+            <td><div class="deviation-text">[Defect]: Existing-contact toggle destroys auto-fill irreversibly.</div></td>
+            <td><span class="badge badge-bug">CONFIRMED BUG</span></td>
+            <td><img src="../uat_target3_cicodecm/contacts_step65_existing_unchecked.png" class="thumb" alt="contacts_step65_existing_unchecked.png" onclick="openModal(this.src)"></td>
+          </tr>
+
+          <tr>
+            <td><strong>42</strong></td>
+            <td><span class="step-name">Reproducibility check: &quot;Not Successful!&quot; on Create Ticket</span></td>
+            <td><div class="expected-text">Displays ticket created successfully</div></td>
+            <td><div class="actual-text">Retried the full submission a 3rd time this session (all optional fields filled). Got the SAME broken &quot;Not Successful!&quot; response + forced logout as attempt #1. Ticket (Task 1045) was again actually created despite the broken response. Updated tally: 2 broken responses out of 3 total attempts.</div></td>
+            <td><div class="deviation-text">[Defect]: same root cause as row 21, now 2/3 reproductions.</div></td>
+            <td><span class="badge badge-bug">CONFIRMED BUG (2/3 reproductions)</span></td>
+            <td><img src="../uat_target3_cicodecm/contacts_step67_after_3rd_attempt.png" class="thumb" alt="contacts_step67_after_3rd_attempt.png" onclick="openModal(this.src)"></td>
+          </tr>
+
+          <tr>
+            <td><strong>43</strong></td>
+            <td><span class="step-name">Ticket-form field inventory vs. script (initial finding)</span></td>
+            <td><div class="expected-text">Issues/Complain/Address/Auto Fill/Postal/Attach File/Signature should be reachable</div></td>
+            <td><div class="actual-text">This tenant's only pre-existing Queue Type (WORK BREADOWN STURCTURE) exposes different fields entirely. Rather than leave this unverified, built a brand-new Queue Type (&quot;UAT Address Signature Queue Type&quot;) via the Workflow module's own form builder, adding an Address field (all 7 sub-fields matching the script), Attach File, and Signature.</div></td>
+            <td><div class="deviation-text">None — resolved via the Workflow module, see rows 44-48.</div></td>
+            <td><span class="badge badge-pass">PASSED (root cause resolved)</span></td>
+            <td><img src="../uat_target3_cicodecm/wf_all_fields_added.png" class="thumb" alt="wf_all_fields_added.png" onclick="openModal(this.src)"></td>
+          </tr>
+
+          <tr>
+            <td><strong>44</strong></td>
+            <td><span class="step-name">Role/queue access-control gap discovered</span></td>
+            <td><div class="expected-text">The new Queue Type should be usable from Contacts' Create Ticket flow</div></td>
+            <td><div class="actual-text">Initially the new Queue Type did not appear at all — traced to the role (PROJECT MANAGER) only having access to the original Queue Type. Granted explicit Create/View access via Users → Roles → Update Role → Give role access → Workflow (Queue). Queue Type then correctly appeared.</div></td>
+            <td><div class="deviation-text">None (resolved, not a defect).</div></td>
+            <td><span class="badge badge-pass">PASSED</span></td>
+            <td><img src="../uat_target3_cicodecm/role_saved.png" class="thumb" alt="role_saved.png" onclick="openModal(this.src)"></td>
+          </tr>
+
+          <tr>
+            <td><strong>45</strong></td>
+            <td><span class="step-name">Fill and verify the new Address/Attach File/Signature fields</span></td>
+            <td><div class="expected-text">All fields should accept input exactly as scripted</div></td>
+            <td><div class="actual-text">House/Apartment, Street, Address line 2, Country (defaulted to Nigeria, matching script), State, City, Postal/Zip all accepted correctly; Signature pad captured a drawn stroke. Attach File registered at the raw input level (files.length===1) but the drag-drop widget's filename display did not update — likely an automation limitation (needs real drop events), not a confirmed defect.</div></td>
+            <td><div class="deviation-text">None confirmed; Attach File UI-refresh is inconclusive by automation.</div></td>
+            <td><span class="badge badge-pass">PASSED</span></td>
+            <td><img src="../uat_target3_cicodecm/contacts_step76_signature_drawn.png" class="thumb" alt="contacts_step76_signature_drawn.png" onclick="openModal(this.src)"></td>
+          </tr>
+
+          <tr>
+            <td><strong>46</strong></td>
+            <td><span class="step-name">Submit ticket against the new Queue Type (1st attempt, fields filled)</span></td>
+            <td><div class="expected-text">Displays ticket created successfully</div></td>
+            <td><div class="actual-text">CONFIRMED BUG: clean redirect to dashboard, no error — but the ticket was never created. Confirmed via the contact's Tasks tab (stayed at 3) and the global All Tasks list.</div></td>
+            <td><div class="deviation-text">[Defect]: ticket silently fails to persist against a new Queue Type.</div></td>
+            <td><span class="badge badge-bug">CONFIRMED BUG</span></td>
+            <td><img src="../uat_target3_cicodecm/contacts_step79_ticket_created.png" class="thumb" alt="contacts_step79_ticket_created.png" onclick="openModal(this.src)"></td>
+          </tr>
+
+          <tr>
+            <td><strong>47</strong></td>
+            <td><span class="step-name">Submit ticket against the new Queue Type (2nd attempt, Title only)</span></td>
+            <td><div class="expected-text">Displays ticket created successfully</div></td>
+            <td><div class="actual-text">CONFIRMED BUG (2/2): same clean-looking redirect, same silent non-creation, this time with only the required Title filled — ruling out the optional fields as the cause.</div></td>
+            <td><div class="deviation-text">[Defect]: confirmed 2/2, not the optional fields’ fault.</div></td>
+            <td><span class="badge badge-bug">CONFIRMED BUG (2/2)</span></td>
+            <td><span class="no-img-badge">No UI Component<br><small style="color:var(--text-muted);font-size:0.68rem;">(Not executed)</small></span></td>
+          </tr>
+
+          <tr>
+            <td><strong>48</strong></td>
+            <td><span class="step-name">Sanity check: submit ticket against the original Queue Type, same session</span></td>
+            <td><div class="expected-text">Displays ticket created successfully</div></td>
+            <td><div class="actual-text">Immediately after the two failures, created a ticket against the original Queue Type with the same account/session. Succeeded on the first try (Task 1048). Isolates the defect to newly-created Queue Types specifically, not the session or account.</div></td>
+            <td><div class="deviation-text">None (isolating control).</div></td>
+            <td><span class="badge badge-pass">PASSED</span></td>
+            <td><img src="../uat_target3_cicodecm/contacts_step81_final_tasklist.png" class="thumb" alt="contacts_step81_final_tasklist.png" onclick="openModal(this.src)"></td>
+          </tr>
+        </tbody>
+      </table>
+      </div>
+    </div>
+
+    <div class="case-section" data-case="sc4">
+      <div class="case-header">
+        <div class="case-title">Scenario 4: SEARCH TICKET BY ID / VIEW FORM</div>
+        <div class="case-tag">Rows 24-25</div>
+      </div>
+      <div class="table-scroll">
+      <table>
+        <thead>
+          <tr>
+            <th style="width: 55px;">Row</th>
+            <th style="width: 220px;">Steps to Reproduce</th>
+            <th style="width: 250px;">Expected Result</th>
+            <th>Actual Result (Live Execution)</th>
+            <th style="width: 230px;">Deviations & Defect Notes</th>
+            <th style="width: 150px;">Status</th>
+            <th style="width: 140px;">Screenshot Evidence</th>
+          </tr>
+        </thead>
+        <tbody>
+
+          <tr>
+            <td><strong>24</strong></td>
+            <td><span class="step-name">Select ticket tab, Enter Ticket ID</span></td>
+            <td><div class="expected-text">The Ticket should be displayed when search by ID</div></td>
+            <td><div class="actual-text">Typing alone (synthetic input event) did not filter; dispatching a keyup event triggered the live filter correctly, narrowing the list from 2 rows to the exact matching row (1043). Works correctly once the right event fires — real keyboard users are unaffected.</div></td>
+            <td><div class="deviation-text">None (automation-only quirk).</div></td>
+            <td><span class="badge badge-pass">PASSED</span></td>
+            <td><img src="../uat_target3_cicodecm/contacts_step27_search_enter.png" class="thumb" alt="contacts_step27_search_enter.png" onclick="openModal(this.src)"></td>
+          </tr>
+
+          <tr>
+            <td><strong>25</strong></td>
+            <td><span class="step-name">&quot;View Form&quot; script section (verbatim duplicate of Search Ticket By ID steps)</span></td>
+            <td><div class="expected-text">Should displays ticket's page</div></td>
+            <td><div class="actual-text">Script-content quirk: this section's steps are an exact duplicate of the Search Ticket By ID section — satisfied by the same test (row 24).</div></td>
+            <td><div class="deviation-text">[Script quirk]: duplicated section, not a distinct test.</div></td>
+            <td><span class="badge badge-pass">PASSED (via row 24)</span></td>
+            <td><img src="../uat_target3_cicodecm/contacts_step26_search_by_id.png" class="thumb" alt="contacts_step26_search_by_id.png" onclick="openModal(this.src)"></td>
+          </tr>
+        </tbody>
+      </table>
+      </div>
+    </div>
+
+    <div class="case-section" data-case="sc5">
+      <div class="case-header">
+        <div class="case-title">Scenario 5: CREATE NOTE</div>
+        <div class="case-tag">Rows 26-28</div>
+      </div>
+      <div class="table-scroll">
+      <table>
+        <thead>
+          <tr>
+            <th style="width: 55px;">Row</th>
+            <th style="width: 220px;">Steps to Reproduce</th>
+            <th style="width: 250px;">Expected Result</th>
+            <th>Actual Result (Live Execution)</th>
+            <th style="width: 230px;">Deviations & Defect Notes</th>
+            <th style="width: 150px;">Status</th>
+            <th style="width: 140px;">Screenshot Evidence</th>
+          </tr>
+        </thead>
+        <tbody>
+
+          <tr>
+            <td><strong>26</strong></td>
+            <td><span class="step-name">Select note tab (empty state)</span></td>
+            <td><div class="expected-text">Should display note creation modal / &quot;No Notes found!&quot;</div></td>
+            <td><div class="actual-text">Confirmed exact message and layout for a contact with no notes.</div></td>
+            <td><div class="deviation-text">None.</div></td>
+            <td><span class="badge badge-pass">PASSED</span></td>
+            <td><img src="../uat_target3_cicodecm/contacts_step29_notes_tab.png" class="thumb" alt="contacts_step29_notes_tab.png" onclick="openModal(this.src)"></td>
+          </tr>
+
+          <tr>
+            <td><strong>27</strong></td>
+            <td><span class="step-name">Enter Note, Save Note (Call Driver left at default)</span></td>
+            <td><div class="expected-text">The note typed in should be displayed / saved/created</div></td>
+            <td><div class="actual-text">CONFIRMED BUG: clicking Save silently closes the editor with no success message and no error message. Confirmed not persisted — list still read &quot;No Notes found!&quot; even after a full page reload.</div></td>
+            <td><div class="deviation-text">[Defect]: Create Note fails silently without a Call Driver selection.</div></td>
+            <td><span class="badge badge-bug">CONFIRMED BUG</span></td>
+            <td><img src="../uat_target3_cicodecm/contacts_step32_notes_reload_check.png" class="thumb" alt="contacts_step32_notes_reload_check.png" onclick="openModal(this.src)"></td>
+          </tr>
+
+          <tr>
+            <td><strong>28</strong></td>
+            <td><span class="step-name">Retry: select a Call Driver, enter Note, Save Note</span></td>
+            <td><div class="expected-text">The note entered should be saved/created</div></td>
+            <td><div class="actual-text">Explicit &quot;Note created&quot; confirmation dialog shown; note appears in the list tagged &quot;Call-Driver: E-mail&quot; — confirms the Call Driver field is silently required (root cause of row 27).</div></td>
+            <td><div class="deviation-text">None (root cause of row 27 confirmed).</div></td>
+            <td><span class="badge badge-pass">PASSED</span></td>
+            <td><img src="../uat_target3_cicodecm/contacts_step34_note_list_confirmed.png" class="thumb" alt="contacts_step34_note_list_confirmed.png" onclick="openModal(this.src)"></td>
+          </tr>
+        </tbody>
+      </table>
+      </div>
+    </div>
+
+    <div class="case-section" data-case="sc6">
+      <div class="case-header">
+        <div class="case-title">Scenario 6: UPDATE NOTES</div>
+        <div class="case-tag">Rows 29-32</div>
+      </div>
+      <div class="table-scroll">
+      <table>
+        <thead>
+          <tr>
+            <th style="width: 55px;">Row</th>
+            <th style="width: 220px;">Steps to Reproduce</th>
+            <th style="width: 250px;">Expected Result</th>
+            <th>Actual Result (Live Execution)</th>
+            <th style="width: 230px;">Deviations & Defect Notes</th>
+            <th style="width: 150px;">Status</th>
+            <th style="width: 140px;">Screenshot Evidence</th>
+          </tr>
+        </thead>
+        <tbody>
+
+          <tr>
+            <td><strong>29</strong></td>
+            <td><span class="step-name">Click on Actions</span></td>
+            <td><div class="expected-text">Should display update/delete action</div></td>
+            <td><div class="actual-text">Update / Delete options shown correctly (after correcting an automation mis-click on the unrelated global &quot;Quick Actions&quot; header button, scoped by coordinate to the note's own Actions button).</div></td>
+            <td><div class="deviation-text">None.</div></td>
+            <td><span class="badge badge-pass">PASSED</span></td>
+            <td><img src="../uat_target3_cicodecm/contacts_step36_note_actions2.png" class="thumb" alt="contacts_step36_note_actions2.png" onclick="openModal(this.src)"></td>
+          </tr>
+
+          <tr>
+            <td><strong>30</strong></td>
+            <td><span class="step-name">Click on Update</span></td>
+            <td><div class="expected-text">Should display modal note update modal</div></td>
+            <td><div class="actual-text">Modal opens correctly pre-filled with both the existing text and the existing Call Driver value (&quot;E-mail&quot;).</div></td>
+            <td><div class="deviation-text">None.</div></td>
+            <td><span class="badge badge-pass">PASSED</span></td>
+            <td><img src="../uat_target3_cicodecm/contacts_step37_note_update_form.png" class="thumb" alt="contacts_step37_note_update_form.png" onclick="openModal(this.src)"></td>
+          </tr>
+
+          <tr>
+            <td><strong>31</strong></td>
+            <td><span class="step-name">Update note, Click Save</span></td>
+            <td><div class="expected-text">Should save and display the edited note</div></td>
+            <td><div class="actual-text">Explicit &quot;Note updated!&quot; confirmation shown; edited text reflected immediately in the list.</div></td>
+            <td><div class="deviation-text">None.</div></td>
+            <td><span class="badge badge-pass">PASSED</span></td>
+            <td><img src="../uat_target3_cicodecm/contacts_step38_note_update_result.png" class="thumb" alt="contacts_step38_note_update_result.png" onclick="openModal(this.src)"></td>
+          </tr>
+
+          <tr>
+            <td><strong>32</strong></td>
+            <td><span class="step-name">Click on Delete</span></td>
+            <td><div class="expected-text">Should delete note</div></td>
+            <td><div class="actual-text">A throwaway second note was created specifically for this test, then deleted via Actions → Delete. &quot;Note deleted!&quot; confirmation shown; the throwaway note disappeared while the original evidence note remained untouched.</div></td>
+            <td><div class="deviation-text">None.</div></td>
+            <td><span class="badge badge-pass">PASSED</span></td>
+            <td><img src="../uat_target3_cicodecm/contacts_step59_delete_confirm.png" class="thumb" alt="contacts_step59_delete_confirm.png" onclick="openModal(this.src)"></td>
+          </tr>
+        </tbody>
+      </table>
+      </div>
+    </div>
+
+    <div class="case-section" data-case="sc7">
+      <div class="case-header">
+        <div class="case-title">Scenario 7: ADD FIELD TOGGLES (CREATE CONTACT)</div>
+        <div class="case-tag">Rows 34-37</div>
+      </div>
+      <div class="table-scroll">
+      <table>
+        <thead>
+          <tr>
+            <th style="width: 55px;">Row</th>
+            <th style="width: 220px;">Steps to Reproduce</th>
+            <th style="width: 250px;">Expected Result</th>
+            <th>Actual Result (Live Execution)</th>
+            <th style="width: 230px;">Deviations & Defect Notes</th>
+            <th style="width: 150px;">Status</th>
+            <th style="width: 140px;">Screenshot Evidence</th>
+          </tr>
+        </thead>
+        <tbody>
+
+          <tr>
+            <td><strong>34</strong></td>
+            <td><span class="step-name">Click on add field</span></td>
+            <td><div class="expected-text">A display of multiple checkboxes (Prefix, Middle name, Website URL) should be displayed</div></td>
+            <td><div class="actual-text">Confirmed: clicking &quot;+ Add Field&quot; reveals exactly the 3 scripted checkboxes.</div></td>
+            <td><div class="deviation-text">None.</div></td>
+            <td><span class="badge badge-pass">PASSED</span></td>
+            <td><img src="../uat_target3_cicodecm/contacts_step48_addfield_checkboxes.png" class="thumb" alt="contacts_step48_addfield_checkboxes.png" onclick="openModal(this.src)"></td>
+          </tr>
+
+          <tr>
+            <td><strong>35</strong></td>
+            <td><span class="step-name">Check Prefix/Middle Name/Website boxes and enter values</span></td>
+            <td><div class="expected-text">Fields should be toggled on and accept input</div></td>
+            <td><div class="actual-text">All 3 fields correctly appear and accept input: Prefix (dropdown, &quot;Mr&quot;), Middle Name (&quot;Middleton&quot;), Website (https://uataddfield.example.com).</div></td>
+            <td><div class="deviation-text">None.</div></td>
+            <td><span class="badge badge-pass">PASSED</span></td>
+            <td><img src="../uat_target3_cicodecm/contacts_step50_addfield_filled.png" class="thumb" alt="contacts_step50_addfield_filled.png" onclick="openModal(this.src)"></td>
+          </tr>
+
+          <tr>
+            <td><strong>36</strong></td>
+            <td><span class="step-name">Click on save button (with add-fields filled)</span></td>
+            <td><div class="expected-text">The contact should be saved successfully</div></td>
+            <td><div class="actual-text">&quot;Contact created&quot; confirmation shown; new contact (Customer ID 5) appears in the list.</div></td>
+            <td><div class="deviation-text">None.</div></td>
+            <td><span class="badge badge-pass">PASSED</span></td>
+            <td><img src="../uat_target3_cicodecm/contacts_step51_addfield_saved.png" class="thumb" alt="contacts_step51_addfield_saved.png" onclick="openModal(this.src)"></td>
+          </tr>
+
+          <tr>
+            <td><strong>37</strong></td>
+            <td><span class="step-name">Verify Prefix/Middle Name/Website on the Contact view page</span></td>
+            <td><div class="expected-text">The saved values should display in &quot;About this contact&quot;</div></td>
+            <td><div class="actual-text">CONFIRMED BUG: the view page shows Website correctly but never displays Prefix or Middle Name anywhere, even though both are genuinely saved — confirmed by reopening Update Contact, which correctly pre-fills Prefix=&quot;Mr&quot; and Middle Name=&quot;Middleton&quot;. Display-only gap, not data loss.</div></td>
+            <td><div class="deviation-text">[Defect - minor]: Prefix/Middle Name saved but never displayed.</div></td>
+            <td><span class="badge badge-bug">CONFIRMED BUG (minor)</span></td>
+            <td><img src="../uat_target3_cicodecm/contacts_step53_addfield_view.png" class="thumb" alt="contacts_step53_addfield_view.png" onclick="openModal(this.src)"></td>
+          </tr>
+        </tbody>
+      </table>
+      </div>
+    </div>
+
+    <div class="case-section" data-case="sc8">
+      <div class="case-header">
+        <div class="case-title">Scenario 8: CANCEL BUTTON (CREATE / UPDATE CONTACT)</div>
+        <div class="case-tag">Rows 49-50</div>
+      </div>
+      <div class="table-scroll">
+      <table>
+        <thead>
+          <tr>
+            <th style="width: 55px;">Row</th>
+            <th style="width: 220px;">Steps to Reproduce</th>
+            <th style="width: 250px;">Expected Result</th>
+            <th>Actual Result (Live Execution)</th>
+            <th style="width: 230px;">Deviations & Defect Notes</th>
+            <th style="width: 150px;">Status</th>
+            <th style="width: 140px;">Screenshot Evidence</th>
+          </tr>
+        </thead>
+        <tbody>
+
+          <tr>
+            <td><strong>49</strong></td>
+            <td><span class="step-name">Click on cancel button (Create Contact)</span></td>
+            <td><div class="expected-text">The contact form should be closed</div></td>
+            <td><div class="actual-text">Filled First/Last Name (&quot;UATCancelTest&quot;/&quot;ShouldNotSave&quot;) then clicked Cancel. Modal closed correctly; Total Contacts remained 5, no new contact was created.</div></td>
+            <td><div class="deviation-text">None.</div></td>
+            <td><span class="badge badge-pass">PASSED</span></td>
+            <td><img src="../uat_target3_cicodecm/contacts_step71_after_cancel.png" class="thumb" alt="contacts_step71_after_cancel.png" onclick="openModal(this.src)"></td>
+          </tr>
+
+          <tr>
+            <td><strong>50</strong></td>
+            <td><span class="step-name">Click on cancel button (Update Contact)</span></td>
+            <td><div class="expected-text">The contact form should be closed</div></td>
+            <td><div class="actual-text">Changed Organization to &quot;SHOULD NOT PERSIST&quot; on contact 4's Update Contact modal, then clicked Cancel. Modal closed correctly; Organization still read &quot;CICOD UAT Test Org&quot; (unchanged) afterward.</div></td>
+            <td><div class="deviation-text">None.</div></td>
+            <td><span class="badge badge-pass">PASSED</span></td>
+            <td><img src="../uat_target3_cicodecm/contacts_step72_update_cancel.png" class="thumb" alt="contacts_step72_update_cancel.png" onclick="openModal(this.src)"></td>
+          </tr>
+        </tbody>
+      </table>
+      </div>
+    </div>
+
+    <div class="case-section" data-case="not-executed">
+      <div class="case-header">
+        <div class="case-title">Not Executed This Session</div>
+        <div class="case-tag" style="background: rgba(16,185,129,0.15); border-color: rgba(16,185,129,0.3); color: #34d399;">0 items — all resolved</div>
+      </div>
+      <div style="padding: 24px;">
+        <p style="color:#34d399;font-weight:600;margin-bottom:12px;">Every gap identified earlier this session has been resolved: the Create-Ticket optional fields were reached by building a new Queue Type (see Scenario 3, rows 43-48), and the Cancel button was explicitly tested (Scenario 8).</p>
+      </div>
+      <div class="table-scroll">
+      <table>
+        <thead>
+          <tr>
+            <th style="width: 55px;">Row</th>
+            <th style="width: 140px;">Feature</th>
+            <th style="width: 250px;">Script Section</th>
+            <th>Script Reference</th>
+            <th style="width: 300px;">Note</th>
+            <th style="width: 150px;">Status</th>
+            <th style="width: 100px;">Evidence</th>
+          </tr>
+        </thead>
+        <tbody>
+        <tr>
+          <td><strong>&mdash;</strong></td>
+          <td><span class="feature-tag" style="color:#38bdf8;background:rgba(56,189,248,0.12);">SEE OTHER REPORT</span></td>
+          <td>Create User (valid Credential) / Create User (invalid Credential)</td>
+          <td>~38 rows misplaced at the tail of the CONTACTS sheet</td>
+          <td>Tested this session as its own module — see test/UsersTest_Results.md and testCases/users_test_report.html — rather than folded into this Contacts report, since it is genuinely Users-module scope.</td>
+          <td><span class="badge badge-dev">CROSS-REFERENCED</span></td>
+          <td>&mdash;</td>
+        </tr>
+        </tbody>
+      </table>
+      </div>
+    </div>
+
+  </div>
+
+  <div id="imageModal" class="modal" onclick="closeModal()">
+    <span class="modal-close">&times;</span>
+    <img id="modalImg" class="modal-content" src="" alt="Full Preview">
+  </div>
+
+  <script>
+    function filterCases(filter, btn) {
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      document.querySelectorAll('.case-section').forEach(sec => {
+        if (filter === 'all' || sec.getAttribute('data-case') === filter) sec.style.display = 'block';
+        else sec.style.display = sec.getAttribute('data-case') === 'not-executed' && filter === 'all' ? 'block' : 'none';
+      });
+    }
+    function openModal(src) {
+      document.getElementById('modalImg').src = src;
+      document.getElementById('imageModal').classList.add('active');
+    }
+    function closeModal() { document.getElementById('imageModal').classList.remove('active'); }
+    document.addEventListener('keydown', function(e) { if (e.key === 'Escape') closeModal(); });
+  </script>
+</body>
+</html>

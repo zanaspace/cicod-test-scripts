@@ -253,7 +253,11 @@ const appModules = [
         summary: 'Dual internal & external form intake: live tabs, keyword search bar, and queue category segregation. Live verified on staging with 16 data-dependent form steps documented.',
         targetRoute: '/ecms/index.php?r=request',
         images: [
-          { file: 'uat_target3_cicodecm/ecms_req_landing_page.png', caption: 'Step 1: Request Module Landing with Search & Dual Tabs' }
+          { file: 'uat_target3_cicodecm/ecms_req_step1_landing_tabs.png', caption: 'Step 1: Request Module Landing with Search & Dual Tabs' },
+          { file: 'uat_target3_cicodecm/ecms_req_step2_internal_view.png', caption: 'Step 2: Internal Queue Empty State (No Records)' },
+          { file: 'uat_target3_cicodecm/ecms_req_step2_search_filter.png', caption: 'Step 2b: Search Filter Bar Functionality' },
+          { file: 'uat_target3_cicodecm/ecms_req_step13_external_tab.png', caption: 'Step 13: External Request Queue Tab' },
+          { file: 'uat_target3_cicodecm/ecms_req_step22_end_test.png', caption: 'Step 22: Concluded Test Session' }
         ]
       },
       {

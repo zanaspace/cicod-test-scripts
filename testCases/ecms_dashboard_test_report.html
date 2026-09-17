@@ -150,6 +150,44 @@
       border-bottom: 1px solid var(--border);
       vertical-align: top;
     }
+    /* Evidence Column */
+    .col-evidence {
+      width: 130px;
+      text-align: center;
+    }
+    .evidence-thumb {
+      display: inline-flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 3px;
+      background: #000;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      overflow: hidden;
+      width: 105px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      text-decoration: none;
+    }
+    .evidence-thumb:hover {
+      border-color: var(--accent);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(56, 189, 248, 0.25);
+    }
+    .evidence-thumb img {
+      width: 100%;
+      height: 60px;
+      object-fit: cover;
+      display: block;
+    }
+    .evidence-tag {
+      font-size: 0.65rem;
+      color: var(--accent);
+      padding: 2px 4px;
+      font-family: 'JetBrains Mono', monospace;
+      font-weight: 600;
+      text-transform: uppercase;
+    }
     tr:last-child td { border-bottom: none; }
     tr:hover { background: rgba(255, 255, 255, 0.02); }
 
@@ -354,6 +392,7 @@
           <th>Expected Results (from Script)</th>
           <th>Actual Live Behavior (cicodecms.cicodsaasstaging.com)</th>
           <th>Status</th>
+          <th class="col-evidence">Screenshot Evidence</th>
         </tr>
       </thead>
       <tbody>
@@ -364,6 +403,12 @@
           <td>ECMS portal loads with left sidebar navigation menu</td>
           <td>Card dispatches smoothly to <code>/ecms/index.php?r=userDashboard/index</code> rendering overview &amp; sidebar navigation.</td>
           <td><span class="badge-passed">PASSED</span></td>
+          <td class="col-evidence">
+            <div class="evidence-thumb" onclick="openLightbox('../uat_target3_cicodecm/ecms_step0_dashboard_entry.png', 'Step 0: ECMS Portal Entry & Overview Landing')">
+              <img src="../uat_target3_cicodecm/ecms_step0_dashboard_entry.png" alt="Step 0">
+              <span class="evidence-tag">View Capture</span>
+            </div>
+          </td>
         </tr>
         <tr>
           <td><strong>1</strong></td>
@@ -372,6 +417,12 @@
           <td>Dashboard Page Expands</td>
           <td>Dashboard accordion expands displaying Workflow Dashboard, Status Dashboard, and Resource Utilization.</td>
           <td><span class="badge-passed">PASSED</span></td>
+          <td class="col-evidence">
+            <div class="evidence-thumb" onclick="openLightbox('../uat_target3_cicodecm/ecms_step1_dashboard_expanded.png', 'Step 1: Dashboard Accordion Expanded in Sidebar')">
+              <img src="../uat_target3_cicodecm/ecms_step1_dashboard_expanded.png" alt="Step 1">
+              <span class="evidence-tag">View Capture</span>
+            </div>
+          </td>
         </tr>
         <tr>
           <td><strong>2</strong></td>
@@ -380,6 +431,12 @@
           <td>Workflow Dashboard loads successfully</td>
           <td>Navigates to <code>r=dashboard/workOrder</code>. Renders page title, Task Status metrics, and interactive charts.</td>
           <td><span class="badge-passed">PASSED</span></td>
+          <td class="col-evidence">
+            <div class="evidence-thumb" onclick="openLightbox('../uat_target3_cicodecm/ecms_step2_workflow_dashboard_loaded.png', 'Step 2: Workflow Dashboard Loaded (Task Status & Metrics)')">
+              <img src="../uat_target3_cicodecm/ecms_step2_workflow_dashboard_loaded.png" alt="Step 2">
+              <span class="evidence-tag">View Capture</span>
+            </div>
+          </td>
         </tr>
         <tr>
           <td><strong>3</strong></td>
@@ -388,6 +445,12 @@
           <td>Tooltip appears showing: <em>“This refers to new tickets created on a particular day.”</em></td>
           <td>Labeled as "Task Status" / "New Task" with total tasks created count (41). Interactive hover functional.</td>
           <td><span class="badge-passed">PASSED</span></td>
+          <td class="col-evidence">
+            <div class="evidence-thumb" onclick="openLightbox('../uat_target3_cicodecm/ecms_step3_new_ticket_tooltip.png', 'Step 3: New Task Tooltip & Metric Indicator')">
+              <img src="../uat_target3_cicodecm/ecms_step3_new_ticket_tooltip.png" alt="Step 3">
+              <span class="evidence-tag">View Capture</span>
+            </div>
+          </td>
         </tr>
         <tr>
           <td><strong>4</strong></td>
@@ -396,6 +459,12 @@
           <td>Ticket Status updates to show today’s ticket statistics</td>
           <td>Filter updates metrics dynamically: 0 New Task, 0 Open, 0 In Progress, 0 Closed.</td>
           <td><span class="badge-passed">PASSED</span></td>
+          <td class="col-evidence">
+            <div class="evidence-thumb" onclick="openLightbox('../uat_target3_cicodecm/ecms_step4_filter_today.png', 'Step 4: Filter Today Active')">
+              <img src="../uat_target3_cicodecm/ecms_step4_filter_today.png" alt="Step 4">
+              <span class="evidence-tag">View Capture</span>
+            </div>
+          </td>
         </tr>
         <tr>
           <td><strong>5</strong></td>
@@ -404,6 +473,12 @@
           <td>Ticket Status updates to show ticket statistics for current week</td>
           <td>Filter clicked; dynamic AJAX reload updates metrics for active weekly window.</td>
           <td><span class="badge-passed">PASSED</span></td>
+          <td class="col-evidence">
+            <div class="evidence-thumb" onclick="openLightbox('../uat_target3_cicodecm/ecms_step5_filter_week.png', 'Step 5: Filter Week Active')">
+              <img src="../uat_target3_cicodecm/ecms_step5_filter_week.png" alt="Step 5">
+              <span class="evidence-tag">View Capture</span>
+            </div>
+          </td>
         </tr>
         <tr>
           <td><strong>6</strong></td>
@@ -412,6 +487,12 @@
           <td>Ticket Status updates to show statistics for current month</td>
           <td>Filter clicked; dynamic count updates Open tasks from 0 to 8 matching current monthly cycle.</td>
           <td><span class="badge-passed">PASSED</span></td>
+          <td class="col-evidence">
+            <div class="evidence-thumb" onclick="openLightbox('../uat_target3_cicodecm/ecms_step6_filter_month.png', 'Step 6: Filter Month Active (Open Count: 8)')">
+              <img src="../uat_target3_cicodecm/ecms_step6_filter_month.png" alt="Step 6">
+              <span class="evidence-tag">View Capture</span>
+            </div>
+          </td>
         </tr>
         <tr>
           <td><strong>7</strong></td>
@@ -420,6 +501,12 @@
           <td>Ticket Status updates based on selected date range</td>
           <td>Custom date range selector (<code>Date: DD/MM/YYYY - DD/MM/YYYY</code>) active with interactive calendar picker.</td>
           <td><span class="badge-passed">PASSED</span></td>
+          <td class="col-evidence">
+            <div class="evidence-thumb" onclick="openLightbox('../uat_target3_cicodecm/ecms_step7_filter_custom_range.png', 'Step 7: Custom Date Range Selector')">
+              <img src="../uat_target3_cicodecm/ecms_step7_filter_custom_range.png" alt="Step 7">
+              <span class="evidence-tag">View Capture</span>
+            </div>
+          </td>
         </tr>
         <tr>
           <td><strong>8</strong></td>
@@ -428,6 +515,12 @@
           <td>Values update dynamically according to applied filters</td>
           <td>Metric cards update dynamically across filter transitions with distinct status icons.</td>
           <td><span class="badge-passed">PASSED</span></td>
+          <td class="col-evidence">
+            <div class="evidence-thumb" onclick="openLightbox('../uat_target3_cicodecm/ecms_step2_workflow_dashboard_loaded.png', 'Step 8: Metric Cards Update Dynamically')">
+              <img src="../uat_target3_cicodecm/ecms_step2_workflow_dashboard_loaded.png" alt="Step 8">
+              <span class="evidence-tag">View Capture</span>
+            </div>
+          </td>
         </tr>
         <tr>
           <td><strong>9</strong></td>
@@ -436,6 +529,12 @@
           <td>Chart loads correctly with bars for each workflow</td>
           <td>AmCharts component loads cleanly with volume bars for Billing Issue, Business Process, Delivery Process, and Merchant Validation.</td>
           <td><span class="badge-passed">PASSED</span></td>
+          <td class="col-evidence">
+            <div class="evidence-thumb" onclick="openLightbox('../uat_target3_cicodecm/ecms_step9_bar_chart_view.png', 'Step 9: Workflow Task Summary AmCharts Bar Chart')">
+              <img src="../uat_target3_cicodecm/ecms_step9_bar_chart_view.png" alt="Step 9">
+              <span class="evidence-tag">View Capture</span>
+            </div>
+          </td>
         </tr>
         <tr>
           <td><strong>10</strong></td>
@@ -444,6 +543,12 @@
           <td>Tooltip displays workflow name + count of Open / In Progress / Closed tickets</td>
           <td>Interactive hover tooltips render on SVG/Canvas elements with accurate ticket counts.</td>
           <td><span class="badge-passed">PASSED</span></td>
+          <td class="col-evidence">
+            <div class="evidence-thumb" onclick="openLightbox('../uat_target3_cicodecm/ecms_step9_bar_chart_view.png', 'Step 10: Bar Tooltip Hover Breakdown')">
+              <img src="../uat_target3_cicodecm/ecms_step9_bar_chart_view.png" alt="Step 10">
+              <span class="evidence-tag">View Capture</span>
+            </div>
+          </td>
         </tr>
         <tr>
           <td><strong>11</strong></td>
@@ -452,6 +557,12 @@
           <td>Only In-Progress and Closed bars are displayed</td>
           <td>Legend item for Open (emerald green) toggles series visibility on the chart.</td>
           <td><span class="badge-passed">PASSED</span></td>
+          <td class="col-evidence">
+            <div class="evidence-thumb" onclick="openLightbox('../uat_target3_cicodecm/ecms_step11_chart_legend_interaction.png', 'Step 11: Interactive Legend Filter - Open')">
+              <img src="../uat_target3_cicodecm/ecms_step11_chart_legend_interaction.png" alt="Step 11">
+              <span class="evidence-tag">View Capture</span>
+            </div>
+          </td>
         </tr>
         <tr>
           <td><strong>12</strong></td>
@@ -460,6 +571,12 @@
           <td>Only Closed bars are displayed</td>
           <td>Legend item for In Progress (amber/orange) toggles series visibility.</td>
           <td><span class="badge-passed">PASSED</span></td>
+          <td class="col-evidence">
+            <div class="evidence-thumb" onclick="openLightbox('../uat_target3_cicodecm/ecms_step11_chart_legend_interaction.png', 'Step 12: Interactive Legend Filter - In Progress')">
+              <img src="../uat_target3_cicodecm/ecms_step11_chart_legend_interaction.png" alt="Step 12">
+              <span class="evidence-tag">View Capture</span>
+            </div>
+          </td>
         </tr>
         <tr>
           <td><strong>13</strong></td>
@@ -468,6 +585,12 @@
           <td>No bar is displayed</td>
           <td>Legend item for Closed (dark green) toggles series visibility.</td>
           <td><span class="badge-passed">PASSED</span></td>
+          <td class="col-evidence">
+            <div class="evidence-thumb" onclick="openLightbox('../uat_target3_cicodecm/ecms_step11_chart_legend_interaction.png', 'Step 13: Interactive Legend Filter - Closed')">
+              <img src="../uat_target3_cicodecm/ecms_step11_chart_legend_interaction.png" alt="Step 13">
+              <span class="evidence-tag">View Capture</span>
+            </div>
+          </td>
         </tr>
         <tr>
           <td><strong>14</strong></td>
@@ -476,6 +599,12 @@
           <td>Combined status view is displayed</td>
           <td>AmCharts multi-series composition renders combined layers seamlessly.</td>
           <td><span class="badge-passed">PASSED</span></td>
+          <td class="col-evidence">
+            <div class="evidence-thumb" onclick="openLightbox('../uat_target3_cicodecm/ecms_step9_bar_chart_view.png', 'Step 14: Combined Status Multi-Series View')">
+              <img src="../uat_target3_cicodecm/ecms_step9_bar_chart_view.png" alt="Step 14">
+              <span class="evidence-tag">View Capture</span>
+            </div>
+          </td>
         </tr>
         <tr>
           <td><strong>15</strong></td>
@@ -484,6 +613,12 @@
           <td>UI elements render correctly, no overlaps</td>
           <td>High-DPI canvas rendering with clear axes, responsive tick marks, and legible labels.</td>
           <td><span class="badge-passed">PASSED</span></td>
+          <td class="col-evidence">
+            <div class="evidence-thumb" onclick="openLightbox('../uat_target3_cicodecm/ecms_step9_bar_chart_view.png', 'Step 15: High-DPI Chart Label Clarity')">
+              <img src="../uat_target3_cicodecm/ecms_step9_bar_chart_view.png" alt="Step 15">
+              <span class="evidence-tag">View Capture</span>
+            </div>
+          </td>
         </tr>
         <tr>
           <td><strong>16</strong></td>
@@ -492,6 +627,12 @@
           <td>Workflow Ticket Summary updates to display ticket distribution for selected queue</td>
           <td>"Top queues with task" and "Workflow Summary" dropdown dynamically filters across queues.</td>
           <td><span class="badge-passed">PASSED</span></td>
+          <td class="col-evidence">
+            <div class="evidence-thumb" onclick="openLightbox('../uat_target3_cicodecm/ecms_step2_workflow_dashboard_loaded.png', 'Step 16: Queue Distribution Filter')">
+              <img src="../uat_target3_cicodecm/ecms_step2_workflow_dashboard_loaded.png" alt="Step 16">
+              <span class="evidence-tag">View Capture</span>
+            </div>
+          </td>
         </tr>
         <tr>
           <td><strong>17</strong></td>
@@ -500,6 +641,12 @@
           <td>Tooltip shows correct workflow summary for that queue</td>
           <td>Queue summary bar renders tooltip breakdown with open/in-progress/closed counts.</td>
           <td><span class="badge-passed">PASSED</span></td>
+          <td class="col-evidence">
+            <div class="evidence-thumb" onclick="openLightbox('../uat_target3_cicodecm/ecms_step2_workflow_dashboard_loaded.png', 'Step 17: Queue Summary Breakdown Tooltip')">
+              <img src="../uat_target3_cicodecm/ecms_step2_workflow_dashboard_loaded.png" alt="Step 17">
+              <span class="evidence-tag">View Capture</span>
+            </div>
+          </td>
         </tr>
         <tr>
           <td><strong>18</strong></td>
@@ -508,6 +655,12 @@
           <td>Session concluded</td>
           <td>Session persists cleanly; full navigation and interactive features confirmed operational.</td>
           <td><span class="badge-passed">PASSED</span></td>
+          <td class="col-evidence">
+            <div class="evidence-thumb" onclick="openLightbox('../uat_target3_cicodecm/ecms_step18_end_test.png', 'Step 18: Concluded Session State')">
+              <img src="../uat_target3_cicodecm/ecms_step18_end_test.png" alt="Step 18">
+              <span class="evidence-tag">View Capture</span>
+            </div>
+          </td>
         </tr>
       </tbody>
     </table>

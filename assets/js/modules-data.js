@@ -405,6 +405,29 @@ const appModules = [
         ]
       },
       {
+        id: 'ecms_forms',
+        sheetName: 'Forms',
+        reportUrl: 'testCases/forms_test_report.html',
+        passRate: '70.8%',
+        passCount: 17,
+        gapCount: 7,
+        totalSteps: 24,
+        status: 'PARTIAL — PUBLIC FORM-FILL BROKEN (P0)',
+        isUpcoming: false,
+        summary: 'Form builder engine: Internal/External/Inter MDA form creation, Queue/Queue Type linkage (auto-populates fields from the linked workflow), field builder, Share (Link/Embed/WhatsApp/Mail/Twitter/Facebook), Update, and Suspend/Unsuspend. 24 checkpoints verified across 5 scenarios (17 passed, 2 deviations, 3 confirmed defects). The public "Fill a Form" link is completely non-functional (P0, confirmed on 2 forms including a real pre-existing one), and Form Type classification (Internal/External) is broken across the grid column and both filter tabs. ~174 of 198 script rows were not executed given these blockers.',
+        targetRoute: '/ecms/webForm/index',
+        images: [
+          { file: 'uat_target3_cicodecm/forms_step1_create_page.png', caption: 'Create Form — 5 Form Types (Internal/External/Inter MDA/Status/Data Capture)' },
+          { file: 'uat_target3_cicodecm/forms_step6_queue_selected.png', caption: 'Queue Type Selection Auto-Populates Fields from Linked Workflow' },
+          { file: 'uat_target3_cicodecm/forms_step14_update_form_shows_internal.png', caption: 'BUG: Grid Shows "External" for a Form Actually Saved as Internal' },
+          { file: 'uat_target3_cicodecm/forms_step24_external_tab.png', caption: 'BUG: External Forms Tab Lists Every Form Regardless of Real Type' },
+          { file: 'uat_target3_cicodecm/forms_step16_share_modal.png', caption: 'Share Form Modal — Link/Embed/WhatsApp/FB/Twitter/Email' },
+          { file: 'uat_target3_cicodecm/forms_step17_public_fill_page.png', caption: 'P0 BUG: Public Fill-Form Link — "Unable To Load Form!"' },
+          { file: 'uat_target3_cicodecm/forms_step19_cicodform_public.png', caption: 'P0 BUG Reproduced on Pre-Existing Production Form (CICOD Form)' },
+          { file: 'uat_target3_cicodecm/forms_step21_after_suspend.png', caption: 'Suspend Form — Status Updates Correctly' }
+        ]
+      },
+      {
         id: 'ecms_workgroups',
         sheetName: 'Workgroups',
         passRate: 'Queued',

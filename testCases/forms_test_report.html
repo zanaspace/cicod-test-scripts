@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>UAT Report - FORMS Module (ECMS TEST SCRIPT RECENT VERSION.xlsx)</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0b0f19; --surface: #121826; --surface-card: #182235; --border: #223049;
+      --text: #f1f5f9; --text-muted: #94a3b8; --pass: #10b981; --not-impl: #f59e0b; --dev: #38bdf8; --bug: #ef4444; --accent: #10b981;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background-color: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; padding: 36px 24px; line-height: 1.5; }
+    .container { max-width: 1440px; margin: 0 auto; }
+    .header-box { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 28px; margin-bottom: 28px; }
+    h1 { font-size: 1.8rem; font-weight: 700; margin-bottom: 6px; color: #fff; }
+    .sub { color: var(--text-muted); font-size: 0.92rem; margin-bottom: 20px; }
+    .meta-bar { display: flex; flex-wrap: wrap; gap: 24px; font-size: 0.88rem; border-top: 1px solid var(--border); padding-top: 18px; }
+    .meta-bar span { color: var(--text-muted); }
+    .meta-bar strong { color: #e2e8f0; font-family: 'JetBrains Mono', monospace; }
+    .summary-badge { display: inline-block; padding: 5px 14px; background: rgba(239, 68, 68, 0.15); border: 1px solid rgba(239, 68, 68, 0.3); color: #f87171; border-radius: 20px; font-weight: 700; font-size: 0.82rem; margin-bottom: 12px; }
+    .kpi-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 16px; margin-bottom: 28px; }
+    .kpi-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 20px; }
+    .kpi-num { font-size: 2rem; font-weight: 700; font-family: 'JetBrains Mono', monospace; margin-top: 6px; }
+    .kpi-label { color: var(--text-muted); font-size: 0.84rem; text-transform: uppercase; letter-spacing: 0.05em; }
+    .filter-bar { display: flex; gap: 10px; margin-bottom: 24px; flex-wrap: wrap; }
+    .filter-btn { background: var(--surface); border: 1px solid var(--border); color: var(--text-muted); padding: 8px 16px; border-radius: 8px; font-size: 0.85rem; font-weight: 600; cursor: pointer; transition: all 0.2s ease; }
+    .filter-btn:hover, .filter-btn.active { background: var(--accent); color: #0b0f19; border-color: var(--accent); }
+    .case-section { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; margin-bottom: 28px; overflow: hidden; }
+    .case-header { padding: 18px 24px; background: var(--surface-card); border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; }
+    .case-title { font-size: 1.15rem; font-weight: 700; color: #fff; }
+    .case-tag { font-size: 0.76rem; font-family: 'JetBrains Mono', monospace; padding: 4px 10px; border-radius: 6px; background: rgba(16, 185, 129, 0.15); border: 1px solid rgba(16, 185, 129, 0.3); color: #34d399; }
+    table { width: 100%; border-collapse: collapse; font-size: 0.88rem; }
+    th { background: rgba(11, 15, 25, 0.6); text-align: left; padding: 14px 16px; color: var(--text-muted); font-weight: 600; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.04em; border-bottom: 1px solid var(--border); }
+    td { padding: 14px 16px; border-bottom: 1px solid var(--border); vertical-align: top; }
+    tr:last-child td { border-bottom: none; }
+    tr:hover td { background: rgba(255, 255, 255, 0.02); }
+    .step-name { font-weight: 600; color: #fff; }
+    .expected-text { color: #cbd5e1; font-size: 0.86rem; }
+    .actual-text { color: #93c5fd; font-size: 0.86rem; font-family: 'JetBrains Mono', monospace; }
+    .deviation-text { color: #fbbf24; font-size: 0.84rem; }
+    .badge { display: inline-block; padding: 3px 10px; border-radius: 6px; font-size: 0.74rem; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; }
+    .badge-pass { background: rgba(16, 185, 129, 0.2); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.3); }
+    .badge-not-impl { background: rgba(245, 158, 11, 0.2); color: #fbbf24; border: 1px solid rgba(245, 158, 11, 0.3); }
+    .badge-dev { background: rgba(56, 189, 248, 0.2); color: #38bdf8; border: 1px solid rgba(56, 189, 248, 0.3); }
+    .badge-bug { background: rgba(239, 68, 68, 0.2); color: #f87171; border: 1px solid rgba(239, 68, 68, 0.35); }
+    .thumb { width: 80px; height: 50px; object-fit: cover; border-radius: 6px; border: 1px solid var(--border); cursor: pointer; transition: transform 0.15s ease, border-color 0.15s ease; }
+    .thumb:hover { transform: scale(1.08); border-color: var(--accent); }
+    .no-img-badge { display: inline-block; padding: 4px 8px; border-radius: 6px; background: rgba(245, 158, 11, 0.1); border: 1px dashed rgba(245, 158, 11, 0.3); color: #fbbf24; font-size: 0.72rem; font-weight: 600; text-align: center; line-height: 1.3; }
+    .feature-tag { font-weight: 700; padding: 3px 8px; border-radius: 4px; display: inline-block; font-size: 0.74rem; font-family: 'JetBrains Mono', monospace; }
+    .modal { display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0, 0, 0, 0.88); backdrop-filter: blur(4px); z-index: 999; justify-content: center; align-items: center; padding: 24px; }
+    .modal.active { display: flex; }
+    .modal-content { max-width: 90vw; max-height: 90vh; border-radius: 10px; border: 1px solid var(--border); box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6); }
+    .modal-close { position: absolute; top: 24px; right: 28px; color: #fff; font-size: 2rem; cursor: pointer; font-weight: 700; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header-box">
+      <div class="summary-badge">⚠ FORMS MODULE UAT — 3 CONFIRMED DEFECTS, PUBLIC FORM-FILL IS FULLY BROKEN (P0)</div>
+      <h1>UAT Execution Report: FORMS Module</h1>
+      <p class="sub">Live functional/UI verification against the Excel Test Script (<code>ECMS TEST SCRIPT RECENT VERSION.xlsx</code>, sheet "FORMS", 198 rows) on Target 3 Environment (<code>cicodsaasstaging.com</code> / tenant: <code>cicodecms</code>). This session covered 24 checkpoints; ~174 further script rows were not executed given the severity of what was found and are marked accordingly rather than assumed passing.</p>
+      <div class="meta-bar">
+        <div><span>Test Script:</span> <strong>test/FormsTest_Results.md</strong></div>
+        <div><span>Target URL:</span> <strong>https://cicodecms.cicodsaasstaging.com/ecms/index.php?r=webForm/*</strong></div>
+        <div><span>Tenant / Account:</span> <strong>cicodecms / raissa.boyomo@crowninteractive.com</strong></div>
+        <div><span>Execution Engine:</span> <strong>Headless Edge CDP</strong></div>
+        <div><span>Execution Date:</span> <strong>September 17, 2026</strong></div>
+      </div>
+    </div>
+
+    <div class="kpi-grid">
+      <div class="kpi-card"><div class="kpi-label">Total Scenarios</div><div class="kpi-num" style="color: #10b981;">5</div></div>
+      <div class="kpi-card"><div class="kpi-label">Checkpoints Verified</div><div class="kpi-num" style="color: #38bdf8;">24</div></div>
+      <div class="kpi-card"><div class="kpi-label">Functional Passed</div><div class="kpi-num" style="color: #10b981;">17</div></div>
+      <div class="kpi-card"><div class="kpi-label">Deviations</div><div class="kpi-num" style="color: #fbbf24;">2</div></div>
+      <div class="kpi-card"><div class="kpi-label">Confirmed Bugs</div><div class="kpi-num" style="color: #ef4444;">5</div></div>
+      <div class="kpi-card"><div class="kpi-label">Not Executed (of 198 Script Rows)</div><div class="kpi-num" style="color: #94a3b8;">~174</div></div>
+    </div>
+
+    <div class="filter-bar">
+      <button class="filter-btn active" onclick="filterCases('all', this)">All Scenarios (5)</button>
+      <button class="filter-btn" onclick="filterCases('sc1', this)">MENU NAVIGATION &amp; CREATE FORM PAGE (3)</button>
+      <button class="filter-btn" onclick="filterCases('sc2', this)">INTERNAL FORM CREATION &amp; FIELD BUILDER (9)</button>
+      <button class="filter-btn" onclick="filterCases('sc3', this)">ALL FORMS LIST &amp; TYPE CLASSIFICATION DEFECT (4)</button>
+      <button class="filter-btn" onclick="filterCases('sc4', this)">SHARE FORM &amp; PUBLIC FILL-FORM LINK (P0 DEFECT) (4)</button>
+      <button class="filter-btn" onclick="filterCases('sc5', this)">UPDATE FORM &amp; SUSPEND / UNSUSPEND (4)</button>
+    </div>
+
+    <div class="case-section" data-case="sc1">
+      <div class="case-header">
+        <div class="case-title">Scenario 1: MENU NAVIGATION &amp; CREATE FORM PAGE</div>
+        <div class="case-tag">Rows 1-4</div>
+      </div>
+      <table>
+        <thead>
+          <tr>
+            <th style="width: 55px;">Row</th>
+            <th style="width: 220px;">Steps to Reproduce</th>
+            <th style="width: 250px;">Expected Result</th>
+            <th>Actual Result (Live Execution)</th>
+            <th style="width: 230px;">Deviations & Defect Notes</th>
+            <th style="width: 150px;">Status</th>
+            <th style="width: 140px;">Screenshot Evidence</th>
+          </tr>
+        </thead>
+        <tbody>
+
+          <tr>
+            <td><strong>1</strong></td>
+            <td><span class="step-name">From the Menu click on Form</span></td>
+            <td><div class="expected-text">Sub-menu: create form button and all form displayed</div></td>
+            <td><div class="actual-text">Sidebar &quot;Forms&quot; expands to &quot;Create Form&quot; and &quot;All Forms&quot; — exact match.</div></td>
+            <td><div class="deviation-text">None.</div></td>
+            <td><span class="badge badge-pass">PASSED</span></td>
+            <td><img src="../uat_target3_cicodecm/forms_step1_create_page.png" class="thumb" alt="forms_step1_create_page.png" onclick="openModal(this.src)"></td>
+          </tr>
+
+          <tr>
+            <td><strong>2</strong></td>
+            <td><span class="step-name">Click on Create form sub-menu</span></td>
+            <td><div class="expected-text">Should display Create form page</div></td>
+            <td><div class="actual-text">&quot;New Form&quot; page loads with Name, Upload Banner, Description (rich text), and Form Type radio group.</div></td>
+            <td><div class="deviation-text">None.</div></td>
+            <td><span class="badge badge-pass">PASSED</span></td>
+            <td><img src="../uat_target3_cicodecm/forms_step1_create_page.png" class="thumb" alt="forms_step1_create_page.png" onclick="openModal(this.src)"></td>
+          </tr>
+
+          <tr>
+            <td><strong>3</strong></td>
+            <td><span class="step-name">View Form Type radio group</span></td>
+            <td><div class="expected-text">Internal / External / Inter MDA</div></td>
+            <td><div class="actual-text">Live UI offers 5 options: Internal, External, Inter MDA, Status, Data Capture — two undocumented types beyond the script.</div></td>
+            <td><div class="deviation-text">None (exceeds spec).</div></td>
+            <td><span class="badge badge-pass">PASSED</span></td>
+            <td><img src="../uat_target3_cicodecm/forms_step1_create_page.png" class="thumb" alt="forms_step1_create_page.png" onclick="openModal(this.src)"></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="case-section" data-case="sc2">
+      <div class="case-header">
+        <div class="case-title">Scenario 2: INTERNAL FORM CREATION &amp; FIELD BUILDER</div>
+        <div class="case-tag">Rows 5-20</div>
+      </div>
+      <table>
+        <thead>
+          <tr>
+            <th style="width: 55px;">Row</th>
+            <th style="width: 220px;">Steps to Reproduce</th>
+            <th style="width: 250px;">Expected Result</th>
+            <th>Actual Result (Live Execution)</th>
+            <th style="width: 230px;">Deviations & Defect Notes</th>
+            <th style="width: 150px;">Status</th>
+            <th style="width: 140px;">Screenshot Evidence</th>
+          </tr>
+        </thead>
+        <tbody>
+
+          <tr>
+            <td><strong>4</strong></td>
+            <td><span class="step-name">Enter name of form</span></td>
+            <td><div class="expected-text">Should display name of the form</div></td>
+            <td><div class="actual-text">&quot;UAT Internal Form 48736&quot; accepted correctly.</div></td>
+            <td><div class="deviation-text">None.</div></td>
+            <td><span class="badge badge-pass">PASSED</span></td>
+            <td><img src="../uat_target3_cicodecm/forms_step2_filled.png" class="thumb" alt="forms_step2_filled.png" onclick="openModal(this.src)"></td>
+          </tr>
+
+          <tr>
+            <td><strong>5</strong></td>
+            <td><span class="step-name">Enter description</span></td>
+            <td><div class="expected-text">Description should be displayed</div></td>
+            <td><div class="actual-text">Quill rich text editor accepts text correctly; live character counter (54/1500) updates.</div></td>
+            <td><div class="deviation-text">None.</div></td>
+            <td><span class="badge badge-pass">PASSED</span></td>
+            <td><img src="../uat_target3_cicodecm/forms_step3_description_filled.png" class="thumb" alt="forms_step3_description_filled.png" onclick="openModal(this.src)"></td>
+          </tr>
+
+          <tr>
+            <td><strong>6</strong></td>
+            <td><span class="step-name">Select a form type (Internal), click Create</span></td>
+            <td><div class="expected-text">&quot;form created successfully&quot; message</div></td>
+            <td><div class="actual-text">Form created; redirected to Update Form (field-builder) page. Persisted data confirms success.</div></td>
+            <td><div class="deviation-text">None.</div></td>
+            <td><span class="badge badge-pass">PASSED</span></td>
+            <td><img src="../uat_target3_cicodecm/forms_step4_after_create.png" class="thumb" alt="forms_step4_after_create.png" onclick="openModal(this.src)"></td>
+          </tr>
+
+          <tr>
+            <td><strong>7</strong></td>
+            <td><span class="step-name">Click and Select Queue</span></td>
+            <td><div class="expected-text">Should display Queue</div></td>
+            <td><div class="actual-text">Dropdown opens with real queues (Complaints, Finance, HR, etc.); &quot;Complaints&quot; selected successfully.</div></td>
+            <td><div class="deviation-text">None.</div></td>
+            <td><span class="badge badge-pass">PASSED</span></td>
+            <td><img src="../uat_target3_cicodecm/forms_step6_queue_selected.png" class="thumb" alt="forms_step6_queue_selected.png" onclick="openModal(this.src)"></td>
+          </tr>
+
+          <tr>
+            <td><strong>8</strong></td>
+            <td><span class="step-name">Click and Select Queue Type</span></td>
+            <td><div class="expected-text">Should display Queue Type</div></td>
+            <td><div class="actual-text">&quot;Billing Issue&quot; selected; form fields auto-populated from the linked workflow (Contact/Title/Last Name/Email/Address) — working integration with Workflow module.</div></td>
+            <td><div class="deviation-text">None (positive integration finding, undocumented).</div></td>
+            <td><span class="badge badge-pass">PASSED</span></td>
+            <td><img src="../uat_target3_cicodecm/forms_step6_queue_selected.png" class="thumb" alt="forms_step6_queue_selected.png" onclick="openModal(this.src)"></td>
+          </tr>
+
+          <tr>
+            <td><strong>9</strong></td>
+            <td><span class="step-name">Drag &amp; drop form field</span></td>
+            <td><div class="expected-text">Should display form field in the form page</div></td>
+            <td><div class="actual-text">Fields added via click (button), not native drag-and-drop — same pattern as Workflow module. Config panel (Label, Required toggle) opens and saves correctly.</div></td>
+            <td><div class="deviation-text">[Deviation]: script specifies drag-and-drop; live is click-to-configure.</div></td>
+            <td><span class="badge badge-dev">PARTIAL / DEVIATION</span></td>
+            <td><img src="../uat_target3_cicodecm/forms_step7_field_added.png" class="thumb" alt="forms_step7_field_added.png" onclick="openModal(this.src)"></td>
+          </tr>
+
+          <tr>
+            <td><strong>10</strong></td>
+            <td><span class="step-name">View available field types</span></td>
+            <td><div class="expected-text">Not detailed in script</div></td>
+            <td><div class="actual-text">20 field types available (Text Field, Text Area, Contact, Address, Organization, Dropdown, Check Box, Radio Button, Attach File, Date, Number, Currency, Divider, Body, Section Title, Distance, Dimension, Weight, Star Rating, Scale Rating, Add Image, Business Sector) — far exceeds script scope.</div></td>
+            <td><div class="deviation-text">None (exceeds spec).</div></td>
+            <td><span class="badge badge-pass">PASSED</span></td>
+            <td><img src="../uat_target3_cicodecm/forms_step8_field_saved.png" class="thumb" alt="forms_step8_field_saved.png" onclick="openModal(this.src)"></td>
+          </tr>
+
+          <tr>
+            <td><strong>11</strong></td>
+            <td><span class="step-name">Fill Initial Email Response (Form Setting)</span></td>
+            <td><div class="expected-text">Should display email response message</div></td>
+            <td><div class="actual-text">Required rich-text field; validation correctly blocks save when blank (&quot;Initial email response cannot be blank&quot;); accepts text once filled.</div></td>
+            <td><div class="deviation-text">None.</div></td>
+            <td><span class="badge badge-pass">PASSED</span></td>
+            <td><img src="../uat_target3_cicodecm/forms_step9_before_save.png" class="thumb" alt="forms_step9_before_save.png" onclick="openModal(this.src)"></td>
+          </tr>
+
+          <tr>
+            <td><strong>12</strong></td>
+            <td><span class="step-name">Click on Save</span></td>
+            <td><div class="expected-text">&quot;Created successfully&quot;</div></td>
+            <td><div class="actual-text">&quot;Updated Successfully&quot; toast shown; redirected to All Forms list.</div></td>
+            <td><div class="deviation-text">None.</div></td>
+            <td><span class="badge badge-pass">PASSED</span></td>
+            <td><img src="../uat_target3_cicodecm/forms_step11_allforms_wait.png" class="thumb" alt="forms_step11_allforms_wait.png" onclick="openModal(this.src)"></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="case-section" data-case="sc3">
+      <div class="case-header">
+        <div class="case-title">Scenario 3: ALL FORMS LIST &amp; TYPE CLASSIFICATION DEFECT</div>
+        <div class="case-tag">All Forms List</div>
+      </div>
+      <table>
+        <thead>
+          <tr>
+            <th style="width: 55px;">Row</th>
+            <th style="width: 220px;">Steps to Reproduce</th>
+            <th style="width: 250px;">Expected Result</th>
+            <th>Actual Result (Live Execution)</th>
+            <th style="width: 230px;">Deviations & Defect Notes</th>
+            <th style="width: 150px;">Status</th>
+            <th style="width: 140px;">Screenshot Evidence</th>
+          </tr>
+        </thead>
+        <tbody>
+
+          <tr>
+            <td><strong>13</strong></td>
+            <td><span class="step-name">Click on All form sub-menu, view forms created</span></td>
+            <td><div class="expected-text">Display all form item</div></td>
+            <td><div class="actual-text">&quot;My Forms&quot; tab lists all 8 forms with Queue, Queue Type, Form Type, Status, and Actions columns.</div></td>
+            <td><div class="deviation-text">None.</div></td>
+            <td><span class="badge badge-pass">PASSED</span></td>
+            <td><img src="../uat_target3_cicodecm/forms_step12_allforms_list.png" class="thumb" alt="forms_step12_allforms_list.png" onclick="openModal(this.src)"></td>
+          </tr>
+
+          <tr>
+            <td><strong>14</strong></td>
+            <td><span class="step-name">Compare grid &quot;Form Type&quot; column to the form’s actual saved type</span></td>
+            <td><div class="expected-text">Column should reflect the real type</div></td>
+            <td><div class="actual-text">CONFIRMED BUG: grid shows &quot;External&quot; for &quot;UAT Internal Form 48736&quot;, but its own Update Form page confirms the radio is actually set to Internal.</div></td>
+            <td><div class="deviation-text">[Defect]: Form Type display is unreliable.</div></td>
+            <td><span class="badge badge-bug">CONFIRMED BUG</span></td>
+            <td><img src="../uat_target3_cicodecm/forms_step14_update_form_shows_internal.png" class="thumb" alt="forms_step14_update_form_shows_internal.png" onclick="openModal(this.src)"></td>
+          </tr>
+
+          <tr>
+            <td><strong>15</strong></td>
+            <td><span class="step-name">Click the action button (⋮) on a form row</span></td>
+            <td><div class="expected-text">Share, Update form, view form, Suspend form</div></td>
+            <td><div class="actual-text">Confirmed exact match: Share / Update Form / Suspend Form.</div></td>
+            <td><div class="deviation-text">None.</div></td>
+            <td><span class="badge badge-pass">PASSED</span></td>
+            <td><img src="../uat_target3_cicodecm/forms_step13_action_menu.png" class="thumb" alt="forms_step13_action_menu.png" onclick="openModal(this.src)"></td>
+          </tr>
+
+          <tr>
+            <td><strong>16</strong></td>
+            <td><span class="step-name">Click &quot;Internal Forms&quot; tab, then &quot;External Forms&quot; tab</span></td>
+            <td><div class="expected-text">Should filter forms by their real type</div></td>
+            <td><div class="actual-text">CONFIRMED BUG (same root cause as row 14): Internal Forms tab shows 0 results despite a confirmed-Internal form existing; External Forms tab shows ALL 7 non-suspended forms, including that same Internal one.</div></td>
+            <td><div class="deviation-text">[Defect]: type filtering is broken platform-wide.</div></td>
+            <td><span class="badge badge-bug">CONFIRMED BUG</span></td>
+            <td><img src="../uat_target3_cicodecm/forms_step24_external_tab.png" class="thumb" alt="forms_step24_external_tab.png" onclick="openModal(this.src)"></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="case-section" data-case="sc4">
+      <div class="case-header">
+        <div class="case-title">Scenario 4: SHARE FORM &amp; PUBLIC FILL-FORM LINK (P0 DEFECT)</div>
+        <div class="case-tag">P0 Defect</div>
+      </div>
+      <table>
+        <thead>
+          <tr>
+            <th style="width: 55px;">Row</th>
+            <th style="width: 220px;">Steps to Reproduce</th>
+            <th style="width: 250px;">Expected Result</th>
+            <th>Actual Result (Live Execution)</th>
+            <th style="width: 230px;">Deviations & Defect Notes</th>
+            <th style="width: 150px;">Status</th>
+            <th style="width: 140px;">Screenshot Evidence</th>
+          </tr>
+        </thead>
+        <tbody>
+
+          <tr>
+            <td><strong>17</strong></td>
+            <td><span class="step-name">Click on Share button</span></td>
+            <td><div class="expected-text">Modal with shareable link and social channels</div></td>
+            <td><div class="actual-text">&quot;Share form&quot; modal confirmed with Link tab, Embed tab, and WhatsApp / Facebook / Twitter / Email icons — matches all 4 scripted share channels.</div></td>
+            <td><div class="deviation-text">None.</div></td>
+            <td><span class="badge badge-pass">PASSED</span></td>
+            <td><img src="../uat_target3_cicodecm/forms_step16_share_modal.png" class="thumb" alt="forms_step16_share_modal.png" onclick="openModal(this.src)"></td>
+          </tr>
+
+          <tr>
+            <td><strong>18</strong></td>
+            <td><span class="step-name">Inspect the generated Link/Embed values</span></td>
+            <td><div class="expected-text">Should point to a valid, well-formed URL</div></td>
+            <td><div class="actual-text">CONFIRMED BUG: spaces in the form name are double URL-encoded (%2520 instead of %20) in both the Link field and the Embed iframe code.</div></td>
+            <td><div class="deviation-text">[Defect - minor]: double-encoding bug.</div></td>
+            <td><span class="badge badge-bug">CONFIRMED BUG</span></td>
+            <td><img src="../uat_target3_cicodecm/forms_step16_share_modal.png" class="thumb" alt="forms_step16_share_modal.png" onclick="openModal(this.src)"></td>
+          </tr>
+
+          <tr>
+            <td><strong>19</strong></td>
+            <td><span class="step-name">Open the public share link (webform/&lt;name&gt;)</span></td>
+            <td><div class="expected-text">Should display the external form to be filled</div></td>
+            <td><div class="actual-text">CONFIRMED BUG (P0): page shows &quot;Unable To Load Form!&quot; with a Reload button. Reproduced with both the double-encoded and manually-corrected single-encoded URL, ruling out encoding as the cause.</div></td>
+            <td><div class="deviation-text">[Defect - P0]: full feature outage.</div></td>
+            <td><span class="badge badge-bug">CONFIRMED BUG (P0)</span></td>
+            <td><img src="../uat_target3_cicodecm/forms_step18_single_encoded_link.png" class="thumb" alt="forms_step18_single_encoded_link.png" onclick="openModal(this.src)"></td>
+          </tr>
+
+          <tr>
+            <td><strong>20</strong></td>
+            <td><span class="step-name">Open the public share link for &quot;CICOD Form&quot; (pre-existing, created 2026-07-08)</span></td>
+            <td><div class="expected-text">Should display that form to be filled</div></td>
+            <td><div class="actual-text">Same &quot;Unable To Load Form!&quot; error — confirms this is a platform-wide outage, not specific to newly created test forms.</div></td>
+            <td><div class="deviation-text">[Defect confirmed 2/2 — platform-wide]</div></td>
+            <td><span class="badge badge-bug">CONFIRMED BUG (P0)</span></td>
+            <td><img src="../uat_target3_cicodecm/forms_step19_cicodform_public.png" class="thumb" alt="forms_step19_cicodform_public.png" onclick="openModal(this.src)"></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="case-section" data-case="sc5">
+      <div class="case-header">
+        <div class="case-title">Scenario 5: UPDATE FORM &amp; SUSPEND / UNSUSPEND</div>
+        <div class="case-tag">Update / Suspend</div>
+      </div>
+      <table>
+        <thead>
+          <tr>
+            <th style="width: 55px;">Row</th>
+            <th style="width: 220px;">Steps to Reproduce</th>
+            <th style="width: 250px;">Expected Result</th>
+            <th>Actual Result (Live Execution)</th>
+            <th style="width: 230px;">Deviations & Defect Notes</th>
+            <th style="width: 150px;">Status</th>
+            <th style="width: 140px;">Screenshot Evidence</th>
+          </tr>
+        </thead>
+        <tbody>
+
+          <tr>
+            <td><strong>21</strong></td>
+            <td><span class="step-name">Click on Update Form button</span></td>
+            <td><div class="expected-text">Display Form page with fields to edit</div></td>
+            <td><div class="actual-text">Loads the same field-builder page, correctly pre-filled with Queue, Queue Type, and existing fields.</div></td>
+            <td><div class="deviation-text">None.</div></td>
+            <td><span class="badge badge-pass">PASSED</span></td>
+            <td><img src="../uat_target3_cicodecm/forms_step15_correct_form_update.png" class="thumb" alt="forms_step15_correct_form_update.png" onclick="openModal(this.src)"></td>
+          </tr>
+
+          <tr>
+            <td><strong>22</strong></td>
+            <td><span class="step-name">Click on Suspend Form button</span></td>
+            <td><div class="expected-text">&quot;Suspended successfully&quot;</div></td>
+            <td><div class="actual-text">Status column updates to SUSPENDED (orange) immediately, no confirmation dialog required.</div></td>
+            <td><div class="deviation-text">None.</div></td>
+            <td><span class="badge badge-pass">PASSED</span></td>
+            <td><img src="../uat_target3_cicodecm/forms_step21_after_suspend.png" class="thumb" alt="forms_step21_after_suspend.png" onclick="openModal(this.src)"></td>
+          </tr>
+
+          <tr>
+            <td><strong>23</strong></td>
+            <td><span class="step-name">Re-open the action menu on a suspended form</span></td>
+            <td><div class="expected-text">Drop-down should now show Unsuspend Form</div></td>
+            <td><div class="actual-text">Confirmed: menu correctly swaps to Share / Update Form / Unsuspend Form.</div></td>
+            <td><div class="deviation-text">None.</div></td>
+            <td><span class="badge badge-pass">PASSED</span></td>
+            <td><img src="../uat_target3_cicodecm/forms_step22_unsuspend_menu.png" class="thumb" alt="forms_step22_unsuspend_menu.png" onclick="openModal(this.src)"></td>
+          </tr>
+
+          <tr>
+            <td><strong>24</strong></td>
+            <td><span class="step-name">Click &quot;Update Form&quot; immediately after opening a row’s menu (automation note)</span></td>
+            <td><div class="expected-text">Should open the same row’s form</div></td>
+            <td><div class="actual-text">First attempt opened the wrong row’s form (&quot;Go Live&quot; instead of the target) due to a stray menu element left in the DOM. Not scored as a product defect; worth a manual spot-check.</div></td>
+            <td><div class="deviation-text">[Automation note, not scored as defect]</div></td>
+            <td><span class="badge badge-dev">PARTIAL / DEVIATION</span></td>
+            <td><img src="../uat_target3_cicodecm/forms_step14_update_form_shows_internal.png" class="thumb" alt="forms_step14_update_form_shows_internal.png" onclick="openModal(this.src)"></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="case-section" data-case="not-executed">
+      <div class="case-header">
+        <div class="case-title">Not Executed This Session</div>
+        <div class="case-tag">~174 rows</div>
+      </div>
+      <table>
+        <thead>
+          <tr>
+            <th style="width: 55px;">Row</th>
+            <th style="width: 140px;">Feature</th>
+            <th style="width: 250px;">Script Section</th>
+            <th>Script Reference</th>
+            <th style="width: 300px;">Reason Not Executed</th>
+            <th style="width: 150px;">Status</th>
+            <th style="width: 100px;">Evidence</th>
+          </tr>
+        </thead>
+        <tbody>
+        <tr>
+          <td><strong>&mdash;</strong></td>
+          <td><span class="feature-tag" style="color:#94a3b8;background:rgba(148,163,184,0.12);">NOT EXECUTED</span></td>
+          <td>Fill a Form (External)</td>
+          <td>As scripted (rows ~72-88)</td>
+          <td>Blocked entirely by the P0 defect (row 19/20) — public form never loads.</td>
+          <td><span class="badge badge-not-impl">NOT EXECUTED</span></td>
+          <td>&mdash;</td>
+        </tr>
+        <tr>
+          <td><strong>&mdash;</strong></td>
+          <td><span class="feature-tag" style="color:#94a3b8;background:rgba(148,163,184,0.12);">NOT EXECUTED</span></td>
+          <td>Fill a Form (Internal)</td>
+          <td>As scripted (rows ~89-105)</td>
+          <td>Blocked entirely by the P0 defect (row 19/20) — public form never loads.</td>
+          <td><span class="badge badge-not-impl">NOT EXECUTED</span></td>
+          <td>&mdash;</td>
+        </tr>
+        <tr>
+          <td><strong>&mdash;</strong></td>
+          <td><span class="feature-tag" style="color:#94a3b8;background:rgba(148,163,184,0.12);">NOT EXECUTED</span></td>
+          <td>Create External Form / Create Inter MDA Form</td>
+          <td>As scripted (rows ~21-56)</td>
+          <td>Not created this session — only Internal form type was exercised.</td>
+          <td><span class="badge badge-not-impl">NOT EXECUTED</span></td>
+          <td>&mdash;</td>
+        </tr>
+        <tr>
+          <td><strong>&mdash;</strong></td>
+          <td><span class="feature-tag" style="color:#94a3b8;background:rgba(148,163,184,0.12);">NOT EXECUTED</span></td>
+          <td>Update Internal Form / Update External Form (tab-specific)</td>
+          <td>As scripted (rows ~151-170)</td>
+          <td>Generic Update flow verified (row 21); tab-scoped variants not executed, and row 16’s tab-filter defect makes those tabs unreliable for locating forms.</td>
+          <td><span class="badge badge-not-impl">NOT EXECUTED</span></td>
+          <td>&mdash;</td>
+        </tr>
+        <tr>
+          <td><strong>&mdash;</strong></td>
+          <td><span class="feature-tag" style="color:#94a3b8;background:rgba(148,163,184,0.12);">NOT EXECUTED</span></td>
+          <td>Suspend Internal Form / Suspend External Form (tab-specific)</td>
+          <td>As scripted (rows ~171-184)</td>
+          <td>Generic Suspend flow verified (row 22); tab-scoped variants not executed.</td>
+          <td><span class="badge badge-not-impl">NOT EXECUTED</span></td>
+          <td>&mdash;</td>
+        </tr>
+        <tr>
+          <td><strong>&mdash;</strong></td>
+          <td><span class="feature-tag" style="color:#94a3b8;background:rgba(148,163,184,0.12);">NOT EXECUTED</span></td>
+          <td>Share Form via WhatsApp / Mail / Twitter / Facebook (destination flows)</td>
+          <td>As scripted (rows ~106-141)</td>
+          <td>Icons confirmed present (row 17); none of the 4 destination flows were clicked through to completion.</td>
+          <td><span class="badge badge-not-impl">NOT EXECUTED</span></td>
+          <td>&mdash;</td>
+        </tr>
+        <tr>
+          <td><strong>&mdash;</strong></td>
+          <td><span class="feature-tag" style="color:#94a3b8;background:rgba(148,163,184,0.12);">NOT EXECUTED</span></td>
+          <td>Status Forms tab / Data Capture form type</td>
+          <td>As scripted (not in script)</td>
+          <td>Both exist live but are entirely undocumented; not explored this session.</td>
+          <td><span class="badge badge-not-impl">NOT EXECUTED</span></td>
+          <td>&mdash;</td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+
+  <div id="imageModal" class="modal" onclick="closeModal()">
+    <span class="modal-close">&times;</span>
+    <img id="modalImg" class="modal-content" src="" alt="Full Preview">
+  </div>
+
+  <script>
+    function filterCases(filter, btn) {
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      document.querySelectorAll('.case-section').forEach(sec => {
+        if (filter === 'all' || sec.getAttribute('data-case') === filter) sec.style.display = 'block';
+        else sec.style.display = sec.getAttribute('data-case') === 'not-executed' && filter === 'all' ? 'block' : 'none';
+      });
+    }
+    function openModal(src) {
+      document.getElementById('modalImg').src = src;
+      document.getElementById('imageModal').classList.add('active');
+    }
+    function closeModal() { document.getElementById('imageModal').classList.remove('active'); }
+    document.addEventListener('keydown', function(e) { if (e.key === 'Escape') closeModal(); });
+  </script>
+</body>
+</html>

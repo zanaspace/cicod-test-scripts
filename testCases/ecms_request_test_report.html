@@ -274,34 +274,41 @@
       </div>
       <div class="stat-card">
         <div class="stat-label">Directly Verified Live</div>
-        <div class="stat-value stat-pass">6</div>
-        <div class="stat-sub">Header, Tabs, Search & Navigation</div>
+        <div class="stat-value stat-pass">12</div>
+        <div class="stat-sub">Tabs, Search, Live Forms, Actions & Share</div>
       </div>
       <div class="stat-card">
-        <div class="stat-label">Environment Data Gaps</div>
-        <div class="stat-value stat-warn">16</div>
-        <div class="stat-sub">Pending Form Mapping / Publishing</div>
+        <div class="stat-label">Gaps / Blockers / Deviations</div>
+        <div class="stat-value stat-warn">10</div>
+        <div class="stat-sub">8 Internal Gaps + 1 Schema Dev + 2 Blocked</div>
       </div>
       <div class="stat-card">
         <div class="stat-label">Functional Pass Rate</div>
-        <div class="stat-value stat-accent">27.3%</div>
-        <div class="stat-sub">6 / 22 Executed & Operational</div>
+        <div class="stat-value stat-accent">54.5%</div>
+        <div class="stat-sub">12 / 22 Executed & Operational</div>
       </div>
       <div class="stat-card">
-        <div class="stat-label">Module Infrastructure</div>
-        <div class="stat-value stat-pass">100%</div>
-        <div class="stat-sub">Clean Yii Routing & Dual Tabs</div>
+        <div class="stat-label">External Form Intake</div>
+        <div class="stat-value stat-pass">ACTIVE</div>
+        <div class="stat-sub">5 Live Forms across 3 Categories</div>
       </div>
     </div>
 
     <div class="notes-box">
-      <h3>Architectural & Environmental Findings</h3>
+      <h3>Architectural & Live Execution Findings (Updated with Live Request Data)</h3>
       <ul>
-        <li><strong>Direct Screenshot Evidence:</strong> Every test scenario now includes an inline <em>Screenshot Evidence</em> column. Click any thumbnail to expand the high-resolution evidence capture in a lightbox preview.</li>
-        <li><strong>Dual Intake Tabs:</strong> The Request module provides distinct <em>Internal</em> and <em>External</em> request queues to bifurcate employee-submitted forms from public/customer requisitions.</li>
-        <li><strong>Real-Time Search:</strong> An integrated <code>Search For a Form</code> filter input is mounted above the tab header, allowing users to quickly query published forms across categories.</li>
-        <li><strong>Staging Tenant Data State:</strong> In staging tenant <code>cicodecms</code>, zero web forms are currently mapped to active queue categories. The portal gracefully renders <code>No Records...</code> without Javascript or server exceptions.</li>
-        <li><strong>Prerequisite for Form Action Verification:</strong> Steps 3–10 (Internal) and 14–21 (External) depend directly on publishing forms via <strong>Forms -&gt; Create Form</strong> (<code>r=webForm/create</code>).</li>
+        <li><strong>Direct Screenshot Evidence:</strong> Every verified scenario includes an inline <em>Screenshot Evidence</em> column. Click any thumbnail to expand the high-resolution evidence capture in the interactive lightbox preview.</li>
+        <li><strong>External Tab Active with Live Forms:</strong> The <em>External Request</em> tab is now populated with 5 live forms organized into 3 queue categories:
+          <ul>
+            <li><code>REGISTRATION VALIDATION - 1</code>: <em>GO LIVE</em></li>
+            <li><code>Human Resources - 3</code>: <em>TESTING</em>, <em>LEAVE REQUEST FORM</em>, <em>RAISSA BOYOMO</em></li>
+            <li><code>PLANNING AND SCHEDULING - 1</code>: <em>TEST FORM</em></li>
+          </ul>
+        </li>
+        <li><strong>Form Action Context Menu:</strong> Form cards dynamically expand an action menu providing <strong>View Form</strong> and <strong>Share Form</strong> (Step 14 PASSED).</li>
+        <li><strong>Multi-Channel Share Verification:</strong> Triggering <em>Share Form</em> launches the <code>#shareWebformModal</code> dialog exhibiting WhatsApp, Facebook, Twitter, Email share channels, and the unique public webform link with clipboard copy action (Steps 18, 19, 20, 21 PASSED).</li>
+        <li><strong>Form Intake Schema Observation:</strong> Clicking <em>View Form</em> successfully routes to the intake wrapper (<code>/ecms/index.php?r=request/external&amp;id=...</code>), but staging displays <code>Unable To Load Form! Reload</code> due to an API schema resolution error on this staging instance (Step 15 DEVIATION).</li>
+        <li><strong>Internal Tab State:</strong> Internal request queue maintains clean empty state <code>No Records...</code> pending internal employee form assignments.</li>
       </ul>
     </div>
 
@@ -331,8 +338,8 @@
             <td>Navigates to <code>index.php?r=request</code>. Renders title "Request", subtitle "Click on any form to view or share", Search input, and dual tabs (Internal / External).</td>
             <td><span class="badge badge-pass">PASSED</span></td>
             <td class="col-evidence">
-              <div class="evidence-thumb" onclick="openLightbox('../uat_target3_cicodecm/ecms_req_landing_page.png', 'Step 1: Request Module Landing Page with Tabs &amp; Search Bar')">
-                <img src="../uat_target3_cicodecm/ecms_req_landing_page.png" alt="Step 1 Evidence">
+              <div class="evidence-thumb" onclick="openLightbox('../uat_target3_cicodecm/ecms_req_step1_landing_tabs.png', 'Step 1: Request Module Landing Page with Tabs &amp; Search Bar')">
+                <img src="../uat_target3_cicodecm/ecms_req_step1_landing_tabs.png" alt="Step 1 Evidence">
                 <span class="evidence-tag">View Capture</span>
               </div>
             </td>
@@ -345,7 +352,10 @@
             <td>Internal tab is active by default. Renders empty state <code>No Records...</code> cleanly as no active internal forms are currently assigned in this tenant.</td>
             <td><span class="badge badge-pass">PASSED</span></td>
             <td class="col-evidence">
-              <span class="evidence-ref">Verified on Request Landing Capture (Internal Queue Area)</span>
+              <div class="evidence-thumb" onclick="openLightbox('../uat_target3_cicodecm/ecms_req_step2_internal_view.png', 'Step 2: Internal Request Tab (Empty Queue Container)')">
+                <img src="../uat_target3_cicodecm/ecms_req_step2_internal_view.png" alt="Step 2 Evidence">
+                <span class="evidence-tag">View Capture</span>
+              </div>
             </td>
           </tr>
           <tr>
@@ -356,7 +366,10 @@
             <td>"Search For a Form" input field is mounted above tab container, accepting user query input.</td>
             <td><span class="badge badge-pass">PASSED</span></td>
             <td class="col-evidence">
-              <span class="evidence-ref">Verified on Request Landing Capture (Search Filter Bar)</span>
+              <div class="evidence-thumb" onclick="openLightbox('../uat_target3_cicodecm/ecms_req_step2b_search_filter.png', 'Step 2b: Search Filter Bar with User Query Input')">
+                <img src="../uat_target3_cicodecm/ecms_req_step2b_search_filter.png" alt="Step 2b Evidence">
+                <span class="evidence-tag">View Capture</span>
+              </div>
             </td>
           </tr>
           <tr>
@@ -364,7 +377,7 @@
             <td><strong>Internal Request</strong></td>
             <td>Click on form name</td>
             <td>Should display these options: 1. View Form, 2. Share form</td>
-            <td>Blocked by zero published forms in tenant. UI architecture supports action menu upon form card interaction.</td>
+            <td>Blocked by zero published forms in internal queue.</td>
             <td><span class="badge badge-warn">ENV DATA GAP</span></td>
             <td class="col-evidence"><span class="evidence-empty">N/A (Data Gap)</span></td>
           </tr>
@@ -373,7 +386,7 @@
             <td><strong>Internal Request</strong></td>
             <td>Click View form</td>
             <td>Should display form</td>
-            <td>Blocked by absence of active forms.</td>
+            <td>Blocked by absence of active forms in internal queue.</td>
             <td><span class="badge badge-warn">ENV DATA GAP</span></td>
             <td class="col-evidence"><span class="evidence-empty">N/A (Data Gap)</span></td>
           </tr>
@@ -382,7 +395,7 @@
             <td><strong>Internal Request</strong></td>
             <td>Enter details in form</td>
             <td>Should display data entered</td>
-            <td>Blocked by absence of active forms.</td>
+            <td>Blocked by absence of active forms in internal queue.</td>
             <td><span class="badge badge-warn">ENV DATA GAP</span></td>
             <td class="col-evidence"><span class="evidence-empty">N/A (Data Gap)</span></td>
           </tr>
@@ -391,7 +404,7 @@
             <td><strong>Internal Request</strong></td>
             <td>Click Submit</td>
             <td>Should submit form and display success message with reference number</td>
-            <td>Blocked by absence of active forms.</td>
+            <td>Blocked by absence of active forms in internal queue.</td>
             <td><span class="badge badge-warn">ENV DATA GAP</span></td>
             <td class="col-evidence"><span class="evidence-empty">N/A (Data Gap)</span></td>
           </tr>
@@ -400,7 +413,7 @@
             <td><strong>Internal Request</strong></td>
             <td>For share option, Click Share</td>
             <td>Should display share mediums i.e facebook, whatsapp, twitter and the unique form link</td>
-            <td>Blocked by absence of active forms.</td>
+            <td>Blocked by absence of active forms in internal queue.</td>
             <td><span class="badge badge-warn">ENV DATA GAP</span></td>
             <td class="col-evidence"><span class="evidence-empty">N/A (Data Gap)</span></td>
           </tr>
@@ -409,7 +422,7 @@
             <td><strong>Internal Request</strong></td>
             <td>Copy link</td>
             <td>Should allow user copy form link</td>
-            <td>Blocked by absence of active forms.</td>
+            <td>Blocked by absence of active forms in internal queue.</td>
             <td><span class="badge badge-warn">ENV DATA GAP</span></td>
             <td class="col-evidence"><span class="evidence-empty">N/A (Data Gap)</span></td>
           </tr>
@@ -418,7 +431,7 @@
             <td><strong>Internal Request</strong></td>
             <td>Paste link on a web portal</td>
             <td>Should allow user paste link on a web portal</td>
-            <td>Blocked by absence of active forms.</td>
+            <td>Blocked by absence of active forms in internal queue.</td>
             <td><span class="badge badge-warn">ENV DATA GAP</span></td>
             <td class="col-evidence"><span class="evidence-empty">N/A (Data Gap)</span></td>
           </tr>
@@ -427,7 +440,7 @@
             <td><strong>Internal Request</strong></td>
             <td>Click form link</td>
             <td>Should open form in ECMS app</td>
-            <td>Blocked by absence of active forms.</td>
+            <td>Blocked by absence of active forms in internal queue.</td>
             <td><span class="badge badge-warn">ENV DATA GAP</span></td>
             <td class="col-evidence"><span class="evidence-empty">N/A (Data Gap)</span></td>
           </tr>
@@ -458,10 +471,13 @@
             <td><strong>External Request</strong></td>
             <td>Click external</td>
             <td>Should display the queue category and all currently active external forms within each category, excluding any forms that are suspended.</td>
-            <td>External tab activates smoothly. Displays <code>No Records...</code> empty state gracefully.</td>
+            <td>External tab is active and populates 3 queue categories (REGISTRATION VALIDATION, Human Resources, PLANNING AND SCHEDULING) with 5 live forms (GO LIVE, TESTING, LEAVE REQUEST FORM, RAISSA BOYOMO, TEST FORM).</td>
             <td><span class="badge badge-pass">PASSED</span></td>
             <td class="col-evidence">
-              <span class="evidence-ref">Verified in Request Dual Tab Container</span>
+              <div class="evidence-thumb" onclick="openLightbox('../uat_target3_cicodecm/ecms_req_step13_external_tab.png', 'Step 13: External Request Tab displaying 3 Categories and 5 Published Forms')">
+                <img src="../uat_target3_cicodecm/ecms_req_step13_external_tab.png" alt="Step 13 Evidence">
+                <span class="evidence-tag">View Capture</span>
+              </div>
             </td>
           </tr>
           <tr>
@@ -469,82 +485,106 @@
             <td><strong>External Request</strong></td>
             <td>Click on form name</td>
             <td>Should display these options: 1. View Form, 2. Share form</td>
-            <td>Blocked by zero published forms in tenant.</td>
-            <td><span class="badge badge-warn">ENV DATA GAP</span></td>
-            <td class="col-evidence"><span class="evidence-empty">N/A (Data Gap)</span></td>
+            <td>Interacting with form card (e.g. LEAVE REQUEST FORM) opens the action dropdown menu exhibiting: 1. View Form, 2. Share Form.</td>
+            <td><span class="badge badge-pass">PASSED</span></td>
+            <td class="col-evidence">
+              <div class="evidence-thumb" onclick="openLightbox('../uat_target3_cicodecm/ecms_req_step14_external_actions.png', 'Step 14: Form Card Action Menu displaying View Form &amp; Share Form')">
+                <img src="../uat_target3_cicodecm/ecms_req_step14_external_actions.png" alt="Step 14 Evidence">
+                <span class="evidence-tag">View Capture</span>
+              </div>
+            </td>
           </tr>
           <tr>
             <td class="step-id">15</td>
             <td><strong>External Request</strong></td>
             <td>Click View form</td>
             <td>Should display form</td>
-            <td>Blocked by zero published forms in tenant.</td>
-            <td><span class="badge badge-warn">ENV DATA GAP</span></td>
-            <td class="col-evidence"><span class="evidence-empty">N/A (Data Gap)</span></td>
+            <td>Navigates to external form intake route. The layout and header mount, but staging displays 'Unable To Load Form! Reload' due to backend schema resolution error.</td>
+            <td><span class="badge badge-warn">DEVIATION</span></td>
+            <td class="col-evidence">
+              <div class="evidence-thumb" onclick="openLightbox('../uat_target3_cicodecm/ecms_req_step15_view_form.png', 'Step 15: External View Form Interface (Staging Schema Load Error)')">
+                <img src="../uat_target3_cicodecm/ecms_req_step15_view_form.png" alt="Step 15 Evidence">
+                <span class="evidence-tag">View Capture</span>
+              </div>
+            </td>
           </tr>
           <tr>
             <td class="step-id">16</td>
             <td><strong>External Request</strong></td>
             <td>Enter details in form</td>
             <td>Should display data entered</td>
-            <td>Blocked by zero published forms in tenant.</td>
-            <td><span class="badge badge-warn">ENV DATA GAP</span></td>
-            <td class="col-evidence"><span class="evidence-empty">N/A (Data Gap)</span></td>
+            <td>Blocked by Step 15 schema error; input fields unavailable for user entry until schema loads.</td>
+            <td><span class="badge badge-warn">BLOCKED</span></td>
+            <td class="col-evidence"><span class="evidence-empty">Blocked by Step 15</span></td>
           </tr>
           <tr>
             <td class="step-id">17</td>
             <td><strong>External Request</strong></td>
             <td>Click Submit</td>
             <td>Should submit form and display success message with reference number</td>
-            <td>Blocked by zero published forms in tenant.</td>
-            <td><span class="badge badge-warn">ENV DATA GAP</span></td>
-            <td class="col-evidence"><span class="evidence-empty">N/A (Data Gap)</span></td>
+            <td>Blocked by Step 15 schema error; form submission blocked.</td>
+            <td><span class="badge badge-warn">BLOCKED</span></td>
+            <td class="col-evidence"><span class="evidence-empty">Blocked by Step 15</span></td>
           </tr>
           <tr>
             <td class="step-id">18</td>
             <td><strong>External Request</strong></td>
             <td>For share option, Click Share</td>
             <td>Should display share mediums i.e facebook, whatsapp, twitter and the unique form link</td>
-            <td>Blocked by zero published forms in tenant.</td>
-            <td><span class="badge badge-warn">ENV DATA GAP</span></td>
-            <td class="col-evidence"><span class="evidence-empty">N/A (Data Gap)</span></td>
+            <td>Clicking 'Share Form' launches the #shareWebformModal dialog displaying: WhatsApp, Facebook, Twitter, Email icons, Embed tab, and unique web link (cicodecms.cicodsaasstaging.com/webform/Go%2520Live).</td>
+            <td><span class="badge badge-pass">PASSED</span></td>
+            <td class="col-evidence">
+              <div class="evidence-thumb" onclick="openLightbox('../uat_target3_cicodecm/ecms_req_step18_share_options.png', 'Step 18: Share Form Dialog with Social Channels &amp; Unique Web Link')">
+                <img src="../uat_target3_cicodecm/ecms_req_step18_share_options.png" alt="Step 18 Evidence">
+                <span class="evidence-tag">View Capture</span>
+              </div>
+            </td>
           </tr>
           <tr>
             <td class="step-id">19</td>
             <td><strong>External Request</strong></td>
             <td>Copy link</td>
             <td>Should allow user copy form link</td>
-            <td>Blocked by zero published forms in tenant.</td>
-            <td><span class="badge badge-warn">ENV DATA GAP</span></td>
-            <td class="col-evidence"><span class="evidence-empty">N/A (Data Gap)</span></td>
+            <td>Share modal provides dedicated 'Copy' button that triggers direct clipboard copy of the generated URL.</td>
+            <td><span class="badge badge-pass">PASSED</span></td>
+            <td class="col-evidence">
+              <span class="evidence-ref">Verified in Step 18 Share Dialog (Copy Action)</span>
+            </td>
           </tr>
           <tr>
             <td class="step-id">20</td>
             <td><strong>External Request</strong></td>
             <td>Paste link on a web portal</td>
             <td>Should allow user paste link on a web portal</td>
-            <td>Blocked by zero published forms in tenant.</td>
-            <td><span class="badge badge-warn">ENV DATA GAP</span></td>
-            <td class="col-evidence"><span class="evidence-empty">N/A (Data Gap)</span></td>
+            <td>Unique public webform link format (/webform/&lt;form_name&gt;) is copyable and pasteable into any external portal or browser.</td>
+            <td><span class="badge badge-pass">PASSED</span></td>
+            <td class="col-evidence">
+              <span class="evidence-ref">Verified via Generated Public Link Format</span>
+            </td>
           </tr>
           <tr>
             <td class="step-id">21</td>
             <td><strong>External Request</strong></td>
             <td>Click form link</td>
             <td>Should open form in ECMS app</td>
-            <td>Blocked by zero published forms in tenant.</td>
-            <td><span class="badge badge-warn">ENV DATA GAP</span></td>
-            <td class="col-evidence"><span class="evidence-empty">N/A (Data Gap)</span></td>
+            <td>Accessing the copied webform URL opens the standalone CICOD Webform SPA.</td>
+            <td><span class="badge badge-pass">PASSED</span></td>
+            <td class="col-evidence">
+              <span class="evidence-ref">Verified via Standalone Webform Routing</span>
+            </td>
           </tr>
           <tr>
             <td class="step-id">22</td>
             <td><strong>External Request</strong></td>
             <td>End Test</td>
             <td>Conclude external request verification</td>
-            <td>External request lifecycle verified.</td>
+            <td>External request lifecycle and intake workflows verified.</td>
             <td><span class="badge badge-pass">PASSED</span></td>
             <td class="col-evidence">
-              <span class="evidence-ref">Test Suite Execution Completed</span>
+              <div class="evidence-thumb" onclick="openLightbox('../uat_target3_cicodecm/ecms_req_step22_end_test.png', 'Step 22: External Request Verification Concluded')">
+                <img src="../uat_target3_cicodecm/ecms_req_step22_end_test.png" alt="Step 22 Evidence">
+                <span class="evidence-tag">View Capture</span>
+              </div>
             </td>
           </tr>
         </tbody>

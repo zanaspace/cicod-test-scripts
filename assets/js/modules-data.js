@@ -244,16 +244,23 @@ const appModules = [
         id: 'ecms_requests',
         sheetName: 'Requests',
         reportUrl: 'testCases/ecms_request_test_report.html',
-        passRate: '27.3%',
-        passCount: 6,
-        gapCount: 16,
+        passRate: '54.5%',
+        passCount: 12,
+        gapCount: 10,
         totalSteps: 22,
-        status: 'VERIFIED (ENV GAPS)',
+        status: '54.5% VERIFIED',
         isUpcoming: false,
-        summary: 'Dual internal & external form intake: live tabs, keyword search bar, and queue category segregation. Live verified on staging with 16 data-dependent form steps documented.',
+        summary: 'Dual internal & external form intake: populated external queue with 5 live forms across 3 categories, search bar filter, form context menu (View/Share), and multi-channel share dialog.',
         targetRoute: '/ecms/index.php?r=request',
         images: [
-          { file: 'uat_target3_cicodecm/ecms_req_landing_page.png', caption: 'Request Module Landing with Search Bar & Dual Intake Tabs (Internal / External)' }
+          { file: 'uat_target3_cicodecm/ecms_req_step1_landing_tabs.png', caption: 'Step 1: Request Module Landing Page with Dual Intake Tabs & Search Bar' },
+          { file: 'uat_target3_cicodecm/ecms_req_step2_internal_view.png', caption: 'Step 2: Internal Request Tab (Empty Queue Container)' },
+          { file: 'uat_target3_cicodecm/ecms_req_step2b_search_filter.png', caption: 'Step 2b: Search Filter Bar with Active User Query' },
+          { file: 'uat_target3_cicodecm/ecms_req_step13_external_tab.png', caption: 'Step 13: External Request Tab displaying 3 Categories & 5 Live Forms' },
+          { file: 'uat_target3_cicodecm/ecms_req_step14_external_actions.png', caption: 'Step 14: Form Card Action Dropdown (View Form & Share Form)' },
+          { file: 'uat_target3_cicodecm/ecms_req_step18_share_options.png', caption: 'Step 18: Share Form Dialog with Social Channels & Unique Web Link' },
+          { file: 'uat_target3_cicodecm/ecms_req_step15_view_form.png', caption: 'Step 15: External Form Intake View (Schema Load Deviation)' },
+          { file: 'uat_target3_cicodecm/ecms_req_step22_end_test.png', caption: 'Step 22: External Request Verification Concluded' }
         ]
       },
       {

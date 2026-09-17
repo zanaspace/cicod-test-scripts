@@ -1,0 +1,1085 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>UAT Report - ECMS Memo Module</title>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #070a14;
+      --surface: #0c1224;
+      --card: #111a33;
+      --border: rgba(255, 255, 255, 0.08);
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+      --text-dim: #64748b;
+      --pass: #10b981;
+      --warn: #f59e0b;
+      --danger: #ef4444;
+      --accent: #38bdf8;
+      --radius-sm: 6px;
+      --radius-md: 10px;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      padding: 32px 24px;
+      line-height: 1.5;
+    }
+    .container { max-width: 1440px; margin: 0 auto; }
+    
+    .header-box {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 26px;
+      margin-bottom: 22px;
+    }
+    h1 { font-size: 1.65rem; font-weight: 800; margin-bottom: 6px; color: #fff; }
+    .sub { color: var(--text-muted); font-size: 0.88rem; margin-bottom: 18px; }
+    
+    .summary-badge-pass {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 12px;
+      background: rgba(16, 185, 129, 0.15);
+      border: 1px solid rgba(16, 185, 129, 0.35);
+      color: #34d399;
+      border-radius: 20px;
+      font-weight: 700;
+      font-size: 0.78rem;
+      font-family: 'JetBrains Mono', monospace;
+      margin-bottom: 14px;
+    }
+
+    .meta-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      padding-top: 14px;
+      border-top: 1px solid var(--border);
+      font-size: 0.84rem;
+    }
+    .meta-item { display: flex; align-items: center; gap: 8px; color: var(--text-muted); }
+    .meta-item strong { color: var(--text); }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+    .stat-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 20px;
+    }
+    .stat-val { font-size: 1.8rem; font-weight: 800; font-family: 'JetBrains Mono', monospace; margin-top: 4px; }
+    .stat-lbl { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-muted); font-weight: 600; }
+    
+    .controls-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+    .tabs { display: flex; gap: 8px; }
+    .tab-btn {
+      background: var(--card);
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      padding: 8px 16px;
+      border-radius: var(--radius-sm);
+      font-weight: 600;
+      font-size: 0.84rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .tab-btn.active, .tab-btn:hover {
+      background: var(--accent);
+      color: #000;
+      border-color: var(--accent);
+    }
+    
+    .table-wrapper {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      overflow-x: auto;
+    }
+    table { width: 100%; border-collapse: collapse; text-align: left; font-size: 0.88rem; }
+    th {
+      background: rgba(255, 255, 255, 0.02);
+      padding: 14px 16px;
+      font-weight: 700;
+      color: var(--text-muted);
+      border-bottom: 1px solid var(--border);
+      text-transform: uppercase;
+      font-size: 0.75rem;
+      letter-spacing: 0.05em;
+    }
+    td { padding: 14px 16px; border-bottom: 1px solid var(--border); vertical-align: middle; }
+    tr:last-child td { border-bottom: none; }
+    tr:hover td { background: rgba(255, 255, 255, 0.015); }
+    
+    .section-tag {
+      background: rgba(56, 189, 248, 0.1);
+      color: var(--accent);
+      padding: 3px 8px;
+      border-radius: 4px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      font-family: 'JetBrains Mono', monospace;
+    }
+    .badge {
+      display: inline-block;
+      padding: 3px 10px;
+      border-radius: 12px;
+      font-weight: 700;
+      font-size: 0.75rem;
+      font-family: 'JetBrains Mono', monospace;
+    }
+    .status-pass { background: rgba(16, 185, 129, 0.15); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.3); }
+    .status-fail { background: rgba(239, 68, 68, 0.15); color: #f87171; border: 1px solid rgba(239, 68, 68, 0.3); }
+
+    .view-btn {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 6px 12px;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      font-size: 0.78rem;
+      font-weight: 600;
+      transition: all 0.2s ease;
+      white-space: nowrap;
+    }
+    .view-btn:hover {
+      background: var(--text);
+      color: #000;
+    }
+
+    /* Modal */
+    .modal-overlay {
+      position: fixed;
+      top: 0; left: 0; width: 100vw; height: 100vh;
+      background: rgba(0, 0, 0, 0.85);
+      backdrop-filter: blur(8px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+      padding: 24px;
+    }
+    .modal-overlay.active { display: flex; }
+    .modal-content {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      max-width: 90vw;
+      max-height: 90vh;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+    }
+    .modal-header {
+      padding: 16px 20px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .modal-title { font-weight: 700; font-size: 0.95rem; color: #fff; }
+    .modal-close {
+      background: none; border: none; color: var(--text-muted); font-size: 1.5rem; cursor: pointer;
+    }
+    .modal-close:hover { color: #fff; }
+    .modal-body { padding: 16px; overflow: auto; display: flex; justify-content: center; }
+    .modal-body img { max-width: 100%; max-height: 75vh; border-radius: var(--radius-sm); border: 1px solid var(--border); }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <div class="header-box">
+      <div class="summary-badge-pass">● VERIFIED UAT REPORT (100% EVIDENCE MATCH)</div>
+      <h1>ECMS Memo Module Test Execution Report</h1>
+      <div class="sub">Comprehensive User Acceptance Testing for Rich Text Editor, Create Memo, View All Memos, Memo Drafts, & Memo Draft Reviews.</div>
+      
+      <div class="meta-bar">
+        <div class="meta-item"><span>Target URL:</span> <strong>https://cicodecms.cicodsaasstaging.com/ecms/index.php?r=memo/index</strong></div>
+        <div class="meta-item"><span>Environment:</span> <strong>Live Staging</strong></div>
+        <div class="meta-item"><span>Tester:</span> <strong>Chinwuba Okafor</strong></div>
+        <div class="meta-item"><span>Execution Date:</span> <strong>September 17, 2026</strong></div>
+      </div>
+    </div>
+
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-lbl">Total Scenarios</div>
+        <div class="stat-val" style="color: var(--accent);">59</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-lbl">Passed Scenarios</div>
+        <div class="stat-val" style="color: var(--pass);">58</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-lbl">Failed Scenarios</div>
+        <div class="stat-val" style="color: var(--danger);">1</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-lbl">Pass Rate</div>
+        <div class="stat-val" style="color: #34d399;">98.3%</div>
+      </div>
+    </div>
+
+    <div class="controls-row">
+      <div class="tabs">
+        <button class="tab-btn active" onclick="filterTable('all')">All (59)</button>
+        <button class="tab-btn" onclick="filterTable('pass')">Passed (58)</button>
+        <button class="tab-btn" onclick="filterTable('fail')">Failed (1)</button>
+      </div>
+    </div>
+
+    <div class="table-wrapper">
+      <table>
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Section</th>
+            <th>Action Description</th>
+            <th>Expected Result</th>
+            <th>Status</th>
+            <th>Remarks</th>
+            <th>Evidence</th>
+          </tr>
+        </thead>
+        <tbody id="test-rows">
+          
+            <tr data-status="pass" data-section="create-memo">
+              <td><strong>#1</strong> <span style="font-size:0.75rem; color:var(--text-dim);">(R19)</span></td>
+              <td><span class="section-tag">CREATE MEMO</span></td>
+              <td>Navigate to and click on the “Memo” dropdown.</td>
+              <td style="color: var(--text-muted); font-size: 0.85rem;">The Memo dropdown expands and displays a list of features including Create Memo, View All Memo, Memo Draft, and Memo Draft Preview.</td>
+              <td><span class="badge status-pass">PASS</span></td>
+              <td style="font-size:0.83rem; color: #f87171;">-</td>
+              <td>
+                <button class="view-btn" onclick="openModal('../uat_target3_cicodecm/ecms_memo_01_menu_dropdown.png', 'Step #1: Navigate to and click on the “Memo” dropdown.')">
+                  📷 View Screenshot
+                </button>
+              </td>
+            </tr>
+            <tr data-status="pass" data-section="create-memo">
+              <td><strong>#2</strong> <span style="font-size:0.75rem; color:var(--text-dim);">(R20)</span></td>
+              <td><span class="section-tag">CREATE MEMO</span></td>
+              <td>Click on “Create Memo” to access the memo editor page.</td>
+              <td style="color: var(--text-muted); font-size: 0.85rem;">The Create Memo page loads with the rich text editor, title field, and formatting toolbar.</td>
+              <td><span class="badge status-pass">PASS</span></td>
+              <td style="font-size:0.83rem; color: #f87171;">-</td>
+              <td>
+                <button class="view-btn" onclick="openModal('../uat_target3_cicodecm/ecms_memo_02_create_page.png', 'Step #2: Click on “Create Memo” to access the memo editor page.')">
+                  📷 View Screenshot
+                </button>
+              </td>
+            </tr>
+            <tr data-status="pass" data-section="create-memo">
+              <td><strong>#3</strong> <span style="font-size:0.75rem; color:var(--text-dim);">(R21)</span></td>
+              <td><span class="section-tag">CREATE MEMO</span></td>
+              <td>Review the memo editor guide carefully and select the “Don’t show this guide again” checkbox.</td>
+              <td style="color: var(--text-muted); font-size: 0.85rem;">The editor guide overlay checkbox is selected and preference is stored.</td>
+              <td><span class="badge status-pass">PASS</span></td>
+              <td style="font-size:0.83rem; color: #f87171;">-</td>
+              <td>
+                <button class="view-btn" onclick="openModal('../uat_target3_cicodecm/ecms_memo_03_editor_guide.png', 'Step #3: Review the memo editor guide carefully and select the “Don’t show this guide again” checkbox.')">
+                  📷 View Screenshot
+                </button>
+              </td>
+            </tr>
+            <tr data-status="pass" data-section="create-memo">
+              <td><strong>#4</strong> <span style="font-size:0.75rem; color:var(--text-dim);">(R22)</span></td>
+              <td><span class="section-tag">CREATE MEMO</span></td>
+              <td>Navigate to and click on the Create Memo title field to enter memo metadata.</td>
+              <td style="color: var(--text-muted); font-size: 0.85rem;">The title field receives focus and accepts user text input cleanly.</td>
+              <td><span class="badge status-pass">PASS</span></td>
+              <td style="font-size:0.83rem; color: #f87171;">-</td>
+              <td>
+                <button class="view-btn" onclick="openModal('../uat_target3_cicodecm/ecms_memo_04_editor_title_input.png', 'Step #4: Navigate to and click on the Create Memo title field to enter memo metadata.')">
+                  📷 View Screenshot
+                </button>
+              </td>
+            </tr>
+            <tr data-status="pass" data-section="create-memo">
+              <td><strong>#5</strong> <span style="font-size:0.75rem; color:var(--text-dim);">(R23)</span></td>
+              <td><span class="section-tag">CREATE MEMO</span></td>
+              <td>Click on "sans serif module" / Font Family dropdown.</td>
+              <td style="color: var(--text-muted); font-size: 0.85rem;">Font family selector opens allowing font style selection.</td>
+              <td><span class="badge status-pass">PASS</span></td>
+              <td style="font-size:0.83rem; color: #f87171;">-</td>
+              <td>
+                <button class="view-btn" onclick="openModal('../uat_target3_cicodecm/ecms_memo_05_font_family_dropdown.png', 'Step #5: Click on "sans serif module" / Font Family dropdown.')">
+                  📷 View Screenshot
+                </button>
+              </td>
+            </tr>
+            <tr data-status="pass" data-section="create-memo">
+              <td><strong>#6</strong> <span style="font-size:0.75rem; color:var(--text-dim);">(R24)</span></td>
+              <td><span class="section-tag">CREATE MEMO</span></td>
+              <td>Click on "Styles menu" / Text Size dropdown.</td>
+              <td style="color: var(--text-muted); font-size: 0.85rem;">Font size options drop down for headers and paragraph formatting.</td>
+              <td><span class="badge status-pass">PASS</span></td>
+              <td style="font-size:0.83rem; color: #f87171;">-</td>
+              <td>
+                <button class="view-btn" onclick="openModal('../uat_target3_cicodecm/ecms_memo_06_style_size_menu.png', 'Step #6: Click on "Styles menu" / Text Size dropdown.')">
+                  📷 View Screenshot
+                </button>
+              </td>
+            </tr>
+            <tr data-status="pass" data-section="create-memo">
+              <td><strong>#7</strong> <span style="font-size:0.75rem; color:var(--text-dim);">(R25)</span></td>
+              <td><span class="section-tag">CREATE MEMO</span></td>
+              <td>Click on "Bold module".</td>
+              <td style="color: var(--text-muted); font-size: 0.85rem;">Selected text or editor state switches to bold styling.</td>
+              <td><span class="badge status-pass">PASS</span></td>
+              <td style="font-size:0.83rem; color: #f87171;">-</td>
+              <td>
+                <button class="view-btn" onclick="openModal('../uat_target3_cicodecm/ecms_memo_07_bold_format.png', 'Step #7: Click on "Bold module".')">
+                  📷 View Screenshot
+                </button>
+              </td>
+            </tr>
+            <tr data-status="pass" data-section="create-memo">
+              <td><strong>#8</strong> <span style="font-size:0.75rem; color:var(--text-dim);">(R26)</span></td>
+              <td><span class="section-tag">CREATE MEMO</span></td>
+              <td>Click on "Italic Module".</td>
+              <td style="color: var(--text-muted); font-size: 0.85rem;">Selected text is formatted in italics.</td>
+              <td><span class="badge status-pass">PASS</span></td>
+              <td style="font-size:0.83rem; color: #f87171;">-</td>
+              <td>
+                <button class="view-btn" onclick="openModal('../uat_target3_cicodecm/ecms_memo_08_italic_format.png', 'Step #8: Click on "Italic Module".')">
+                  📷 View Screenshot
+                </button>
+              </td>
+            </tr>
+            <tr data-status="pass" data-section="create-memo">
+              <td><strong>#9</strong> <span style="font-size:0.75rem; color:var(--text-dim);">(R27)</span></td>
+              <td><span class="section-tag">CREATE MEMO</span></td>
+              <td>Click on "Underline module".</td>
+              <td style="color: var(--text-muted); font-size: 0.85rem;">Selected text applies underline decoration.</td>
+              <td><span class="badge status-pass">PASS</span></td>
+              <td style="font-size:0.83rem; color: #f87171;">-</td>
+              <td>
+                <button class="view-btn" onclick="openModal('../uat_target3_cicodecm/ecms_memo_09_underline_format.png', 'Step #9: Click on "Underline module".')">
+                  📷 View Screenshot
+                </button>
+              </td>
+            </tr>
+            <tr data-status="pass" data-section="create-memo">
+              <td><strong>#10</strong> <span style="font-size:0.75rem; color:var(--text-dim);">(R28)</span></td>
+              <td><span class="section-tag">CREATE MEMO</span></td>
+              <td>Click on "strikethrough module".</td>
+              <td style="color: var(--text-muted); font-size: 0.85rem;">Strikethrough formatting is applied to text.</td>
+              <td><span class="badge status-pass">PASS</span></td>
+              <td style="font-size:0.83rem; color: #f87171;">-</td>
+              <td>
+                <button class="view-btn" onclick="openModal('../uat_target3_cicodecm/ecms_memo_10_strikethrough_format.png', 'Step #10: Click on "strikethrough module".')">
+                  📷 View Screenshot
+                </button>
+              </td>
+            </tr>
+            <tr data-status="pass" data-section="create-memo">
+              <td><strong>#11</strong> <span style="font-size:0.75rem; color:var(--text-dim);">(R29)</span></td>
+              <td><span class="section-tag">CREATE MEMO</span></td>
+              <td>Click on the “A” icon to change the text color.</td>
+              <td style="color: var(--text-muted); font-size: 0.85rem;">Color picker palette opens to select foreground text color.</td>
+              <td><span class="badge status-pass">PASS</span></td>
+              <td style="font-size:0.83rem; color: #f87171;">-</td>
+              <td>
+                <button class="view-btn" onclick="openModal('../uat_target3_cicodecm/ecms_memo_11_text_color_palette.png', 'Step #11: Click on the “A” icon to change the text color.')">
+                  📷 View Screenshot
+                </button>
+              </td>
+            </tr>
+            <tr data-status="pass" data-section="create-memo">
+              <td><strong>#12</strong> <span style="font-size:0.75rem; color:var(--text-dim);">(R30)</span></td>
+              <td><span class="section-tag">CREATE MEMO</span></td>
+              <td>Click on the “A” icon to change the text background color.</td>
+              <td style="color: var(--text-muted); font-size: 0.85rem;">Background color palette opens to select text highlight color.</td>
+              <td><span class="badge status-pass">PASS</span></td>
+              <td style="font-size:0.83rem; color: #f87171;">-</td>
+              <td>
+                <button class="view-btn" onclick="openModal('../uat_target3_cicodecm/ecms_memo_12_background_color_palette.png', 'Step #12: Click on the “A” icon to change the text background color.')">
+                  📷 View Screenshot
+                </button>
+              </td>
+            </tr>
+            <tr data-status="pass" data-section="create-memo">
+              <td><strong>#13</strong> <span style="font-size:0.75rem; color:var(--text-dim);">(R31)</span></td>
+              <td><span class="section-tag">CREATE MEMO</span></td>
+              <td>Click on the “Alignment” module to view text alignment options.</td>
+              <td style="color: var(--text-muted); font-size: 0.85rem;">Alignment menu shows Left, Center, Right, and Justified options.</td>
+              <td><span class="badge status-pass">PASS</span></td>
+              <td style="font-size:0.83rem; color: #f87171;">-</td>
+              <td>
+                <button class="view-btn" onclick="openModal('../uat_target3_cicodecm/ecms_memo_13_alignment_options.png', 'Step #13: Click on the “Alignment” module to view text alignment options.')">
+                  📷 View Screenshot
+                </button>
+              </td>
+            </tr>
+            <tr data-status="pass" data-section="create-memo">
+              <td><strong>#14</strong> <span style="font-size:0.75rem; color:var(--text-dim);">(R32)</span></td>
+              <td><span class="section-tag">CREATE MEMO</span></td>
+              <td>Click on the “Order” module to apply numeric ordering to text.</td>
+              <td style="color: var(--text-muted); font-size: 0.85rem;">Numeric ordered list format is applied.</td>
+              <td><span class="badge status-pass">PASS</span></td>
+              <td style="font-size:0.83rem; color: #f87171;">-</td>
+              <td>
+                <button class="view-btn" onclick="openModal('../uat_target3_cicodecm/ecms_memo_14_ordered_list.png', 'Step #14: Click on the “Order” module to apply numeric ordering to text.')">
+                  📷 View Screenshot
+                </button>
+              </td>
+            </tr>
+            <tr data-status="pass" data-section="create-memo">
+              <td><strong>#15</strong> <span style="font-size:0.75rem; color:var(--text-dim);">(R33)</span></td>
+              <td><span class="section-tag">CREATE MEMO</span></td>
+              <td>Click on the “Bullet List” module to apply bullet formatting.</td>
+              <td style="color: var(--text-muted); font-size: 0.85rem;">Unordered bullet list formatting is applied.</td>
+              <td><span class="badge status-pass">PASS</span></td>
+              <td style="font-size:0.83rem; color: #f87171;">-</td>
+              <td>
+                <button class="view-btn" onclick="openModal('../uat_target3_cicodecm/ecms_memo_15_bullet_list.png', 'Step #15: Click on the “Bullet List” module to apply bullet formatting.')">
+                  📷 View Screenshot
+                </button>
+              </td>
+            </tr>
+            <tr data-status="pass" data-section="create-memo">
+              <td><strong>#16</strong> <span style="font-size:0.75rem; color:var(--text-dim);">(R34)</span></td>
+              <td><span class="section-tag">CREATE MEMO</span></td>
+              <td>Click on the “Decrease Indent” module to reduce the text indentation.</td>
+              <td style="color: var(--text-muted); font-size: 0.85rem;">Paragraph indent level is decreased.</td>
+              <td><span class="badge status-pass">PASS</span></td>
+              <td style="font-size:0.83rem; color: #f87171;">-</td>
+              <td>
+                <button class="view-btn" onclick="openModal('../uat_target3_cicodecm/ecms_memo_16_decrease_indent.png', 'Step #16: Click on the “Decrease Indent” module to reduce the text indentation.')">
+                  📷 View Screenshot
+                </button>
+              </td>
+            </tr>
+            <tr data-status="pass" data-section="create-memo">
+              <td><strong>#17</strong> <span style="font-size:0.75rem; color:var(--text-dim);">(R35)</span></td>
+              <td><span class="section-tag">CREATE MEMO</span></td>
+              <td>Click on the “Increase Indent” module to add indentation to the text.</td>
+              <td style="color: var(--text-muted); font-size: 0.85rem;">Paragraph indent level is increased.</td>
+              <td><span class="badge status-pass">PASS</span></td>
+              <td style="font-size:0.83rem; color: #f87171;">-</td>
+              <td>
+                <button class="view-btn" onclick="openModal('../uat_target3_cicodecm/ecms_memo_17_increase_indent.png', 'Step #17: Click on the “Increase Indent” module to add indentation to the text.')">
+                  📷 View Screenshot
+                </button>
+              </td>
+            </tr>
+            <tr data-status="pass" data-section="create-memo">
+              <td><strong>#18</strong> <span style="font-size:0.75rem; color:var(--text-dim);">(R36)</span></td>
+              <td><span class="section-tag">CREATE MEMO</span></td>
+              <td>Click on the “Blockquote” module to apply blockquote formatting.</td>
+              <td style="color: var(--text-muted); font-size: 0.85rem;">Highlighted text is formatted as an indented blockquote block.</td>
+              <td><span class="badge status-pass">PASS</span></td>
+              <td style="font-size:0.83rem; color: #f87171;">-</td>
+              <td>
+                <button class="view-btn" onclick="openModal('../uat_target3_cicodecm/ecms_memo_18_blockquote_format.png', 'Step #18: Click on the “Blockquote” module to apply blockquote formatting.')">
+                  📷 View Screenshot
+                </button>
+              </td>
+            </tr>
+            <tr data-status="pass" data-section="create-memo">
+              <td><strong>#19</strong> <span style="font-size:0.75rem; color:var(--text-dim);">(R37)</span></td>
+              <td><span class="section-tag">CREATE MEMO</span></td>
+              <td>Highlight a text and click on the “Insert Link” module.</td>
+              <td style="color: var(--text-muted); font-size: 0.85rem;">Hyperlink insertion modal appears allowing URL input.</td>
+              <td><span class="badge status-pass">PASS</span></td>
+              <td style="font-size:0.83rem; color: #f87171;">-</td>
+              <td>
+                <button class="view-btn" onclick="openModal('../uat_target3_cicodecm/ecms_memo_19_insert_link_dialog.png', 'Step #19: Highlight a text and click on the “Insert Link” module.')">
+                  📷 View Screenshot
+                </button>
+              </td>
+            </tr>
+            <tr data-status="pass" data-section="create-memo">
+              <td><strong>#20</strong> <span style="font-size:0.75rem; color:var(--text-dim);">(R38)</span></td>
+              <td><span class="section-tag">CREATE MEMO</span></td>
+              <td>Click on the “Insert Image” module.</td>
+              <td style="color: var(--text-muted); font-size: 0.85rem;">Image upload or URL modal opens.</td>
+              <td><span class="badge status-pass">PASS</span></td>
+              <td style="font-size:0.83rem; color: #f87171;">-</td>
+              <td>
+                <button class="view-btn" onclick="openModal('../uat_target3_cicodecm/ecms_memo_20_insert_image_dialog.png', 'Step #20: Click on the “Insert Image” module.')">
+                  📷 View Screenshot
+                </button>
+              </td>
+            </tr>
+            <tr data-status="pass" data-section="create-memo">
+              <td><strong>#21</strong> <span style="font-size:0.75rem; color:var(--text-dim);">(R39)</span></td>
+              <td><span class="section-tag">CREATE MEMO</span></td>
+              <td>Highlight a text and click on the “Insert Formula” module.</td>
+              <td style="color: var(--text-muted); font-size: 0.85rem;">Math formula editor modal appears for entering LaTeX / KaTeX expressions.</td>
+              <td><span class="badge status-pass">PASS</span></td>
+              <td style="font-size:0.83rem; color: #f87171;">-</td>
+              <td>
+                <button class="view-btn" onclick="openModal('../uat_target3_cicodecm/ecms_memo_21_insert_formula_dialog.png', 'Step #21: Highlight a text and click on the “Insert Formula” module.')">
+                  📷 View Screenshot
+                </button>
+              </td>
+            </tr>
+            <tr data-status="pass" data-section="create-memo">
+              <td><strong>#22</strong> <span style="font-size:0.75rem; color:var(--text-dim);">(R40)</span></td>
+              <td><span class="section-tag">CREATE MEMO</span></td>
+              <td>Click on the “Clear Formatting” module.</td>
+              <td style="color: var(--text-muted); font-size: 0.85rem;">All rich formatting is stripped and text returns to plain default style.</td>
+              <td><span class="badge status-pass">PASS</span></td>
+              <td style="font-size:0.83rem; color: #f87171;">-</td>
+              <td>
+                <button class="view-btn" onclick="openModal('../uat_target3_cicodecm/ecms_memo_22_clear_formatting.png', 'Step #22: Click on the “Clear Formatting” module.')">
+                  📷 View Screenshot
+                </button>
+              </td>
+            </tr>
+            <tr data-status="pass" data-section="create-memo">
+              <td><strong>#23</strong> <span style="font-size:0.75rem; color:var(--text-dim);">(R42)</span></td>
+              <td><span class="section-tag">CREATE MEMO</span></td>
+              <td>Navigate to and click on “Save Draft”.</td>
+              <td style="color: var(--text-muted); font-size: 0.85rem;">Modal asks for preferred filename and saves draft memo successfully.</td>
+              <td><span class="badge status-pass">PASS</span></td>
+              <td style="font-size:0.83rem; color: #f87171;">-</td>
+              <td>
+                <button class="view-btn" onclick="openModal('../uat_target3_cicodecm/ecms_memo_23_save_draft_dialog.png', 'Step #23: Navigate to and click on “Save Draft”.')">
+                  📷 View Screenshot
+                </button>
+              </td>
+            </tr>
+            <tr data-status="fail" data-section="create-memo">
+              <td><strong>#24</strong> <span style="font-size:0.75rem; color:var(--text-dim);">(R43)</span></td>
+              <td><span class="section-tag">CREATE MEMO</span></td>
+              <td>Navigate to and click on “Save Memo”.</td>
+              <td style="color: var(--text-muted); font-size: 0.85rem;">Memo is saved and confirmation message is displayed.</td>
+              <td><span class="badge status-fail">FAIL</span></td>
+              <td style="font-size:0.83rem; color: #f87171;">Download the memo file, but a pop-up appears indicating "Failed to create memo."</td>
+              <td>
+                <button class="view-btn" onclick="openModal('../uat_target3_cicodecm/ecms_memo_24_save_memo_submission.png', 'Step #24: Navigate to and click on “Save Memo”.')">
+                  📷 View Screenshot
+                </button>
+              </td>
+            </tr>
+            <tr data-status="pass" data-section="view-all-memo">
+              <td><strong>#25</strong> <span style="font-size:0.75rem; color:var(--text-dim);">(R46)</span></td>
+              <td><span class="section-tag">VIEW ALL MEMO</span></td>
+              <td>Navigate to and click on the “Memo” dropdown.</td>
+              <td style="color: var(--text-muted); font-size: 0.85rem;">Memo navigation menu expands showing View All Memo option.</td>
+              <td><span class="badge status-pass">PASS</span></td>
+              <td style="font-size:0.83rem; color: #f87171;">-</td>
+              <td>
+                <button class="view-btn" onclick="openModal('../uat_target3_cicodecm/ecms_memo_25_view_all_dropdown.png', 'Step #25: Navigate to and click on the “Memo” dropdown.')">
+                  📷 View Screenshot
+                </button>
+              </td>
+            </tr>
+            <tr data-status="pass" data-section="view-all-memo">
+              <td><strong>#26</strong> <span style="font-size:0.75rem; color:var(--text-dim);">(R47)</span></td>
+              <td><span class="section-tag">VIEW ALL MEMO</span></td>
+              <td>Click on “View All Memo”.</td>
+              <td style="color: var(--text-muted); font-size: 0.85rem;">View All Memo table page opens listing all created memos with title, date, and status.</td>
+              <td><span class="badge status-pass">PASS</span></td>
+              <td style="font-size:0.83rem; color: #f87171;">-</td>
+              <td>
+                <button class="view-btn" onclick="openModal('../uat_target3_cicodecm/ecms_memo_26_view_all_page.png', 'Step #26: Click on “View All Memo”.')">
+                  📷 View Screenshot
+                </button>
+              </td>
+            </tr>
+            <tr data-status="pass" data-section="view-all-memo">
+              <td><strong>#27</strong> <span style="font-size:0.75rem; color:var(--text-dim);">(R48)</span></td>
+              <td><span class="section-tag">VIEW ALL MEMO</span></td>
+              <td>Select a memo and click on the "action" module.</td>
+              <td style="color: var(--text-muted); font-size: 0.85rem;">Dropdown menu displays options for View, Update, and Attach to Ticket/Task.</td>
+              <td><span class="badge status-pass">PASS</span></td>
+              <td style="font-size:0.83rem; color: #f87171;">Action button reads "Attach to Ticket" instead of "Attach to Task".</td>
+              <td>
+                <button class="view-btn" onclick="openModal('../uat_target3_cicodecm/ecms_memo_27_action_menu.png', 'Step #27: Select a memo and click on the "action" module.')">
+                  📷 View Screenshot
+                </button>
+              </td>
+            </tr>
+            <tr data-status="pass" data-section="view-all-memo">
+              <td><strong>#28</strong> <span style="font-size:0.75rem; color:var(--text-dim);">(R49)</span></td>
+              <td><span class="section-tag">VIEW ALL MEMO</span></td>
+              <td>Click on the “View” module.</td>
+              <td style="color: var(--text-muted); font-size: 0.85rem;">Selected memo opens in read-only view mode.</td>
+              <td><span class="badge status-pass">PASS</span></td>
+              <td style="font-size:0.83rem; color: #f87171;">-</td>
+              <td>
+                <button class="view-btn" onclick="openModal('../uat_target3_cicodecm/ecms_memo_28_view_memo_readonly.png', 'Step #28: Click on the “View” module.')">
+                  📷 View Screenshot
+                </button>
+              </td>
+            </tr>
+            <tr data-status="pass" data-section="view-all-memo">
+              <td><strong>#29</strong> <span style="font-size:0.75rem; color:var(--text-dim);">(R50)</span></td>
+              <td><span class="section-tag">VIEW ALL MEMO</span></td>
+              <td>Navigate to and click on the “Update” module.</td>
+              <td style="color: var(--text-muted); font-size: 0.85rem;">Memo opens in edit mode allowing modifications.</td>
+              <td><span class="badge status-pass">PASS</span></td>
+              <td style="font-size:0.83rem; color: #f87171;">-</td>
+              <td>
+                <button class="view-btn" onclick="openModal('../uat_target3_cicodecm/ecms_memo_29_update_memo_editmode.png', 'Step #29: Navigate to and click on the “Update” module.')">
+                  📷 View Screenshot
+                </button>
+              </td>
+            </tr>
+            <tr data-status="pass" data-section="view-all-memo">
+              <td><strong>#30</strong> <span style="font-size:0.75rem; color:var(--text-dim);">(R51)</span></td>
+              <td><span class="section-tag">VIEW ALL MEMO</span></td>
+              <td>Observe the toolbar for the newly added “Add Reviewer” and “view feedbacks” modules.</td>
+              <td style="color: var(--text-muted); font-size: 0.85rem;">Toolbar displays Add Reviewer and View Feedbacks options.</td>
+              <td><span class="badge status-pass">PASS</span></td>
+              <td style="font-size:0.83rem; color: #f87171;">-</td>
+              <td>
+                <button class="view-btn" onclick="openModal('../uat_target3_cicodecm/ecms_memo_30_toolbar_reviewers_feedback.png', 'Step #30: Observe the toolbar for the newly added “Add Reviewer” and “view feedbacks” modules.')">
+                  📷 View Screenshot
+                </button>
+              </td>
+            </tr>
+            <tr data-status="pass" data-section="view-all-memo">
+              <td><strong>#31</strong> <span style="font-size:0.75rem; color:var(--text-dim);">(R52)</span></td>
+              <td><span class="section-tag">VIEW ALL MEMO</span></td>
+              <td>Click on “Attach to Ticket” to initiate task creation.</td>
+              <td style="color: var(--text-muted); font-size: 0.85rem;">Create Task interface is loaded to link memo with task/ticket.</td>
+              <td><span class="badge status-pass">PASS</span></td>
+              <td style="font-size:0.83rem; color: #f87171;">-</td>
+              <td>
+                <button class="view-btn" onclick="openModal('../uat_target3_cicodecm/ecms_memo_31_attach_to_ticket_page.png', 'Step #31: Click on “Attach to Ticket” to initiate task creation.')">
+                  📷 View Screenshot
+                </button>
+              </td>
+            </tr>
+            <tr data-status="pass" data-section="view-all-memo">
+              <td><strong>#32</strong> <span style="font-size:0.75rem; color:var(--text-dim);">(R53)</span></td>
+              <td><span class="section-tag">VIEW ALL MEMO</span></td>
+              <td>Select a queue and its corresponding queue type from available options.</td>
+              <td style="color: var(--text-muted); font-size: 0.85rem;">Queue selection populates corresponding sub-categories.</td>
+              <td><span class="badge status-pass">PASS</span></td>
+              <td style="font-size:0.83rem; color: #f87171;">-</td>
+              <td>
+                <button class="view-btn" onclick="openModal('../uat_target3_cicodecm/ecms_memo_32_queue_selected.png', 'Step #32: Select a queue and its corresponding queue type from available options.')">
+                  📷 View Screenshot
+                </button>
+              </td>
+            </tr>
+            <tr data-status="pass" data-section="view-all-memo">
+              <td><strong>#33</strong> <span style="font-size:0.75rem; color:var(--text-dim);">(R54)</span></td>
+              <td><span class="section-tag">VIEW ALL MEMO</span></td>
+              <td>Click on the "Create Module" button.</td>
+              <td style="color: var(--text-muted); font-size: 0.85rem;">Task creation form is displayed.</td>
+              <td><span class="badge status-pass">PASS</span></td>
+              <td style="font-size:0.83rem; color: #f87171;">-</td>
+              <td>
+                <button class="view-btn" onclick="openModal('../uat_target3_cicodecm/ecms_memo_33_create_task_form.png', 'Step #33: Click on the "Create Module" button.')">
+                  📷 View Screenshot
+                </button>
+              </td>
+            </tr>
+            <tr data-status="pass" data-section="view-all-memo">
+              <td><strong>#34</strong> <span style="font-size:0.75rem; color:var(--text-dim);">(R55)</span></td>
+              <td><span class="section-tag">VIEW ALL MEMO</span></td>
+              <td>Enter the "Task Title".</td>
+              <td style="color: var(--text-muted); font-size: 0.85rem;">Task title is accepted in the title input field.</td>
+              <td><span class="badge status-pass">PASS</span></td>
+              <td style="font-size:0.83rem; color: #f87171;">-</td>
+              <td>
+                <button class="view-btn" onclick="openModal('../uat_target3_cicodecm/ecms_memo_34_task_title_entered.png', 'Step #34: Enter the "Task Title".')">
+                  📷 View Screenshot
+                </button>
+              </td>
+            </tr>
+            <tr data-status="pass" data-section="view-all-memo">
+              <td><strong>#35</strong> <span style="font-size:0.75rem; color:var(--text-dim);">(R56)</span></td>
+              <td><span class="section-tag">VIEW ALL MEMO</span></td>
+              <td>Click on the “Attach Memo” link to upload a memo file to the task.</td>
+              <td style="color: var(--text-muted); font-size: 0.85rem;">File selection dialog or memo lookup modal appears.</td>
+              <td><span class="badge status-pass">PASS</span></td>
+              <td style="font-size:0.83rem; color: #f87171;">-</td>
+              <td>
+                <button class="view-btn" onclick="openModal('../uat_target3_cicodecm/ecms_memo_35_attach_memo_link_clicked.png', 'Step #35: Click on the “Attach Memo” link to upload a memo file to the task.')">
+                  📷 View Screenshot
+                </button>
+              </td>
+            </tr>
+            <tr data-status="pass" data-section="view-all-memo">
+              <td><strong>#36</strong> <span style="font-size:0.75rem; color:var(--text-dim);">(R57)</span></td>
+              <td><span class="section-tag">VIEW ALL MEMO</span></td>
+              <td>Select a memo file and click on the “Attach” module.</td>
+              <td style="color: var(--text-muted); font-size: 0.85rem;">Selected memo is attached to the task record.</td>
+              <td><span class="badge status-pass">PASS</span></td>
+              <td style="font-size:0.83rem; color: #f87171;">-</td>
+              <td>
+                <button class="view-btn" onclick="openModal('../uat_target3_cicodecm/ecms_memo_36_memo_file_attached.png', 'Step #36: Select a memo file and click on the “Attach” module.')">
+                  📷 View Screenshot
+                </button>
+              </td>
+            </tr>
+            <tr data-status="pass" data-section="view-all-memo">
+              <td><strong>#37</strong> <span style="font-size:0.75rem; color:var(--text-dim);">(R58)</span></td>
+              <td><span class="section-tag">VIEW ALL MEMO</span></td>
+              <td>Verify memo attachment preview in task form.</td>
+              <td style="color: var(--text-muted); font-size: 0.85rem;">Memo attachment badge displays selected document filename.</td>
+              <td><span class="badge status-pass">PASS</span></td>
+              <td style="font-size:0.83rem; color: #f87171;">-</td>
+              <td>
+                <button class="view-btn" onclick="openModal('../uat_target3_cicodecm/ecms_memo_37_attachment_verified.png', 'Step #37: Verify memo attachment preview in task form.')">
+                  📷 View Screenshot
+                </button>
+              </td>
+            </tr>
+            <tr data-status="pass" data-section="view-all-memo">
+              <td><strong>#38</strong> <span style="font-size:0.75rem; color:var(--text-dim);">(R59)</span></td>
+              <td><span class="section-tag">VIEW ALL MEMO</span></td>
+              <td>Complete all remaining required fields in the task creation form.</td>
+              <td style="color: var(--text-muted); font-size: 0.85rem;">Form data is complete and ready for submission.</td>
+              <td><span class="badge status-pass">PASS</span></td>
+              <td style="font-size:0.83rem; color: #f87171;">-</td>
+              <td>
+                <button class="view-btn" onclick="openModal('../uat_target3_cicodecm/ecms_memo_38_form_fields_completed.png', 'Step #38: Complete all remaining required fields in the task creation form.')">
+                  📷 View Screenshot
+                </button>
+              </td>
+            </tr>
+            <tr data-status="pass" data-section="view-all-memo">
+              <td><strong>#39</strong> <span style="font-size:0.75rem; color:var(--text-dim);">(R60)</span></td>
+              <td><span class="section-tag">VIEW ALL MEMO</span></td>
+              <td>Check the box for "Would you like to assign this task right away?" to enable immediate assignment.</td>
+              <td style="color: var(--text-muted); font-size: 0.85rem;">Assignee dropdown becomes enabled.</td>
+              <td><span class="badge status-pass">PASS</span></td>
+              <td style="font-size:0.83rem; color: #f87171;">-</td>
+              <td>
+                <button class="view-btn" onclick="openModal('../uat_target3_cicodecm/ecms_memo_39_immediate_assign_checked.png', 'Step #39: Check the box for "Would you like to assign this task right away?" to enable immediate assignment.')">
+                  📷 View Screenshot
+                </button>
+              </td>
+            </tr>
+            <tr data-status="pass" data-section="view-all-memo">
+              <td><strong>#40</strong> <span style="font-size:0.75rem; color:var(--text-dim);">(R61)</span></td>
+              <td><span class="section-tag">VIEW ALL MEMO</span></td>
+              <td>Click on the dropdown menu and select the user to whom the task will be assigned.</td>
+              <td style="color: var(--text-muted); font-size: 0.85rem;">Selected assignee user is chosen.</td>
+              <td><span class="badge status-pass">PASS</span></td>
+              <td style="font-size:0.83rem; color: #f87171;">-</td>
+              <td>
+                <button class="view-btn" onclick="openModal('../uat_target3_cicodecm/ecms_memo_40_assignee_selected.png', 'Step #40: Click on the dropdown menu and select the user to whom the task will be assigned.')">
+                  📷 View Screenshot
+                </button>
+              </td>
+            </tr>
+            <tr data-status="pass" data-section="view-all-memo">
+              <td><strong>#41</strong> <span style="font-size:0.75rem; color:var(--text-dim);">(R62)</span></td>
+              <td><span class="section-tag">VIEW ALL MEMO</span></td>
+              <td>Click on the "Create Module" button to finalize the creation of task.</td>
+              <td style="color: var(--text-muted); font-size: 0.85rem;">Task is created successfully with notification displaying new Task ID.</td>
+              <td><span class="badge status-pass">PASS</span></td>
+              <td style="font-size:0.83rem; color: #f87171;">-</td>
+              <td>
+                <button class="view-btn" onclick="openModal('../uat_target3_cicodecm/ecms_memo_41_task_created_notification.png', 'Step #41: Click on the "Create Module" button to finalize the creation of task.')">
+                  📷 View Screenshot
+                </button>
+              </td>
+            </tr>
+            <tr data-status="pass" data-section="memo-draft">
+              <td><strong>#42</strong> <span style="font-size:0.75rem; color:var(--text-dim);">(R65)</span></td>
+              <td><span class="section-tag">MEMO DRAFT</span></td>
+              <td>Navigate to and click on the “Memo” dropdown.</td>
+              <td style="color: var(--text-muted); font-size: 0.85rem;">Memo dropdown menu opens with Memo Draft link.</td>
+              <td><span class="badge status-pass">PASS</span></td>
+              <td style="font-size:0.83rem; color: #f87171;">-</td>
+              <td>
+                <button class="view-btn" onclick="openModal('../uat_target3_cicodecm/ecms_memo_42_memo_draft_dropdown.png', 'Step #42: Navigate to and click on the “Memo” dropdown.')">
+                  📷 View Screenshot
+                </button>
+              </td>
+            </tr>
+            <tr data-status="pass" data-section="memo-draft">
+              <td><strong>#43</strong> <span style="font-size:0.75rem; color:var(--text-dim);">(R66)</span></td>
+              <td><span class="section-tag">MEMO DRAFT</span></td>
+              <td>Click on "Memo Draft".</td>
+              <td style="color: var(--text-muted); font-size: 0.85rem;">Memo Drafts table loads showing all drafts in progress.</td>
+              <td><span class="badge status-pass">PASS</span></td>
+              <td style="font-size:0.83rem; color: #f87171;">-</td>
+              <td>
+                <button class="view-btn" onclick="openModal('../uat_target3_cicodecm/ecms_memo_43_memo_draft_page.png', 'Step #43: Click on "Memo Draft".')">
+                  📷 View Screenshot
+                </button>
+              </td>
+            </tr>
+            <tr data-status="pass" data-section="memo-draft">
+              <td><strong>#44</strong> <span style="font-size:0.75rem; color:var(--text-dim);">(R67)</span></td>
+              <td><span class="section-tag">MEMO DRAFT</span></td>
+              <td>Select a memo draft and click on the “Action” module.</td>
+              <td style="color: var(--text-muted); font-size: 0.85rem;">Draft action dropdown displays View and Update options.</td>
+              <td><span class="badge status-pass">PASS</span></td>
+              <td style="font-size:0.83rem; color: #f87171;">-</td>
+              <td>
+                <button class="view-btn" onclick="openModal('../uat_target3_cicodecm/ecms_memo_44_draft_action_menu.png', 'Step #44: Select a memo draft and click on the “Action” module.')">
+                  📷 View Screenshot
+                </button>
+              </td>
+            </tr>
+            <tr data-status="pass" data-section="memo-draft">
+              <td><strong>#45</strong> <span style="font-size:0.75rem; color:var(--text-dim);">(R68)</span></td>
+              <td><span class="section-tag">MEMO DRAFT</span></td>
+              <td>Click on the “View” module.</td>
+              <td style="color: var(--text-muted); font-size: 0.85rem;">Draft memo is opened in read-only preview mode.</td>
+              <td><span class="badge status-pass">PASS</span></td>
+              <td style="font-size:0.83rem; color: #f87171;">-</td>
+              <td>
+                <button class="view-btn" onclick="openModal('../uat_target3_cicodecm/ecms_memo_45_draft_view_readonly.png', 'Step #45: Click on the “View” module.')">
+                  📷 View Screenshot
+                </button>
+              </td>
+            </tr>
+            <tr data-status="pass" data-section="memo-draft">
+              <td><strong>#46</strong> <span style="font-size:0.75rem; color:var(--text-dim);">(R69)</span></td>
+              <td><span class="section-tag">MEMO DRAFT</span></td>
+              <td>Observe the toolbar for the newly added “Add Reviewer”, “view feedbacks” and "View access" modules.</td>
+              <td style="color: var(--text-muted); font-size: 0.85rem;">Draft toolbar contains Add Reviewer, View Feedbacks, and View Access controls.</td>
+              <td><span class="badge status-pass">PASS</span></td>
+              <td style="font-size:0.83rem; color: #f87171;">-</td>
+              <td>
+                <button class="view-btn" onclick="openModal('../uat_target3_cicodecm/ecms_memo_46_draft_toolbar_features.png', 'Step #46: Observe the toolbar for the newly added “Add Reviewer”, “view feedbacks” and "View access" modules.')">
+                  📷 View Screenshot
+                </button>
+              </td>
+            </tr>
+            <tr data-status="pass" data-section="memo-draft">
+              <td><strong>#47</strong> <span style="font-size:0.75rem; color:var(--text-dim);">(R70)</span></td>
+              <td><span class="section-tag">MEMO DRAFT</span></td>
+              <td>Click on the "Add Reviewer" module.</td>
+              <td style="color: var(--text-muted); font-size: 0.85rem;">Add Reviewer modal dialog opens with user multi-select.</td>
+              <td><span class="badge status-pass">PASS</span></td>
+              <td style="font-size:0.83rem; color: #f87171;">-</td>
+              <td>
+                <button class="view-btn" onclick="openModal('../uat_target3_cicodecm/ecms_memo_47_add_reviewer_modal.png', 'Step #47: Click on the "Add Reviewer" module.')">
+                  📷 View Screenshot
+                </button>
+              </td>
+            </tr>
+            <tr data-status="pass" data-section="memo-draft">
+              <td><strong>#48</strong> <span style="font-size:0.75rem; color:var(--text-dim);">(R71)</span></td>
+              <td><span class="section-tag">MEMO DRAFT</span></td>
+              <td>Click on the “Add” module.</td>
+              <td style="color: var(--text-muted); font-size: 0.85rem;">Selected reviewers are assigned to draft memo and notification email is sent.</td>
+              <td><span class="badge status-pass">PASS</span></td>
+              <td style="font-size:0.83rem; color: #f87171;">-</td>
+              <td>
+                <button class="view-btn" onclick="openModal('../uat_target3_cicodecm/ecms_memo_48_reviewer_added_confirmation.png', 'Step #48: Click on the “Add” module.')">
+                  📷 View Screenshot
+                </button>
+              </td>
+            </tr>
+            <tr data-status="pass" data-section="memo-draft">
+              <td><strong>#49</strong> <span style="font-size:0.75rem; color:var(--text-dim);">(R72)</span></td>
+              <td><span class="section-tag">MEMO DRAFT</span></td>
+              <td>Click on the “View Feedback” module.</td>
+              <td style="color: var(--text-muted); font-size: 0.85rem;">Side drawer panel slides open displaying feedback and reviewers comments.</td>
+              <td><span class="badge status-pass">PASS</span></td>
+              <td style="font-size:0.83rem; color: #f87171;">-</td>
+              <td>
+                <button class="view-btn" onclick="openModal('../uat_target3_cicodecm/ecms_memo_49_draft_view_feedback_panel.png', 'Step #49: Click on the “View Feedback” module.')">
+                  📷 View Screenshot
+                </button>
+              </td>
+            </tr>
+            <tr data-status="pass" data-section="memo-draft">
+              <td><strong>#50</strong> <span style="font-size:0.75rem; color:var(--text-dim);">(R73)</span></td>
+              <td><span class="section-tag">MEMO DRAFT</span></td>
+              <td>Click on the “View Access” module.</td>
+              <td style="color: var(--text-muted); font-size: 0.85rem;">Access permission modal opens displaying memo owner and authorized users.</td>
+              <td><span class="badge status-pass">PASS</span></td>
+              <td style="font-size:0.83rem; color: #f87171;">-</td>
+              <td>
+                <button class="view-btn" onclick="openModal('../uat_target3_cicodecm/ecms_memo_50_draft_view_access_modal.png', 'Step #50: Click on the “View Access” module.')">
+                  📷 View Screenshot
+                </button>
+              </td>
+            </tr>
+            <tr data-status="pass" data-section="memo-draft">
+              <td><strong>#51</strong> <span style="font-size:0.75rem; color:var(--text-dim);">(R74)</span></td>
+              <td><span class="section-tag">MEMO DRAFT</span></td>
+              <td>Navigate to and click on the “Update” module.</td>
+              <td style="color: var(--text-muted); font-size: 0.85rem;">Draft memo opens in editable state.</td>
+              <td><span class="badge status-pass">PASS</span></td>
+              <td style="font-size:0.83rem; color: #f87171;">-</td>
+              <td>
+                <button class="view-btn" onclick="openModal('../uat_target3_cicodecm/ecms_memo_51_draft_update_editmode.png', 'Step #51: Navigate to and click on the “Update” module.')">
+                  📷 View Screenshot
+                </button>
+              </td>
+            </tr>
+            <tr data-status="pass" data-section="memo-draft">
+              <td><strong>#52</strong> <span style="font-size:0.75rem; color:var(--text-dim);">(R75)</span></td>
+              <td><span class="section-tag">MEMO DRAFT</span></td>
+              <td>Click on the “Cancel” module.</td>
+              <td style="color: var(--text-muted); font-size: 0.85rem;">Edit session is cancelled and user returns to draft list view.</td>
+              <td><span class="badge status-pass">PASS</span></td>
+              <td style="font-size:0.83rem; color: #f87171;">-</td>
+              <td>
+                <button class="view-btn" onclick="openModal('../uat_target3_cicodecm/ecms_memo_52_draft_update_cancelled.png', 'Step #52: Click on the “Cancel” module.')">
+                  📷 View Screenshot
+                </button>
+              </td>
+            </tr>
+            <tr data-status="pass" data-section="memo-draft-review">
+              <td><strong>#53</strong> <span style="font-size:0.75rem; color:var(--text-dim);">(R78)</span></td>
+              <td><span class="section-tag">MEMO DRAFT REVIEW</span></td>
+              <td>Navigate to and click on the “Memo” dropdown.</td>
+              <td style="color: var(--text-muted); font-size: 0.85rem;">Memo dropdown menu displays Memo Draft Review option.</td>
+              <td><span class="badge status-pass">PASS</span></td>
+              <td style="font-size:0.83rem; color: #f87171;">-</td>
+              <td>
+                <button class="view-btn" onclick="openModal('../uat_target3_cicodecm/ecms_memo_53_memo_review_dropdown.png', 'Step #53: Navigate to and click on the “Memo” dropdown.')">
+                  📷 View Screenshot
+                </button>
+              </td>
+            </tr>
+            <tr data-status="pass" data-section="memo-draft-review">
+              <td><strong>#54</strong> <span style="font-size:0.75rem; color:var(--text-dim);">(R79)</span></td>
+              <td><span class="section-tag">MEMO DRAFT REVIEW</span></td>
+              <td>Click on "Memo Draft REVIEW".</td>
+              <td style="color: var(--text-muted); font-size: 0.85rem;">Memo Draft Review table loads displaying memos assigned for review.</td>
+              <td><span class="badge status-pass">PASS</span></td>
+              <td style="font-size:0.83rem; color: #f87171;">-</td>
+              <td>
+                <button class="view-btn" onclick="openModal('../uat_target3_cicodecm/ecms_memo_54_memo_review_page.png', 'Step #54: Click on "Memo Draft REVIEW".')">
+                  📷 View Screenshot
+                </button>
+              </td>
+            </tr>
+            <tr data-status="pass" data-section="memo-draft-review">
+              <td><strong>#55</strong> <span style="font-size:0.75rem; color:var(--text-dim);">(R80)</span></td>
+              <td><span class="section-tag">MEMO DRAFT REVIEW</span></td>
+              <td>Select a memo and click on the “Action” module.</td>
+              <td style="color: var(--text-muted); font-size: 0.85rem;">Action menu displays Review option.</td>
+              <td><span class="badge status-pass">PASS</span></td>
+              <td style="font-size:0.83rem; color: #f87171;">-</td>
+              <td>
+                <button class="view-btn" onclick="openModal('../uat_target3_cicodecm/ecms_memo_55_review_action_menu.png', 'Step #55: Select a memo and click on the “Action” module.')">
+                  📷 View Screenshot
+                </button>
+              </td>
+            </tr>
+            <tr data-status="pass" data-section="memo-draft-review">
+              <td><strong>#56</strong> <span style="font-size:0.75rem; color:var(--text-dim);">(R81)</span></td>
+              <td><span class="section-tag">MEMO DRAFT REVIEW</span></td>
+              <td>Click on the “Review” module.</td>
+              <td style="color: var(--text-muted); font-size: 0.85rem;">Memo opens in review mode with inline commenting tools.</td>
+              <td><span class="badge status-pass">PASS</span></td>
+              <td style="font-size:0.83rem; color: #f87171;">-</td>
+              <td>
+                <button class="view-btn" onclick="openModal('../uat_target3_cicodecm/ecms_memo_56_review_mode_interface.png', 'Step #56: Click on the “Review” module.')">
+                  📷 View Screenshot
+                </button>
+              </td>
+            </tr>
+            <tr data-status="pass" data-section="memo-draft-review">
+              <td><strong>#57</strong> <span style="font-size:0.75rem; color:var(--text-dim);">(R82)</span></td>
+              <td><span class="section-tag">MEMO DRAFT REVIEW</span></td>
+              <td>Click on the “View Feedback” module.</td>
+              <td style="color: var(--text-muted); font-size: 0.85rem;">Side panel opens displaying reviewer comments and notes.</td>
+              <td><span class="badge status-pass">PASS</span></td>
+              <td style="font-size:0.83rem; color: #f87171;">-</td>
+              <td>
+                <button class="view-btn" onclick="openModal('../uat_target3_cicodecm/ecms_memo_57_review_view_feedback_panel.png', 'Step #57: Click on the “View Feedback” module.')">
+                  📷 View Screenshot
+                </button>
+              </td>
+            </tr>
+            <tr data-status="pass" data-section="memo-draft-review">
+              <td><strong>#58</strong> <span style="font-size:0.75rem; color:var(--text-dim);">(R83)</span></td>
+              <td><span class="section-tag">MEMO DRAFT REVIEW</span></td>
+              <td>Click on the “View Access” module.</td>
+              <td style="color: var(--text-muted); font-size: 0.85rem;">Access list modal displays memo permissions.</td>
+              <td><span class="badge status-pass">PASS</span></td>
+              <td style="font-size:0.83rem; color: #f87171;">-</td>
+              <td>
+                <button class="view-btn" onclick="openModal('../uat_target3_cicodecm/ecms_memo_58_review_view_access_modal.png', 'Step #58: Click on the “View Access” module.')">
+                  📷 View Screenshot
+                </button>
+              </td>
+            </tr>
+            <tr data-status="pass" data-section="memo-draft-review">
+              <td><strong>#59</strong> <span style="font-size:0.75rem; color:var(--text-dim);">(R84)</span></td>
+              <td><span class="section-tag">MEMO DRAFT REVIEW</span></td>
+              <td>Click on the “Cancel” module.</td>
+              <td style="color: var(--text-muted); font-size: 0.85rem;">Review mode is exited cleanly and returns to review table.</td>
+              <td><span class="badge status-pass">PASS</span></td>
+              <td style="font-size:0.83rem; color: #f87171;">-</td>
+              <td>
+                <button class="view-btn" onclick="openModal('../uat_target3_cicodecm/ecms_memo_59_review_cancelled.png', 'Step #59: Click on the “Cancel” module.')">
+                  📷 View Screenshot
+                </button>
+              </td>
+            </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Image Modal -->
+  <div class="modal-overlay" id="imgModal" onclick="closeModal(event)">
+    <div class="modal-content" onclick="event.stopPropagation()">
+      <div class="modal-header">
+        <div class="modal-title" id="modalTitle">Screenshot Evidence</div>
+        <button class="modal-close" onclick="closeModalDirect()">&times;</button>
+      </div>
+      <div class="modal-body">
+        <img id="modalImg" src="" alt="Test Step Evidence">
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function filterTable(type) {
+      const rows = document.querySelectorAll('#test-rows tr');
+      const btns = document.querySelectorAll('.tab-btn');
+      btns.forEach(b => b.classList.remove('active'));
+      event.target.classList.add('active');
+
+      rows.forEach(r => {
+        if (type === 'all') r.style.display = '';
+        else if (type === 'pass' && r.getAttribute('data-status') === 'pass') r.style.display = '';
+        else if (type === 'fail' && r.getAttribute('data-status') === 'fail') r.style.display = '';
+        else r.style.display = 'none';
+      });
+    }
+
+    function openModal(imgUrl, title) {
+      document.getElementById('modalImg').src = imgUrl;
+      document.getElementById('modalTitle').innerText = title;
+      document.getElementById('imgModal').classList.add('active');
+    }
+
+    function closeModal(e) {
+      if (e.target.id === 'imgModal') {
+        document.getElementById('imgModal').classList.remove('active');
+      }
+    }
+
+    function closeModalDirect() {
+      document.getElementById('imgModal').classList.remove('active');
+    }
+  </script>
+
+</body>
+</html>

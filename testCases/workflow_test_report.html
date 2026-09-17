@@ -1,0 +1,793 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>UAT Report - Workflow Module (ECMS TEST SCRIPT RECENT VERSION.xlsx)</title>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #070a14; --surface: #0c1224; --card: #111a33; --border: rgba(255,255,255,0.08);
+      --text: #f8fafc; --text-muted: #94a3b8; --text-dim: #64748b;
+      --pass: #10b981; --warn: #f59e0b; --danger: #ef4444; --accent: #38bdf8;
+      --radius-sm: 6px; --radius-md: 10px;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background-color: var(--bg); color: var(--text); font-family: 'Plus Jakarta Sans', sans-serif; padding: 32px 24px; line-height: 1.5; }
+    .container { max-width: 1500px; margin: 0 auto; }
+    .header-box { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 26px; margin-bottom: 22px; }
+    h1 { font-size: 1.65rem; font-weight: 800; margin-bottom: 6px; color: #fff; }
+    .sub { color: var(--text-muted); font-size: 0.88rem; margin-bottom: 18px; }
+    .summary-badge-warn { display: inline-flex; align-items: center; gap: 6px; padding: 4px 12px; background: rgba(245,158,11,0.15); border: 1px solid rgba(245,158,11,0.35); color: #fbbf24; border-radius: 20px; font-weight: 700; font-size: 0.78rem; font-family: 'JetBrains Mono', monospace; margin-bottom: 14px; }
+    .meta-bar { display: flex; flex-wrap: wrap; gap: 20px; font-size: 0.84rem; border-top: 1px solid var(--border); padding-top: 16px; }
+    .meta-bar span { color: var(--text-dim); }
+    .meta-bar strong { color: #e2e8f0; font-family: 'JetBrains Mono', monospace; }
+    .alert-block { background: rgba(239,68,68,0.08); border: 1px solid rgba(239,68,68,0.3); border-left: 4px solid var(--danger); border-radius: var(--radius-sm); padding: 16px 20px; margin-bottom: 24px; font-size: 0.86rem; line-height: 1.6; }
+    .alert-title { font-weight: 800; color: #f87171; display: flex; align-items: center; gap: 8px; margin-bottom: 6px; font-size: 0.95rem; }
+    .kpi-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; margin-bottom: 24px; }
+    @media (max-width: 900px) { .kpi-grid { grid-template-columns: repeat(2, 1fr); } }
+    .kpi-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 14px 16px; display: flex; flex-direction: column; gap: 4px; }
+    .kpi-title { font-size: 0.72rem; font-weight: 600; color: var(--text-dim); text-transform: uppercase; font-family: 'JetBrains Mono', monospace; }
+    .kpi-val { font-size: 1.4rem; font-weight: 800; font-family: 'JetBrains Mono', monospace; color: #fff; }
+    .table-container { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-md); overflow-x: auto; margin-bottom: 28px; }
+    table { width: 100%; border-collapse: collapse; text-align: left; font-size: 0.86rem; }
+    th { background: rgba(0,0,0,0.25); color: var(--text-dim); font-weight: 700; text-transform: uppercase; font-size: 0.72rem; letter-spacing: 0.05em; padding: 14px 16px; border-bottom: 1px solid var(--border); white-space: nowrap; font-family: 'JetBrains Mono', monospace; }
+    td { padding: 14px 16px; border-bottom: 1px solid var(--border); vertical-align: top; }
+    tr:last-child td { border-bottom: none; }
+    tr:hover { background: rgba(255,255,255,0.02); }
+    .feature-tag { font-weight: 700; color: #38bdf8; background: rgba(56,189,248,0.12); padding: 3px 8px; border-radius: 4px; display: inline-block; font-size: 0.74rem; font-family: 'JetBrains Mono', monospace; }
+    .badge-blocked { background: rgba(245,158,11,0.15); color: #fbbf24; border: 1px solid rgba(245,158,11,0.35); padding: 2px 8px; border-radius: 4px; font-weight: 700; font-size: 0.72rem; font-family: 'JetBrains Mono', monospace; display: inline-block; }
+    .badge-passed { background: rgba(16,185,129,0.15); color: #34d399; border: 1px solid rgba(16,185,129,0.3); padding: 2px 8px; border-radius: 4px; font-weight: 700; font-size: 0.72rem; font-family: 'JetBrains Mono', monospace; display: inline-block; }
+    .badge-bug { background: rgba(239,68,68,0.15); color: #f87171; border: 1px solid rgba(239,68,68,0.35); padding: 2px 8px; border-radius: 4px; font-weight: 700; font-size: 0.72rem; font-family: 'JetBrains Mono', monospace; display: inline-block; }
+    .gallery-title { font-size: 1.1rem; font-weight: 800; color: #fff; margin-bottom: 14px; display: flex; align-items: center; gap: 8px; }
+    .gallery-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px; margin-bottom: 32px; }
+    .thumb-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-sm); overflow: hidden; cursor: pointer; transition: all 0.2s ease; }
+    .thumb-card:hover { border-color: var(--accent); transform: translateY(-2px); }
+    .thumb-img { width: 100%; height: 160px; overflow: hidden; background: #000; }
+    .thumb-img img { width: 100%; height: 100%; object-fit: cover; }
+    .thumb-caption { padding: 10px 12px; font-size: 0.78rem; font-weight: 600; color: var(--text-muted); }
+    .col-evidence { width: 140px; text-align: center; }
+    .evidence-thumb { display: inline-flex; flex-direction: column; align-items: center; gap: 4px; background: #000; border: 1px solid var(--border); border-radius: var(--radius-sm); overflow: hidden; width: 115px; cursor: pointer; transition: all 0.2s ease; text-decoration: none; }
+    .evidence-thumb:hover { border-color: var(--accent); transform: translateY(-2px); box-shadow: 0 4px 12px rgba(56,189,248,0.25); }
+    .evidence-thumb img { width: 100%; height: 65px; object-fit: cover; display: block; }
+    .evidence-tag { font-size: 0.68rem; color: var(--accent); padding: 2px 4px; font-family: 'JetBrains Mono', monospace; font-weight: 600; text-transform: uppercase; }
+    .lightbox { position: fixed; inset: 0; background: rgba(0,0,0,0.88); backdrop-filter: blur(6px); display: none; align-items: center; justify-content: center; z-index: 1000; padding: 24px; }
+    .lightbox.active { display: flex; }
+    .lightbox-box { max-width: 90vw; max-height: 90vh; display: flex; flex-direction: column; align-items: center; position: relative; }
+    .lightbox-box img { max-width: 100%; max-height: 82vh; object-fit: contain; border: 1px solid var(--border); border-radius: 8px; }
+    .lightbox-caption { margin-top: 10px; color: #fff; font-size: 0.88rem; font-weight: 600; }
+    .lightbox-close { position: absolute; top: -14px; right: -14px; width: 32px; height: 32px; background: #ef4444; color: #fff; border-radius: 50%; border: 2px solid #fff; font-size: 1.1rem; font-weight: 800; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+    .section-title { font-size: 1.15rem; font-weight: 800; color: #fff; margin: 28px 0 14px; }
+    .findings-list { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 20px 24px; margin-bottom: 24px; }
+    .findings-list li { margin-bottom: 10px; color: #cbd5e1; font-size: 0.88rem; line-height: 1.6; }
+    .findings-list li strong { color: #fff; }
+  </style>
+</head>
+<body>
+<div class="container">
+
+  <div class="header-box">
+    <div class="summary-badge-warn">⚠ 4 DEFECTS FOUND — 1 IS A FULL FEATURE OUTAGE (P0)</div>
+    <h1>UAT Test Report: Workflow Module</h1>
+    <div class="sub">Live functional/UI verification against the WORKFLOW sheet on staging tenant: <code>cicodecms.cicodsaasstaging.com</code></div>
+    <div class="meta-bar">
+      <div><span>Source Sheet: </span><strong>ECMS TEST SCRIPT RECENT VERSION.xlsx (WORKFLOW)</strong></div>
+      <div><span>Target URL: </span><strong>https://cicodecms.cicodsaasstaging.com/ecms/index.php?r=workflows/*</strong></div>
+      <div><span>Tenant ID: </span><strong>cicodecms</strong></div>
+      <div><span>Tester User: </span><strong>raissa.boyomo@crowninteractive.com</strong></div>
+      <div><span>Execution Date: </span><strong>September 17, 2026</strong></div>
+    </div>
+  </div>
+
+  <div class="alert-block">
+    <div class="alert-title"><span>⚠ 4 Reproducible Defects — One Is a Full Feature Outage</span></div>
+    <p style="color:#cbd5e1;">
+      (1) <strong>NEW: Linking a workflow to a Department cannot be completed at all</strong> — "Generate Folder Path" fails with "Session Expired" in its embedded Gov Drive panel, reproduced 3/3 times across two different queues, with no manual-entry workaround. See the new WF-DEPT-01 scenario below.
+      (2) The Role-access grid at <code>rightTemplate/index?grant-access=true</code> renders zero rows despite correct summary counts, blocking role-to-workflow access grants.
+      (3) Queue / Queue Type / Status tab routes are not reload-safe (direct URL or refresh shows a generic error page).
+      (4) The row action menu on all three of those tabs opens the wrong (workflow-level) menu instead of a row-specific Update action — this alone blocks roughly a third of the full 208-row script (Update Queue/Queue-Type/Status item, linked-status trigger/suspend/hide, status creation via link-statuses, and per-entity suspend). See Section "Confirmed Defects" below.
+    </p>
+  </div>
+
+  <div class="kpi-grid">
+    <div class="kpi-card"><span class="kpi-title">Checkpoints Verified</span><span class="kpi-val" style="color:#38bdf8;">36</span></div>
+    <div class="kpi-card"><span class="kpi-title">Passed</span><span class="kpi-val" style="color:#34d399;">29</span></div>
+    <div class="kpi-card"><span class="kpi-title">Deviations</span><span class="kpi-val" style="color:#fbbf24;">2</span></div>
+    <div class="kpi-card"><span class="kpi-title">Confirmed Bugs</span><span class="kpi-val" style="color:#f87171;">5</span></div>
+    <div class="kpi-card"><span class="kpi-title">Blocked Script Rows</span><span class="kpi-val" style="color:#94a3b8;">~60</span></div>
+  </div>
+
+  <div class="table-container">
+    <table>
+      <thead>
+        <tr>
+          <th>#</th><th>Feature</th><th>Steps to Reproduce</th><th>Expected Result (from Script)</th><th>Actual Live Behavior</th><th>Status</th><th class="col-evidence">Screenshot Evidence</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>1</strong></td>
+          <td><span class="feature-tag">MENU NAVIGATION</span></td>
+          <td>From the Menu click on Workflow</td>
+          <td>Sub-menus: 1. Create workflow 2. My workflow</td>
+          <td>Sidebar item is "Workflows" (plural); expands to reveal "Create Workflow" and "My Workflows" — exact match, minor pluralization only.</td>
+          <td><span class="badge-passed">PASSED</span></td>
+          <td class="col-evidence">
+            <div class="evidence-thumb" onclick="openLightbox('../uat_target3_cicodecm/wf_step1_sidebar_submenu.png', 'MENU NAVIGATION')">
+              <img src="../uat_target3_cicodecm/wf_step1_sidebar_submenu.png" alt="MENU NAVIGATION">
+              <span class="evidence-tag">View Capture</span>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td><strong>2</strong></td>
+          <td><span class="feature-tag">CREATE WORKFLOW</span></td>
+          <td>Click on Create workflow sub-menu</td>
+          <td>4 tabs: Process, Forms, Escalations, Approvals</td>
+          <td>Page loads with 4 tabs: Process, Form, Escalation, Approval (singular). A one-time coach-mark must be dismissed via "Ignore".</td>
+          <td><span class="badge-passed">PASSED</span></td>
+          <td class="col-evidence">
+            <div class="evidence-thumb" onclick="openLightbox('../uat_target3_cicodecm/wf_step2_create_workflow_page.png', 'CREATE WORKFLOW')">
+              <img src="../uat_target3_cicodecm/wf_step2_create_workflow_page.png" alt="CREATE WORKFLOW">
+              <span class="evidence-tag">View Capture</span>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td><strong>3</strong></td>
+          <td><span class="feature-tag">PROCESS: SELECT QUEUE</span></td>
+          <td>Click "Select Queue"</td>
+          <td>Displays already-created Queues for selection</td>
+          <td>Dropdown opens with full existing queue list plus a "Create new queue" action and search box.</td>
+          <td><span class="badge-passed">PASSED</span></td>
+          <td class="col-evidence">
+            <div class="evidence-thumb" onclick="openLightbox('../uat_target3_cicodecm/wf_step3_queue_dropdown_options.png', 'PROCESS: SELECT QUEUE')">
+              <img src="../uat_target3_cicodecm/wf_step3_queue_dropdown_options.png" alt="PROCESS: SELECT QUEUE">
+              <span class="evidence-tag">View Capture</span>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td><strong>4</strong></td>
+          <td><span class="feature-tag">CREATE NEW QUEUE</span></td>
+          <td>Click Create Queue, enter name/description, Save and select</td>
+          <td>Should create and select queue on Process tab</td>
+          <td>"Create Queue" modal opened; "UAT Test Queue 90355" created and auto-populated into the Queue field.</td>
+          <td><span class="badge-passed">PASSED</span></td>
+          <td class="col-evidence">
+            <div class="evidence-thumb" onclick="openLightbox('../uat_target3_cicodecm/wf_step4_create_queue_modal.png', 'CREATE NEW QUEUE')">
+              <img src="../uat_target3_cicodecm/wf_step4_create_queue_modal.png" alt="CREATE NEW QUEUE">
+              <span class="evidence-tag">View Capture</span>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td><strong>5</strong></td>
+          <td><span class="feature-tag">CREATE QUEUE TYPE</span></td>
+          <td>Click create new queue type, enter name/description, Save and select</td>
+          <td>Should create and select queue type on Process form</td>
+          <td>"UAT Queue Type 53252" created and auto-populated into the Queue Type field.</td>
+          <td><span class="badge-passed">PASSED</span></td>
+          <td class="col-evidence">
+            <div class="evidence-thumb" onclick="openLightbox('../uat_target3_cicodecm/wf_step5b_create_queuetype_modal.png', 'CREATE QUEUE TYPE')">
+              <img src="../uat_target3_cicodecm/wf_step5b_create_queuetype_modal.png" alt="CREATE QUEUE TYPE">
+              <span class="evidence-tag">View Capture</span>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td><strong>6</strong></td>
+          <td><span class="feature-tag">SELECT STATUS (DEFAULTS)</span></td>
+          <td>Click Select Status</td>
+          <td>Should display Status (Open) and Closed as default</td>
+          <td>DEVIATION: brand-new Queue Type shows "No record found" — no default Open/Closed statuses pre-seeded.</td>
+          <td><span class="badge-blocked">DEVIATION</span></td>
+          <td class="col-evidence">
+            <div class="evidence-thumb" onclick="openLightbox('../uat_target3_cicodecm/wf_step6_status_dropdown_norecord.png', 'SELECT STATUS (DEFAULTS)')">
+              <img src="../uat_target3_cicodecm/wf_step6_status_dropdown_norecord.png" alt="SELECT STATUS (DEFAULTS)">
+              <span class="evidence-tag">View Capture</span>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td><strong>7</strong></td>
+          <td><span class="feature-tag">CREATE NEW STATUS</span></td>
+          <td>Click Create Status, enter name/description, Save and select</td>
+          <td>Should create and select status on the process form</td>
+          <td>Status is created and linked on the backend (200 OK both calls) and shows checked when reopened. Minor UX gap: closed dropdown still shows placeholder text, no confirmation of what/how many is selected.</td>
+          <td><span class="badge-passed">PASSED</span></td>
+          <td class="col-evidence">
+            <div class="evidence-thumb" onclick="openLightbox('../uat_target3_cicodecm/wf_step6i_status_list_after_create.png', 'CREATE NEW STATUS')">
+              <img src="../uat_target3_cicodecm/wf_step6i_status_list_after_create.png" alt="CREATE NEW STATUS">
+              <span class="evidence-tag">View Capture</span>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td><strong>8</strong></td>
+          <td><span class="feature-tag">FORM TAB: FIELDS</span></td>
+          <td>View Fields / Default fields (Title, Description) / Help Guide</td>
+          <td>Should display all three</td>
+          <td>Confirmed. Additional field types beyond the script are also available: Text Field, Text Area, Contact, Address, Organization, Section Title, Add Image, Business Sector.</td>
+          <td><span class="badge-passed">PASSED</span></td>
+          <td class="col-evidence">
+            <div class="evidence-thumb" onclick="openLightbox('../uat_target3_cicodecm/wf_step7_form_tab.png', 'FORM TAB: FIELDS')">
+              <img src="../uat_target3_cicodecm/wf_step7_form_tab.png" alt="FORM TAB: FIELDS">
+              <span class="evidence-tag">View Capture</span>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td><strong>9</strong></td>
+          <td><span class="feature-tag">HIDE TITLE/DESCRIPTION</span></td>
+          <td>Check the "Hide Field" boxes</td>
+          <td>Fields should be checked and hidden from the ticket-creation form</td>
+          <td>Both checkboxes toggle correctly.</td>
+          <td><span class="badge-passed">PASSED</span></td>
+          <td class="col-evidence">
+            <div class="evidence-thumb" onclick="openLightbox('../uat_target3_cicodecm/wf_step7b_title_desc_hidden.png', 'HIDE TITLE/DESCRIPTION')">
+              <img src="../uat_target3_cicodecm/wf_step7b_title_desc_hidden.png" alt="HIDE TITLE/DESCRIPTION">
+              <span class="evidence-tag">View Capture</span>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td><strong>10</strong></td>
+          <td><span class="feature-tag">ADD FORM FIELD</span></td>
+          <td>Drag and drop a field into the form</td>
+          <td>Field should be added to the form panel</td>
+          <td>Fields are added via click (button), not native HTML5 drag-and-drop. Clicking "Dropdown" opens a config panel; Save adds it to the form correctly.</td>
+          <td><span class="badge-passed">PASSED</span></td>
+          <td class="col-evidence">
+            <div class="evidence-thumb" onclick="openLightbox('../uat_target3_cicodecm/wf_step7e_field_added.png', 'ADD FORM FIELD')">
+              <img src="../uat_target3_cicodecm/wf_step7e_field_added.png" alt="ADD FORM FIELD">
+              <span class="evidence-tag">View Capture</span>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td><strong>11</strong></td>
+          <td><span class="feature-tag">ESCALATION TAB</span></td>
+          <td>Click Next, should display escalation page</td>
+          <td>Escalation page with Add Escalation on status</td>
+          <td>Confirmed. Automation note: two "Next" buttons exist in the DOM (one hidden) — must target the visible one.</td>
+          <td><span class="badge-passed">PASSED</span></td>
+          <td class="col-evidence">
+            <div class="evidence-thumb" onclick="openLightbox('../uat_target3_cicodecm/wf_step8_escalation_tab_v2.png', 'ESCALATION TAB')">
+              <img src="../uat_target3_cicodecm/wf_step8_escalation_tab_v2.png" alt="ESCALATION TAB">
+              <span class="evidence-tag">View Capture</span>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td><strong>12</strong></td>
+          <td><span class="feature-tag">ADD ESCALATION LEVEL</span></td>
+          <td>Click "+ Add new escalation level(s)", then Add</td>
+          <td>Modal "Escalation Levels for Status: X" with Add button</td>
+          <td>Confirmed exact match.</td>
+          <td><span class="badge-passed">PASSED</span></td>
+          <td class="col-evidence">
+            <div class="evidence-thumb" onclick="openLightbox('../uat_target3_cicodecm/wf_step9_add_escalation_modal.png', 'ADD ESCALATION LEVEL')">
+              <img src="../uat_target3_cicodecm/wf_step9_add_escalation_modal.png" alt="ADD ESCALATION LEVEL">
+              <span class="evidence-tag">View Capture</span>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td><strong>13</strong></td>
+          <td><span class="feature-tag">ESCALATION TYPE: LINE MANAGER</span></td>
+          <td>Select escalation type from dropdown</td>
+          <td>Line Manager / Role; Line Manager reveals time-value box</td>
+          <td>Dropdown options exactly: Line Manager, Role. Selecting Line Manager reveals "Time Value (hrs) *".</td>
+          <td><span class="badge-passed">PASSED</span></td>
+          <td class="col-evidence">
+            <div class="evidence-thumb" onclick="openLightbox('../uat_target3_cicodecm/wf_step9d_linemanager_selected.png', 'ESCALATION TYPE: LINE MANAGER')">
+              <img src="../uat_target3_cicodecm/wf_step9d_linemanager_selected.png" alt="ESCALATION TYPE: LINE MANAGER">
+              <span class="evidence-tag">View Capture</span>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td><strong>14</strong></td>
+          <td><span class="feature-tag">SAVE ESCALATION</span></td>
+          <td>Enter time value, click Save</td>
+          <td>Escalation record should be saved</td>
+          <td>Saved successfully; modal closed, returned to Escalation tab.</td>
+          <td><span class="badge-passed">PASSED</span></td>
+          <td class="col-evidence">
+            <div class="evidence-thumb" onclick="openLightbox('../uat_target3_cicodecm/wf_step9e_escalation_saved.png', 'SAVE ESCALATION')">
+              <img src="../uat_target3_cicodecm/wf_step9e_escalation_saved.png" alt="SAVE ESCALATION">
+              <span class="evidence-tag">View Capture</span>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td><strong>15</strong></td>
+          <td><span class="feature-tag">APPROVAL TAB</span></td>
+          <td>Click Approval tab (not detailed in script)</td>
+          <td>Not specified</td>
+          <td>Tab loads mirroring Escalation tab structure ("Setup Approvals on status" / "+ Add New Approval Level(s)").</td>
+          <td><span class="badge-passed">PASSED</span></td>
+          <td class="col-evidence">
+            <div class="evidence-thumb" onclick="openLightbox('../uat_target3_cicodecm/wf_step10_approval_tab_v2.png', 'APPROVAL TAB')">
+              <img src="../uat_target3_cicodecm/wf_step10_approval_tab_v2.png" alt="APPROVAL TAB">
+              <span class="evidence-tag">View Capture</span>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td><strong>16</strong></td>
+          <td><span class="feature-tag">ADD APPROVAL LEVEL</span></td>
+          <td>Click Add</td>
+          <td>Modal "Approval Levels for Status: X" with Add</td>
+          <td>Form is richer than Escalation: includes "Next Status After Approval" and "Next Status After Rejection" branching fields, undocumented in script.</td>
+          <td><span class="badge-passed">PASSED</span></td>
+          <td class="col-evidence">
+            <div class="evidence-thumb" onclick="openLightbox('../uat_target3_cicodecm/wf_step11b_approval_add_form.png', 'ADD APPROVAL LEVEL')">
+              <img src="../uat_target3_cicodecm/wf_step11b_approval_add_form.png" alt="ADD APPROVAL LEVEL">
+              <span class="evidence-tag">View Capture</span>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td><strong>17</strong></td>
+          <td><span class="feature-tag">UPDATE WORKFLOW (RE-ENTRY)</span></td>
+          <td>Navigate to workflows/update&amp;id=X</td>
+          <td>Wizard re-opens pre-filled</td>
+          <td>Confirmed; Queue and Queue Type data persisted correctly.</td>
+          <td><span class="badge-passed">PASSED</span></td>
+          <td class="col-evidence">
+            <div class="evidence-thumb" onclick="openLightbox('../uat_target3_cicodecm/wf_step16c_update_page.png', 'UPDATE WORKFLOW (RE-ENTRY)')">
+              <img src="../uat_target3_cicodecm/wf_step16c_update_page.png" alt="UPDATE WORKFLOW (RE-ENTRY)">
+              <span class="evidence-tag">View Capture</span>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td><strong>18</strong></td>
+          <td><span class="feature-tag">FINISH / WORKFLOW CREATED</span></td>
+          <td>Click Finish on Approval tab</td>
+          <td>"Successfully created your first workflow" + Grant/Skip modal</td>
+          <td>Exact match, including copy about roles requiring access to view tickets.</td>
+          <td><span class="badge-passed">PASSED</span></td>
+          <td class="col-evidence">
+            <div class="evidence-thumb" onclick="openLightbox('../uat_target3_cicodecm/wf_step17_finish_clicked.png', 'FINISH / WORKFLOW CREATED')">
+              <img src="../uat_target3_cicodecm/wf_step17_finish_clicked.png" alt="FINISH / WORKFLOW CREATED">
+              <span class="evidence-tag">View Capture</span>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td><strong>19</strong></td>
+          <td><span class="feature-tag">GRANT ACCESS → ROLE PAGE</span></td>
+          <td>Click "Grant access"</td>
+          <td>Should display the role page</td>
+          <td>Navigates to rightTemplate/index?grant-access=true; "Manage Role" page loads with correct summary cards (5/5/0).</td>
+          <td><span class="badge-passed">PASSED</span></td>
+          <td class="col-evidence">
+            <div class="evidence-thumb" onclick="openLightbox('../uat_target3_cicodecm/wf_step18_grant_access_page.png', 'GRANT ACCESS → ROLE PAGE')">
+              <img src="../uat_target3_cicodecm/wf_step18_grant_access_page.png" alt="GRANT ACCESS → ROLE PAGE">
+              <span class="evidence-tag">View Capture</span>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td><strong>20</strong></td>
+          <td><span class="feature-tag">ROLE LIST RENDERS</span></td>
+          <td>Update a role, give role access, check features, Save</td>
+          <td>Role list should be selectable; access grantable</td>
+          <td>DEFECT: role table body renders zero rows despite "Total Records: 5". Reproducible after full reload. Grant flow is fully blocked.</td>
+          <td><span class="badge-bug">BUG</span></td>
+          <td class="col-evidence">
+            <div class="evidence-thumb" onclick="openLightbox('../uat_target3_cicodecm/wf_step18c_role_table_empty_bug.png', 'ROLE LIST RENDERS')">
+              <img src="../uat_target3_cicodecm/wf_step18c_role_table_empty_bug.png" alt="ROLE LIST RENDERS">
+              <span class="evidence-tag">View Capture</span>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td><strong>21</strong></td>
+          <td><span class="feature-tag">MY WORKFLOWS: LIST VIEW</span></td>
+          <td>Click My workflows sub-menu</td>
+          <td>Should display my workflow page</td>
+          <td>Confirmed: 4 tabs, Search, Sort By, Custom View, Filter, and summary cards. Test workflow appears in table.</td>
+          <td><span class="badge-passed">PASSED</span></td>
+          <td class="col-evidence">
+            <div class="evidence-thumb" onclick="openLightbox('../uat_target3_cicodecm/wf_step12_my_workflows_list.png', 'MY WORKFLOWS: LIST VIEW')">
+              <img src="../uat_target3_cicodecm/wf_step12_my_workflows_list.png" alt="MY WORKFLOWS: LIST VIEW">
+              <span class="evidence-tag">View Capture</span>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td><strong>22</strong></td>
+          <td><span class="feature-tag">WORKFLOW ROW ACTION MENU</span></td>
+          <td>Click action button on a workflow item</td>
+          <td>Drop-down: View, suspend, update workflow</td>
+          <td>Exact match: View / Suspend / Update workflow.</td>
+          <td><span class="badge-passed">PASSED</span></td>
+          <td class="col-evidence">
+            <div class="evidence-thumb" onclick="openLightbox('../uat_target3_cicodecm/wf_step13_action_dropdown.png', 'WORKFLOW ROW ACTION MENU')">
+              <img src="../uat_target3_cicodecm/wf_step13_action_dropdown.png" alt="WORKFLOW ROW ACTION MENU">
+              <span class="evidence-tag">View Capture</span>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td><strong>23</strong></td>
+          <td><span class="feature-tag">VIEW WORKFLOW ITEM</span></td>
+          <td>Click View</td>
+          <td>Should display the workflow page</td>
+          <td>"Workflow Details" page: Date Created, Created by, Status, Last updated, plus Process/Departments/Roles tabs.</td>
+          <td><span class="badge-passed">PASSED</span></td>
+          <td class="col-evidence">
+            <div class="evidence-thumb" onclick="openLightbox('../uat_target3_cicodecm/wf_step14_view_workflow.png', 'VIEW WORKFLOW ITEM')">
+              <img src="../uat_target3_cicodecm/wf_step14_view_workflow.png" alt="VIEW WORKFLOW ITEM">
+              <span class="evidence-tag">View Capture</span>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td><strong>24</strong></td>
+          <td><span class="feature-tag">WORKFLOW DETAILS → ROLES TAB</span></td>
+          <td>(implied) verify role access from details view</td>
+          <td>Not explicitly scripted</td>
+          <td>"Name of Roles linked to this workflow" panel renders with no button at all — no persistent way to grant role access after initial creation.</td>
+          <td><span class="badge-blocked">DEVIATION</span></td>
+          <td class="col-evidence">
+            <div class="evidence-thumb" onclick="openLightbox('../uat_target3_cicodecm/wf_step15b_roles_scrolled.png', 'WORKFLOW DETAILS → ROLES TAB')">
+              <img src="../uat_target3_cicodecm/wf_step15b_roles_scrolled.png" alt="WORKFLOW DETAILS → ROLES TAB">
+              <span class="evidence-tag">View Capture</span>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td><strong>25</strong></td>
+          <td><span class="feature-tag">SUSPEND WORKFLOW ITEM</span></td>
+          <td>Click action button, then Suspend</td>
+          <td>Workflow items should be suspended</td>
+          <td>Triggers a native browser confirm() dialog. Accepting correctly moves workflow Active to Suspended (counters updated 20/0 to 19/1).</td>
+          <td><span class="badge-passed">PASSED</span></td>
+          <td class="col-evidence">
+            <div class="evidence-thumb" onclick="openLightbox('../uat_target3_cicodecm/wf_step19b_suspend_result.png', 'SUSPEND WORKFLOW ITEM')">
+              <img src="../uat_target3_cicodecm/wf_step19b_suspend_result.png" alt="SUSPEND WORKFLOW ITEM">
+              <span class="evidence-tag">View Capture</span>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td><strong>26</strong></td>
+          <td><span class="feature-tag">QUEUE / QUEUE TYPE / STATUS TABS</span></td>
+          <td>Click Queue tab (also Queue Type, Status)</td>
+          <td>Should display Queue / Queue Type / Status page</td>
+          <td>All three load correctly when reached via in-app tab click, listing existing entities with name &amp; description.</td>
+          <td><span class="badge-passed">PASSED</span></td>
+          <td class="col-evidence">
+            <div class="evidence-thumb" onclick="openLightbox('../uat_target3_cicodecm/wf_step20_queue_tab.png', 'QUEUE / QUEUE TYPE / STATUS TABS')">
+              <img src="../uat_target3_cicodecm/wf_step20_queue_tab.png" alt="QUEUE / QUEUE TYPE / STATUS TABS">
+              <span class="evidence-tag">View Capture</span>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td><strong>27</strong></td>
+          <td><span class="feature-tag">DEEP-LINK / RELOAD ROBUSTNESS</span></td>
+          <td>Reload or directly open a Queue/Queue-Type/Status tab URL</td>
+          <td>Not scripted, reasonable robustness expectation</td>
+          <td>DEFECT: direct navigation to ?r=workflows/queue (or refresh) renders a generic "Oops! Something went wrong" error page.</td>
+          <td><span class="badge-bug">BUG</span></td>
+          <td class="col-evidence">
+            <div class="evidence-thumb" onclick="openLightbox('../uat_target3_cicodecm/wf_step22_queue_search.png', 'DEEP-LINK / RELOAD ROBUSTNESS')">
+              <img src="../uat_target3_cicodecm/wf_step22_queue_search.png" alt="DEEP-LINK / RELOAD ROBUSTNESS">
+              <span class="evidence-tag">View Capture</span>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td><strong>28</strong></td>
+          <td><span class="feature-tag">UPDATE QUEUE / QUEUE TYPE / STATUS ITEM</span></td>
+          <td>Click action button on a row, select Update</td>
+          <td>Should display the respective Update page</td>
+          <td>DEFECT (systemic): all three tabs open the wrong, stale "View/Unsuspend/Update workflow" menu instead of a row-specific Update action. Reproduced 3/3 across all tabs. Blocks remaining script rows below.</td>
+          <td><span class="badge-bug">BUG</span></td>
+          <td class="col-evidence">
+            <div class="evidence-thumb" onclick="openLightbox('../uat_target3_cicodecm/wf_step23_queue_wrong_menu_bug.png', 'UPDATE QUEUE / QUEUE TYPE / STATUS ITEM')">
+              <img src="../uat_target3_cicodecm/wf_step23_queue_wrong_menu_bug.png" alt="UPDATE QUEUE / QUEUE TYPE / STATUS ITEM">
+              <span class="evidence-tag">View Capture</span>
+            </div>
+          </td>
+        </tr>
+        <tr style="background:rgba(56,189,248,0.06);">
+          <td colspan="7" style="padding:12px 16px;font-weight:800;color:#38bdf8;font-family:'JetBrains Mono',monospace;font-size:0.8rem;text-transform:uppercase;">
+            ▸ New Test Case Scenario: WF-DEPT-01 — Link a Workflow to a Department (not in original script; executed this session)
+          </td>
+        </tr>
+        <tr>
+          <td><strong>WF-DEPT-01.1</strong></td>
+          <td><span class="feature-tag">DEPT LINK: PROCESS SETUP</span></td>
+          <td>Create/select a Queue and Queue Type on the Process tab</td>
+          <td>Process form displayed</td>
+          <td>"UAT Dept Link Queue 61363" / "UAT Dept Link QType 99496" created and selected successfully.</td>
+          <td><span class="badge-passed">PASSED</span></td>
+          <td class="col-evidence">
+            <div class="evidence-thumb" onclick="openLightbox('../uat_target3_cicodecm/wf2_step5_queuetype_created.png', 'DEPT LINK: PROCESS SETUP')">
+              <img src="../uat_target3_cicodecm/wf2_step5_queuetype_created.png" alt="DEPT LINK: PROCESS SETUP">
+              <span class="evidence-tag">View Capture</span>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td><strong>WF-DEPT-01.2</strong></td>
+          <td><span class="feature-tag">DEPT LINK: SELECT YES</span></td>
+          <td>Select "Yes" on "Would you like to link this workflow to a department?"</td>
+          <td>Departments and Folder Path fields should appear</td>
+          <td>Confirmed: "Departments" (searchable multi-select) and "Folder Path" (disabled text field) both appear immediately.</td>
+          <td><span class="badge-passed">PASSED</span></td>
+          <td class="col-evidence">
+            <div class="evidence-thumb" onclick="openLightbox('../uat_target3_cicodecm/wf2_step4_dept_yes_clicked.png', 'DEPT LINK: SELECT YES')">
+              <img src="../uat_target3_cicodecm/wf2_step4_dept_yes_clicked.png" alt="DEPT LINK: SELECT YES">
+              <span class="evidence-tag">View Capture</span>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td><strong>WF-DEPT-01.3</strong></td>
+          <td><span class="feature-tag">DEPT LINK: SELECT DEPARTMENT</span></td>
+          <td>Click "Select department" and choose "Sales"</td>
+          <td>Department should be selected and shown</td>
+          <td>"Sales" selected correctly from 7 existing departments (Logistics, Customer Service, Sales, Finance, IT Support, Human Resources, Marketing).</td>
+          <td><span class="badge-passed">PASSED</span></td>
+          <td class="col-evidence">
+            <div class="evidence-thumb" onclick="openLightbox('../uat_target3_cicodecm/wf2_step7_sales_selected.png', 'DEPT LINK: SELECT DEPARTMENT')">
+              <img src="../uat_target3_cicodecm/wf2_step7_sales_selected.png" alt="DEPT LINK: SELECT DEPARTMENT">
+              <span class="evidence-tag">View Capture</span>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td><strong>WF-DEPT-01.4</strong></td>
+          <td><span class="feature-tag">DEPT LINK: GENERATE FOLDER PATH</span></td>
+          <td>Click "Generate Folder Path"</td>
+          <td>Should generate/assign a CICOD Drive folder path</td>
+          <td>DEFECT (P0): embedded "Gov Drive" panel loads indefinitely showing "Session Expired", despite a valid active session. Folder Path field is disabled — no manual workaround exists.</td>
+          <td><span class="badge-bug">BUG</span></td>
+          <td class="col-evidence">
+            <div class="evidence-thumb" onclick="openLightbox('../uat_target3_cicodecm/wf2_step9c_govdrive_stuck.png', 'DEPT LINK: GENERATE FOLDER PATH')">
+              <img src="../uat_target3_cicodecm/wf2_step9c_govdrive_stuck.png" alt="DEPT LINK: GENERATE FOLDER PATH">
+              <span class="evidence-tag">View Capture</span>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td><strong>WF-DEPT-01.5</strong></td>
+          <td><span class="feature-tag">DEPT LINK: REPRODUCIBILITY CHECK</span></td>
+          <td>Retry Generate Folder Path on the same queue, then on an established queue ("Complaints")</td>
+          <td>Should succeed at least once if queue-specific</td>
+          <td>Reproduced identically 3/3 attempts across 2 different queues — confirms a general integration failure, not a one-off or new-queue-specific glitch.</td>
+          <td><span class="badge-bug">BUG</span></td>
+          <td class="col-evidence">
+            <div class="evidence-thumb" onclick="openLightbox('../uat_target3_cicodecm/wf2_step17_existing_queue_govdrive.png', 'DEPT LINK: REPRODUCIBILITY CHECK')">
+              <img src="../uat_target3_cicodecm/wf2_step17_existing_queue_govdrive.png" alt="DEPT LINK: REPRODUCIBILITY CHECK">
+              <span class="evidence-tag">View Capture</span>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td><strong>WF-DEPT-01.6</strong></td>
+          <td><span class="feature-tag">DEPT LINK: VALIDATION ON NEXT</span></td>
+          <td>Click Next with Department=Yes but no Folder Path generated</td>
+          <td>Should clearly explain why progress is blocked</td>
+          <td>Modal correctly blocks progress: "Please generate cde folder path" — validation itself works and is clear.</td>
+          <td><span class="badge-passed">PASSED</span></td>
+          <td class="col-evidence">
+            <div class="evidence-thumb" onclick="openLightbox('../uat_target3_cicodecm/wf2_step11_next_clicked.png', 'DEPT LINK: VALIDATION ON NEXT')">
+              <img src="../uat_target3_cicodecm/wf2_step11_next_clicked.png" alt="DEPT LINK: VALIDATION ON NEXT">
+              <span class="evidence-tag">View Capture</span>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td><strong>WF-DEPT-01.7</strong></td>
+          <td><span class="feature-tag">DEPT LINK: WORKAROUND (NO)</span></td>
+          <td>Switch Department back to No and continue through Form/Escalation/Approval/Finish</td>
+          <td>Workflow creation should proceed normally</td>
+          <td>Confirmed: full pipeline completed normally and workflow was created successfully once Department was set to No.</td>
+          <td><span class="badge-passed">PASSED</span></td>
+          <td class="col-evidence">
+            <div class="evidence-thumb" onclick="openLightbox('../uat_target3_cicodecm/wf2_step34_finish_result.png', 'DEPT LINK: WORKAROUND (NO)')">
+              <img src="../uat_target3_cicodecm/wf2_step34_finish_result.png" alt="DEPT LINK: WORKAROUND (NO)">
+              <span class="evidence-tag">View Capture</span>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td><strong>WF-DEPT-01.8</strong></td>
+          <td><span class="feature-tag">DEPT LINK: VERIFY FINAL STATE</span></td>
+          <td>Check the finished workflow in My Workflows</td>
+          <td>Departments column should reflect the link if made</td>
+          <td>Workflow appears ACTIVE, but Departments column correctly shows "No" — confirms the department link was never applied, since its Folder Path prerequisite could never be generated.</td>
+          <td><span class="badge-passed">PASSED</span></td>
+          <td class="col-evidence">
+            <div class="evidence-thumb" onclick="openLightbox('../uat_target3_cicodecm/wf2_step38_final_state.png', 'DEPT LINK: VERIFY FINAL STATE')">
+              <img src="../uat_target3_cicodecm/wf2_step38_final_state.png" alt="DEPT LINK: VERIFY FINAL STATE">
+              <span class="evidence-tag">View Capture</span>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td><strong>&mdash;</strong></td>
+          <td><span class="feature-tag" style="color:#94a3b8;background:rgba(148,163,184,0.12);">BLOCKED</span></td>
+          <td>Update Queue Item</td>
+          <td>As scripted (rows ~1310–1431)</td>
+          <td>Blocked by the systemic wrong-menu defect (row 28) — no reachable Update/action entry point.</td>
+          <td><span class="badge-blocked">BLOCKED</span></td>
+          <td class="col-evidence">&mdash;</td>
+        </tr>
+        <tr>
+          <td><strong>&mdash;</strong></td>
+          <td><span class="feature-tag" style="color:#94a3b8;background:rgba(148,163,184,0.12);">BLOCKED</span></td>
+          <td>Update Queue Type Item</td>
+          <td>As scripted (rows ~1466–1596)</td>
+          <td>Blocked by the systemic wrong-menu defect (row 28) — no reachable Update/action entry point.</td>
+          <td><span class="badge-blocked">BLOCKED</span></td>
+          <td class="col-evidence">&mdash;</td>
+        </tr>
+        <tr>
+          <td><strong>&mdash;</strong></td>
+          <td><span class="feature-tag" style="color:#94a3b8;background:rgba(148,163,184,0.12);">BLOCKED</span></td>
+          <td>Update Status Item</td>
+          <td>As scripted (rows ~1630–1751)</td>
+          <td>Blocked by the systemic wrong-menu defect (row 28) — no reachable Update/action entry point.</td>
+          <td><span class="badge-blocked">BLOCKED</span></td>
+          <td class="col-evidence">&mdash;</td>
+        </tr>
+        <tr>
+          <td><strong>&mdash;</strong></td>
+          <td><span class="feature-tag" style="color:#94a3b8;background:rgba(148,163,184,0.12);">BLOCKED</span></td>
+          <td>Linked Status: Trigger / Suspend / Hide from Resource</td>
+          <td>As scripted (rows ~1784–1992)</td>
+          <td>Blocked by the systemic wrong-menu defect (row 28) — no reachable Update/action entry point.</td>
+          <td><span class="badge-blocked">BLOCKED</span></td>
+          <td class="col-evidence">&mdash;</td>
+        </tr>
+        <tr>
+          <td><strong>&mdash;</strong></td>
+          <td><span class="feature-tag" style="color:#94a3b8;background:rgba(148,163,184,0.12);">BLOCKED</span></td>
+          <td>Create Status via Queue Type → link-statuses → Add status</td>
+          <td>As scripted (rows ~2015–2135)</td>
+          <td>Blocked by the systemic wrong-menu defect (row 28) — no reachable Update/action entry point.</td>
+          <td><span class="badge-blocked">BLOCKED</span></td>
+          <td class="col-evidence">&mdash;</td>
+        </tr>
+        <tr>
+          <td><strong>&mdash;</strong></td>
+          <td><span class="feature-tag" style="color:#94a3b8;background:rgba(148,163,184,0.12);">BLOCKED</span></td>
+          <td>Suspend Queue / Queue Type / Status individually</td>
+          <td>As scripted (rows ~2158–2289)</td>
+          <td>Blocked by the systemic wrong-menu defect (row 28) — no reachable Update/action entry point.</td>
+          <td><span class="badge-blocked">BLOCKED</span></td>
+          <td class="col-evidence">&mdash;</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="section-title">Confirmed Defects</div>
+  <div class="findings-list">
+    <ol>
+      <li><strong>P0 &mdash; Department linking cannot be completed.</strong> "Generate Folder Path" (mandatory when linking a workflow to a Department) opens an embedded Gov Drive panel that gets stuck on "Session Expired" &mdash; reproduced 3/3 times across two different queues, one brand-new and one long-established. The Folder Path field is disabled with no manual-entry workaround, so a workflow can never be saved while linked to a department.</li>
+      <li><strong>Role-access grid renders empty.</strong> Summary cards show 5 total/5 active/0 suspended roles, but the table body has zero rows &mdash; reproduced after a full reload. No role can be selected to grant workflow access.</li>
+      <li><strong>Queue/Queue Type/Status tabs are not reload-safe.</strong> Direct navigation or refresh on <code>?r=workflows/queue</code> returns a generic "Oops! Something went wrong" page; these views only work via in-app client-side tab switches.</li>
+      <li><strong>Row action menu shows the wrong content on all three tabs.</strong> Clicking a row's action button on Queue, Queue Type, or Status opens the workflow-level "View/Unsuspend/Update workflow" menu instead of a row-specific action, blocking Update flows and everything downstream of them in the script.</li>
+    </ol>
+  </div>
+
+  <div class="gallery-title">📸 Key Evidence Gallery</div>
+  <div class="gallery-grid">
+    <div class="thumb-card" onclick="openLightbox('../uat_target3_cicodecm/wf_step2b_process_tab.png', 'Create Workflow – Process Tab')">
+      <div class="thumb-img">
+        <img src="../uat_target3_cicodecm/wf_step2b_process_tab.png" alt="Create Workflow – Process Tab" loading="lazy">
+      </div>
+      <div class="thumb-caption">Create Workflow – Process Tab</div>
+    </div>
+    <div class="thumb-card" onclick="openLightbox('../uat_target3_cicodecm/wf_step7_form_tab.png', 'Form Tab – Field Palette')">
+      <div class="thumb-img">
+        <img src="../uat_target3_cicodecm/wf_step7_form_tab.png" alt="Form Tab – Field Palette" loading="lazy">
+      </div>
+      <div class="thumb-caption">Form Tab – Field Palette</div>
+    </div>
+    <div class="thumb-card" onclick="openLightbox('../uat_target3_cicodecm/wf_step9c_escalation_form.png', 'Escalation Level Form')">
+      <div class="thumb-img">
+        <img src="../uat_target3_cicodecm/wf_step9c_escalation_form.png" alt="Escalation Level Form" loading="lazy">
+      </div>
+      <div class="thumb-caption">Escalation Level Form</div>
+    </div>
+    <div class="thumb-card" onclick="openLightbox('../uat_target3_cicodecm/wf_step11b_approval_add_form.png', 'Approval Level Form (Undocumented Branching)')">
+      <div class="thumb-img">
+        <img src="../uat_target3_cicodecm/wf_step11b_approval_add_form.png" alt="Approval Level Form (Undocumented Branching)" loading="lazy">
+      </div>
+      <div class="thumb-caption">Approval Level Form (Undocumented Branching)</div>
+    </div>
+    <div class="thumb-card" onclick="openLightbox('../uat_target3_cicodecm/wf_step17_finish_clicked.png', 'Workflow Created – Grant Access Prompt')">
+      <div class="thumb-img">
+        <img src="../uat_target3_cicodecm/wf_step17_finish_clicked.png" alt="Workflow Created – Grant Access Prompt" loading="lazy">
+      </div>
+      <div class="thumb-caption">Workflow Created – Grant Access Prompt</div>
+    </div>
+    <div class="thumb-card" onclick="openLightbox('../uat_target3_cicodecm/wf_step18c_role_table_empty_bug.png', 'BUG: Empty Role Table')">
+      <div class="thumb-img">
+        <img src="../uat_target3_cicodecm/wf_step18c_role_table_empty_bug.png" alt="BUG: Empty Role Table" loading="lazy">
+      </div>
+      <div class="thumb-caption">BUG: Empty Role Table</div>
+    </div>
+    <div class="thumb-card" onclick="openLightbox('../uat_target3_cicodecm/wf_step13_action_dropdown.png', 'My Workflows – Row Action Menu')">
+      <div class="thumb-img">
+        <img src="../uat_target3_cicodecm/wf_step13_action_dropdown.png" alt="My Workflows – Row Action Menu" loading="lazy">
+      </div>
+      <div class="thumb-caption">My Workflows – Row Action Menu</div>
+    </div>
+    <div class="thumb-card" onclick="openLightbox('../uat_target3_cicodecm/wf_step19b_suspend_result.png', 'Suspend – Counters Updated')">
+      <div class="thumb-img">
+        <img src="../uat_target3_cicodecm/wf_step19b_suspend_result.png" alt="Suspend – Counters Updated" loading="lazy">
+      </div>
+      <div class="thumb-caption">Suspend – Counters Updated</div>
+    </div>
+    <div class="thumb-card" onclick="openLightbox('../uat_target3_cicodecm/wf_step22_queue_search.png', 'BUG: Reload Error on Queue Tab')">
+      <div class="thumb-img">
+        <img src="../uat_target3_cicodecm/wf_step22_queue_search.png" alt="BUG: Reload Error on Queue Tab" loading="lazy">
+      </div>
+      <div class="thumb-caption">BUG: Reload Error on Queue Tab</div>
+    </div>
+    <div class="thumb-card" onclick="openLightbox('../uat_target3_cicodecm/wf_step23_queue_wrong_menu_bug.png', 'BUG: Wrong Menu on Queue Tab')">
+      <div class="thumb-img">
+        <img src="../uat_target3_cicodecm/wf_step23_queue_wrong_menu_bug.png" alt="BUG: Wrong Menu on Queue Tab" loading="lazy">
+      </div>
+      <div class="thumb-caption">BUG: Wrong Menu on Queue Tab</div>
+    </div>
+    <div class="thumb-card" onclick="openLightbox('../uat_target3_cicodecm/wf2_step4_dept_yes_clicked.png', 'Department Link – Yes Selected')">
+      <div class="thumb-img">
+        <img src="../uat_target3_cicodecm/wf2_step4_dept_yes_clicked.png" alt="Department Link – Yes Selected" loading="lazy">
+      </div>
+      <div class="thumb-caption">Department Link – Yes Selected</div>
+    </div>
+    <div class="thumb-card" onclick="openLightbox('../uat_target3_cicodecm/wf2_step9c_govdrive_stuck.png', 'P0 BUG: Gov Drive Session Expired')">
+      <div class="thumb-img">
+        <img src="../uat_target3_cicodecm/wf2_step9c_govdrive_stuck.png" alt="P0 BUG: Gov Drive Session Expired" loading="lazy">
+      </div>
+      <div class="thumb-caption">P0 BUG: Gov Drive Session Expired</div>
+    </div>
+    <div class="thumb-card" onclick="openLightbox('../uat_target3_cicodecm/wf2_step11_next_clicked.png', 'Validation: Folder Path Required')">
+      <div class="thumb-img">
+        <img src="../uat_target3_cicodecm/wf2_step11_next_clicked.png" alt="Validation: Folder Path Required" loading="lazy">
+      </div>
+      <div class="thumb-caption">Validation: Folder Path Required</div>
+    </div>
+    <div class="thumb-card" onclick="openLightbox('../uat_target3_cicodecm/wf2_step38_final_state.png', 'Final Proof: Departments Column = No')">
+      <div class="thumb-img">
+        <img src="../uat_target3_cicodecm/wf2_step38_final_state.png" alt="Final Proof: Departments Column = No" loading="lazy">
+      </div>
+      <div class="thumb-caption">Final Proof: Departments Column = No</div>
+    </div>
+  </div>
+
+</div>
+
+<div class="lightbox" id="lightbox" onclick="closeLightbox()">
+  <div class="lightbox-box" onclick="event.stopPropagation()">
+    <button class="lightbox-close" onclick="closeLightbox()">&times;</button>
+    <img id="lightboxImg" src="" alt="Evidence Full Resolution">
+    <div class="lightbox-caption" id="lightboxCaption"></div>
+  </div>
+</div>
+
+<script>
+  function openLightbox(src, cap) {
+    document.getElementById('lightboxImg').src = src;
+    document.getElementById('lightboxCaption').innerText = cap || '';
+    document.getElementById('lightbox').classList.add('active');
+  }
+  function closeLightbox() { document.getElementById('lightbox').classList.remove('active'); }
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
+</script>
+</body>
+</html>

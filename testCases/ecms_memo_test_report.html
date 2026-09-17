@@ -225,9 +225,10 @@
     .step-num { font-weight: 700; color: var(--text); font-family: 'JetBrains Mono', monospace; }
     .step-name { font-weight: 700; color: #fff; }
     .expected { color: var(--text-muted); font-size: 0.85rem; }
+    .actual { color: #cbd5e1; font-size: 0.85rem; }
 
     .section-tag {
-      font-size: 0.68rem;
+      font-size: 0.65rem;
       color: var(--accent);
       padding: 2px 6px;
       background: var(--accent-glow);
@@ -235,6 +236,9 @@
       border-radius: 4px;
       font-family: 'JetBrains Mono', monospace;
       font-weight: 600;
+      text-transform: uppercase;
+      display: inline-block;
+      margin-bottom: 4px;
     }
 
     .badge {
@@ -251,8 +255,8 @@
 
     /* Evidence Cell & Inline Image Thumbnail Box */
     .evidence-cell {
-      width: 200px;
-      min-width: 180px;
+      width: 210px;
+      min-width: 190px;
     }
     .thumb-box {
       position: relative;
@@ -270,7 +274,7 @@
     }
     .thumb-box img {
       width: 100%;
-      height: 95px;
+      height: 98px;
       object-fit: cover;
       display: block;
     }
@@ -410,24 +414,27 @@
     <table>
       <thead>
         <tr>
-          <th style="width: 75px;">Step #</th>
-          <th style="width: 140px;">Section</th>
-          <th style="width: 220px;">Action / Test Step</th>
-          <th>Expected Behavior</th>
+          <th style="width: 55px;">#</th>
+          <th style="width: 180px;">Step Name</th>
+          <th style="width: 240px;">Reproduction Steps</th>
+          <th style="width: 280px;">Expected Result</th>
+          <th style="width: 280px;">Actual Live Behavior</th>
           <th style="width: 90px;">Status</th>
-          <th style="width: 200px;">Gap Details / Notes</th>
           <th class="evidence-cell">Screenshot Evidence</th>
         </tr>
       </thead>
       <tbody id="tableBody">
 
             <tr data-status="pass" data-section="create-memo">
-              <td class="step-num">#1 <span style="font-size:0.75rem; color:var(--text-dim);">(R19)</span></td>
-              <td><span class="section-tag">CREATE MEMO</span></td>
-              <td class="step-name">Expand Left Sidebar Menu & Click "Memo"</td>
+              <td class="step-num">#1 <br><span style="font-size:0.7rem; color:var(--text-dim);">(R19)</span></td>
+              <td class="step-name">
+                <span class="section-tag">CREATE MEMO</span><br>
+                <strong style="color:var(--text); font-size:0.88rem;">Expand Memo Sidebar Menu</strong>
+              </td>
+              <td>Click on 'Memo' on left navigation sidebar</td>
               <td class="expected">Memo dropdown menu expands exhibiting: 1. Create Memo, 2. View All Memo, 3. Memo Draft, 4. Memo Draft Review.</td>
-              <td><span class="badge badge-pass">PASS</span></td>
-              <td style="font-size:0.83rem; color: var(--text-muted);">-</td>
+              <td class="actual">Left navigation sidebar expands displaying 4 memo submenu options.</td>
+              <td><span class="badge badge-pass">PASSED</span></td>
               <td class="evidence-cell">
                 <div class="thumb-box" onclick="openModal('../uat_target3_cicodecm/ecms_memo_01_menu_dropdown.png', 'Step #1: Expand Left Sidebar Menu & Click Memo')">
                   <img src="../uat_target3_cicodecm/ecms_memo_01_menu_dropdown.png" alt="Step 1 Evidence" loading="lazy">
@@ -437,12 +444,15 @@
             </tr>
 
             <tr data-status="pass" data-section="create-memo">
-              <td class="step-num">#2 <span style="font-size:0.75rem; color:var(--text-dim);">(R20)</span></td>
-              <td><span class="section-tag">CREATE MEMO</span></td>
-              <td class="step-name">Click "Create Memo"</td>
+              <td class="step-num">#2 <br><span style="font-size:0.7rem; color:var(--text-dim);">(R20)</span></td>
+              <td class="step-name">
+                <span class="section-tag">CREATE MEMO</span><br>
+                <strong style="color:var(--text); font-size:0.88rem;">Navigate Create Memo Page</strong>
+              </td>
+              <td>Click 'Create Memo' link in sidebar menu</td>
               <td class="expected">Navigates to /ecms/index.php?r=memo/create. Renders Title input, Toolbar, WYSIWYG Editor, Save Draft, and Save Memo buttons.</td>
-              <td><span class="badge badge-pass">PASS</span></td>
-              <td style="font-size:0.83rem; color: var(--text-muted);">-</td>
+              <td class="actual">Create Memo interface loads exhibiting title field, rich text toolbar, editor canvas, Save Draft and Save Memo buttons.</td>
+              <td><span class="badge badge-pass">PASSED</span></td>
               <td class="evidence-cell">
                 <div class="thumb-box" onclick="openModal('../uat_target3_cicodecm/ecms_memo_02_create_page.png', 'Step #2: Click Create Memo Page')">
                   <img src="../uat_target3_cicodecm/ecms_memo_02_create_page.png" alt="Step 2 Evidence" loading="lazy">
@@ -452,12 +462,15 @@
             </tr>
 
             <tr data-status="pass" data-section="create-memo">
-              <td class="step-num">#3 <span style="font-size:0.75rem; color:var(--text-dim);">(R21)</span></td>
-              <td><span class="section-tag">CREATE MEMO</span></td>
-              <td class="step-name">Verify Editor Canvas & Guidelines</td>
-              <td class="expected">Editor container displays formatted title field, header guides, and Quil rich text toolbar.</td>
-              <td><span class="badge badge-pass">PASS</span></td>
-              <td style="font-size:0.83rem; color: var(--text-muted);">-</td>
+              <td class="step-num">#3 <br><span style="font-size:0.7rem; color:var(--text-dim);">(R21)</span></td>
+              <td class="step-name">
+                <span class="section-tag">CREATE MEMO</span><br>
+                <strong style="color:var(--text); font-size:0.88rem;">Editor Canvas & Guidelines</strong>
+              </td>
+              <td>Inspect editor container guidelines and header guides</td>
+              <td class="expected">Editor container displays formatted title field, header guides, and Quill rich text toolbar.</td>
+              <td class="actual">Editor canvas displays structured header guides and active formatting toolbar.</td>
+              <td><span class="badge badge-pass">PASSED</span></td>
               <td class="evidence-cell">
                 <div class="thumb-box" onclick="openModal('../uat_target3_cicodecm/ecms_memo_03_editor_guide.png', 'Step #3: Verify Editor Canvas & Guidelines')">
                   <img src="../uat_target3_cicodecm/ecms_memo_03_editor_guide.png" alt="Step 3 Evidence" loading="lazy">
@@ -467,12 +480,15 @@
             </tr>
 
             <tr data-status="pass" data-section="create-memo">
-              <td class="step-num">#4 <span style="font-size:0.75rem; color:var(--text-dim);">(R22)</span></td>
-              <td><span class="section-tag">CREATE MEMO</span></td>
-              <td class="step-name">Enter Memo Title text</td>
+              <td class="step-num">#4 <br><span style="font-size:0.7rem; color:var(--text-dim);">(R22)</span></td>
+              <td class="step-name">
+                <span class="section-tag">CREATE MEMO</span><br>
+                <strong style="color:var(--text); font-size:0.88rem;">Memo Title Input</strong>
+              </td>
+              <td>Type title string into Title input field</td>
               <td class="expected">Title field accepts character string input without truncation.</td>
-              <td><span class="badge badge-pass">PASS</span></td>
-              <td style="font-size:0.83rem; color: var(--text-muted);">-</td>
+              <td class="actual">Title field accepts input 'UAT Audit Memo - Q3 System Review'.</td>
+              <td><span class="badge badge-pass">PASSED</span></td>
               <td class="evidence-cell">
                 <div class="thumb-box" onclick="openModal('../uat_target3_cicodecm/ecms_memo_04_editor_title_input.png', 'Step #4: Enter Memo Title text')">
                   <img src="../uat_target3_cicodecm/ecms_memo_04_editor_title_input.png" alt="Step 4 Evidence" loading="lazy">
@@ -482,12 +498,15 @@
             </tr>
 
             <tr data-status="pass" data-section="create-memo">
-              <td class="step-num">#5 <span style="font-size:0.75rem; color:var(--text-dim);">(R23)</span></td>
-              <td><span class="section-tag">CREATE MEMO</span></td>
-              <td class="step-name">Click on "Font menu" dropdown</td>
+              <td class="step-num">#5 <br><span style="font-size:0.7rem; color:var(--text-dim);">(R23)</span></td>
+              <td class="step-name">
+                <span class="section-tag">CREATE MEMO</span><br>
+                <strong style="color:var(--text); font-size:0.88rem;">Font Family Dropdown</strong>
+              </td>
+              <td>Click on 'Font' toolbar menu dropdown</td>
               <td class="expected">Font selection menu expands with available typeface families.</td>
-              <td><span class="badge badge-pass">PASS</span></td>
-              <td style="font-size:0.83rem; color: var(--text-muted);">-</td>
+              <td class="actual">Font family dropdown expands displaying typography options.</td>
+              <td><span class="badge badge-pass">PASSED</span></td>
               <td class="evidence-cell">
                 <div class="thumb-box" onclick="openModal('../uat_target3_cicodecm/ecms_memo_05_font_family_dropdown.png', 'Step #5: Click on Font menu dropdown')">
                   <img src="../uat_target3_cicodecm/ecms_memo_05_font_family_dropdown.png" alt="Step 5 Evidence" loading="lazy">
@@ -497,12 +516,15 @@
             </tr>
 
             <tr data-status="pass" data-section="create-memo">
-              <td class="step-num">#6 <span style="font-size:0.75rem; color:var(--text-dim);">(R24)</span></td>
-              <td><span class="section-tag">CREATE MEMO</span></td>
-              <td class="step-name">Click on "Styles menu" / Text Size dropdown</td>
+              <td class="step-num">#6 <br><span style="font-size:0.7rem; color:var(--text-dim);">(R24)</span></td>
+              <td class="step-name">
+                <span class="section-tag">CREATE MEMO</span><br>
+                <strong style="color:var(--text); font-size:0.88rem;">Text Size / Styles Menu</strong>
+              </td>
+              <td>Click on 'Styles menu' / Text Size dropdown</td>
               <td class="expected">Font size options drop down for headers and paragraph formatting.</td>
-              <td><span class="badge badge-pass">PASS</span></td>
-              <td style="font-size:0.83rem; color: var(--text-muted);">-</td>
+              <td class="actual">Styles menu expands showing Normal, Heading 1, 2, 3 options.</td>
+              <td><span class="badge badge-pass">PASSED</span></td>
               <td class="evidence-cell">
                 <div class="thumb-box" onclick="openModal('../uat_target3_cicodecm/ecms_memo_06_style_size_menu.png', 'Step #6: Click on Styles menu / Text Size dropdown')">
                   <img src="../uat_target3_cicodecm/ecms_memo_06_style_size_menu.png" alt="Step 6 Evidence" loading="lazy">
@@ -512,12 +534,15 @@
             </tr>
 
             <tr data-status="pass" data-section="create-memo">
-              <td class="step-num">#7 <span style="font-size:0.75rem; color:var(--text-dim);">(R25)</span></td>
-              <td><span class="section-tag">CREATE MEMO</span></td>
-              <td class="step-name">Click on "Bold module"</td>
+              <td class="step-num">#7 <br><span style="font-size:0.7rem; color:var(--text-dim);">(R25)</span></td>
+              <td class="step-name">
+                <span class="section-tag">CREATE MEMO</span><br>
+                <strong style="color:var(--text); font-size:0.88rem;">Bold Formatting</strong>
+              </td>
+              <td>Click on 'Bold' toolbar module icon</td>
               <td class="expected">Selected text or editor state switches to bold styling.</td>
-              <td><span class="badge badge-pass">PASS</span></td>
-              <td style="font-size:0.83rem; color: var(--text-muted);">-</td>
+              <td class="actual">Bold button toggles active state and applies bold font weight.</td>
+              <td><span class="badge badge-pass">PASSED</span></td>
               <td class="evidence-cell">
                 <div class="thumb-box" onclick="openModal('../uat_target3_cicodecm/ecms_memo_07_bold_format.png', 'Step #7: Click on Bold module')">
                   <img src="../uat_target3_cicodecm/ecms_memo_07_bold_format.png" alt="Step 7 Evidence" loading="lazy">
@@ -527,12 +552,15 @@
             </tr>
 
             <tr data-status="pass" data-section="create-memo">
-              <td class="step-num">#8 <span style="font-size:0.75rem; color:var(--text-dim);">(R26)</span></td>
-              <td><span class="section-tag">CREATE MEMO</span></td>
-              <td class="step-name">Click on "Italic module"</td>
+              <td class="step-num">#8 <br><span style="font-size:0.7rem; color:var(--text-dim);">(R26)</span></td>
+              <td class="step-name">
+                <span class="section-tag">CREATE MEMO</span><br>
+                <strong style="color:var(--text); font-size:0.88rem;">Italic Formatting</strong>
+              </td>
+              <td>Click on 'Italic' toolbar module icon</td>
               <td class="expected">Selected text or editor state switches to italic styling.</td>
-              <td><span class="badge badge-pass">PASS</span></td>
-              <td style="font-size:0.83rem; color: var(--text-muted);">-</td>
+              <td class="actual">Italic button toggles active state and applies italic styling.</td>
+              <td><span class="badge badge-pass">PASSED</span></td>
               <td class="evidence-cell">
                 <div class="thumb-box" onclick="openModal('../uat_target3_cicodecm/ecms_memo_08_italic_format.png', 'Step #8: Click on Italic module')">
                   <img src="../uat_target3_cicodecm/ecms_memo_08_italic_format.png" alt="Step 8 Evidence" loading="lazy">
@@ -542,12 +570,15 @@
             </tr>
 
             <tr data-status="pass" data-section="create-memo">
-              <td class="step-num">#9 <span style="font-size:0.75rem; color:var(--text-dim);">(R27)</span></td>
-              <td><span class="section-tag">CREATE MEMO</span></td>
-              <td class="step-name">Click on "Underline module"</td>
+              <td class="step-num">#9 <br><span style="font-size:0.7rem; color:var(--text-dim);">(R27)</span></td>
+              <td class="step-name">
+                <span class="section-tag">CREATE MEMO</span><br>
+                <strong style="color:var(--text); font-size:0.88rem;">Underline Formatting</strong>
+              </td>
+              <td>Click on 'Underline' toolbar module icon</td>
               <td class="expected">Selected text or editor state switches to underline styling.</td>
-              <td><span class="badge badge-pass">PASS</span></td>
-              <td style="font-size:0.83rem; color: var(--text-muted);">-</td>
+              <td class="actual">Underline button toggles active state and applies underline styling.</td>
+              <td><span class="badge badge-pass">PASSED</span></td>
               <td class="evidence-cell">
                 <div class="thumb-box" onclick="openModal('../uat_target3_cicodecm/ecms_memo_09_underline_format.png', 'Step #9: Click on Underline module')">
                   <img src="../uat_target3_cicodecm/ecms_memo_09_underline_format.png" alt="Step 9 Evidence" loading="lazy">
@@ -557,12 +588,15 @@
             </tr>
 
             <tr data-status="pass" data-section="create-memo">
-              <td class="step-num">#10 <span style="font-size:0.75rem; color:var(--text-dim);">(R28)</span></td>
-              <td><span class="section-tag">CREATE MEMO</span></td>
-              <td class="step-name">Click on "Strikethrough module"</td>
+              <td class="step-num">#10 <br><span style="font-size:0.7rem; color:var(--text-dim);">(R28)</span></td>
+              <td class="step-name">
+                <span class="section-tag">CREATE MEMO</span><br>
+                <strong style="color:var(--text); font-size:0.88rem;">Strikethrough Formatting</strong>
+              </td>
+              <td>Click on 'Strikethrough' toolbar module icon</td>
               <td class="expected">Selected text or editor state switches to strikethrough styling.</td>
-              <td><span class="badge badge-pass">PASS</span></td>
-              <td style="font-size:0.83rem; color: var(--text-muted);">-</td>
+              <td class="actual">Strikethrough button toggles active state and applies strikethrough styling.</td>
+              <td><span class="badge badge-pass">PASSED</span></td>
               <td class="evidence-cell">
                 <div class="thumb-box" onclick="openModal('../uat_target3_cicodecm/ecms_memo_10_strikethrough_format.png', 'Step #10: Click on Strikethrough module')">
                   <img src="../uat_target3_cicodecm/ecms_memo_10_strikethrough_format.png" alt="Step 10 Evidence" loading="lazy">
@@ -572,12 +606,15 @@
             </tr>
 
             <tr data-status="pass" data-section="create-memo">
-              <td class="step-num">#11 <span style="font-size:0.75rem; color:var(--text-dim);">(R29)</span></td>
-              <td><span class="section-tag">CREATE MEMO</span></td>
-              <td class="step-name">Click on "Text color module"</td>
+              <td class="step-num">#11 <br><span style="font-size:0.7rem; color:var(--text-dim);">(R29)</span></td>
+              <td class="step-name">
+                <span class="section-tag">CREATE MEMO</span><br>
+                <strong style="color:var(--text); font-size:0.88rem;">Text Color Palette</strong>
+              </td>
+              <td>Click on 'Text Color' toolbar icon</td>
               <td class="expected">Color picker palette expands allowing foreground text color selection.</td>
-              <td><span class="badge badge-pass">PASS</span></td>
-              <td style="font-size:0.83rem; color: var(--text-muted);">-</td>
+              <td class="actual">Text color palette expands showing RGB color choices.</td>
+              <td><span class="badge badge-pass">PASSED</span></td>
               <td class="evidence-cell">
                 <div class="thumb-box" onclick="openModal('../uat_target3_cicodecm/ecms_memo_11_text_color_palette.png', 'Step #11: Click on Text color module')">
                   <img src="../uat_target3_cicodecm/ecms_memo_11_text_color_palette.png" alt="Step 11 Evidence" loading="lazy">
@@ -587,12 +624,15 @@
             </tr>
 
             <tr data-status="pass" data-section="create-memo">
-              <td class="step-num">#12 <span style="font-size:0.75rem; color:var(--text-dim);">(R30)</span></td>
-              <td><span class="section-tag">CREATE MEMO</span></td>
-              <td class="step-name">Click on "Background color module"</td>
+              <td class="step-num">#12 <br><span style="font-size:0.7rem; color:var(--text-dim);">(R30)</span></td>
+              <td class="step-name">
+                <span class="section-tag">CREATE MEMO</span><br>
+                <strong style="color:var(--text); font-size:0.88rem;">Background Color Palette</strong>
+              </td>
+              <td>Click on 'Background Color' toolbar icon</td>
               <td class="expected">Color picker palette expands allowing text background highlight color selection.</td>
-              <td><span class="badge badge-pass">PASS</span></td>
-              <td style="font-size:0.83rem; color: var(--text-muted);">-</td>
+              <td class="actual">Background color palette expands showing highlight choices.</td>
+              <td><span class="badge badge-pass">PASSED</span></td>
               <td class="evidence-cell">
                 <div class="thumb-box" onclick="openModal('../uat_target3_cicodecm/ecms_memo_12_background_color_palette.png', 'Step #12: Click on Background color module')">
                   <img src="../uat_target3_cicodecm/ecms_memo_12_background_color_palette.png" alt="Step 12 Evidence" loading="lazy">
@@ -602,12 +642,15 @@
             </tr>
 
             <tr data-status="pass" data-section="create-memo">
-              <td class="step-num">#13 <span style="font-size:0.75rem; color:var(--text-dim);">(R31)</span></td>
-              <td><span class="section-tag">CREATE MEMO</span></td>
-              <td class="step-name">Click on "Alignment module"</td>
+              <td class="step-num">#13 <br><span style="font-size:0.7rem; color:var(--text-dim);">(R31)</span></td>
+              <td class="step-name">
+                <span class="section-tag">CREATE MEMO</span><br>
+                <strong style="color:var(--text); font-size:0.88rem;">Text Alignment Options</strong>
+              </td>
+              <td>Click on 'Alignment' toolbar icon</td>
               <td class="expected">Alignment options expand (Left, Center, Right, Justify).</td>
-              <td><span class="badge badge-pass">PASS</span></td>
-              <td style="font-size:0.83rem; color: var(--text-muted);">-</td>
+              <td class="actual">Alignment options dropdown displays Left, Center, Right, Justify options.</td>
+              <td><span class="badge badge-pass">PASSED</span></td>
               <td class="evidence-cell">
                 <div class="thumb-box" onclick="openModal('../uat_target3_cicodecm/ecms_memo_13_alignment_options.png', 'Step #13: Click on Alignment module')">
                   <img src="../uat_target3_cicodecm/ecms_memo_13_alignment_options.png" alt="Step 13 Evidence" loading="lazy">
@@ -617,12 +660,15 @@
             </tr>
 
             <tr data-status="pass" data-section="create-memo">
-              <td class="step-num">#14 <span style="font-size:0.75rem; color:var(--text-dim);">(R32)</span></td>
-              <td><span class="section-tag">CREATE MEMO</span></td>
-              <td class="step-name">Click on "Numbered list module"</td>
+              <td class="step-num">#14 <br><span style="font-size:0.7rem; color:var(--text-dim);">(R32)</span></td>
+              <td class="step-name">
+                <span class="section-tag">CREATE MEMO</span><br>
+                <strong style="color:var(--text); font-size:0.88rem;">Numbered List Module</strong>
+              </td>
+              <td>Click on 'Numbered List' toolbar icon</td>
               <td class="expected">Editor toggles numbered list formatting.</td>
-              <td><span class="badge badge-pass">PASS</span></td>
-              <td style="font-size:0.83rem; color: var(--text-muted);">-</td>
+              <td class="actual">Ordered list formatting toggles active state.</td>
+              <td><span class="badge badge-pass">PASSED</span></td>
               <td class="evidence-cell">
                 <div class="thumb-box" onclick="openModal('../uat_target3_cicodecm/ecms_memo_14_ordered_list.png', 'Step #14: Click on Numbered list module')">
                   <img src="../uat_target3_cicodecm/ecms_memo_14_ordered_list.png" alt="Step 14 Evidence" loading="lazy">
@@ -632,12 +678,15 @@
             </tr>
 
             <tr data-status="pass" data-section="create-memo">
-              <td class="step-num">#15 <span style="font-size:0.75rem; color:var(--text-dim);">(R33)</span></td>
-              <td><span class="section-tag">CREATE MEMO</span></td>
-              <td class="step-name">Click on "Bullet list module"</td>
+              <td class="step-num">#15 <br><span style="font-size:0.7rem; color:var(--text-dim);">(R33)</span></td>
+              <td class="step-name">
+                <span class="section-tag">CREATE MEMO</span><br>
+                <strong style="color:var(--text); font-size:0.88rem;">Bullet List Module</strong>
+              </td>
+              <td>Click on 'Bullet List' toolbar icon</td>
               <td class="expected">Editor toggles bulleted list formatting.</td>
-              <td><span class="badge badge-pass">PASS</span></td>
-              <td style="font-size:0.83rem; color: var(--text-muted);">-</td>
+              <td class="actual">Unordered bullet list formatting toggles active state.</td>
+              <td><span class="badge badge-pass">PASSED</span></td>
               <td class="evidence-cell">
                 <div class="thumb-box" onclick="openModal('../uat_target3_cicodecm/ecms_memo_15_bullet_list.png', 'Step #15: Click on Bullet list module')">
                   <img src="../uat_target3_cicodecm/ecms_memo_15_bullet_list.png" alt="Step 15 Evidence" loading="lazy">
@@ -647,12 +696,15 @@
             </tr>
 
             <tr data-status="pass" data-section="create-memo">
-              <td class="step-num">#16 <span style="font-size:0.75rem; color:var(--text-dim);">(R34)</span></td>
-              <td><span class="section-tag">CREATE MEMO</span></td>
-              <td class="step-name">Click on "Outdent module"</td>
+              <td class="step-num">#16 <br><span style="font-size:0.7rem; color:var(--text-dim);">(R34)</span></td>
+              <td class="step-name">
+                <span class="section-tag">CREATE MEMO</span><br>
+                <strong style="color:var(--text); font-size:0.88rem;">Outdent Module</strong>
+              </td>
+              <td>Click on 'Outdent' toolbar icon</td>
               <td class="expected">Selected block decreases indentation level.</td>
-              <td><span class="badge badge-pass">PASS</span></td>
-              <td style="font-size:0.83rem; color: var(--text-muted);">-</td>
+              <td class="actual">Outdent action decreases block indent level.</td>
+              <td><span class="badge badge-pass">PASSED</span></td>
               <td class="evidence-cell">
                 <div class="thumb-box" onclick="openModal('../uat_target3_cicodecm/ecms_memo_16_decrease_indent.png', 'Step #16: Click on Outdent module')">
                   <img src="../uat_target3_cicodecm/ecms_memo_16_decrease_indent.png" alt="Step 16 Evidence" loading="lazy">
@@ -662,12 +714,15 @@
             </tr>
 
             <tr data-status="pass" data-section="create-memo">
-              <td class="step-num">#17 <span style="font-size:0.75rem; color:var(--text-dim);">(R35)</span></td>
-              <td><span class="section-tag">CREATE MEMO</span></td>
-              <td class="step-name">Click on "Indent module"</td>
+              <td class="step-num">#17 <br><span style="font-size:0.7rem; color:var(--text-dim);">(R35)</span></td>
+              <td class="step-name">
+                <span class="section-tag">CREATE MEMO</span><br>
+                <strong style="color:var(--text); font-size:0.88rem;">Indent Module</strong>
+              </td>
+              <td>Click on 'Indent' toolbar icon</td>
               <td class="expected">Selected block increases indentation level.</td>
-              <td><span class="badge badge-pass">PASS</span></td>
-              <td style="font-size:0.83rem; color: var(--text-muted);">-</td>
+              <td class="actual">Indent action increases block indent level.</td>
+              <td><span class="badge badge-pass">PASSED</span></td>
               <td class="evidence-cell">
                 <div class="thumb-box" onclick="openModal('../uat_target3_cicodecm/ecms_memo_17_increase_indent.png', 'Step #17: Click on Indent module')">
                   <img src="../uat_target3_cicodecm/ecms_memo_17_increase_indent.png" alt="Step 17 Evidence" loading="lazy">
@@ -677,12 +732,15 @@
             </tr>
 
             <tr data-status="pass" data-section="create-memo">
-              <td class="step-num">#18 <span style="font-size:0.75rem; color:var(--text-dim);">(R36)</span></td>
-              <td><span class="section-tag">CREATE MEMO</span></td>
-              <td class="step-name">Click on "Blockquote module"</td>
+              <td class="step-num">#18 <br><span style="font-size:0.7rem; color:var(--text-dim);">(R36)</span></td>
+              <td class="step-name">
+                <span class="section-tag">CREATE MEMO</span><br>
+                <strong style="color:var(--text); font-size:0.88rem;">Blockquote Module</strong>
+              </td>
+              <td>Click on 'Blockquote' toolbar icon</td>
               <td class="expected">Editor toggles quotation styling block.</td>
-              <td><span class="badge badge-pass">PASS</span></td>
-              <td style="font-size:0.83rem; color: var(--text-muted);">-</td>
+              <td class="actual">Blockquote style applies to current paragraph.</td>
+              <td><span class="badge badge-pass">PASSED</span></td>
               <td class="evidence-cell">
                 <div class="thumb-box" onclick="openModal('../uat_target3_cicodecm/ecms_memo_18_blockquote_format.png', 'Step #18: Click on Blockquote module')">
                   <img src="../uat_target3_cicodecm/ecms_memo_18_blockquote_format.png" alt="Step 18 Evidence" loading="lazy">
@@ -692,12 +750,15 @@
             </tr>
 
             <tr data-status="pass" data-section="create-memo">
-              <td class="step-num">#19 <span style="font-size:0.75rem; color:var(--text-dim);">(R37)</span></td>
-              <td><span class="section-tag">CREATE MEMO</span></td>
-              <td class="step-name">Click on "Insert link module"</td>
+              <td class="step-num">#19 <br><span style="font-size:0.7rem; color:var(--text-dim);">(R37)</span></td>
+              <td class="step-name">
+                <span class="section-tag">CREATE MEMO</span><br>
+                <strong style="color:var(--text); font-size:0.88rem;">Insert Link Dialog</strong>
+              </td>
+              <td>Click on 'Insert Link' toolbar icon</td>
               <td class="expected">Link insertion popup dialog opens requesting URL and link text.</td>
-              <td><span class="badge badge-pass">PASS</span></td>
-              <td style="font-size:0.83rem; color: var(--text-muted);">-</td>
+              <td class="actual">Link popup dialog opens with URL input field.</td>
+              <td><span class="badge badge-pass">PASSED</span></td>
               <td class="evidence-cell">
                 <div class="thumb-box" onclick="openModal('../uat_target3_cicodecm/ecms_memo_19_insert_link_dialog.png', 'Step #19: Click on Insert link module')">
                   <img src="../uat_target3_cicodecm/ecms_memo_19_insert_link_dialog.png" alt="Step 19 Evidence" loading="lazy">
@@ -707,12 +768,15 @@
             </tr>
 
             <tr data-status="pass" data-section="create-memo">
-              <td class="step-num">#20 <span style="font-size:0.75rem; color:var(--text-dim);">(R38)</span></td>
-              <td><span class="section-tag">CREATE MEMO</span></td>
-              <td class="step-name">Click on "Insert image module"</td>
+              <td class="step-num">#20 <br><span style="font-size:0.7rem; color:var(--text-dim);">(R38)</span></td>
+              <td class="step-name">
+                <span class="section-tag">CREATE MEMO</span><br>
+                <strong style="color:var(--text); font-size:0.88rem;">Insert Image Dialog</strong>
+              </td>
+              <td>Click on 'Insert Image' toolbar icon</td>
               <td class="expected">Image insertion dialog / file chooser opens.</td>
-              <td><span class="badge badge-pass">PASS</span></td>
-              <td style="font-size:0.83rem; color: var(--text-muted);">-</td>
+              <td class="actual">File selector modal opens allowing image upload.</td>
+              <td><span class="badge badge-pass">PASSED</span></td>
               <td class="evidence-cell">
                 <div class="thumb-box" onclick="openModal('../uat_target3_cicodecm/ecms_memo_20_insert_image_dialog.png', 'Step #20: Click on Insert image module')">
                   <img src="../uat_target3_cicodecm/ecms_memo_20_insert_image_dialog.png" alt="Step 20 Evidence" loading="lazy">
@@ -722,12 +786,15 @@
             </tr>
 
             <tr data-status="pass" data-section="create-memo">
-              <td class="step-num">#21 <span style="font-size:0.75rem; color:var(--text-dim);">(R39)</span></td>
-              <td><span class="section-tag">CREATE MEMO</span></td>
-              <td class="step-name">Click on "Insert formula module"</td>
+              <td class="step-num">#21 <br><span style="font-size:0.7rem; color:var(--text-dim);">(R39)</span></td>
+              <td class="step-name">
+                <span class="section-tag">CREATE MEMO</span><br>
+                <strong style="color:var(--text); font-size:0.88rem;">Insert Formula Dialog</strong>
+              </td>
+              <td>Click on 'Insert Formula' toolbar icon</td>
               <td class="expected">Formula expression editor dialog opens.</td>
-              <td><span class="badge badge-pass">PASS</span></td>
-              <td style="font-size:0.83rem; color: var(--text-muted);">-</td>
+              <td class="actual">Formula editor input dialog launches.</td>
+              <td><span class="badge badge-pass">PASSED</span></td>
               <td class="evidence-cell">
                 <div class="thumb-box" onclick="openModal('../uat_target3_cicodecm/ecms_memo_21_insert_formula_dialog.png', 'Step #21: Click on Insert formula module')">
                   <img src="../uat_target3_cicodecm/ecms_memo_21_insert_formula_dialog.png" alt="Step 21 Evidence" loading="lazy">
@@ -737,12 +804,15 @@
             </tr>
 
             <tr data-status="pass" data-section="create-memo">
-              <td class="step-num">#22 <span style="font-size:0.75rem; color:var(--text-dim);">(R40)</span></td>
-              <td><span class="section-tag">CREATE MEMO</span></td>
-              <td class="step-name">Click on "Clear formatting module"</td>
+              <td class="step-num">#22 <br><span style="font-size:0.7rem; color:var(--text-dim);">(R40)</span></td>
+              <td class="step-name">
+                <span class="section-tag">CREATE MEMO</span><br>
+                <strong style="color:var(--text); font-size:0.88rem;">Clear Formatting</strong>
+              </td>
+              <td>Click on 'Clear Formatting' toolbar icon</td>
               <td class="expected">Removes all rich text styling from selected text.</td>
-              <td><span class="badge badge-pass">PASS</span></td>
-              <td style="font-size:0.83rem; color: var(--text-muted);">-</td>
+              <td class="actual">Clear formatting strips active text styles back to default.</td>
+              <td><span class="badge badge-pass">PASSED</span></td>
               <td class="evidence-cell">
                 <div class="thumb-box" onclick="openModal('../uat_target3_cicodecm/ecms_memo_22_clear_formatting.png', 'Step #22: Click on Clear formatting module')">
                   <img src="../uat_target3_cicodecm/ecms_memo_22_clear_formatting.png" alt="Step 22 Evidence" loading="lazy">
@@ -752,12 +822,15 @@
             </tr>
 
             <tr data-status="pass" data-section="create-memo">
-              <td class="step-num">#23 <span style="font-size:0.75rem; color:var(--text-dim);">(R41)</span></td>
-              <td><span class="section-tag">CREATE MEMO</span></td>
-              <td class="step-name">Click on "Save Draft"</td>
+              <td class="step-num">#23 <br><span style="font-size:0.7rem; color:var(--text-dim);">(R41)</span></td>
+              <td class="step-name">
+                <span class="section-tag">CREATE MEMO</span><br>
+                <strong style="color:var(--text); font-size:0.88rem;">Save Draft Dialog</strong>
+              </td>
+              <td>Click 'Save Draft' button</td>
               <td class="expected">Memo is saved to draft state; dialog prompt allows reviewer assignment.</td>
-              <td><span class="badge badge-pass">PASS</span></td>
-              <td style="font-size:0.83rem; color: var(--text-muted);">-</td>
+              <td class="actual">Save draft modal opens allowing draft reviewer selection.</td>
+              <td><span class="badge badge-pass">PASSED</span></td>
               <td class="evidence-cell">
                 <div class="thumb-box" onclick="openModal('../uat_target3_cicodecm/ecms_memo_23_save_draft_dialog.png', 'Step #23: Click on Save Draft')">
                   <img src="../uat_target3_cicodecm/ecms_memo_23_save_draft_dialog.png" alt="Step 23 Evidence" loading="lazy">
@@ -767,12 +840,15 @@
             </tr>
 
             <tr data-status="gap" data-section="create-memo">
-              <td class="step-num">#24 <span style="font-size:0.75rem; color:var(--text-dim);">(R43)</span></td>
-              <td><span class="section-tag">CREATE MEMO</span></td>
-              <td class="step-name">Click on "Save Memo"</td>
-              <td class="expected">Staging shows popup error 'Failed to create memo.' while triggering file download.</td>
+              <td class="step-num">#24 <br><span style="font-size:0.7rem; color:var(--text-dim);">(R43)</span></td>
+              <td class="step-name">
+                <span class="section-tag">CREATE MEMO</span><br>
+                <strong style="color:var(--text); font-size:0.88rem;">Save Memo Submission</strong>
+              </td>
+              <td>Click 'Save Memo' button</td>
+              <td class="expected">Memo is submitted and created successfully.</td>
+              <td class="actual">Staging displays popup error 'Failed to create memo.' while triggering file download. <br><span style="color:#f87171; font-weight:600; font-size:0.75rem;">[GAP: Popup error 'Failed to create memo.' displayed during save submission.]</span></td>
               <td><span class="badge badge-gap">GAP</span></td>
-              <td style="font-size:0.83rem; color: #f87171;">Popup error 'Failed to create memo.' displayed during save submission.</td>
               <td class="evidence-cell">
                 <div class="thumb-box" onclick="openModal('../uat_target3_cicodecm/ecms_memo_24_save_memo_submission.png', 'Step #24: Click on Save Memo (Staging Error)')">
                   <img src="../uat_target3_cicodecm/ecms_memo_24_save_memo_submission.png" alt="Step 24 Evidence" loading="lazy">
@@ -782,12 +858,15 @@
             </tr>
 
             <tr data-status="pass" data-section="view-all">
-              <td class="step-num">#25 <span style="font-size:0.75rem; color:var(--text-dim);">(R44)</span></td>
-              <td><span class="section-tag">VIEW ALL MEMO</span></td>
-              <td class="step-name">Click Memo sidebar dropdown</td>
+              <td class="step-num">#25 <br><span style="font-size:0.7rem; color:var(--text-dim);">(R44)</span></td>
+              <td class="step-name">
+                <span class="section-tag">VIEW ALL MEMO</span><br>
+                <strong style="color:var(--text); font-size:0.88rem;">View All Sidebar Menu</strong>
+              </td>
+              <td>Click 'Memo' sidebar dropdown</td>
               <td class="expected">Dropdown expands displaying View All Memo link.</td>
-              <td><span class="badge badge-pass">PASS</span></td>
-              <td style="font-size:0.83rem; color: var(--text-muted);">-</td>
+              <td class="actual">Sidebar dropdown displays View All Memo option.</td>
+              <td><span class="badge badge-pass">PASSED</span></td>
               <td class="evidence-cell">
                 <div class="thumb-box" onclick="openModal('../uat_target3_cicodecm/ecms_memo_25_view_all_dropdown.png', 'Step #25: Click Memo sidebar dropdown')">
                   <img src="../uat_target3_cicodecm/ecms_memo_25_view_all_dropdown.png" alt="Step 25 Evidence" loading="lazy">
@@ -797,12 +876,15 @@
             </tr>
 
             <tr data-status="pass" data-section="view-all">
-              <td class="step-num">#26 <span style="font-size:0.75rem; color:var(--text-dim);">(R45)</span></td>
-              <td><span class="section-tag">VIEW ALL MEMO</span></td>
-              <td class="step-name">Click View All Memo link</td>
+              <td class="step-num">#26 <br><span style="font-size:0.7rem; color:var(--text-dim);">(R45)</span></td>
+              <td class="step-name">
+                <span class="section-tag">VIEW ALL MEMO</span><br>
+                <strong style="color:var(--text); font-size:0.88rem;">View All Memo Table</strong>
+              </td>
+              <td>Click 'View All Memo' link</td>
               <td class="expected">Navigates to /ecms/index.php?r=memo/index displaying memo datatable with columns: Title, Status, Author, Date, Actions.</td>
-              <td><span class="badge badge-pass">PASS</span></td>
-              <td style="font-size:0.83rem; color: var(--text-muted);">-</td>
+              <td class="actual">Datatable renders with columns: Title, Status, Author, Date Created, Action.</td>
+              <td><span class="badge badge-pass">PASSED</span></td>
               <td class="evidence-cell">
                 <div class="thumb-box" onclick="openModal('../uat_target3_cicodecm/ecms_memo_26_view_all_page.png', 'Step #26: Click View All Memo link')">
                   <img src="../uat_target3_cicodecm/ecms_memo_26_view_all_page.png" alt="Step 26 Evidence" loading="lazy">
@@ -812,12 +894,15 @@
             </tr>
 
             <tr data-status="pass" data-section="view-all">
-              <td class="step-num">#27 <span style="font-size:0.75rem; color:var(--text-dim);">(R46)</span></td>
-              <td><span class="section-tag">VIEW ALL MEMO</span></td>
-              <td class="step-name">Click Action menu on memo record</td>
+              <td class="step-num">#27 <br><span style="font-size:0.7rem; color:var(--text-dim);">(R46)</span></td>
+              <td class="step-name">
+                <span class="section-tag">VIEW ALL MEMO</span><br>
+                <strong style="color:var(--text); font-size:0.88rem;">Action Menu Dropdown</strong>
+              </td>
+              <td>Click Action menu button on memo row</td>
               <td class="expected">Dropdown displays: View, Update, Attach to Ticket/Task.</td>
-              <td><span class="badge badge-pass">PASS</span></td>
-              <td style="font-size:0.83rem; color: var(--text-muted);">-</td>
+              <td class="actual">Action menu expands displaying options: View, Update, Attach to Ticket.</td>
+              <td><span class="badge badge-pass">PASSED</span></td>
               <td class="evidence-cell">
                 <div class="thumb-box" onclick="openModal('../uat_target3_cicodecm/ecms_memo_27_action_menu.png', 'Step #27: Click Action menu on memo record')">
                   <img src="../uat_target3_cicodecm/ecms_memo_27_action_menu.png" alt="Step 27 Evidence" loading="lazy">
@@ -827,12 +912,15 @@
             </tr>
 
             <tr data-status="pass" data-section="view-all">
-              <td class="step-num">#28 <span style="font-size:0.75rem; color:var(--text-dim);">(R47)</span></td>
-              <td><span class="section-tag">VIEW ALL MEMO</span></td>
-              <td class="step-name">Click "View" in Action menu</td>
+              <td class="step-num">#28 <br><span style="font-size:0.7rem; color:var(--text-dim);">(R47)</span></td>
+              <td class="step-name">
+                <span class="section-tag">VIEW ALL MEMO</span><br>
+                <strong style="color:var(--text); font-size:0.88rem;">Readonly Memo View</strong>
+              </td>
+              <td>Click 'View' in Action menu</td>
               <td class="expected">Opens readonly memo view displaying header, title, body content, and action toolbar.</td>
-              <td><span class="badge badge-pass">PASS</span></td>
-              <td style="font-size:0.83rem; color: var(--text-muted);">-</td>
+              <td class="actual">Readonly memo viewer loads displaying memo metadata and content.</td>
+              <td><span class="badge badge-pass">PASSED</span></td>
               <td class="evidence-cell">
                 <div class="thumb-box" onclick="openModal('../uat_target3_cicodecm/ecms_memo_28_view_memo_readonly.png', 'Step #28: Click View in Action menu')">
                   <img src="../uat_target3_cicodecm/ecms_memo_28_view_memo_readonly.png" alt="Step 28 Evidence" loading="lazy">
@@ -842,12 +930,15 @@
             </tr>
 
             <tr data-status="pass" data-section="view-all">
-              <td class="step-num">#29 <span style="font-size:0.75rem; color:var(--text-dim);">(R47)</span></td>
-              <td><span class="section-tag">VIEW ALL MEMO</span></td>
-              <td class="step-name">Click "Update" in Action menu</td>
+              <td class="step-num">#29 <br><span style="font-size:0.7rem; color:var(--text-dim);">(R47)</span></td>
+              <td class="step-name">
+                <span class="section-tag">VIEW ALL MEMO</span><br>
+                <strong style="color:var(--text); font-size:0.88rem;">Update Memo Edit Mode</strong>
+              </td>
+              <td>Click 'Update' in Action menu</td>
               <td class="expected">Opens memo editor in update mode pre-populated with existing title and content.</td>
-              <td><span class="badge badge-pass">PASS</span></td>
-              <td style="font-size:0.83rem; color: var(--text-muted);">-</td>
+              <td class="actual">Memo editor opens in edit mode pre-populated with title and content.</td>
+              <td><span class="badge badge-pass">PASSED</span></td>
               <td class="evidence-cell">
                 <div class="thumb-box" onclick="openModal('../uat_target3_cicodecm/ecms_memo_29_update_memo_editmode.png', 'Step #29: Click Update in Action menu')">
                   <img src="../uat_target3_cicodecm/ecms_memo_29_update_memo_editmode.png" alt="Step 29 Evidence" loading="lazy">
@@ -857,12 +948,15 @@
             </tr>
 
             <tr data-status="pass" data-section="view-all">
-              <td class="step-num">#30 <span style="font-size:0.75rem; color:var(--text-dim);">(R47)</span></td>
-              <td><span class="section-tag">VIEW ALL MEMO</span></td>
-              <td class="step-name">Click "Reviewers Feedback" toolbar button</td>
+              <td class="step-num">#30 <br><span style="font-size:0.7rem; color:var(--text-dim);">(R47)</span></td>
+              <td class="step-name">
+                <span class="section-tag">VIEW ALL MEMO</span><br>
+                <strong style="color:var(--text); font-size:0.88rem;">Reviewers Feedback Panel</strong>
+              </td>
+              <td>Click 'Reviewers Feedback' toolbar button</td>
               <td class="expected">Feedback side panel expands exhibiting reviewer comments and feedback history.</td>
-              <td><span class="badge badge-pass">PASS</span></td>
-              <td style="font-size:0.83rem; color: var(--text-muted);">-</td>
+              <td class="actual">Feedback drawer panel expands exhibiting reviewer feedback history.</td>
+              <td><span class="badge badge-pass">PASSED</span></td>
               <td class="evidence-cell">
                 <div class="thumb-box" onclick="openModal('../uat_target3_cicodecm/ecms_memo_30_toolbar_reviewers_feedback.png', 'Step #30: Click Reviewers Feedback toolbar button')">
                   <img src="../uat_target3_cicodecm/ecms_memo_30_toolbar_reviewers_feedback.png" alt="Step 30 Evidence" loading="lazy">
@@ -872,12 +966,15 @@
             </tr>
 
             <tr data-status="gap" data-section="view-all">
-              <td class="step-num">#31 <span style="font-size:0.75rem; color:var(--text-dim);">(R48)</span></td>
-              <td><span class="section-tag">VIEW ALL MEMO</span></td>
-              <td class="step-name">Click "Attach to Ticket" in Action menu</td>
-              <td class="expected">Action menu button reads 'Attach to Ticket' (naming discrepancy vs 'Attach to Task'). Navigates to Attach page.</td>
+              <td class="step-num">#31 <br><span style="font-size:0.7rem; color:var(--text-dim);">(R48)</span></td>
+              <td class="step-name">
+                <span class="section-tag">VIEW ALL MEMO</span><br>
+                <strong style="color:var(--text); font-size:0.88rem;">Attach to Task Page</strong>
+              </td>
+              <td>Click 'Attach to Ticket' in Action menu</td>
+              <td class="expected">Navigates to Attach page (Action menu reads 'Attach to Task').</td>
+              <td class="actual">Action menu button reads 'Attach to Ticket' instead of 'Attach to Task'. Navigates to Attach page. <br><span style="color:#f87171; font-weight:600; font-size:0.75rem;">[GAP: Action menu button reads 'Attach to Ticket' instead of 'Attach to Task'.]</span></td>
               <td><span class="badge badge-gap">GAP</span></td>
-              <td style="font-size:0.83rem; color: #f87171;">Action menu button reads 'Attach to Ticket' instead of 'Attach to Task'.</td>
               <td class="evidence-cell">
                 <div class="thumb-box" onclick="openModal('../uat_target3_cicodecm/ecms_memo_31_attach_to_ticket_page.png', 'Step #31: Click Attach to Ticket in Action menu')">
                   <img src="../uat_target3_cicodecm/ecms_memo_31_attach_to_ticket_page.png" alt="Step 31 Evidence" loading="lazy">
@@ -887,12 +984,15 @@
             </tr>
 
             <tr data-status="pass" data-section="view-all">
-              <td class="step-num">#32 <span style="font-size:0.75rem; color:var(--text-dim);">(R49)</span></td>
-              <td><span class="section-tag">VIEW ALL MEMO</span></td>
-              <td class="step-name">Select Queue from dropdown</td>
+              <td class="step-num">#32 <br><span style="font-size:0.7rem; color:var(--text-dim);">(R49)</span></td>
+              <td class="step-name">
+                <span class="section-tag">VIEW ALL MEMO</span><br>
+                <strong style="color:var(--text); font-size:0.88rem;">Queue Selection Dropdown</strong>
+              </td>
+              <td>Select Queue from dropdown</td>
               <td class="expected">Queue selection dropdown displays available department queues.</td>
-              <td><span class="badge badge-pass">PASS</span></td>
-              <td style="font-size:0.83rem; color: var(--text-muted);">-</td>
+              <td class="actual">Queue dropdown displays accessible department queues.</td>
+              <td><span class="badge badge-pass">PASSED</span></td>
               <td class="evidence-cell">
                 <div class="thumb-box" onclick="openModal('../uat_target3_cicodecm/ecms_memo_32_queue_selected.png', 'Step #32: Select Queue from dropdown')">
                   <img src="../uat_target3_cicodecm/ecms_memo_32_queue_selected.png" alt="Step 32 Evidence" loading="lazy">
@@ -902,12 +1002,15 @@
             </tr>
 
             <tr data-status="pass" data-section="view-all">
-              <td class="step-num">#33 <span style="font-size:0.75rem; color:var(--text-dim);">(R50)</span></td>
-              <td><span class="section-tag">VIEW ALL MEMO</span></td>
-              <td class="step-name">Click "Create Task" button</td>
+              <td class="step-num">#33 <br><span style="font-size:0.7rem; color:var(--text-dim);">(R50)</span></td>
+              <td class="step-name">
+                <span class="section-tag">VIEW ALL MEMO</span><br>
+                <strong style="color:var(--text); font-size:0.88rem;">Create Task Form Modal</strong>
+              </td>
+              <td>Click 'Create Task' button</td>
               <td class="expected">Create Task modal form opens pre-configured with attached memo reference.</td>
-              <td><span class="badge badge-pass">PASS</span></td>
-              <td style="font-size:0.83rem; color: var(--text-muted);">-</td>
+              <td class="actual">Create Task modal launches with attached memo reference pre-selected.</td>
+              <td><span class="badge badge-pass">PASSED</span></td>
               <td class="evidence-cell">
                 <div class="thumb-box" onclick="openModal('../uat_target3_cicodecm/ecms_memo_33_create_task_form.png', 'Step #33: Click Create Task button')">
                   <img src="../uat_target3_cicodecm/ecms_memo_33_create_task_form.png" alt="Step 33 Evidence" loading="lazy">
@@ -917,12 +1020,15 @@
             </tr>
 
             <tr data-status="pass" data-section="view-all">
-              <td class="step-num">#34 <span style="font-size:0.75rem; color:var(--text-dim);">(R51)</span></td>
-              <td><span class="section-tag">VIEW ALL MEMO</span></td>
-              <td class="step-name">Enter Task Title</td>
+              <td class="step-num">#34 <br><span style="font-size:0.7rem; color:var(--text-dim);">(R51)</span></td>
+              <td class="step-name">
+                <span class="section-tag">VIEW ALL MEMO</span><br>
+                <strong style="color:var(--text); font-size:0.88rem;">Enter Task Title</strong>
+              </td>
+              <td>Type title string into Task Title input</td>
               <td class="expected">Title field accepts text input for the new attached task.</td>
-              <td><span class="badge badge-pass">PASS</span></td>
-              <td style="font-size:0.83rem; color: var(--text-muted);">-</td>
+              <td class="actual">Task Title field accepts input without restriction.</td>
+              <td><span class="badge badge-pass">PASSED</span></td>
               <td class="evidence-cell">
                 <div class="thumb-box" onclick="openModal('../uat_target3_cicodecm/ecms_memo_34_task_title_entered.png', 'Step #34: Enter Task Title')">
                   <img src="../uat_target3_cicodecm/ecms_memo_34_task_title_entered.png" alt="Step 34 Evidence" loading="lazy">
@@ -932,12 +1038,15 @@
             </tr>
 
             <tr data-status="pass" data-section="view-all">
-              <td class="step-num">#35 <span style="font-size:0.75rem; color:var(--text-dim);">(R52)</span></td>
-              <td><span class="section-tag">VIEW ALL MEMO</span></td>
-              <td class="step-name">Click "Attach Memo" link</td>
+              <td class="step-num">#35 <br><span style="font-size:0.7rem; color:var(--text-dim);">(R52)</span></td>
+              <td class="step-name">
+                <span class="section-tag">VIEW ALL MEMO</span><br>
+                <strong style="color:var(--text); font-size:0.88rem;">Attach Memo Link Click</strong>
+              </td>
+              <td>Click 'Attach Memo' link button</td>
               <td class="expected">File selector / attachment link dialog triggers.</td>
-              <td><span class="badge badge-pass">PASS</span></td>
-              <td style="font-size:0.83rem; color: var(--text-muted);">-</td>
+              <td class="actual">Attachment picker dialog triggers.</td>
+              <td><span class="badge badge-pass">PASSED</span></td>
               <td class="evidence-cell">
                 <div class="thumb-box" onclick="openModal('../uat_target3_cicodecm/ecms_memo_35_attach_memo_link_clicked.png', 'Step #35: Click Attach Memo link')">
                   <img src="../uat_target3_cicodecm/ecms_memo_35_attach_memo_link_clicked.png" alt="Step 35 Evidence" loading="lazy">
@@ -947,12 +1056,15 @@
             </tr>
 
             <tr data-status="pass" data-section="view-all">
-              <td class="step-num">#36 <span style="font-size:0.75rem; color:var(--text-dim);">(R53)</span></td>
-              <td><span class="section-tag">VIEW ALL MEMO</span></td>
-              <td class="step-name">Select Memo File attachment</td>
+              <td class="step-num">#36 <br><span style="font-size:0.7rem; color:var(--text-dim);">(R53)</span></td>
+              <td class="step-name">
+                <span class="section-tag">VIEW ALL MEMO</span><br>
+                <strong style="color:var(--text); font-size:0.88rem;">Memo File Attached</strong>
+              </td>
+              <td>Select file to attach to task</td>
               <td class="expected">Selected file populates attachment list with filename and size.</td>
-              <td><span class="badge badge-pass">PASS</span></td>
-              <td style="font-size:0.83rem; color: var(--text-muted);">-</td>
+              <td class="actual">Attachment list populates with selected file.</td>
+              <td><span class="badge badge-pass">PASSED</span></td>
               <td class="evidence-cell">
                 <div class="thumb-box" onclick="openModal('../uat_target3_cicodecm/ecms_memo_36_memo_file_attached.png', 'Step #36: Select Memo File attachment')">
                   <img src="../uat_target3_cicodecm/ecms_memo_36_memo_file_attached.png" alt="Step 36 Evidence" loading="lazy">
@@ -962,12 +1074,15 @@
             </tr>
 
             <tr data-status="pass" data-section="view-all">
-              <td class="step-num">#37 <span style="font-size:0.75rem; color:var(--text-dim);">(R54)</span></td>
-              <td><span class="section-tag">VIEW ALL MEMO</span></td>
-              <td class="step-name">Verify Attachment List item</td>
+              <td class="step-num">#37 <br><span style="font-size:0.7rem; color:var(--text-dim);">(R54)</span></td>
+              <td class="step-name">
+                <span class="section-tag">VIEW ALL MEMO</span><br>
+                <strong style="color:var(--text); font-size:0.88rem;">Verify Attachment List</strong>
+              </td>
+              <td>Inspect attachment item tag</td>
               <td class="expected">Attachment tag displays with remove icon option.</td>
-              <td><span class="badge badge-pass">PASS</span></td>
-              <td style="font-size:0.83rem; color: var(--text-muted);">-</td>
+              <td class="actual">Attachment tag displays filename with delete icon.</td>
+              <td><span class="badge badge-pass">PASSED</span></td>
               <td class="evidence-cell">
                 <div class="thumb-box" onclick="openModal('../uat_target3_cicodecm/ecms_memo_37_attachment_verified.png', 'Step #37: Verify Attachment List item')">
                   <img src="../uat_target3_cicodecm/ecms_memo_37_attachment_verified.png" alt="Step 37 Evidence" loading="lazy">
@@ -977,12 +1092,15 @@
             </tr>
 
             <tr data-status="pass" data-section="view-all">
-              <td class="step-num">#38 <span style="font-size:0.75rem; color:var(--text-dim);">(R55)</span></td>
-              <td><span class="section-tag">VIEW ALL MEMO</span></td>
-              <td class="step-name">Fill required Task Form fields</td>
+              <td class="step-num">#38 <br><span style="font-size:0.7rem; color:var(--text-dim);">(R55)</span></td>
+              <td class="step-name">
+                <span class="section-tag">VIEW ALL MEMO</span><br>
+                <strong style="color:var(--text); font-size:0.88rem;">Fill Task Form Fields</strong>
+              </td>
+              <td>Fill Priority, Description, and Due Date</td>
               <td class="expected">Priority, Description, and Due Date fields accept inputs.</td>
-              <td><span class="badge badge-pass">PASS</span></td>
-              <td style="font-size:0.83rem; color: var(--text-muted);">-</td>
+              <td class="actual">Task form fields accept priority, description, and date inputs.</td>
+              <td><span class="badge badge-pass">PASSED</span></td>
               <td class="evidence-cell">
                 <div class="thumb-box" onclick="openModal('../uat_target3_cicodecm/ecms_memo_38_form_fields_completed.png', 'Step #38: Fill required Task Form fields')">
                   <img src="../uat_target3_cicodecm/ecms_memo_38_form_fields_completed.png" alt="Step 38 Evidence" loading="lazy">
@@ -992,12 +1110,15 @@
             </tr>
 
             <tr data-status="pass" data-section="view-all">
-              <td class="step-num">#39 <span style="font-size:0.75rem; color:var(--text-dim);">(R56)</span></td>
-              <td><span class="section-tag">VIEW ALL MEMO</span></td>
-              <td class="step-name">Check "Immediate Assignment" checkbox</td>
+              <td class="step-num">#39 <br><span style="font-size:0.7rem; color:var(--text-dim);">(R56)</span></td>
+              <td class="step-name">
+                <span class="section-tag">VIEW ALL MEMO</span><br>
+                <strong style="color:var(--text); font-size:0.88rem;">Immediate Assignment Toggle</strong>
+              </td>
+              <td>Check 'Immediate Assignment' checkbox</td>
               <td class="expected">Checkbox toggles active state enabling Assignee dropdown.</td>
-              <td><span class="badge badge-pass">PASS</span></td>
-              <td style="font-size:0.83rem; color: var(--text-muted);">-</td>
+              <td class="actual">Immediate assignment checkbox enables Assignee selection dropdown.</td>
+              <td><span class="badge badge-pass">PASSED</span></td>
               <td class="evidence-cell">
                 <div class="thumb-box" onclick="openModal('../uat_target3_cicodecm/ecms_memo_39_immediate_assign_checked.png', 'Step #39: Check Immediate Assignment checkbox')">
                   <img src="../uat_target3_cicodecm/ecms_memo_39_immediate_assign_checked.png" alt="Step 39 Evidence" loading="lazy">
@@ -1007,12 +1128,15 @@
             </tr>
 
             <tr data-status="pass" data-section="view-all">
-              <td class="step-num">#40 <span style="font-size:0.75rem; color:var(--text-dim);">(R57)</span></td>
-              <td><span class="section-tag">VIEW ALL MEMO</span></td>
-              <td class="step-name">Select Assignee user</td>
+              <td class="step-num">#40 <br><span style="font-size:0.7rem; color:var(--text-dim);">(R57)</span></td>
+              <td class="step-name">
+                <span class="section-tag">VIEW ALL MEMO</span><br>
+                <strong style="color:var(--text); font-size:0.88rem;">Select Assignee User</strong>
+              </td>
+              <td>Select Assignee from staff dropdown</td>
               <td class="expected">User selected from tenant staff dropdown list.</td>
-              <td><span class="badge badge-pass">PASS</span></td>
-              <td style="font-size:0.83rem; color: var(--text-muted);">-</td>
+              <td class="actual">Assignee user selected from staff list.</td>
+              <td><span class="badge badge-pass">PASSED</span></td>
               <td class="evidence-cell">
                 <div class="thumb-box" onclick="openModal('../uat_target3_cicodecm/ecms_memo_40_assignee_selected.png', 'Step #40: Select Assignee user')">
                   <img src="../uat_target3_cicodecm/ecms_memo_40_assignee_selected.png" alt="Step 40 Evidence" loading="lazy">
@@ -1022,12 +1146,15 @@
             </tr>
 
             <tr data-status="pass" data-section="view-all">
-              <td class="step-num">#41 <span style="font-size:0.75rem; color:var(--text-dim);">(R58)</span></td>
-              <td><span class="section-tag">VIEW ALL MEMO</span></td>
-              <td class="step-name">Click "Submit Task"</td>
+              <td class="step-num">#41 <br><span style="font-size:0.7rem; color:var(--text-dim);">(R58)</span></td>
+              <td class="step-name">
+                <span class="section-tag">VIEW ALL MEMO</span><br>
+                <strong style="color:var(--text); font-size:0.88rem;">Submit Task Creation</strong>
+              </td>
+              <td>Click 'Submit Task' button</td>
               <td class="expected">Task created successfully toast notification displays; modal closes.</td>
-              <td><span class="badge badge-pass">PASS</span></td>
-              <td style="font-size:0.83rem; color: var(--text-muted);">-</td>
+              <td class="actual">Task creation notification displays; task created successfully.</td>
+              <td><span class="badge badge-pass">PASSED</span></td>
               <td class="evidence-cell">
                 <div class="thumb-box" onclick="openModal('../uat_target3_cicodecm/ecms_memo_41_task_created_notification.png', 'Step #41: Click Submit Task')">
                   <img src="../uat_target3_cicodecm/ecms_memo_41_task_created_notification.png" alt="Step 41 Evidence" loading="lazy">
@@ -1037,12 +1164,15 @@
             </tr>
 
             <tr data-status="pass" data-section="memo-draft">
-              <td class="step-num">#42 <span style="font-size:0.75rem; color:var(--text-dim);">(R59)</span></td>
-              <td><span class="section-tag">MEMO DRAFT</span></td>
-              <td class="step-name">Click Memo sidebar dropdown</td>
+              <td class="step-num">#42 <br><span style="font-size:0.7rem; color:var(--text-dim);">(R59)</span></td>
+              <td class="step-name">
+                <span class="section-tag">MEMO DRAFT</span><br>
+                <strong style="color:var(--text); font-size:0.88rem;">Memo Draft Sidebar Menu</strong>
+              </td>
+              <td>Click 'Memo' sidebar dropdown</td>
               <td class="expected">Dropdown expands displaying Memo Draft link.</td>
-              <td><span class="badge badge-pass">PASS</span></td>
-              <td style="font-size:0.83rem; color: var(--text-muted);">-</td>
+              <td class="actual">Sidebar menu displays Memo Draft option.</td>
+              <td><span class="badge badge-pass">PASSED</span></td>
               <td class="evidence-cell">
                 <div class="thumb-box" onclick="openModal('../uat_target3_cicodecm/ecms_memo_42_memo_draft_dropdown.png', 'Step #42: Click Memo sidebar dropdown')">
                   <img src="../uat_target3_cicodecm/ecms_memo_42_memo_draft_dropdown.png" alt="Step 42 Evidence" loading="lazy">
@@ -1052,12 +1182,15 @@
             </tr>
 
             <tr data-status="pass" data-section="memo-draft">
-              <td class="step-num">#43 <span style="font-size:0.75rem; color:var(--text-dim);">(R60)</span></td>
-              <td><span class="section-tag">MEMO DRAFT</span></td>
-              <td class="step-name">Click Memo Draft link</td>
+              <td class="step-num">#43 <br><span style="font-size:0.7rem; color:var(--text-dim);">(R60)</span></td>
+              <td class="step-name">
+                <span class="section-tag">MEMO DRAFT</span><br>
+                <strong style="color:var(--text); font-size:0.88rem;">Memo Draft Table Page</strong>
+              </td>
+              <td>Click 'Memo Draft' link</td>
               <td class="expected">Navigates to /ecms/index.php?r=memo/draft displaying draft datatable.</td>
-              <td><span class="badge badge-pass">PASS</span></td>
-              <td style="font-size:0.83rem; color: var(--text-muted);">-</td>
+              <td class="actual">Navigates to Memo Draft page exhibiting list of draft memos.</td>
+              <td><span class="badge badge-pass">PASSED</span></td>
               <td class="evidence-cell">
                 <div class="thumb-box" onclick="openModal('../uat_target3_cicodecm/ecms_memo_43_memo_draft_page.png', 'Step #43: Click Memo Draft link')">
                   <img src="../uat_target3_cicodecm/ecms_memo_43_memo_draft_page.png" alt="Step 43 Evidence" loading="lazy">
@@ -1067,12 +1200,15 @@
             </tr>
 
             <tr data-status="pass" data-section="memo-draft">
-              <td class="step-num">#44 <span style="font-size:0.75rem; color:var(--text-dim);">(R61)</span></td>
-              <td><span class="section-tag">MEMO DRAFT</span></td>
-              <td class="step-name">Click Action menu on draft record</td>
+              <td class="step-num">#44 <br><span style="font-size:0.7rem; color:var(--text-dim);">(R61)</span></td>
+              <td class="step-name">
+                <span class="section-tag">MEMO DRAFT</span><br>
+                <strong style="color:var(--text); font-size:0.88rem;">Draft Action Menu</strong>
+              </td>
+              <td>Click Action menu on draft record</td>
               <td class="expected">Dropdown displays: View, Update, Add Reviewer, Access Control.</td>
-              <td><span class="badge badge-pass">PASS</span></td>
-              <td style="font-size:0.83rem; color: var(--text-muted);">-</td>
+              <td class="actual">Action menu expands with View, Update, Add Reviewer, Access Control.</td>
+              <td><span class="badge badge-pass">PASSED</span></td>
               <td class="evidence-cell">
                 <div class="thumb-box" onclick="openModal('../uat_target3_cicodecm/ecms_memo_44_draft_action_menu.png', 'Step #44: Click Action menu on draft record')">
                   <img src="../uat_target3_cicodecm/ecms_memo_44_draft_action_menu.png" alt="Step 44 Evidence" loading="lazy">
@@ -1082,12 +1218,15 @@
             </tr>
 
             <tr data-status="pass" data-section="memo-draft">
-              <td class="step-num">#45 <span style="font-size:0.75rem; color:var(--text-dim);">(R62)</span></td>
-              <td><span class="section-tag">MEMO DRAFT</span></td>
-              <td class="step-name">Click "View" in Draft Action menu</td>
+              <td class="step-num">#45 <br><span style="font-size:0.7rem; color:var(--text-dim);">(R62)</span></td>
+              <td class="step-name">
+                <span class="section-tag">MEMO DRAFT</span><br>
+                <strong style="color:var(--text); font-size:0.88rem;">View Readonly Draft</strong>
+              </td>
+              <td>Click 'View' in Draft Action menu</td>
               <td class="expected">Opens draft view interface in readonly mode.</td>
-              <td><span class="badge badge-pass">PASS</span></td>
-              <td style="font-size:0.83rem; color: var(--text-muted);">-</td>
+              <td class="actual">Draft viewer opens exhibiting memo in readonly format.</td>
+              <td><span class="badge badge-pass">PASSED</span></td>
               <td class="evidence-cell">
                 <div class="thumb-box" onclick="openModal('../uat_target3_cicodecm/ecms_memo_45_draft_view_readonly.png', 'Step #45: Click View in Draft Action menu')">
                   <img src="../uat_target3_cicodecm/ecms_memo_45_draft_view_readonly.png" alt="Step 45 Evidence" loading="lazy">
@@ -1097,12 +1236,15 @@
             </tr>
 
             <tr data-status="pass" data-section="memo-draft">
-              <td class="step-num">#46 <span style="font-size:0.75rem; color:var(--text-dim);">(R63)</span></td>
-              <td><span class="section-tag">MEMO DRAFT</span></td>
-              <td class="step-name">Inspect Toolbar features in View mode</td>
+              <td class="step-num">#46 <br><span style="font-size:0.7rem; color:var(--text-dim);">(R63)</span></td>
+              <td class="step-name">
+                <span class="section-tag">MEMO DRAFT</span><br>
+                <strong style="color:var(--text); font-size:0.88rem;">Draft View Toolbar Features</strong>
+              </td>
+              <td>Inspect Toolbar features in View mode</td>
               <td class="expected">Toolbar displays Edit, Add Reviewer, Feedback, Access Control buttons.</td>
-              <td><span class="badge badge-pass">PASS</span></td>
-              <td style="font-size:0.83rem; color: var(--text-muted);">-</td>
+              <td class="actual">Toolbar displays Edit, Add Reviewer, Feedback, Access Control options.</td>
+              <td><span class="badge badge-pass">PASSED</span></td>
               <td class="evidence-cell">
                 <div class="thumb-box" onclick="openModal('../uat_target3_cicodecm/ecms_memo_46_draft_toolbar_features.png', 'Step #46: Inspect Toolbar features in View mode')">
                   <img src="../uat_target3_cicodecm/ecms_memo_46_draft_toolbar_features.png" alt="Step 46 Evidence" loading="lazy">
@@ -1112,12 +1254,15 @@
             </tr>
 
             <tr data-status="pass" data-section="memo-draft">
-              <td class="step-num">#47 <span style="font-size:0.75rem; color:var(--text-dim);">(R64)</span></td>
-              <td><span class="section-tag">MEMO DRAFT</span></td>
-              <td class="step-name">Click "Add Reviewer" button</td>
+              <td class="step-num">#47 <br><span style="font-size:0.7rem; color:var(--text-dim);">(R64)</span></td>
+              <td class="step-name">
+                <span class="section-tag">MEMO DRAFT</span><br>
+                <strong style="color:var(--text); font-size:0.88rem;">Add Reviewer Modal</strong>
+              </td>
+              <td>Click 'Add Reviewer' button</td>
               <td class="expected">Add Reviewer modal opens with user select dropdown and reviewer role options.</td>
-              <td><span class="badge badge-pass">PASS</span></td>
-              <td style="font-size:0.83rem; color: var(--text-muted);">-</td>
+              <td class="actual">Add Reviewer modal opens with user selection list.</td>
+              <td><span class="badge badge-pass">PASSED</span></td>
               <td class="evidence-cell">
                 <div class="thumb-box" onclick="openModal('../uat_target3_cicodecm/ecms_memo_47_add_reviewer_modal.png', 'Step #47: Click Add Reviewer button')">
                   <img src="../uat_target3_cicodecm/ecms_memo_47_add_reviewer_modal.png" alt="Step 47 Evidence" loading="lazy">
@@ -1127,12 +1272,15 @@
             </tr>
 
             <tr data-status="pass" data-section="memo-draft">
-              <td class="step-num">#48 <span style="font-size:0.75rem; color:var(--text-dim);">(R65)</span></td>
-              <td><span class="section-tag">MEMO DRAFT</span></td>
-              <td class="step-name">Select user & click "Add Reviewer"</td>
+              <td class="step-num">#48 <br><span style="font-size:0.7rem; color:var(--text-dim);">(R65)</span></td>
+              <td class="step-name">
+                <span class="section-tag">MEMO DRAFT</span><br>
+                <strong style="color:var(--text); font-size:0.88rem;">Reviewer Added Confirmation</strong>
+              </td>
+              <td>Select user & click 'Add Reviewer'</td>
               <td class="expected">Reviewer added confirmation alert displays; reviewer appears in list.</td>
-              <td><span class="badge badge-pass">PASS</span></td>
-              <td style="font-size:0.83rem; color: var(--text-muted);">-</td>
+              <td class="actual">Reviewer added alert displays and reviewer populates reviewer list.</td>
+              <td><span class="badge badge-pass">PASSED</span></td>
               <td class="evidence-cell">
                 <div class="thumb-box" onclick="openModal('../uat_target3_cicodecm/ecms_memo_48_reviewer_added_confirmation.png', 'Step #48: Select user & click Add Reviewer')">
                   <img src="../uat_target3_cicodecm/ecms_memo_48_reviewer_added_confirmation.png" alt="Step 48 Evidence" loading="lazy">
@@ -1142,12 +1290,15 @@
             </tr>
 
             <tr data-status="pass" data-section="memo-draft">
-              <td class="step-num">#49 <span style="font-size:0.75rem; color:var(--text-dim);">(R66)</span></td>
-              <td><span class="section-tag">MEMO DRAFT</span></td>
-              <td class="step-name">Click "Reviewers Feedback" in View mode</td>
+              <td class="step-num">#49 <br><span style="font-size:0.7rem; color:var(--text-dim);">(R66)</span></td>
+              <td class="step-name">
+                <span class="section-tag">MEMO DRAFT</span><br>
+                <strong style="color:var(--text); font-size:0.88rem;">Reviewers Feedback Panel</strong>
+              </td>
+              <td>Click 'Reviewers Feedback' in View mode</td>
               <td class="expected">Feedback drawer slides out displaying reviewer comments.</td>
-              <td><span class="badge badge-pass">PASS</span></td>
-              <td style="font-size:0.83rem; color: var(--text-muted);">-</td>
+              <td class="actual">Feedback panel slides out exhibiting comments.</td>
+              <td><span class="badge badge-pass">PASSED</span></td>
               <td class="evidence-cell">
                 <div class="thumb-box" onclick="openModal('../uat_target3_cicodecm/ecms_memo_49_draft_view_feedback_panel.png', 'Step #49: Click Reviewers Feedback in View mode')">
                   <img src="../uat_target3_cicodecm/ecms_memo_49_draft_view_feedback_panel.png" alt="Step 49 Evidence" loading="lazy">
@@ -1157,12 +1308,15 @@
             </tr>
 
             <tr data-status="pass" data-section="memo-draft">
-              <td class="step-num">#50 <span style="font-size:0.75rem; color:var(--text-dim);">(R67)</span></td>
-              <td><span class="section-tag">MEMO DRAFT</span></td>
-              <td class="step-name">Click "Access Control" in View mode</td>
+              <td class="step-num">#50 <br><span style="font-size:0.7rem; color:var(--text-dim);">(R67)</span></td>
+              <td class="step-name">
+                <span class="section-tag">MEMO DRAFT</span><br>
+                <strong style="color:var(--text); font-size:0.88rem;">Draft Access Control Modal</strong>
+              </td>
+              <td>Click 'Access Control' in View mode</td>
               <td class="expected">Access control modal opens exhibiting permissions matrix.</td>
-              <td><span class="badge badge-pass">PASS</span></td>
-              <td style="font-size:0.83rem; color: var(--text-muted);">-</td>
+              <td class="actual">Access control modal opens displaying permission matrix.</td>
+              <td><span class="badge badge-pass">PASSED</span></td>
               <td class="evidence-cell">
                 <div class="thumb-box" onclick="openModal('../uat_target3_cicodecm/ecms_memo_50_draft_view_access_modal.png', 'Step #50: Click Access Control in View mode')">
                   <img src="../uat_target3_cicodecm/ecms_memo_50_draft_view_access_modal.png" alt="Step 50 Evidence" loading="lazy">
@@ -1172,12 +1326,15 @@
             </tr>
 
             <tr data-status="pass" data-section="memo-draft">
-              <td class="step-num">#51 <span style="font-size:0.75rem; color:var(--text-dim);">(R68)</span></td>
-              <td><span class="section-tag">MEMO DRAFT</span></td>
-              <td class="step-name">Click "Update" in View mode</td>
+              <td class="step-num">#51 <br><span style="font-size:0.7rem; color:var(--text-dim);">(R68)</span></td>
+              <td class="step-name">
+                <span class="section-tag">MEMO DRAFT</span><br>
+                <strong style="color:var(--text); font-size:0.88rem;">Update Draft Edit Mode</strong>
+              </td>
+              <td>Click 'Update' in View mode</td>
               <td class="expected">Switches interface into editable draft mode.</td>
-              <td><span class="badge badge-pass">PASS</span></td>
-              <td style="font-size:0.83rem; color: var(--text-muted);">-</td>
+              <td class="actual">Draft switches into interactive edit mode.</td>
+              <td><span class="badge badge-pass">PASSED</span></td>
               <td class="evidence-cell">
                 <div class="thumb-box" onclick="openModal('../uat_target3_cicodecm/ecms_memo_51_draft_update_editmode.png', 'Step #51: Click Update in View mode')">
                   <img src="../uat_target3_cicodecm/ecms_memo_51_draft_update_editmode.png" alt="Step 51 Evidence" loading="lazy">
@@ -1187,12 +1344,15 @@
             </tr>
 
             <tr data-status="pass" data-section="memo-draft">
-              <td class="step-num">#52 <span style="font-size:0.75rem; color:var(--text-dim);">(R69)</span></td>
-              <td><span class="section-tag">MEMO DRAFT</span></td>
-              <td class="step-name">Click "Cancel Update"</td>
+              <td class="step-num">#52 <br><span style="font-size:0.7rem; color:var(--text-dim);">(R69)</span></td>
+              <td class="step-name">
+                <span class="section-tag">MEMO DRAFT</span><br>
+                <strong style="color:var(--text); font-size:0.88rem;">Cancel Update Mode</strong>
+              </td>
+              <td>Click 'Cancel Update'</td>
               <td class="expected">Reverts editor changes and returns to draft readonly view.</td>
-              <td><span class="badge badge-pass">PASS</span></td>
-              <td style="font-size:0.83rem; color: var(--text-muted);">-</td>
+              <td class="actual">Reverts editor changes and returns to readonly view.</td>
+              <td><span class="badge badge-pass">PASSED</span></td>
               <td class="evidence-cell">
                 <div class="thumb-box" onclick="openModal('../uat_target3_cicodecm/ecms_memo_52_draft_update_cancelled.png', 'Step #52: Click Cancel Update')">
                   <img src="../uat_target3_cicodecm/ecms_memo_52_draft_update_cancelled.png" alt="Step 52 Evidence" loading="lazy">
@@ -1202,12 +1362,15 @@
             </tr>
 
             <tr data-status="pass" data-section="memo-review">
-              <td class="step-num">#53 <span style="font-size:0.75rem; color:var(--text-dim);">(R70)</span></td>
-              <td><span class="section-tag">MEMO DRAFT REVIEW</span></td>
-              <td class="step-name">Click Memo sidebar dropdown</td>
+              <td class="step-num">#53 <br><span style="font-size:0.7rem; color:var(--text-dim);">(R70)</span></td>
+              <td class="step-name">
+                <span class="section-tag">MEMO DRAFT REVIEW</span><br>
+                <strong style="color:var(--text); font-size:0.88rem;">Memo Review Sidebar Menu</strong>
+              </td>
+              <td>Click 'Memo' sidebar dropdown</td>
               <td class="expected">Dropdown expands displaying Memo Draft Review link.</td>
-              <td><span class="badge badge-pass">PASS</span></td>
-              <td style="font-size:0.83rem; color: var(--text-muted);">-</td>
+              <td class="actual">Sidebar menu displays Memo Draft Review option.</td>
+              <td><span class="badge badge-pass">PASSED</span></td>
               <td class="evidence-cell">
                 <div class="thumb-box" onclick="openModal('../uat_target3_cicodecm/ecms_memo_53_memo_review_dropdown.png', 'Step #53: Click Memo sidebar dropdown')">
                   <img src="../uat_target3_cicodecm/ecms_memo_53_memo_review_dropdown.png" alt="Step 53 Evidence" loading="lazy">
@@ -1217,12 +1380,15 @@
             </tr>
 
             <tr data-status="pass" data-section="memo-review">
-              <td class="step-num">#54 <span style="font-size:0.75rem; color:var(--text-dim);">(R71)</span></td>
-              <td><span class="section-tag">MEMO DRAFT REVIEW</span></td>
-              <td class="step-name">Click Memo Draft Review link</td>
+              <td class="step-num">#54 <br><span style="font-size:0.7rem; color:var(--text-dim);">(R71)</span></td>
+              <td class="step-name">
+                <span class="section-tag">MEMO DRAFT REVIEW</span><br>
+                <strong style="color:var(--text); font-size:0.88rem;">Memo Draft Review Table</strong>
+              </td>
+              <td>Click 'Memo Draft Review' link</td>
               <td class="expected">Navigates to /ecms/index.php?r=memo/review displaying review queue datatable.</td>
-              <td><span class="badge badge-pass">PASS</span></td>
-              <td style="font-size:0.83rem; color: var(--text-muted);">-</td>
+              <td class="actual">Navigates to Memo Draft Review page displaying review queue.</td>
+              <td><span class="badge badge-pass">PASSED</span></td>
               <td class="evidence-cell">
                 <div class="thumb-box" onclick="openModal('../uat_target3_cicodecm/ecms_memo_54_memo_review_page.png', 'Step #54: Click Memo Draft Review link')">
                   <img src="../uat_target3_cicodecm/ecms_memo_54_memo_review_page.png" alt="Step 54 Evidence" loading="lazy">
@@ -1232,12 +1398,15 @@
             </tr>
 
             <tr data-status="pass" data-section="memo-review">
-              <td class="step-num">#55 <span style="font-size:0.75rem; color:var(--text-dim);">(R72)</span></td>
-              <td><span class="section-tag">MEMO DRAFT REVIEW</span></td>
-              <td class="step-name">Click Action menu on review record</td>
+              <td class="step-num">#55 <br><span style="font-size:0.7rem; color:var(--text-dim);">(R72)</span></td>
+              <td class="step-name">
+                <span class="section-tag">MEMO DRAFT REVIEW</span><br>
+                <strong style="color:var(--text); font-size:0.88rem;">Review Action Menu</strong>
+              </td>
+              <td>Click Action menu on review record</td>
               <td class="expected">Dropdown displays: Review, View Feedback, Access Control.</td>
-              <td><span class="badge badge-pass">PASS</span></td>
-              <td style="font-size:0.83rem; color: var(--text-muted);">-</td>
+              <td class="actual">Action menu displays Review, View Feedback, Access Control options.</td>
+              <td><span class="badge badge-pass">PASSED</span></td>
               <td class="evidence-cell">
                 <div class="thumb-box" onclick="openModal('../uat_target3_cicodecm/ecms_memo_55_review_action_menu.png', 'Step #55: Click Action menu on review record')">
                   <img src="../uat_target3_cicodecm/ecms_memo_55_review_action_menu.png" alt="Step 55 Evidence" loading="lazy">
@@ -1247,12 +1416,15 @@
             </tr>
 
             <tr data-status="pass" data-section="memo-review">
-              <td class="step-num">#56 <span style="font-size:0.75rem; color:var(--text-dim);">(R73)</span></td>
-              <td><span class="section-tag">MEMO DRAFT REVIEW</span></td>
-              <td class="step-name">Click "Review" in Action menu</td>
+              <td class="step-num">#56 <br><span style="font-size:0.7rem; color:var(--text-dim);">(R73)</span></td>
+              <td class="step-name">
+                <span class="section-tag">MEMO DRAFT REVIEW</span><br>
+                <strong style="color:var(--text); font-size:0.88rem;">Review Mode Interface</strong>
+              </td>
+              <td>Click 'Review' in Action menu</td>
               <td class="expected">Opens review interface with Approve, Reject, and Comment controls.</td>
-              <td><span class="badge badge-pass">PASS</span></td>
-              <td style="font-size:0.83rem; color: var(--text-muted);">-</td>
+              <td class="actual">Review mode opens with Approve, Reject, and Comment controls.</td>
+              <td><span class="badge badge-pass">PASSED</span></td>
               <td class="evidence-cell">
                 <div class="thumb-box" onclick="openModal('../uat_target3_cicodecm/ecms_memo_56_review_mode_interface.png', 'Step #56: Click Review in Action menu')">
                   <img src="../uat_target3_cicodecm/ecms_memo_56_review_mode_interface.png" alt="Step 56 Evidence" loading="lazy">
@@ -1262,12 +1434,15 @@
             </tr>
 
             <tr data-status="pass" data-section="memo-review">
-              <td class="step-num">#57 <span style="font-size:0.75rem; color:var(--text-dim);">(R74)</span></td>
-              <td><span class="section-tag">MEMO DRAFT REVIEW</span></td>
-              <td class="step-name">Click "View Feedback" in Review mode</td>
+              <td class="step-num">#57 <br><span style="font-size:0.7rem; color:var(--text-dim);">(R74)</span></td>
+              <td class="step-name">
+                <span class="section-tag">MEMO DRAFT REVIEW</span><br>
+                <strong style="color:var(--text); font-size:0.88rem;">Review View Feedback Panel</strong>
+              </td>
+              <td>Click 'View Feedback' in Review mode</td>
               <td class="expected">Feedback panel displays previous comments and revision history.</td>
-              <td><span class="badge badge-pass">PASS</span></td>
-              <td style="font-size:0.83rem; color: var(--text-muted);">-</td>
+              <td class="actual">Feedback panel displays previous reviewer comments.</td>
+              <td><span class="badge badge-pass">PASSED</span></td>
               <td class="evidence-cell">
                 <div class="thumb-box" onclick="openModal('../uat_target3_cicodecm/ecms_memo_57_review_view_feedback_panel.png', 'Step #57: Click View Feedback in Review mode')">
                   <img src="../uat_target3_cicodecm/ecms_memo_57_review_view_feedback_panel.png" alt="Step 57 Evidence" loading="lazy">
@@ -1277,12 +1452,15 @@
             </tr>
 
             <tr data-status="pass" data-section="memo-review">
-              <td class="step-num">#58 <span style="font-size:0.75rem; color:var(--text-dim);">(R75)</span></td>
-              <td><span class="section-tag">MEMO DRAFT REVIEW</span></td>
-              <td class="step-name">Click "Access Control" in Review mode</td>
+              <td class="step-num">#58 <br><span style="font-size:0.7rem; color:var(--text-dim);">(R75)</span></td>
+              <td class="step-name">
+                <span class="section-tag">MEMO DRAFT REVIEW</span><br>
+                <strong style="color:var(--text); font-size:0.88rem;">Review Access Control Modal</strong>
+              </td>
+              <td>Click 'Access Control' in Review mode</td>
               <td class="expected">Access permissions modal displays for review session.</td>
-              <td><span class="badge badge-pass">PASS</span></td>
-              <td style="font-size:0.83rem; color: var(--text-muted);">-</td>
+              <td class="actual">Access control modal opens displaying review permissions.</td>
+              <td><span class="badge badge-pass">PASSED</span></td>
               <td class="evidence-cell">
                 <div class="thumb-box" onclick="openModal('../uat_target3_cicodecm/ecms_memo_58_review_view_access_modal.png', 'Step #58: Click Access Control in Review mode')">
                   <img src="../uat_target3_cicodecm/ecms_memo_58_review_view_access_modal.png" alt="Step 58 Evidence" loading="lazy">
@@ -1292,12 +1470,15 @@
             </tr>
 
             <tr data-status="pass" data-section="memo-review">
-              <td class="step-num">#59 <span style="font-size:0.75rem; color:var(--text-dim);">(R76)</span></td>
-              <td><span class="section-tag">MEMO DRAFT REVIEW</span></td>
-              <td class="step-name">Click "Return to Queue / Cancel"</td>
+              <td class="step-num">#59 <br><span style="font-size:0.7rem; color:var(--text-dim);">(R76)</span></td>
+              <td class="step-name">
+                <span class="section-tag">MEMO DRAFT REVIEW</span><br>
+                <strong style="color:var(--text); font-size:0.88rem;">Return to Queue / Cancel</strong>
+              </td>
+              <td>Click 'Return to Queue / Cancel'</td>
               <td class="expected">Exits review mode and returns to Memo Draft Review queue table.</td>
-              <td><span class="badge badge-pass">PASS</span></td>
-              <td style="font-size:0.83rem; color: var(--text-muted);">-</td>
+              <td class="actual">Exits review mode and returns to Memo Draft Review queue table.</td>
+              <td><span class="badge badge-pass">PASSED</span></td>
               <td class="evidence-cell">
                 <div class="thumb-box" onclick="openModal('../uat_target3_cicodecm/ecms_memo_59_review_cancelled.png', 'Step #59: Click Return to Queue / Cancel')">
                   <img src="../uat_target3_cicodecm/ecms_memo_59_review_cancelled.png" alt="Step 59 Evidence" loading="lazy">

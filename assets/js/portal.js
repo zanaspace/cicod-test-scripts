@@ -128,11 +128,21 @@
               const isActive = mod.id === activeModuleId && f.id === activeFeatureId;
               const isUpcoming = !!f.isUpcoming;
               const rateNum = parseFloat(f.passRate);
-              const is100 = !isUpcoming && rateNum >= 99;
+              const is100 = !isUpcoming && !isNaN(rateNum) && rateNum >= 99;
+              const isBlocked = (f.passRate || '').toLowerCase().includes('blocked');
+              let pillClass = 'pill-rate';
+              let pillStyle = '';
+              if (isUpcoming) {
+                pillStyle = 'background:rgba(56,189,248,0.15);color:#38bdf8;border:1px solid rgba(56,189,248,0.3);';
+              } else if (isBlocked) {
+                pillStyle = 'background:rgba(239,68,68,0.15);color:#f87171;border:1px solid rgba(239,68,68,0.3);';
+              } else if (!is100) {
+                pillClass += ' gap';
+              }
               return `
                 <div class="feature-item ${isActive ? 'active' : ''}" onclick="selectFeature('${mod.id}', '${f.id}')">
                   <span>${f.sheetName}</span>
-                  <span class="pill-rate ${isUpcoming ? '' : (is100 ? '' : 'gap')}" style="${isUpcoming ? 'background:rgba(56,189,248,0.15);color:#38bdf8;' : ''}">${f.passRate}</span>
+                  <span class="${pillClass}" style="${pillStyle}">${f.passRate}</span>
                 </div>
               `;
             }).join('')}
@@ -157,6 +167,23 @@
     if (!sheet) return;
 
     const isUpcoming = !!sheet.isUpcoming;
+    const rateNum = parseFloat(sheet.passRate);
+    const is100 = !isUpcoming && !isNaN(rateNum) && rateNum >= 99;
+    const isBlocked = (sheet.status || '').includes('502') || (sheet.status || '').includes('LOOP') || (sheet.status || '').includes('BLOCKED');
+    const hasGaps = !isUpcoming && sheet.gapCount > 0;
+
+    let statusStyle = '';
+    if (isUpcoming) {
+      statusStyle = 'background:rgba(56,189,248,0.15);color:#38bdf8;border-color:rgba(56,189,248,0.3);';
+    } else if (isBlocked) {
+      statusStyle = 'background:rgba(239,68,68,0.15);color:#f87171;border-color:rgba(239,68,68,0.3);';
+    } else if (hasGaps) {
+      statusStyle = 'background:rgba(245,158,11,0.15);color:#fbbf24;border-color:rgba(245,158,11,0.3);';
+    } else {
+      statusStyle = 'background:rgba(16,185,129,0.15);color:#34d399;border-color:rgba(16,185,129,0.3);';
+    }
+
+    const passRateColor = isUpcoming ? '#38bdf8' : (isBlocked ? '#f87171' : (is100 ? '#34d399' : '#fbbf24'));
 
     main.innerHTML = `
       <!-- Top Bar with Module Context & Sheet Name -->
@@ -165,14 +192,14 @@
           <span class="module-parent-crumb">${mod.name} /</span>
           <span>${sheet.sheetName}</span>
         </h2>
-        <span class="status-tag" style="${isUpcoming ? 'background:rgba(56,189,248,0.15);color:#38bdf8;border-color:rgba(56,189,248,0.3);' : ''}">${sheet.status}</span>
+        <span class="status-tag" style="${statusStyle}">${sheet.status}</span>
       </div>
 
       <!-- Dashboard KPI Cards (Intact) -->
       <div class="dashboard-kpi-grid">
         <div class="kpi-card">
           <span class="kpi-title">${isUpcoming ? 'Status' : 'Pass Rate'}</span>
-          <span class="kpi-number" style="color:${isUpcoming ? '#38bdf8' : '#34d399'};font-size:1.35rem;">${sheet.passRate}</span>
+          <span class="kpi-number" style="color:${passRateColor};font-size:1.35rem;">${sheet.passRate}</span>
         </div>
         <div class="kpi-card">
           <span class="kpi-title">${isUpcoming ? 'Target Steps' : 'Verified Steps'}</span>

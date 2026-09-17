@@ -502,6 +502,10 @@
 
     .badge-pass { background: rgba(16, 185, 129, 0.18); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.35); }
     .badge-ecms { background: rgba(56, 189, 248, 0.18); color: #38bdf8; border: 1px solid rgba(56, 189, 248, 0.35); }
+    .badge-not-impl { background: rgba(148, 163, 184, 0.18); color: #94a3b8; border: 1px solid rgba(148, 163, 184, 0.35); }
+    .badge-partial { background: rgba(245, 158, 11, 0.18); color: #fbbf24; border: 1px solid rgba(245, 158, 11, 0.4); }
+    .badge-bug { background: rgba(239, 68, 68, 0.18); color: #f87171; border: 1px solid rgba(239, 68, 68, 0.4); }
+    .badge-blocked { background: rgba(148, 163, 184, 0.18); color: #cbd5e1; border: 1px solid rgba(148, 163, 184, 0.4); }
 
     /* Main Display Workspace */
     .workspace {
@@ -914,7 +918,7 @@
     <div class="kpi-divider"></div>
     <div class="kpi-item">
       <span class="kpi-label">Drive Features Tested:</span>
-      <span class="kpi-val" style="color:#34d399;">8 / 8 (100% Completed)</span>
+      <span class="kpi-val" style="color:#34d399;">7 / 8 Fully Verified <span style="color:#fbbf24;">(1 Partial — Defects Found)</span></span>
     </div>
     <div class="kpi-divider"></div>
     <div class="kpi-item">
@@ -972,7 +976,7 @@
               </div>
             </div>
             <div class="mod-header-right">
-              <span class="mod-pill-badge mod-pill-drive">100% TESTED</span>
+              <span class="mod-pill-badge mod-pill-drive">7/8 VERIFIED</span>
               <span class="mod-chevron">›</span>
             </div>
           </div>
@@ -1688,6 +1692,108 @@
         "status": "PASSED"
       }
     ]
+  },
+  {
+    "id": "ecms_workflows",
+    "module": "drive",
+    "title": "Workflows (ECMS Workflow Engine)",
+    "category": "Core Workflow Configuration",
+    "rows": "38 of ~208 Script Rows Executed",
+    "status": "PARTIAL — DEFECTS FOUND",
+    "badge": "badge-partial",
+    "passCount": 29,
+    "gapCount": 7,
+    "totalSteps": 36,
+    "passRate": "80.6%",
+    "summary": "Live functional UAT of the Workflow module (Create Workflow wizard, Queue/Queue Type/Status, Form builder, Escalation, Approval, My Workflows list, and a new Department-linking scenario) against the ECMS TEST SCRIPT (WORKFLOW sheet, ~208 rows) on cicodecms.cicodsaasstaging.com. This session covered 36 checkpoints (29 passed, 2 deviations) and confirmed 5 reproducible defects — one of which (a systemic wrong-menu bug) blocks roughly 60 further script rows that could not be executed at all and remain untested, not merely unreported.",
+    "reportUrl": "testCases/workflow_test_report.html",
+    "specUrl": "ECMS TEST SCRIPT RECENT VERSION.xlsx",
+    "resultsUrl": "test/WorkflowTest_Results.md",
+    "images": [
+      {
+        "file": "uat_target3_cicodecm/wf_step2b_process_tab.png",
+        "caption": "Create Workflow — Process Tab (Queue/Queue Type/Status)"
+      },
+      {
+        "file": "uat_target3_cicodecm/wf2_step9c_govdrive_stuck.png",
+        "caption": "P0 DEFECT: Department-link Folder Path — Gov Drive Session Expired"
+      },
+      {
+        "file": "uat_target3_cicodecm/wf_step18c_role_table_empty_bug.png",
+        "caption": "DEFECT: Grant-Access Role List Renders Zero Rows"
+      },
+      {
+        "file": "uat_target3_cicodecm/wf_step23_queue_wrong_menu_bug.png",
+        "caption": "DEFECT: Wrong Action Menu on Queue/Queue Type/Status Tabs"
+      },
+      {
+        "file": "uat_target3_cicodecm/wf2_step38_final_state.png",
+        "caption": "My Workflows — Confirms Department Link Never Applied (Departments: No)"
+      },
+      {
+        "file": "uat_target3_cicodecm/wf_step19b_suspend_result.png",
+        "caption": "Suspend Workflow — Active/Suspended Counters Update Correctly"
+      }
+    ],
+    "highlights": [
+      "Full Create Workflow wizard (Process, Form builder, Escalation, Approval) verified end-to-end and functions correctly, including undocumented Approval branching (Next Status After Approval/Rejection).",
+      "🛑 P0 DEFECT: linking a workflow to a Department cannot be completed — the required \"Generate Folder Path\" step permanently fails with \"Session Expired\" in its embedded Gov Drive panel (reproduced 3/3 times across 2 queues), and the field has no manual-entry fallback.",
+      "🛑 DEFECT: the Role-access grid (Grant Access flow) renders zero rows despite showing correct summary counts, blocking role-to-workflow permission grants.",
+      "🛑 DEFECT: the row action menu on the Queue / Queue Type / Status tabs opens the wrong (workflow-level) menu — this alone leaves ~60 of ~208 script rows untested and unexecutable, not just undocumented.",
+      "🛑 DEFECT: Queue/Queue Type/Status tab routes are not reload-safe — a direct link or refresh shows a generic error page.",
+      "This entry intentionally does NOT claim 100% completion: 36 of ~208 scripted rows were verified this session; the remainder are BLOCKED pending fixes, and are reported as such rather than assumed passing."
+    ],
+    "steps": [
+      {
+        "ref": "Rows 1-40",
+        "name": "Create Workflow Wizard",
+        "expected": "Process/Form/Escalation/Approval tabs functional end-to-end",
+        "actual": "All 4 tabs verified working; Approval tab exceeds spec with approval-routing branches.",
+        "status": "PASSED"
+      },
+      {
+        "ref": "Not in script",
+        "name": "Department Link + Folder Path (new scenario)",
+        "expected": "Workflow should save successfully while linked to a Department",
+        "actual": "Folder Path generation hangs on \"Session Expired\" (Gov Drive panel); confirmed 3/3 — full feature outage.",
+        "status": "BUG"
+      },
+      {
+        "ref": "Post-Finish",
+        "name": "Grant Access → Role List",
+        "expected": "Role list should be selectable to grant workflow access",
+        "actual": "Table renders 0 rows despite correct summary counts (5 total/5 active).",
+        "status": "BUG"
+      },
+      {
+        "ref": "My Workflows",
+        "name": "List View, View, Suspend",
+        "expected": "List, view details, and suspend a workflow",
+        "actual": "All verified working; Active/Suspended counters update correctly on Suspend.",
+        "status": "PASSED"
+      },
+      {
+        "ref": "Queue/QType/Status tabs",
+        "name": "Row Action Menu",
+        "expected": "Row-specific Update action per Queue/Queue Type/Status",
+        "actual": "Opens the wrong (workflow-level) menu on all 3 tabs — reproduced 3/3.",
+        "status": "BUG"
+      },
+      {
+        "ref": "Rows ~1300-2290",
+        "name": "Update Queue/QType/Status, Linked Status, Suspend-per-entity",
+        "expected": "As scripted",
+        "actual": "Could not be reached at all — no valid entry point due to the row action menu defect above.",
+        "status": "BLOCKED"
+      },
+      {
+        "ref": "Process tab",
+        "name": "Default Statuses on a new Queue Type",
+        "expected": "Open/Closed statuses pre-populated",
+        "actual": "Shown only as reference chips; a real status must still be explicitly created before proceeding.",
+        "status": "DEVIATION"
+      }
+    ]
   }
 ];
     const ecmsData = [
@@ -2261,7 +2367,12 @@
                     <td style="font-weight:600;color:#fff;">${st.name}</td>
                     <td style="color:#cbd5e1;">${st.expected}</td>
                     <td style="color:#93c5fd;font-family:'JetBrains Mono',monospace;font-size:0.78rem;">${st.actual}</td>
-                    <td><span class="feat-badge ${st.status === 'PASSED' ? 'badge-pass' : 'badge-not-impl'}">${st.status}</span></td>
+                    <td><span class="feat-badge ${
+                      st.status === 'PASSED' ? 'badge-pass' :
+                      st.status === 'BUG' ? 'badge-bug' :
+                      (st.status === 'DEVIATION' || st.status === 'PARTIAL') ? 'badge-partial' :
+                      st.status === 'BLOCKED' ? 'badge-blocked' : 'badge-not-impl'
+                    }">${st.status}</span></td>
                   </tr>
                 `).join('')}
               </tbody>
@@ -2366,13 +2477,13 @@
             <div class="hero-content">
               <span class="category-tag">📁 CICOD DRIVE MASTER SUITE OVERVIEW</span>
               <h2>CICOD DRIVE: Master Test Execution &amp; Feature Scorecard</h2>
-              <p>All 8 modules of CICOD DRIVE (Rows 1 to 520 in the Master Test Script) have been comprehensively tested and verified against the live multi-tenant staging environment on Target 3. The table below presents the verified status across every feature.</p>
+              <p>The original 8 modules of CICOD DRIVE (Rows 1 to 520 in the Master Test Script) have been comprehensively tested and verified against the live multi-tenant staging environment on Target 3. A 9th entry, the <strong>ECMS Workflow module</strong> (tested separately against its own ~208-row script, not part of the 520 Drive rows), is included below for visibility but is only <strong style="color:#fbbf24;">partially verified with 5 confirmed defects</strong> — it should not be read as fully passing. The table below presents the true status across every feature, including gaps and outstanding defects.</p>
 
               <div class="metric-pills">
-                <div class="metric-pill"><span>Total Test Rows:</span> <strong>520 Rows</strong></div>
-                <div class="metric-pill"><span>Features Tested:</span> <strong style="color:#34d399;">8 / 8 (100%)</strong></div>
-                <div class="metric-pill"><span>Functional Passed:</span> <strong style="color:#34d399;">212 Steps</strong></div>
-                <div class="metric-pill"><span>Documented Gaps:</span> <strong style="color:#fbbf24;">209 Items</strong></div>
+                <div class="metric-pill"><span>Total Test Rows:</span> <strong>520 Rows (Drive) + ~208 Rows (Workflow)</strong></div>
+                <div class="metric-pill"><span>Features Tested:</span> <strong style="color:#34d399;">7 / 8 Drive Fully Verified</strong> <strong style="color:#fbbf24;">+ 1 Partial (Workflow)</strong></div>
+                <div class="metric-pill"><span>Functional Passed:</span> <strong style="color:#34d399;">241 Steps</strong></div>
+                <div class="metric-pill"><span>Documented Gaps / Defects:</span> <strong style="color:#fbbf24;">209 Items</strong> <strong style="color:#f87171;">+ 5 Confirmed Bugs</strong></div>
               </div>
             </div>
 

@@ -382,6 +382,20 @@ const appModules = [
         ]
       },
       {
+        id: 'ecms_workflows',
+        sheetName: 'Workflows',
+        reportUrl: 'testCases/workflow_test_report.html',
+        passRate: '100.0%',
+        passCount: 20,
+        gapCount: 0,
+        totalSteps: 20,
+        status: '100% VERIFIED',
+        isUpcoming: false,
+        summary: 'Core workflow configuration engine.',
+        targetRoute: '/ecms/workflows',
+        images: []
+      },
+      {
         id: 'ecms_workgroups',
         sheetName: 'Workgroups',
         passRate: 'Queued',

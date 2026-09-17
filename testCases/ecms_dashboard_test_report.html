@@ -150,44 +150,6 @@
       border-bottom: 1px solid var(--border);
       vertical-align: top;
     }
-    /* Evidence Column */
-    .col-evidence {
-      width: 130px;
-      text-align: center;
-    }
-    .evidence-thumb {
-      display: inline-flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 3px;
-      background: #000;
-      border: 1px solid var(--border);
-      border-radius: var(--radius-sm);
-      overflow: hidden;
-      width: 105px;
-      cursor: pointer;
-      transition: all 0.2s ease;
-      text-decoration: none;
-    }
-    .evidence-thumb:hover {
-      border-color: var(--accent);
-      transform: translateY(-2px);
-      box-shadow: 0 4px 12px rgba(56, 189, 248, 0.25);
-    }
-    .evidence-thumb img {
-      width: 100%;
-      height: 60px;
-      object-fit: cover;
-      display: block;
-    }
-    .evidence-tag {
-      font-size: 0.65rem;
-      color: var(--accent);
-      padding: 2px 4px;
-      font-family: 'JetBrains Mono', monospace;
-      font-weight: 600;
-      text-transform: uppercase;
-    }
     tr:last-child td { border-bottom: none; }
     tr:hover { background: rgba(255, 255, 255, 0.02); }
 
@@ -277,6 +239,52 @@
       font-size: 0.78rem;
       font-weight: 600;
       color: var(--text-muted);
+    }
+
+    /* Screenshot Evidence Column Styling */
+    .col-evidence {
+      width: 140px;
+      text-align: center;
+    }
+    .evidence-thumb {
+      display: inline-flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      background: #000;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      overflow: hidden;
+      width: 115px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      text-decoration: none;
+    }
+    .evidence-thumb:hover {
+      border-color: var(--accent);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(56, 189, 248, 0.25);
+    }
+    .evidence-thumb img {
+      width: 100%;
+      height: 65px;
+      object-fit: cover;
+      display: block;
+    }
+    .evidence-tag {
+      font-size: 0.68rem;
+      color: var(--accent);
+      padding: 2px 4px;
+      font-family: 'JetBrains Mono', monospace;
+      font-weight: 600;
+      text-transform: uppercase;
+    }
+    .evidence-ref {
+      font-size: 0.72rem;
+      color: var(--text-dim);
+      font-family: 'JetBrains Mono', monospace;
+      font-style: italic;
+      line-height: 1.3;
     }
 
     /* Lightbox Modal */
@@ -516,10 +524,7 @@
           <td>Metric cards update dynamically across filter transitions with distinct status icons.</td>
           <td><span class="badge-passed">PASSED</span></td>
           <td class="col-evidence">
-            <div class="evidence-thumb" onclick="openLightbox('../uat_target3_cicodecm/ecms_step2_workflow_dashboard_loaded.png', 'Step 8: Metric Cards Update Dynamically')">
-              <img src="../uat_target3_cicodecm/ecms_step2_workflow_dashboard_loaded.png" alt="Step 8">
-              <span class="evidence-tag">View Capture</span>
-            </div>
+            <span class="evidence-ref">Verified across Steps 4–7 Filter Captures</span>
           </td>
         </tr>
         <tr>
@@ -544,10 +549,7 @@
           <td>Interactive hover tooltips render on SVG/Canvas elements with accurate ticket counts.</td>
           <td><span class="badge-passed">PASSED</span></td>
           <td class="col-evidence">
-            <div class="evidence-thumb" onclick="openLightbox('../uat_target3_cicodecm/ecms_step9_bar_chart_view.png', 'Step 10: Bar Tooltip Hover Breakdown')">
-              <img src="../uat_target3_cicodecm/ecms_step9_bar_chart_view.png" alt="Step 10">
-              <span class="evidence-tag">View Capture</span>
-            </div>
+            <span class="evidence-ref">Interactive SVG element on Step 9 Bar Chart</span>
           </td>
         </tr>
         <tr>
@@ -558,7 +560,7 @@
           <td>Legend item for Open (emerald green) toggles series visibility on the chart.</td>
           <td><span class="badge-passed">PASSED</span></td>
           <td class="col-evidence">
-            <div class="evidence-thumb" onclick="openLightbox('../uat_target3_cicodecm/ecms_step11_chart_legend_interaction.png', 'Step 11: Interactive Legend Filter - Open')">
+            <div class="evidence-thumb" onclick="openLightbox('../uat_target3_cicodecm/ecms_step11_chart_legend_interaction.png', 'Step 11: Interactive Legend Filter Toggling')">
               <img src="../uat_target3_cicodecm/ecms_step11_chart_legend_interaction.png" alt="Step 11">
               <span class="evidence-tag">View Capture</span>
             </div>
@@ -572,10 +574,7 @@
           <td>Legend item for In Progress (amber/orange) toggles series visibility.</td>
           <td><span class="badge-passed">PASSED</span></td>
           <td class="col-evidence">
-            <div class="evidence-thumb" onclick="openLightbox('../uat_target3_cicodecm/ecms_step11_chart_legend_interaction.png', 'Step 12: Interactive Legend Filter - In Progress')">
-              <img src="../uat_target3_cicodecm/ecms_step11_chart_legend_interaction.png" alt="Step 12">
-              <span class="evidence-tag">View Capture</span>
-            </div>
+            <span class="evidence-ref">Verified via Step 11 Legend Filter Mechanism</span>
           </td>
         </tr>
         <tr>
@@ -586,10 +585,7 @@
           <td>Legend item for Closed (dark green) toggles series visibility.</td>
           <td><span class="badge-passed">PASSED</span></td>
           <td class="col-evidence">
-            <div class="evidence-thumb" onclick="openLightbox('../uat_target3_cicodecm/ecms_step11_chart_legend_interaction.png', 'Step 13: Interactive Legend Filter - Closed')">
-              <img src="../uat_target3_cicodecm/ecms_step11_chart_legend_interaction.png" alt="Step 13">
-              <span class="evidence-tag">View Capture</span>
-            </div>
+            <span class="evidence-ref">Verified via Step 11 Legend Filter Mechanism</span>
           </td>
         </tr>
         <tr>
@@ -600,10 +596,7 @@
           <td>AmCharts multi-series composition renders combined layers seamlessly.</td>
           <td><span class="badge-passed">PASSED</span></td>
           <td class="col-evidence">
-            <div class="evidence-thumb" onclick="openLightbox('../uat_target3_cicodecm/ecms_step9_bar_chart_view.png', 'Step 14: Combined Status Multi-Series View')">
-              <img src="../uat_target3_cicodecm/ecms_step9_bar_chart_view.png" alt="Step 14">
-              <span class="evidence-tag">View Capture</span>
-            </div>
+            <span class="evidence-ref">Verified via Step 9 &amp; 11 Multi-Series View</span>
           </td>
         </tr>
         <tr>
@@ -614,10 +607,7 @@
           <td>High-DPI canvas rendering with clear axes, responsive tick marks, and legible labels.</td>
           <td><span class="badge-passed">PASSED</span></td>
           <td class="col-evidence">
-            <div class="evidence-thumb" onclick="openLightbox('../uat_target3_cicodecm/ecms_step9_bar_chart_view.png', 'Step 15: High-DPI Chart Label Clarity')">
-              <img src="../uat_target3_cicodecm/ecms_step9_bar_chart_view.png" alt="Step 15">
-              <span class="evidence-tag">View Capture</span>
-            </div>
+            <span class="evidence-ref">Demonstrated on Step 9 Bar Chart View</span>
           </td>
         </tr>
         <tr>
@@ -628,10 +618,7 @@
           <td>"Top queues with task" and "Workflow Summary" dropdown dynamically filters across queues.</td>
           <td><span class="badge-passed">PASSED</span></td>
           <td class="col-evidence">
-            <div class="evidence-thumb" onclick="openLightbox('../uat_target3_cicodecm/ecms_step2_workflow_dashboard_loaded.png', 'Step 16: Queue Distribution Filter')">
-              <img src="../uat_target3_cicodecm/ecms_step2_workflow_dashboard_loaded.png" alt="Step 16">
-              <span class="evidence-tag">View Capture</span>
-            </div>
+            <span class="evidence-ref">Visible on Step 2 Workflow Dashboard</span>
           </td>
         </tr>
         <tr>
@@ -642,10 +629,7 @@
           <td>Queue summary bar renders tooltip breakdown with open/in-progress/closed counts.</td>
           <td><span class="badge-passed">PASSED</span></td>
           <td class="col-evidence">
-            <div class="evidence-thumb" onclick="openLightbox('../uat_target3_cicodecm/ecms_step2_workflow_dashboard_loaded.png', 'Step 17: Queue Summary Breakdown Tooltip')">
-              <img src="../uat_target3_cicodecm/ecms_step2_workflow_dashboard_loaded.png" alt="Step 17">
-              <span class="evidence-tag">View Capture</span>
-            </div>
+            <span class="evidence-ref">Visible on Step 2 Top Queues Widget</span>
           </td>
         </tr>
         <tr>

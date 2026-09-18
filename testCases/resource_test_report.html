@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>UAT Report - RESOURCE Module (ECMS)</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0b0f19; --surface: #121826; --surface-card: #182235; --border: #223049;
+      --text: #f1f5f9; --text-muted: #94a3b8; --pass: #10b981; --not-impl: #f59e0b; --dev: #38bdf8; --bug: #ef4444; --accent: #10b981;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background-color: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; padding: 36px 24px; line-height: 1.5; }
+    .container { max-width: 1440px; margin: 0 auto; }
+    .header-box { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 28px; margin-bottom: 28px; }
+    h1 { font-size: 1.8rem; font-weight: 700; margin-bottom: 6px; color: #fff; }
+    .sub { color: var(--text-muted); font-size: 0.92rem; margin-bottom: 20px; }
+    .meta-bar { display: flex; flex-wrap: wrap; gap: 24px; font-size: 0.88rem; border-top: 1px solid var(--border); padding-top: 18px; }
+    .meta-bar span { color: var(--text-muted); }
+    .meta-bar strong { color: #e2e8f0; font-family: 'JetBrains Mono', monospace; }
+    .summary-badge { display: inline-block; padding: 5px 14px; background: rgba(56, 189, 248, 0.15); border: 1px solid rgba(56, 189, 248, 0.3); color: #38bdf8; border-radius: 20px; font-weight: 700; font-size: 0.82rem; margin-bottom: 12px; }
+    .kpi-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 16px; margin-bottom: 28px; }
+    .kpi-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 20px; }
+    .kpi-num { font-size: 2rem; font-weight: 700; font-family: 'JetBrains Mono', monospace; margin-top: 6px; }
+    .kpi-label { color: var(--text-muted); font-size: 0.84rem; text-transform: uppercase; letter-spacing: 0.05em; }
+    .filter-bar { display: flex; gap: 10px; margin-bottom: 24px; flex-wrap: wrap; }
+    .filter-btn { background: var(--surface); border: 1px solid var(--border); color: var(--text-muted); padding: 8px 16px; border-radius: 8px; font-size: 0.85rem; font-weight: 600; cursor: pointer; transition: all 0.2s ease; }
+    .filter-btn:hover, .filter-btn.active { background: var(--accent); color: #0b0f19; border-color: var(--accent); }
+    .case-section { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; margin-bottom: 28px; overflow: hidden; }
+    .case-header { padding: 18px 24px; background: var(--surface-card); border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; }
+    .case-title { font-size: 1.15rem; font-weight: 700; color: #fff; }
+    .case-tag { font-size: 0.76rem; font-family: 'JetBrains Mono', monospace; padding: 4px 10px; border-radius: 6px; background: rgba(16, 185, 129, 0.15); border: 1px solid rgba(16, 185, 129, 0.3); color: #34d399; }
+    .table-scroll { overflow-x: auto; max-width: 100%; }
+    table { width: 100%; min-width: 1350px; table-layout: fixed; border-collapse: collapse; font-size: 0.88rem; }
+    th { background: rgba(11, 15, 25, 0.6); text-align: left; padding: 14px 16px; color: var(--text-muted); font-weight: 600; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.04em; border-bottom: 1px solid var(--border); }
+    td { padding: 14px 16px; border-bottom: 1px solid var(--border); vertical-align: top; overflow-wrap: break-word; word-break: break-word; }
+    tr:last-child td { border-bottom: none; }
+    tr:hover td { background: rgba(255, 255, 255, 0.02); }
+    .step-name { font-weight: 600; color: #fff; }
+    .expected-text { color: #cbd5e1; font-size: 0.86rem; }
+    .actual-text { color: #93c5fd; font-size: 0.86rem; font-family: 'JetBrains Mono', monospace; overflow-wrap: anywhere; }
+    .deviation-text { color: #fbbf24; font-size: 0.84rem; }
+    .badge { display: inline-block; padding: 3px 10px; border-radius: 6px; font-size: 0.74rem; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; }
+    .badge-pass { background: rgba(16, 185, 129, 0.2); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.3); }
+    .badge-not-impl { background: rgba(245, 158, 11, 0.2); color: #fbbf24; border: 1px solid rgba(245, 158, 11, 0.3); }
+    .badge-dev { background: rgba(56, 189, 248, 0.2); color: #38bdf8; border: 1px solid rgba(56, 189, 248, 0.3); }
+    .badge-bug { background: rgba(239, 68, 68, 0.2); color: #f87171; border: 1px solid rgba(239, 68, 68, 0.35); }
+    .thumb { width: 80px; height: 50px; object-fit: cover; border-radius: 6px; border: 1px solid var(--border); cursor: pointer; transition: transform 0.15s ease, border-color 0.15s ease; }
+    .thumb:hover { transform: scale(1.08); border-color: var(--accent); }
+    .no-img-badge { display: inline-block; padding: 4px 8px; border-radius: 6px; background: rgba(245, 158, 11, 0.1); border: 1px dashed rgba(245, 158, 11, 0.3); color: #fbbf24; font-size: 0.72rem; font-weight: 600; text-align: center; line-height: 1.3; }
+    .modal { display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0, 0, 0, 0.88); backdrop-filter: blur(4px); z-index: 999; justify-content: center; align-items: center; padding: 24px; }
+    .modal.active { display: flex; }
+    .modal-content { max-width: 90vw; max-height: 90vh; border-radius: 10px; border: 1px solid var(--border); box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6); }
+    .modal-close { position: absolute; top: 24px; right: 28px; color: #fff; font-size: 2rem; cursor: pointer; font-weight: 700; }
+  </style>
+  <link rel="stylesheet" href="../assets/css/test-report-addon.css">
+</head>
+<body>
+  <div class="container">
+    <div class="header-box">
+      <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;margin-bottom:12px;">
+        <div class="summary-badge">ℹ RESOURCE MODULE UAT — CORE FLOWS WORK, TWO MINOR UI DEVIATIONS, NO CONFIRMED DEFECTS</div>
+        <button class="btn-exec-download" onclick="if(window.ExecReportGenerator) ExecReportGenerator.downloadExecReportPdf('ecms_resources')" title="Download Official Executive &amp; Engineering PDF Report with Detailed Test Cases">
+          <span class="btn-icon-pulse">📄</span>
+          <span>Download PDF Report</span>
+          <span class="btn-exec-badge">PDF</span>
+        </button>
+      </div>
+      <h1>UAT Execution Report: RESOURCE Module</h1>
+      <p class="sub">Live functional/UI verification of the standalone Resource feature — not represented in <code>ECMS TEST SCRIPT RECENT VERSION.xlsx</code>, so this scenario/step breakdown was derived from direct UI exploration. This session covered 8 checkpoints across 5 scenarios. Resource Type's Create and Suspend actions both work correctly and persist as expected. Two minor UI deviations were found: the Resource list's KPI header (Total Records: 2) doesn't match the 1 row actually rendered in the grid, and the New Resource Type form leaves a stale "Please select a queue type" message on screen after a valid selection is made (cosmetic only — Create still succeeds). No confirmed defects this session.</p>
+      <div class="meta-bar">
+        <div><span>Test Script:</span> <strong>test/ResourceTest_Results.md</strong></div>
+        <div><span>Target URL:</span> <strong>https://cicodecms.cicodsaasstaging.com/ecms/index.php?r=resource/*</strong></div>
+        <div><span>Tenant / Account:</span> <strong>cicodecms / raissa.boyomo@crowninteractive.com</strong></div>
+        <div><span>Execution Engine:</span> <strong>Headless Edge CDP</strong></div>
+        <div><span>Execution Date:</span> <strong>September 17, 2026</strong></div>
+      </div>
+    </div>
+
+    <div class="kpi-grid">
+      <div class="kpi-card"><div class="kpi-label">Total Scenarios</div><div class="kpi-num" style="color: #10b981;">5</div></div>
+      <div class="kpi-card"><div class="kpi-label">Checkpoints Verified</div><div class="kpi-num" style="color: #38bdf8;">8</div></div>
+      <div class="kpi-card"><div class="kpi-label">Functional Passed</div><div class="kpi-num" style="color: #10b981;">6</div></div>
+      <div class="kpi-card"><div class="kpi-label">Deviations</div><div class="kpi-num" style="color: #fbbf24;">2</div></div>
+      <div class="kpi-card"><div class="kpi-label">Confirmed Bugs</div><div class="kpi-num" style="color: #ef4444;">0</div></div>
+      <div class="kpi-card"><div class="kpi-label">Blocked (by defect)</div><div class="kpi-num" style="color: #94a3b8;">0</div></div>
+    </div>
+
+    <div class="filter-bar">
+      <button class="filter-btn active" onclick="filterCases('all', this)">All Scenarios (5)</button>
+      <button class="filter-btn" onclick="filterCases('sc1', this)">RESOURCE LIST &amp; SEARCH (2)</button>
+      <button class="filter-btn" onclick="filterCases('sc2', this)">RESOURCE TYPE — LIST (1)</button>
+      <button class="filter-btn" onclick="filterCases('sc3', this)">CREATE RESOURCE TYPE (3)</button>
+      <button class="filter-btn" onclick="filterCases('sc4', this)">SUBMIT &amp; VERIFY CREATE (1)</button>
+      <button class="filter-btn" onclick="filterCases('sc5', this)">SUSPEND RESOURCE TYPE (1)</button>
+    </div>
+
+    <div class="case-section" data-case="sc1">
+      <div class="case-header">
+        <div class="case-title">Scenario 1: RESOURCE LIST &amp; SEARCH</div>
+        <div class="case-tag">Rows 1-2</div>
+      </div>
+      <div class="table-scroll">
+      <table>
+        <thead>
+          <tr>
+            <th style="width: 55px;">Row</th>
+            <th style="width: 220px;">Steps to Reproduce</th>
+            <th style="width: 250px;">Expected Result</th>
+            <th>Actual Result (Live Execution)</th>
+            <th style="width: 230px;">Deviations & Defect Notes</th>
+            <th style="width: 150px;">Status</th>
+            <th style="width: 140px;">Screenshot Evidence</th>
+          </tr>
+        </thead>
+        <tbody>
+
+          <tr>
+            <td><strong>1</strong></td>
+            <td><span class="step-name">From the sidebar click &quot;Resource&quot;, then click the &quot;Resource&quot; sub-item</span></td>
+            <td><div class="expected-text">Sub-menu shows Resource Type / Resource Level / Resource Shift / Resource Schedule / Resource; &quot;Resource&quot; loads a list of resources</div></td>
+            <td><div class="actual-text">List loads with Name/Email/Phone/Department/Status/Actions columns and a &quot;+ Create&quot; button. KPI header reads Total Records: 2, Total Active: 2, Total Suspended: 0 — but only 1 data row (&quot;Chinwuba Okafor&quot;) is actually rendered, with pagination &quot;1 of 1&quot;.</div></td>
+            <td><div class="deviation-text">[Deviation]: KPI count (2) does not match the number of rows actually rendered (1).</div></td>
+            <td><span class="badge badge-dev">PASSED (minor deviation)</span></td>
+            <td><img src="../uat_target3_cicodecm/resource_step1_list.png" class="thumb" alt="resource_step1_list.png" onclick="openModal(this.src)"></td>
+          </tr>
+
+          <tr>
+            <td><strong>2</strong></td>
+            <td><span class="step-name">Type &quot;a&quot; into the Resource list search box</span></td>
+            <td><div class="expected-text">Should filter the list to matching resources</div></td>
+            <td><div class="actual-text">Filtered result still shows the same 1 matching row (&quot;Chinwuba Okafor,&quot; which contains &quot;a&quot;); the search mechanism itself works, though the underlying row-count anomaly from Row 1 persists.</div></td>
+            <td><div class="deviation-text">None.</div></td>
+            <td><span class="badge badge-pass">PASSED</span></td>
+            <td><img src="../uat_target3_cicodecm/resource_step2_search_a.png" class="thumb" alt="resource_step2_search_a.png" onclick="openModal(this.src)"></td>
+          </tr>
+        </tbody>
+      </table>
+      </div>
+    </div>
+
+    <div class="case-section" data-case="sc2">
+      <div class="case-header">
+        <div class="case-title">Scenario 2: RESOURCE TYPE — LIST</div>
+        <div class="case-tag">Row 3</div>
+      </div>
+      <div class="table-scroll">
+      <table>
+        <thead>
+          <tr>
+            <th style="width: 55px;">Row</th>
+            <th style="width: 220px;">Steps to Reproduce</th>
+            <th style="width: 250px;">Expected Result</th>
+            <th>Actual Result (Live Execution)</th>
+            <th style="width: 230px;">Deviations & Defect Notes</th>
+            <th style="width: 150px;">Status</th>
+            <th style="width: 140px;">Screenshot Evidence</th>
+          </tr>
+        </thead>
+        <tbody>
+
+          <tr>
+            <td><strong>3</strong></td>
+            <td><span class="step-name">Click &quot;Resource Type&quot; sub-item</span></td>
+            <td><div class="expected-text">Should display the Manage Resource Type list</div></td>
+            <td><div class="actual-text">Loads correctly: Total Records 8, Total Active 8, Total Suspended 0, with Name/Description/Date Created/Created By/Date Updated/Updated By/Status/Actions columns — all 8 system-seeded types render correctly (Account Manager, Sales Representative, Sales Manager, Customer Service Representative, Warehouse Manager, Delivery Manager, Logistics Manager, Dispatch Rider).</div></td>
+            <td><div class="deviation-text">None.</div></td>
+            <td><span class="badge badge-pass">PASSED</span></td>
+            <td><img src="../uat_target3_cicodecm/resource_step3_type_list.png" class="thumb" alt="resource_step3_type_list.png" onclick="openModal(this.src)"></td>
+          </tr>
+        </tbody>
+      </table>
+      </div>
+    </div>
+
+    <div class="case-section" data-case="sc3">
+      <div class="case-header">
+        <div class="case-title">Scenario 3: CREATE RESOURCE TYPE</div>
+        <div class="case-tag">Rows 4-6</div>
+      </div>
+      <div class="table-scroll">
+      <table>
+        <thead>
+          <tr>
+            <th style="width: 55px;">Row</th>
+            <th style="width: 220px;">Steps to Reproduce</th>
+            <th style="width: 250px;">Expected Result</th>
+            <th>Actual Result (Live Execution)</th>
+            <th style="width: 230px;">Deviations & Defect Notes</th>
+            <th style="width: 150px;">Status</th>
+            <th style="width: 140px;">Screenshot Evidence</th>
+          </tr>
+        </thead>
+        <tbody>
+
+          <tr>
+            <td><strong>4</strong></td>
+            <td><span class="step-name">Click Create on the Resource Type list</span></td>
+            <td><div class="expected-text">Should display the New Resource Type form</div></td>
+            <td><div class="actual-text">&quot;New Resource Type&quot; form loads with Name* (text), Description (textarea), Queue Type* (multi-select), and Cancel/Create buttons.</div></td>
+            <td><div class="deviation-text">None.</div></td>
+            <td><span class="badge badge-pass">PASSED</span></td>
+            <td><img src="../uat_target3_cicodecm/resource_step4_type_create.png" class="thumb" alt="resource_step4_type_create.png" onclick="openModal(this.src)"></td>
+          </tr>
+
+          <tr>
+            <td><strong>5</strong></td>
+            <td><span class="step-name">Enter Name=&quot;UAT Resource Type&quot;; open the Queue Type dropdown</span></td>
+            <td><div class="expected-text">Should display each field correctly</div></td>
+            <td><div class="actual-text">Name field accepts text correctly. Queue Type dropdown opens a searchable list of queue types grouped by parent queue (e.g. &quot;Personnel Complaint (Complaints)&quot;, &quot;Payments (Finance)&quot;, &quot;Leave Management (Human Resources)&quot;).</div></td>
+            <td><div class="deviation-text">None.</div></td>
+            <td><span class="badge badge-pass">PASSED</span></td>
+            <td><img src="../uat_target3_cicodecm/resource_step5_queuetype_dropdown.png" class="thumb" alt="resource_step5_queuetype_dropdown.png" onclick="openModal(this.src)"></td>
+          </tr>
+
+          <tr>
+            <td><strong>6</strong></td>
+            <td><span class="step-name">Select &quot;Personnel Complaint (Complaints)&quot; from the dropdown</span></td>
+            <td><div class="expected-text">Should register the selection and clear any required-field error</div></td>
+            <td><div class="actual-text">The chip &quot;× Personnel Complaint (Complaints)&quot; renders correctly in the field, but a red &quot;Please select a queue type.&quot; message remains visible directly underneath despite the valid selection already being made.</div></td>
+            <td><div class="deviation-text">[Deviation]: stale required-field validation message persists after a valid selection.</div></td>
+            <td><span class="badge badge-dev">PASSED (minor deviation)</span></td>
+            <td><img src="../uat_target3_cicodecm/resource_step9_real_click.png" class="thumb" alt="resource_step9_real_click.png" onclick="openModal(this.src)"></td>
+          </tr>
+        </tbody>
+      </table>
+      </div>
+    </div>
+
+    <div class="case-section" data-case="sc4">
+      <div class="case-header">
+        <div class="case-title">Scenario 4: SUBMIT &amp; VERIFY CREATE</div>
+        <div class="case-tag">Row 7</div>
+      </div>
+      <div class="table-scroll">
+      <table>
+        <thead>
+          <tr>
+            <th style="width: 55px;">Row</th>
+            <th style="width: 220px;">Steps to Reproduce</th>
+            <th style="width: 250px;">Expected Result</th>
+            <th>Actual Result (Live Execution)</th>
+            <th style="width: 230px;">Deviations & Defect Notes</th>
+            <th style="width: 150px;">Status</th>
+            <th style="width: 140px;">Screenshot Evidence</th>
+          </tr>
+        </thead>
+        <tbody>
+
+          <tr>
+            <td><strong>7</strong></td>
+            <td><span class="step-name">Click Create</span></td>
+            <td><div class="expected-text">Should save successfully</div></td>
+            <td><div class="actual-text">&quot;Successful&quot; confirmation modal shown; new &quot;UAT Resource Type&quot; row appears at the top of the list (Created By &quot;Raissa Boyomo&quot;, Status ACTIVE), Total Records incremented 8→9. Confirms Row 6’s stale validation message did not actually block submission.</div></td>
+            <td><div class="deviation-text">None (isolates row 6’s cosmetic nature).</div></td>
+            <td><span class="badge badge-pass">PASSED</span></td>
+            <td><img src="../uat_target3_cicodecm/resource_step10_after_create_click.png" class="thumb" alt="resource_step10_after_create_click.png" onclick="openModal(this.src)"></td>
+          </tr>
+        </tbody>
+      </table>
+      </div>
+    </div>
+
+    <div class="case-section" data-case="sc5">
+      <div class="case-header">
+        <div class="case-title">Scenario 5: SUSPEND RESOURCE TYPE</div>
+        <div class="case-tag">Row 8</div>
+      </div>
+      <div class="table-scroll">
+      <table>
+        <thead>
+          <tr>
+            <th style="width: 55px;">Row</th>
+            <th style="width: 220px;">Steps to Reproduce</th>
+            <th style="width: 250px;">Expected Result</th>
+            <th>Actual Result (Live Execution)</th>
+            <th style="width: 230px;">Deviations & Defect Notes</th>
+            <th style="width: 150px;">Status</th>
+            <th style="width: 140px;">Screenshot Evidence</th>
+          </tr>
+        </thead>
+        <tbody>
+
+          <tr>
+            <td><strong>8</strong></td>
+            <td><span class="step-name">Open the 3-dot Actions menu on &quot;UAT Resource Type&quot;, click Suspend</span></td>
+            <td><div class="expected-text">Should suspend the resource type</div></td>
+            <td><div class="actual-text">Actions menu correctly shows Update / Suspend. Clicking Suspend shows a &quot;Suspended&quot; confirmation, status flips to SUSPENDED, Total Suspended increments 0→1.</div></td>
+            <td><div class="deviation-text">None.</div></td>
+            <td><span class="badge badge-pass">PASSED</span></td>
+            <td><img src="../uat_target3_cicodecm/resource_step12_type_suspend.png" class="thumb" alt="resource_step12_type_suspend.png" onclick="openModal(this.src)"></td>
+          </tr>
+        </tbody>
+      </table>
+      </div>
+    </div>
+
+  </div>
+
+  <div id="imageModal" class="modal" onclick="closeModal()">
+    <span class="modal-close">&times;</span>
+    <img id="modalImg" class="modal-content" src="" alt="Full Preview">
+  </div>
+
+  <script>
+    function filterCases(filter, btn) {
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      document.querySelectorAll('.case-section').forEach(sec => {
+        sec.style.display = (filter === 'all' || sec.getAttribute('data-case') === filter) ? 'block' : 'none';
+      });
+    }
+    function openModal(src) {
+      document.getElementById('modalImg').src = src;
+      document.getElementById('imageModal').classList.add('active');
+    }
+    function closeModal() { document.getElementById('imageModal').classList.remove('active'); }
+    document.addEventListener('keydown', function(e) { if (e.key === 'Escape') closeModal(); });
+  </script>
+
+  <script src="../assets/js/modules-data.js"></script>
+  <script src="../assets/js/test-cases-data.js"></script>
+  <script src="../assets/js/html2pdf.bundle.min.js"></script>
+  <script src="../assets/js/exec-report-generator.js"></script>
+</body>
+</html>

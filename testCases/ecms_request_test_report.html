@@ -249,11 +249,19 @@
       text-align: center;
     }
   </style>
+  <link rel="stylesheet" href="../assets/css/test-report-addon.css">
 </head>
 <body>
   <div class="container">
     <div class="header-box">
-      <div class="summary-badge-warn">AUTHENTIC UAT • WITH DIRECT ROW-LEVEL SCREENSHOT EVIDENCE</div>
+      <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;margin-bottom:12px;">
+        <div class="summary-badge-warn">AUTHENTIC UAT • WITH DIRECT ROW-LEVEL SCREENSHOT EVIDENCE</div>
+        <button class="btn-exec-download" onclick="if(window.ExecReportGenerator) ExecReportGenerator.downloadExecReportPdf('ecms_requests')" title="Download Official Executive &amp; Engineering PDF Report with Detailed Test Cases">
+          <span class="btn-icon-pulse">📄</span>
+          <span>Download PDF Report</span>
+          <span class="btn-exec-badge">PDF</span>
+        </button>
+      </div>
       <h1>ECMS Request Module UAT Execution Report</h1>
       <div class="sub">Comprehensive Live Verification of Internal & External Request Intake against ECMS TEST SCRIPT RECENT VERSION.xlsx</div>
       
@@ -613,5 +621,10 @@
       }
     }
   </script>
+
+  <script src="../assets/js/modules-data.js"></script>
+  <script src="../assets/js/test-cases-data.js"></script>
+  <script src="../assets/js/html2pdf.bundle.min.js"></script>
+  <script src="../assets/js/exec-report-generator.js"></script>
 </body>
 </html>

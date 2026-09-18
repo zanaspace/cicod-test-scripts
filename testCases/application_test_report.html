@@ -143,11 +143,19 @@
       color: var(--text-muted);
     }
   </style>
+  <link rel="stylesheet" href="../assets/css/test-report-addon.css">
 </head>
 <body>
   <div class="container">
     <div class="header-box">
-      <span class="summary-badge">UAT PASSED: APPLICATION Feature Verified</span>
+      <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;margin-bottom:12px;">
+        <span class="summary-badge">UAT PASSED: APPLICATION Feature Verified</span>
+        <button class="btn-exec-download" onclick="if(window.ExecReportGenerator) ExecReportGenerator.downloadExecReportPdf('ecms_applications')" title="Download Official Executive &amp; Engineering PDF Report with Detailed Test Cases">
+          <span class="btn-icon-pulse">📄</span>
+          <span>Download PDF Report</span>
+          <span class="btn-exec-badge">PDF</span>
+        </button>
+      </div>
       <h1>UAT Execution Report: APPLICATION Module</h1>
       <p class="sub">Executed strictly per <code>test/ApplicationTest.md</code> (Row 75 in CICOD DRIVE TEST SCRIPT.xlsx) across live commercial SaaS staging and reference environment.</p>
       
@@ -225,5 +233,10 @@
       </table>
     </div>
   </div>
+
+  <script src="../assets/js/modules-data.js"></script>
+  <script src="../assets/js/test-cases-data.js"></script>
+  <script src="../assets/js/html2pdf.bundle.min.js"></script>
+  <script src="../assets/js/exec-report-generator.js"></script>
 </body>
 </html>

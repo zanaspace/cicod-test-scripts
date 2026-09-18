@@ -1,10 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>UAT Report - ECMS Workflow Dashboard (ECMS TEST SCRIPT RECENT VERSION.xlsx)</title>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap"
+    rel="stylesheet">
   <style>
     :root {
       --bg: #070a14;
@@ -21,7 +24,13 @@
       --radius-sm: 6px;
       --radius-md: 10px;
     }
-    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
     body {
       background-color: var(--bg);
       color: var(--text);
@@ -29,8 +38,12 @@
       padding: 32px 24px;
       line-height: 1.5;
     }
-    .container { max-width: 1400px; margin: 0 auto; }
-    
+
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
     .header-box {
       background: var(--surface);
       border: 1px solid var(--border);
@@ -38,9 +51,20 @@
       padding: 26px;
       margin-bottom: 22px;
     }
-    h1 { font-size: 1.65rem; font-weight: 800; margin-bottom: 6px; color: #fff; }
-    .sub { color: var(--text-muted); font-size: 0.88rem; margin-bottom: 18px; }
-    
+
+    h1 {
+      font-size: 1.65rem;
+      font-weight: 800;
+      margin-bottom: 6px;
+      color: #fff;
+    }
+
+    .sub {
+      color: var(--text-muted);
+      font-size: 0.88rem;
+      margin-bottom: 18px;
+    }
+
     .summary-badge-warn {
       display: inline-flex;
       align-items: center;
@@ -64,8 +88,15 @@
       border-top: 1px solid var(--border);
       padding-top: 16px;
     }
-    .meta-bar span { color: var(--text-dim); }
-    .meta-bar strong { color: #e2e8f0; font-family: 'JetBrains Mono', monospace; }
+
+    .meta-bar span {
+      color: var(--text-dim);
+    }
+
+    .meta-bar strong {
+      color: #e2e8f0;
+      font-family: 'JetBrains Mono', monospace;
+    }
 
     /* Alert Box */
     .alert-block {
@@ -78,6 +109,7 @@
       font-size: 0.86rem;
       line-height: 1.6;
     }
+
     .alert-title {
       font-weight: 800;
       color: #f87171;
@@ -95,7 +127,13 @@
       gap: 12px;
       margin-bottom: 24px;
     }
-    @media (max-width: 800px) { .kpi-grid { grid-template-columns: repeat(2, 1fr); } }
+
+    @media (max-width: 800px) {
+      .kpi-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
     .kpi-card {
       background: var(--surface);
       border: 1px solid var(--border);
@@ -105,6 +143,7 @@
       flex-direction: column;
       gap: 4px;
     }
+
     .kpi-title {
       font-size: 0.72rem;
       font-weight: 600;
@@ -112,6 +151,7 @@
       text-transform: uppercase;
       font-family: 'JetBrains Mono', monospace;
     }
+
     .kpi-val {
       font-size: 1.4rem;
       font-weight: 800;
@@ -127,12 +167,14 @@
       overflow-x: auto;
       margin-bottom: 28px;
     }
+
     table {
       width: 100%;
       border-collapse: collapse;
       text-align: left;
       font-size: 0.86rem;
     }
+
     th {
       background: rgba(0, 0, 0, 0.25);
       color: var(--text-dim);
@@ -145,13 +187,20 @@
       white-space: nowrap;
       font-family: 'JetBrains Mono', monospace;
     }
+
     td {
       padding: 14px 16px;
       border-bottom: 1px solid var(--border);
       vertical-align: top;
     }
-    tr:last-child td { border-bottom: none; }
-    tr:hover { background: rgba(255, 255, 255, 0.02); }
+
+    tr:last-child td {
+      border-bottom: none;
+    }
+
+    tr:hover {
+      background: rgba(255, 255, 255, 0.02);
+    }
 
     .feature-tag {
       font-weight: 700;
@@ -175,6 +224,7 @@
       font-family: 'JetBrains Mono', monospace;
       display: inline-block;
     }
+
     .badge-passed {
       background: rgba(16, 185, 129, 0.15);
       color: #34d399;
@@ -206,11 +256,13 @@
       align-items: center;
       gap: 8px;
     }
+
     .gallery-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
       gap: 16px;
     }
+
     .thumb-card {
       background: var(--surface);
       border: 1px solid var(--border);
@@ -219,21 +271,25 @@
       cursor: pointer;
       transition: all 0.2s ease;
     }
+
     .thumb-card:hover {
       border-color: var(--accent);
       transform: translateY(-2px);
     }
+
     .thumb-img {
       width: 100%;
       height: 160px;
       overflow: hidden;
       background: #000;
     }
+
     .thumb-img img {
       width: 100%;
       height: 100%;
       object-fit: cover;
     }
+
     .thumb-caption {
       padding: 10px 12px;
       font-size: 0.78rem;
@@ -246,6 +302,7 @@
       width: 140px;
       text-align: center;
     }
+
     .evidence-thumb {
       display: inline-flex;
       flex-direction: column;
@@ -260,17 +317,20 @@
       transition: all 0.2s ease;
       text-decoration: none;
     }
+
     .evidence-thumb:hover {
       border-color: var(--accent);
       transform: translateY(-2px);
       box-shadow: 0 4px 12px rgba(56, 189, 248, 0.25);
     }
+
     .evidence-thumb img {
       width: 100%;
       height: 65px;
       object-fit: cover;
       display: block;
     }
+
     .evidence-tag {
       font-size: 0.68rem;
       color: var(--accent);
@@ -279,6 +339,7 @@
       font-weight: 600;
       text-transform: uppercase;
     }
+
     .evidence-ref {
       font-size: 0.72rem;
       color: var(--text-dim);
@@ -299,7 +360,11 @@
       z-index: 1000;
       padding: 24px;
     }
-    .lightbox.active { display: flex; }
+
+    .lightbox.active {
+      display: flex;
+    }
+
     .lightbox-box {
       max-width: 90vw;
       max-height: 90vh;
@@ -308,6 +373,7 @@
       align-items: center;
       position: relative;
     }
+
     .lightbox-box img {
       max-width: 100%;
       max-height: 82vh;
@@ -315,12 +381,14 @@
       border: 1px solid var(--border);
       border-radius: 8px;
     }
+
     .lightbox-caption {
       margin-top: 10px;
       color: #fff;
       font-size: 0.88rem;
       font-weight: 600;
     }
+
     .lightbox-close {
       position: absolute;
       top: -14px;
@@ -339,412 +407,462 @@
       justify-content: center;
     }
   </style>
+  <link rel="stylesheet" href="../assets/css/test-report-addon.css">
 </head>
+
 <body>
 
-<div class="container">
+  <div class="container">
 
-  <!-- Header -->
-  <div class="header-box">
-    <div class="summary-badge-live">✓ 100% VERIFIED &amp; OPERATIONAL ON STAGING</div>
-    <h1>UAT Test Report: ECMS Workflow Dashboard</h1>
-    <div class="sub">Live verification against official sheet specifications on staging tenant: <code>cicodecms.cicodsaasstaging.com</code></div>
+    <!-- Header -->
+    <div class="header-box">
+      <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;margin-bottom:12px;">
+        <div class="summary-badge-live">✓ 100% VERIFIED &amp; OPERATIONAL ON STAGING</div>
+        <button class="btn-exec-download" onclick="if(window.ExecReportGenerator) ExecReportGenerator.downloadExecReportPdf('ecms_dashboard')" title="Download Official Executive &amp; Engineering PDF Report with Detailed Test Cases">
+          <span class="btn-icon-pulse">📄</span>
+          <span>Download PDF Report</span>
+          <span class="btn-exec-badge">PDF</span>
+        </button>
+      </div>
+      <h1>UAT Test Report: ECMS Workflow Dashboard</h1>
+      <div class="sub">Live verification against official sheet specifications on staging tenant:
+        <code>cicodecms.cicodsaasstaging.com</code></div>
 
-    <div class="meta-bar">
-      <div><span>Source Sheet: </span><strong>ECMS TEST SCRIPT RECENT VERSION.xlsx (DASHBOARD)</strong></div>
-      <div><span>Target URL: </span><strong>https://cicodecms.cicodsaasstaging.com/ecms/index.php?r=dashboard/workOrder</strong></div>
-      <div><span>Tenant ID: </span><strong>cicodecms</strong></div>
-      <div><span>Tester User: </span><strong>raissa.boyomo@crowninteractive.com</strong></div>
-      <div><span>Execution Date: </span><strong>September 17, 2026</strong></div>
+      <div class="meta-bar">
+        <div><span>Source Sheet: </span><strong>ECMS TEST SCRIPT RECENT VERSION.xlsx (DASHBOARD)</strong></div>
+        <div><span>Target URL:
+          </span><strong>https://cicodecms.cicodsaasstaging.com/ecms/index.php?r=dashboard/workOrder</strong></div>
+        <div><span>Tenant ID: </span><strong>cicodecms</strong></div>
+        <div><span>Tester User: </span><strong>raissa.boyomo@crowninteractive.com</strong></div>
+        <div><span>Execution Date: </span><strong>September 17, 2026</strong></div>
+      </div>
+    </div>
+
+    <!-- Success Notification Block -->
+    <div class="alert-block" style="background:rgba(16,185,129,0.08);border-left:4px solid #10b981;">
+      <div class="alert-title" style="color:#34d399;">
+        <span>✓ Staging SSO Handshake Verified — Workflow Dashboard Fully Operational</span>
+      </div>
+      <p style="color:#cbd5e1;">
+        Authentication on <code>https://cicodecms.cicodsaasstaging.com/admin/merchant</code> successfully dispatches
+        into the child <strong>Enterprise Content Management (ECMS)</strong> portal. Navigation to the <strong>Workflow
+          Dashboard</strong> (<code>r=dashboard/workOrder</code>), Task Status time-slice filters (Today, Week, Month,
+        Custom Range), dynamic metric counters, and AmCharts multi-series volume bar charts verified live with 100%
+        compliance.
+      </p>
+    </div>
+
+    <!-- KPI Grid -->
+    <div class="kpi-grid">
+      <div class="kpi-card">
+        <span class="kpi-title">Total Test Steps</span>
+        <span class="kpi-val" style="color:#38bdf8;">18 Steps</span>
+      </div>
+      <div class="kpi-card">
+        <span class="kpi-title">Functional Status</span>
+        <span class="kpi-val" style="color:#34d399;">18 / 18 Passed</span>
+      </div>
+      <div class="kpi-card">
+        <span class="kpi-title">Pass Rate</span>
+        <span class="kpi-val" style="color:#34d399;">100.0%</span>
+      </div>
+      <div class="kpi-card">
+        <span class="kpi-title">Evidence Files</span>
+        <span class="kpi-val" style="color:#a855f7;">11 Captured</span>
+      </div>
+    </div>
+
+    <!-- Results Table -->
+    <div class="table-container">
+      <table>
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Feature</th>
+            <th>Steps to Reproduce</th>
+            <th>Expected Results (from Script)</th>
+            <th>Actual Live Behavior (cicodecms.cicodsaasstaging.com)</th>
+            <th>Status</th>
+            <th class="col-evidence">Screenshot Evidence</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>0</strong></td>
+            <td><span class="feature-tag">PORTAL LAUNCH</span></td>
+            <td>Click <strong>Enterprise Content Management</strong> card on merchant dashboard</td>
+            <td>ECMS portal loads with left sidebar navigation menu</td>
+            <td>Card dispatches smoothly to <code>/ecms/index.php?r=userDashboard/index</code> rendering overview &amp;
+              sidebar navigation.</td>
+            <td><span class="badge-passed">PASSED</span></td>
+            <td class="col-evidence">
+              <div class="evidence-thumb"
+                onclick="openLightbox('../uat_target3_cicodecm/ecms_step0_dashboard_entry.png', 'Step 0: ECMS Portal Entry & Overview Landing')">
+                <img src="../uat_target3_cicodecm/ecms_step0_dashboard_entry.png" alt="Step 0">
+                <span class="evidence-tag">View Capture</span>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td><strong>1</strong></td>
+            <td><span class="feature-tag">DASHBOARD</span></td>
+            <td>From the left menu, click <strong>Dashboard</strong></td>
+            <td>Dashboard Page Expands</td>
+            <td>Dashboard accordion expands displaying Workflow Dashboard, Status Dashboard, and Resource Utilization.
+            </td>
+            <td><span class="badge-passed">PASSED</span></td>
+            <td class="col-evidence">
+              <div class="evidence-thumb"
+                onclick="openLightbox('../uat_target3_cicodecm/ecms_step1_dashboard_expanded.png', 'Step 1: Dashboard Accordion Expanded in Sidebar')">
+                <img src="../uat_target3_cicodecm/ecms_step1_dashboard_expanded.png" alt="Step 1">
+                <span class="evidence-tag">View Capture</span>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td><strong>2</strong></td>
+            <td><span class="feature-tag">DASHBOARD</span></td>
+            <td>Click <strong>Workflow Dashboard</strong></td>
+            <td>Workflow Dashboard loads successfully</td>
+            <td>Navigates to <code>r=dashboard/workOrder</code>. Renders page title, Task Status metrics, and
+              interactive charts.</td>
+            <td><span class="badge-passed">PASSED</span></td>
+            <td class="col-evidence">
+              <div class="evidence-thumb"
+                onclick="openLightbox('../uat_target3_cicodecm/ecms_step2_workflow_dashboard_loaded.png', 'Step 2: Workflow Dashboard Loaded (Task Status & Metrics)')">
+                <img src="../uat_target3_cicodecm/ecms_step2_workflow_dashboard_loaded.png" alt="Step 2">
+                <span class="evidence-tag">View Capture</span>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td><strong>3</strong></td>
+            <td><span class="feature-tag">DASHBOARD</span></td>
+            <td>Hover over the green <strong>“New Ticket”</strong> tab under Ticket Status</td>
+            <td>Tooltip appears showing: <em>“This refers to new tickets created on a particular day.”</em></td>
+            <td>Labeled as "Task Status" / "New Task" with total tasks created count (41). Interactive hover functional.
+            </td>
+            <td><span class="badge-passed">PASSED</span></td>
+            <td class="col-evidence">
+              <div class="evidence-thumb"
+                onclick="openLightbox('../uat_target3_cicodecm/ecms_step3_new_ticket_tooltip.png', 'Step 3: New Task Tooltip & Metric Indicator')">
+                <img src="../uat_target3_cicodecm/ecms_step3_new_ticket_tooltip.png" alt="Step 3">
+                <span class="evidence-tag">View Capture</span>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td><strong>4</strong></td>
+            <td><span class="feature-tag">DASHBOARD</span></td>
+            <td>Click <strong>Today</strong> filter</td>
+            <td>Ticket Status updates to show today’s ticket statistics</td>
+            <td>Filter updates metrics dynamically: 0 New Task, 0 Open, 0 In Progress, 0 Closed.</td>
+            <td><span class="badge-passed">PASSED</span></td>
+            <td class="col-evidence">
+              <div class="evidence-thumb"
+                onclick="openLightbox('../uat_target3_cicodecm/ecms_step4_filter_today.png', 'Step 4: Filter Today Active')">
+                <img src="../uat_target3_cicodecm/ecms_step4_filter_today.png" alt="Step 4">
+                <span class="evidence-tag">View Capture</span>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td><strong>5</strong></td>
+            <td><span class="feature-tag">DASHBOARD</span></td>
+            <td>Click <strong>Week</strong> filter</td>
+            <td>Ticket Status updates to show ticket statistics for current week</td>
+            <td>Filter clicked; dynamic AJAX reload updates metrics for active weekly window.</td>
+            <td><span class="badge-passed">PASSED</span></td>
+            <td class="col-evidence">
+              <div class="evidence-thumb"
+                onclick="openLightbox('../uat_target3_cicodecm/ecms_step5_filter_week.png', 'Step 5: Filter Week Active')">
+                <img src="../uat_target3_cicodecm/ecms_step5_filter_week.png" alt="Step 5">
+                <span class="evidence-tag">View Capture</span>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td><strong>6</strong></td>
+            <td><span class="feature-tag">DASHBOARD</span></td>
+            <td>Click <strong>Month</strong> filter</td>
+            <td>Ticket Status updates to show statistics for current month</td>
+            <td>Filter clicked; dynamic count updates Open tasks from 0 to 8 matching current monthly cycle.</td>
+            <td><span class="badge-passed">PASSED</span></td>
+            <td class="col-evidence">
+              <div class="evidence-thumb"
+                onclick="openLightbox('../uat_target3_cicodecm/ecms_step6_filter_month.png', 'Step 6: Filter Month Active (Open Count: 8)')">
+                <img src="../uat_target3_cicodecm/ecms_step6_filter_month.png" alt="Step 6">
+                <span class="evidence-tag">View Capture</span>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td><strong>7</strong></td>
+            <td><span class="feature-tag">DASHBOARD</span></td>
+            <td>Select a custom date range from the date filter</td>
+            <td>Ticket Status updates based on selected date range</td>
+            <td>Custom date range selector (<code>Date: DD/MM/YYYY - DD/MM/YYYY</code>) active with interactive calendar
+              picker.</td>
+            <td><span class="badge-passed">PASSED</span></td>
+            <td class="col-evidence">
+              <div class="evidence-thumb"
+                onclick="openLightbox('../uat_target3_cicodecm/ecms_step7_filter_custom_range.png', 'Step 7: Custom Date Range Selector')">
+                <img src="../uat_target3_cicodecm/ecms_step7_filter_custom_range.png" alt="Step 7">
+                <span class="evidence-tag">View Capture</span>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td><strong>8</strong></td>
+            <td><span class="feature-tag">DASHBOARD</span></td>
+            <td>Verify that Open, In Progress, and Closed ticket counts update correctly</td>
+            <td>Values update dynamically according to applied filters</td>
+            <td>Metric cards update dynamically across filter transitions with distinct status icons.</td>
+            <td><span class="badge-passed">PASSED</span></td>
+            <td class="col-evidence">
+              <span class="evidence-ref">Verified across Steps 4–7 Filter Captures</span>
+            </td>
+          </tr>
+          <tr>
+            <td><strong>9</strong></td>
+            <td><span class="feature-tag">DASHBOARD</span></td>
+            <td>Scroll to <strong>Workflow Ticket Summary</strong> (Bar Chart)</td>
+            <td>Chart loads correctly with bars for each workflow</td>
+            <td>AmCharts component loads cleanly with volume bars for Billing Issue, Business Process, Delivery Process,
+              and Merchant Validation.</td>
+            <td><span class="badge-passed">PASSED</span></td>
+            <td class="col-evidence">
+              <div class="evidence-thumb"
+                onclick="openLightbox('../uat_target3_cicodecm/ecms_step9_bar_chart_view.png', 'Step 9: Workflow Task Summary AmCharts Bar Chart')">
+                <img src="../uat_target3_cicodecm/ecms_step9_bar_chart_view.png" alt="Step 9">
+                <span class="evidence-tag">View Capture</span>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td><strong>10</strong></td>
+            <td><span class="feature-tag">DASHBOARD</span></td>
+            <td>Hover over a bar in the chart</td>
+            <td>Tooltip displays workflow name + count of Open / In Progress / Closed tickets</td>
+            <td>Interactive hover tooltips render on SVG/Canvas elements with accurate ticket counts.</td>
+            <td><span class="badge-passed">PASSED</span></td>
+            <td class="col-evidence">
+              <span class="evidence-ref">Interactive SVG element on Step 9 Bar Chart</span>
+            </td>
+          </tr>
+          <tr>
+            <td><strong>11</strong></td>
+            <td><span class="feature-tag">DASHBOARD</span></td>
+            <td>Click <strong>Open</strong> status Badge (legend)</td>
+            <td>Only In-Progress and Closed bars are displayed</td>
+            <td>Legend item for Open (emerald green) toggles series visibility on the chart.</td>
+            <td><span class="badge-passed">PASSED</span></td>
+            <td class="col-evidence">
+              <div class="evidence-thumb"
+                onclick="openLightbox('../uat_target3_cicodecm/ecms_step11_chart_legend_interaction.png', 'Step 11: Interactive Legend Filter Toggling')">
+                <img src="../uat_target3_cicodecm/ecms_step11_chart_legend_interaction.png" alt="Step 11">
+                <span class="evidence-tag">View Capture</span>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td><strong>12</strong></td>
+            <td><span class="feature-tag">DASHBOARD</span></td>
+            <td>Click <strong>In progress</strong> Badge</td>
+            <td>Only Closed bars are displayed</td>
+            <td>Legend item for In Progress (amber/orange) toggles series visibility.</td>
+            <td><span class="badge-passed">PASSED</span></td>
+            <td class="col-evidence">
+              <span class="evidence-ref">Verified via Step 11 Legend Filter Mechanism</span>
+            </td>
+          </tr>
+          <tr>
+            <td><strong>13</strong></td>
+            <td><span class="feature-tag">DASHBOARD</span></td>
+            <td>Click <strong>Closed</strong> Badge</td>
+            <td>No bar is displayed</td>
+            <td>Legend item for Closed (dark green) toggles series visibility.</td>
+            <td><span class="badge-passed">PASSED</span></td>
+            <td class="col-evidence">
+              <span class="evidence-ref">Verified via Step 11 Legend Filter Mechanism</span>
+            </td>
+          </tr>
+          <tr>
+            <td><strong>14</strong></td>
+            <td><span class="feature-tag">DASHBOARD</span></td>
+            <td>Click multiple statuses at once (e.g., Open + In Progress + Closed)</td>
+            <td>Combined status view is displayed</td>
+            <td>AmCharts multi-series composition renders combined layers seamlessly.</td>
+            <td><span class="badge-passed">PASSED</span></td>
+            <td class="col-evidence">
+              <span class="evidence-ref">Verified via Step 9 &amp; 11 Multi-Series View</span>
+            </td>
+          </tr>
+          <tr>
+            <td><strong>15</strong></td>
+            <td><span class="feature-tag">DASHBOARD</span></td>
+            <td>Validate that all chart labels and legends are readable</td>
+            <td>UI elements render correctly, no overlaps</td>
+            <td>High-DPI canvas rendering with clear axes, responsive tick marks, and legible labels.</td>
+            <td><span class="badge-passed">PASSED</span></td>
+            <td class="col-evidence">
+              <span class="evidence-ref">Demonstrated on Step 9 Bar Chart View</span>
+            </td>
+          </tr>
+          <tr>
+            <td><strong>16</strong></td>
+            <td><span class="feature-tag">DASHBOARD</span></td>
+            <td>Click on any queue (e.g., Complaints, QA, Correspondence)</td>
+            <td>Workflow Ticket Summary updates to display ticket distribution for selected queue</td>
+            <td>"Top queues with task" and "Workflow Summary" dropdown dynamically filters across queues.</td>
+            <td><span class="badge-passed">PASSED</span></td>
+            <td class="col-evidence">
+              <span class="evidence-ref">Visible on Step 2 Workflow Dashboard</span>
+            </td>
+          </tr>
+          <tr>
+            <td><strong>17</strong></td>
+            <td><span class="feature-tag">DASHBOARD</span></td>
+            <td>Hover over the bar for the selected queue</td>
+            <td>Tooltip shows correct workflow summary for that queue</td>
+            <td>Queue summary bar renders tooltip breakdown with open/in-progress/closed counts.</td>
+            <td><span class="badge-passed">PASSED</span></td>
+            <td class="col-evidence">
+              <span class="evidence-ref">Visible on Step 2 Top Queues Widget</span>
+            </td>
+          </tr>
+          <tr>
+            <td><strong>18</strong></td>
+            <td><span class="feature-tag">SESSION</span></td>
+            <td>End Test</td>
+            <td>Session concluded</td>
+            <td>Session persists cleanly; full navigation and interactive features confirmed operational.</td>
+            <td><span class="badge-passed">PASSED</span></td>
+            <td class="col-evidence">
+              <div class="evidence-thumb"
+                onclick="openLightbox('../uat_target3_cicodecm/ecms_step18_end_test.png', 'Step 18: Concluded Session State')">
+                <img src="../uat_target3_cicodecm/ecms_step18_end_test.png" alt="Step 18">
+                <span class="evidence-tag">View Capture</span>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Photographic Evidence Gallery -->
+    <div class="gallery-title">
+      <span>📸 Live Photographic Evidence Captured on Staging (cicodecms.cicodsaasstaging.com)</span>
+    </div>
+    <div class="gallery-grid">
+      <div class="thumb-card"
+        onclick="openLightbox('../uat_target3_cicodecm/ecms_step0_dashboard_entry.png', 'Step 0: ECMS Portal Entry Overview (cicodecms.cicodsaasstaging.com/ecms/)')">
+        <div class="thumb-img">
+          <img src="../uat_target3_cicodecm/ecms_step0_dashboard_entry.png" alt="ECMS Overview" loading="lazy">
+        </div>
+        <div class="thumb-caption">00. ECMS Portal Overview Landing</div>
+      </div>
+      <div class="thumb-card"
+        onclick="openLightbox('../uat_target3_cicodecm/ecms_step1_dashboard_expanded.png', 'Step 1: Dashboard Left Menu Accordion Expanded')">
+        <div class="thumb-img">
+          <img src="../uat_target3_cicodecm/ecms_step1_dashboard_expanded.png" alt="Dashboard Menu Expanded"
+            loading="lazy">
+        </div>
+        <div class="thumb-caption">01. Dashboard Menu Expanded</div>
+      </div>
+      <div class="thumb-card"
+        onclick="openLightbox('../uat_target3_cicodecm/ecms_step2_workflow_dashboard_loaded.png', 'Step 2: Workflow Dashboard Loaded (Task Status &amp; Filters)')">
+        <div class="thumb-img">
+          <img src="../uat_target3_cicodecm/ecms_step2_workflow_dashboard_loaded.png" alt="Workflow Dashboard Loaded"
+            loading="lazy">
+        </div>
+        <div class="thumb-caption">02. Workflow Dashboard Loaded</div>
+      </div>
+      <div class="thumb-card"
+        onclick="openLightbox('../uat_target3_cicodecm/ecms_step3_new_ticket_tooltip.png', 'Step 3: New Ticket / Task Status Hover State')">
+        <div class="thumb-img">
+          <img src="../uat_target3_cicodecm/ecms_step3_new_ticket_tooltip.png" alt="New Ticket Tooltip" loading="lazy">
+        </div>
+        <div class="thumb-caption">03. New Task Tooltip &amp; Metric</div>
+      </div>
+      <div class="thumb-card"
+        onclick="openLightbox('../uat_target3_cicodecm/ecms_step4_filter_today.png', 'Step 4: Filter Today Active')">
+        <div class="thumb-img">
+          <img src="../uat_target3_cicodecm/ecms_step4_filter_today.png" alt="Filter Today" loading="lazy">
+        </div>
+        <div class="thumb-caption">04. Filter Today Selected</div>
+      </div>
+      <div class="thumb-card"
+        onclick="openLightbox('../uat_target3_cicodecm/ecms_step5_filter_week.png', 'Step 5: Filter Week Active')">
+        <div class="thumb-img">
+          <img src="../uat_target3_cicodecm/ecms_step5_filter_week.png" alt="Filter Week" loading="lazy">
+        </div>
+        <div class="thumb-caption">05. Filter Week Selected</div>
+      </div>
+      <div class="thumb-card"
+        onclick="openLightbox('../uat_target3_cicodecm/ecms_step6_filter_month.png', 'Step 6: Filter Month Active (Open Count: 8)')">
+        <div class="thumb-img">
+          <img src="../uat_target3_cicodecm/ecms_step6_filter_month.png" alt="Filter Month" loading="lazy">
+        </div>
+        <div class="thumb-caption">06. Filter Month (Dynamic Update)</div>
+      </div>
+      <div class="thumb-card"
+        onclick="openLightbox('../uat_target3_cicodecm/ecms_step7_filter_custom_range.png', 'Step 7: Custom Date Range Selector')">
+        <div class="thumb-img">
+          <img src="../uat_target3_cicodecm/ecms_step7_filter_custom_range.png" alt="Custom Date Range" loading="lazy">
+        </div>
+        <div class="thumb-caption">07. Custom Date Range Selector</div>
+      </div>
+      <div class="thumb-card"
+        onclick="openLightbox('../uat_target3_cicodecm/ecms_step9_bar_chart_view.png', 'Step 9: Workflow Ticket Summary AmCharts Bar Chart')">
+        <div class="thumb-img">
+          <img src="../uat_target3_cicodecm/ecms_step9_bar_chart_view.png" alt="Bar Chart View" loading="lazy">
+        </div>
+        <div class="thumb-caption">09. Workflow Summary Bar Chart</div>
+      </div>
+      <div class="thumb-card"
+        onclick="openLightbox('../uat_target3_cicodecm/ecms_step11_chart_legend_interaction.png', 'Step 11: Interactive Legend Toggling')">
+        <div class="thumb-img">
+          <img src="../uat_target3_cicodecm/ecms_step11_chart_legend_interaction.png" alt="Legend Toggling"
+            loading="lazy">
+        </div>
+        <div class="thumb-caption">11. Interactive Chart Legend</div>
+      </div>
+      <div class="thumb-card"
+        onclick="openLightbox('../uat_target3_cicodecm/ecms_step18_end_test.png', 'Step 18: Concluded Session State')">
+        <div class="thumb-img">
+          <img src="../uat_target3_cicodecm/ecms_step18_end_test.png" alt="Session End" loading="lazy">
+        </div>
+        <div class="thumb-caption">18. Test Concluded Successfully</div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Lightbox -->
+  <div class="lightbox" id="lightbox" onclick="closeLightbox()">
+    <div class="lightbox-box" onclick="event.stopPropagation()">
+      <button class="lightbox-close" onclick="closeLightbox()">&times;</button>
+      <img id="lightboxImg" src="" alt="Evidence Full Resolution">
+      <div class="lightbox-caption" id="lightboxCaption"></div>
     </div>
   </div>
 
-  <!-- Success Notification Block -->
-  <div class="alert-block" style="background:rgba(16,185,129,0.08);border-left:4px solid #10b981;">
-    <div class="alert-title" style="color:#34d399;">
-      <span>✓ Staging SSO Handshake Verified — Workflow Dashboard Fully Operational</span>
-    </div>
-    <p style="color:#cbd5e1;">
-      Authentication on <code>https://cicodecms.cicodsaasstaging.com/admin/merchant</code> successfully dispatches into the child <strong>Enterprise Content Management (ECMS)</strong> portal. Navigation to the <strong>Workflow Dashboard</strong> (<code>r=dashboard/workOrder</code>), Task Status time-slice filters (Today, Week, Month, Custom Range), dynamic metric counters, and AmCharts multi-series volume bar charts verified live with 100% compliance.
-    </p>
-  </div>
+  <script>
+    function openLightbox(src, cap) {
+      document.getElementById('lightboxImg').src = src;
+      document.getElementById('lightboxCaption').innerText = cap || '';
+      document.getElementById('lightbox').classList.add('active');
+    }
+    function closeLightbox() {
+      document.getElementById('lightbox').classList.remove('active');
+    }
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
+  </script>
 
-  <!-- KPI Grid -->
-  <div class="kpi-grid">
-    <div class="kpi-card">
-      <span class="kpi-title">Total Test Steps</span>
-      <span class="kpi-val" style="color:#38bdf8;">18 Steps</span>
-    </div>
-    <div class="kpi-card">
-      <span class="kpi-title">Functional Status</span>
-      <span class="kpi-val" style="color:#34d399;">18 / 18 Passed</span>
-    </div>
-    <div class="kpi-card">
-      <span class="kpi-title">Pass Rate</span>
-      <span class="kpi-val" style="color:#34d399;">100.0%</span>
-    </div>
-    <div class="kpi-card">
-      <span class="kpi-title">Evidence Files</span>
-      <span class="kpi-val" style="color:#a855f7;">11 Captured</span>
-    </div>
-  </div>
-
-  <!-- Results Table -->
-  <div class="table-container">
-    <table>
-      <thead>
-        <tr>
-          <th>#</th>
-          <th>Feature</th>
-          <th>Steps to Reproduce</th>
-          <th>Expected Results (from Script)</th>
-          <th>Actual Live Behavior (cicodecms.cicodsaasstaging.com)</th>
-          <th>Status</th>
-          <th class="col-evidence">Screenshot Evidence</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td><strong>0</strong></td>
-          <td><span class="feature-tag">PORTAL LAUNCH</span></td>
-          <td>Click <strong>Enterprise Content Management</strong> card on merchant dashboard</td>
-          <td>ECMS portal loads with left sidebar navigation menu</td>
-          <td>Card dispatches smoothly to <code>/ecms/index.php?r=userDashboard/index</code> rendering overview &amp; sidebar navigation.</td>
-          <td><span class="badge-passed">PASSED</span></td>
-          <td class="col-evidence">
-            <div class="evidence-thumb" onclick="openLightbox('../uat_target3_cicodecm/ecms_step0_dashboard_entry.png', 'Step 0: ECMS Portal Entry & Overview Landing')">
-              <img src="../uat_target3_cicodecm/ecms_step0_dashboard_entry.png" alt="Step 0">
-              <span class="evidence-tag">View Capture</span>
-            </div>
-          </td>
-        </tr>
-        <tr>
-          <td><strong>1</strong></td>
-          <td><span class="feature-tag">DASHBOARD</span></td>
-          <td>From the left menu, click <strong>Dashboard</strong></td>
-          <td>Dashboard Page Expands</td>
-          <td>Dashboard accordion expands displaying Workflow Dashboard, Status Dashboard, and Resource Utilization.</td>
-          <td><span class="badge-passed">PASSED</span></td>
-          <td class="col-evidence">
-            <div class="evidence-thumb" onclick="openLightbox('../uat_target3_cicodecm/ecms_step1_dashboard_expanded.png', 'Step 1: Dashboard Accordion Expanded in Sidebar')">
-              <img src="../uat_target3_cicodecm/ecms_step1_dashboard_expanded.png" alt="Step 1">
-              <span class="evidence-tag">View Capture</span>
-            </div>
-          </td>
-        </tr>
-        <tr>
-          <td><strong>2</strong></td>
-          <td><span class="feature-tag">DASHBOARD</span></td>
-          <td>Click <strong>Workflow Dashboard</strong></td>
-          <td>Workflow Dashboard loads successfully</td>
-          <td>Navigates to <code>r=dashboard/workOrder</code>. Renders page title, Task Status metrics, and interactive charts.</td>
-          <td><span class="badge-passed">PASSED</span></td>
-          <td class="col-evidence">
-            <div class="evidence-thumb" onclick="openLightbox('../uat_target3_cicodecm/ecms_step2_workflow_dashboard_loaded.png', 'Step 2: Workflow Dashboard Loaded (Task Status & Metrics)')">
-              <img src="../uat_target3_cicodecm/ecms_step2_workflow_dashboard_loaded.png" alt="Step 2">
-              <span class="evidence-tag">View Capture</span>
-            </div>
-          </td>
-        </tr>
-        <tr>
-          <td><strong>3</strong></td>
-          <td><span class="feature-tag">DASHBOARD</span></td>
-          <td>Hover over the green <strong>“New Ticket”</strong> tab under Ticket Status</td>
-          <td>Tooltip appears showing: <em>“This refers to new tickets created on a particular day.”</em></td>
-          <td>Labeled as "Task Status" / "New Task" with total tasks created count (41). Interactive hover functional.</td>
-          <td><span class="badge-passed">PASSED</span></td>
-          <td class="col-evidence">
-            <div class="evidence-thumb" onclick="openLightbox('../uat_target3_cicodecm/ecms_step3_new_ticket_tooltip.png', 'Step 3: New Task Tooltip & Metric Indicator')">
-              <img src="../uat_target3_cicodecm/ecms_step3_new_ticket_tooltip.png" alt="Step 3">
-              <span class="evidence-tag">View Capture</span>
-            </div>
-          </td>
-        </tr>
-        <tr>
-          <td><strong>4</strong></td>
-          <td><span class="feature-tag">DASHBOARD</span></td>
-          <td>Click <strong>Today</strong> filter</td>
-          <td>Ticket Status updates to show today’s ticket statistics</td>
-          <td>Filter updates metrics dynamically: 0 New Task, 0 Open, 0 In Progress, 0 Closed.</td>
-          <td><span class="badge-passed">PASSED</span></td>
-          <td class="col-evidence">
-            <div class="evidence-thumb" onclick="openLightbox('../uat_target3_cicodecm/ecms_step4_filter_today.png', 'Step 4: Filter Today Active')">
-              <img src="../uat_target3_cicodecm/ecms_step4_filter_today.png" alt="Step 4">
-              <span class="evidence-tag">View Capture</span>
-            </div>
-          </td>
-        </tr>
-        <tr>
-          <td><strong>5</strong></td>
-          <td><span class="feature-tag">DASHBOARD</span></td>
-          <td>Click <strong>Week</strong> filter</td>
-          <td>Ticket Status updates to show ticket statistics for current week</td>
-          <td>Filter clicked; dynamic AJAX reload updates metrics for active weekly window.</td>
-          <td><span class="badge-passed">PASSED</span></td>
-          <td class="col-evidence">
-            <div class="evidence-thumb" onclick="openLightbox('../uat_target3_cicodecm/ecms_step5_filter_week.png', 'Step 5: Filter Week Active')">
-              <img src="../uat_target3_cicodecm/ecms_step5_filter_week.png" alt="Step 5">
-              <span class="evidence-tag">View Capture</span>
-            </div>
-          </td>
-        </tr>
-        <tr>
-          <td><strong>6</strong></td>
-          <td><span class="feature-tag">DASHBOARD</span></td>
-          <td>Click <strong>Month</strong> filter</td>
-          <td>Ticket Status updates to show statistics for current month</td>
-          <td>Filter clicked; dynamic count updates Open tasks from 0 to 8 matching current monthly cycle.</td>
-          <td><span class="badge-passed">PASSED</span></td>
-          <td class="col-evidence">
-            <div class="evidence-thumb" onclick="openLightbox('../uat_target3_cicodecm/ecms_step6_filter_month.png', 'Step 6: Filter Month Active (Open Count: 8)')">
-              <img src="../uat_target3_cicodecm/ecms_step6_filter_month.png" alt="Step 6">
-              <span class="evidence-tag">View Capture</span>
-            </div>
-          </td>
-        </tr>
-        <tr>
-          <td><strong>7</strong></td>
-          <td><span class="feature-tag">DASHBOARD</span></td>
-          <td>Select a custom date range from the date filter</td>
-          <td>Ticket Status updates based on selected date range</td>
-          <td>Custom date range selector (<code>Date: DD/MM/YYYY - DD/MM/YYYY</code>) active with interactive calendar picker.</td>
-          <td><span class="badge-passed">PASSED</span></td>
-          <td class="col-evidence">
-            <div class="evidence-thumb" onclick="openLightbox('../uat_target3_cicodecm/ecms_step7_filter_custom_range.png', 'Step 7: Custom Date Range Selector')">
-              <img src="../uat_target3_cicodecm/ecms_step7_filter_custom_range.png" alt="Step 7">
-              <span class="evidence-tag">View Capture</span>
-            </div>
-          </td>
-        </tr>
-        <tr>
-          <td><strong>8</strong></td>
-          <td><span class="feature-tag">DASHBOARD</span></td>
-          <td>Verify that Open, In Progress, and Closed ticket counts update correctly</td>
-          <td>Values update dynamically according to applied filters</td>
-          <td>Metric cards update dynamically across filter transitions with distinct status icons.</td>
-          <td><span class="badge-passed">PASSED</span></td>
-          <td class="col-evidence">
-            <span class="evidence-ref">Verified across Steps 4–7 Filter Captures</span>
-          </td>
-        </tr>
-        <tr>
-          <td><strong>9</strong></td>
-          <td><span class="feature-tag">DASHBOARD</span></td>
-          <td>Scroll to <strong>Workflow Ticket Summary</strong> (Bar Chart)</td>
-          <td>Chart loads correctly with bars for each workflow</td>
-          <td>AmCharts component loads cleanly with volume bars for Billing Issue, Business Process, Delivery Process, and Merchant Validation.</td>
-          <td><span class="badge-passed">PASSED</span></td>
-          <td class="col-evidence">
-            <div class="evidence-thumb" onclick="openLightbox('../uat_target3_cicodecm/ecms_step9_bar_chart_view.png', 'Step 9: Workflow Task Summary AmCharts Bar Chart')">
-              <img src="../uat_target3_cicodecm/ecms_step9_bar_chart_view.png" alt="Step 9">
-              <span class="evidence-tag">View Capture</span>
-            </div>
-          </td>
-        </tr>
-        <tr>
-          <td><strong>10</strong></td>
-          <td><span class="feature-tag">DASHBOARD</span></td>
-          <td>Hover over a bar in the chart</td>
-          <td>Tooltip displays workflow name + count of Open / In Progress / Closed tickets</td>
-          <td>Interactive hover tooltips render on SVG/Canvas elements with accurate ticket counts.</td>
-          <td><span class="badge-passed">PASSED</span></td>
-          <td class="col-evidence">
-            <span class="evidence-ref">Interactive SVG element on Step 9 Bar Chart</span>
-          </td>
-        </tr>
-        <tr>
-          <td><strong>11</strong></td>
-          <td><span class="feature-tag">DASHBOARD</span></td>
-          <td>Click <strong>Open</strong> status Badge (legend)</td>
-          <td>Only In-Progress and Closed bars are displayed</td>
-          <td>Legend item for Open (emerald green) toggles series visibility on the chart.</td>
-          <td><span class="badge-passed">PASSED</span></td>
-          <td class="col-evidence">
-            <div class="evidence-thumb" onclick="openLightbox('../uat_target3_cicodecm/ecms_step11_chart_legend_interaction.png', 'Step 11: Interactive Legend Filter Toggling')">
-              <img src="../uat_target3_cicodecm/ecms_step11_chart_legend_interaction.png" alt="Step 11">
-              <span class="evidence-tag">View Capture</span>
-            </div>
-          </td>
-        </tr>
-        <tr>
-          <td><strong>12</strong></td>
-          <td><span class="feature-tag">DASHBOARD</span></td>
-          <td>Click <strong>In progress</strong> Badge</td>
-          <td>Only Closed bars are displayed</td>
-          <td>Legend item for In Progress (amber/orange) toggles series visibility.</td>
-          <td><span class="badge-passed">PASSED</span></td>
-          <td class="col-evidence">
-            <span class="evidence-ref">Verified via Step 11 Legend Filter Mechanism</span>
-          </td>
-        </tr>
-        <tr>
-          <td><strong>13</strong></td>
-          <td><span class="feature-tag">DASHBOARD</span></td>
-          <td>Click <strong>Closed</strong> Badge</td>
-          <td>No bar is displayed</td>
-          <td>Legend item for Closed (dark green) toggles series visibility.</td>
-          <td><span class="badge-passed">PASSED</span></td>
-          <td class="col-evidence">
-            <span class="evidence-ref">Verified via Step 11 Legend Filter Mechanism</span>
-          </td>
-        </tr>
-        <tr>
-          <td><strong>14</strong></td>
-          <td><span class="feature-tag">DASHBOARD</span></td>
-          <td>Click multiple statuses at once (e.g., Open + In Progress + Closed)</td>
-          <td>Combined status view is displayed</td>
-          <td>AmCharts multi-series composition renders combined layers seamlessly.</td>
-          <td><span class="badge-passed">PASSED</span></td>
-          <td class="col-evidence">
-            <span class="evidence-ref">Verified via Step 9 &amp; 11 Multi-Series View</span>
-          </td>
-        </tr>
-        <tr>
-          <td><strong>15</strong></td>
-          <td><span class="feature-tag">DASHBOARD</span></td>
-          <td>Validate that all chart labels and legends are readable</td>
-          <td>UI elements render correctly, no overlaps</td>
-          <td>High-DPI canvas rendering with clear axes, responsive tick marks, and legible labels.</td>
-          <td><span class="badge-passed">PASSED</span></td>
-          <td class="col-evidence">
-            <span class="evidence-ref">Demonstrated on Step 9 Bar Chart View</span>
-          </td>
-        </tr>
-        <tr>
-          <td><strong>16</strong></td>
-          <td><span class="feature-tag">DASHBOARD</span></td>
-          <td>Click on any queue (e.g., Complaints, QA, Correspondence)</td>
-          <td>Workflow Ticket Summary updates to display ticket distribution for selected queue</td>
-          <td>"Top queues with task" and "Workflow Summary" dropdown dynamically filters across queues.</td>
-          <td><span class="badge-passed">PASSED</span></td>
-          <td class="col-evidence">
-            <span class="evidence-ref">Visible on Step 2 Workflow Dashboard</span>
-          </td>
-        </tr>
-        <tr>
-          <td><strong>17</strong></td>
-          <td><span class="feature-tag">DASHBOARD</span></td>
-          <td>Hover over the bar for the selected queue</td>
-          <td>Tooltip shows correct workflow summary for that queue</td>
-          <td>Queue summary bar renders tooltip breakdown with open/in-progress/closed counts.</td>
-          <td><span class="badge-passed">PASSED</span></td>
-          <td class="col-evidence">
-            <span class="evidence-ref">Visible on Step 2 Top Queues Widget</span>
-          </td>
-        </tr>
-        <tr>
-          <td><strong>18</strong></td>
-          <td><span class="feature-tag">SESSION</span></td>
-          <td>End Test</td>
-          <td>Session concluded</td>
-          <td>Session persists cleanly; full navigation and interactive features confirmed operational.</td>
-          <td><span class="badge-passed">PASSED</span></td>
-          <td class="col-evidence">
-            <div class="evidence-thumb" onclick="openLightbox('../uat_target3_cicodecm/ecms_step18_end_test.png', 'Step 18: Concluded Session State')">
-              <img src="../uat_target3_cicodecm/ecms_step18_end_test.png" alt="Step 18">
-              <span class="evidence-tag">View Capture</span>
-            </div>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-
-  <!-- Photographic Evidence Gallery -->
-  <div class="gallery-title">
-    <span>📸 Live Photographic Evidence Captured on Staging (cicodecms.cicodsaasstaging.com)</span>
-  </div>
-  <div class="gallery-grid">
-    <div class="thumb-card" onclick="openLightbox('../uat_target3_cicodecm/ecms_step0_dashboard_entry.png', 'Step 0: ECMS Portal Entry Overview (cicodecms.cicodsaasstaging.com/ecms/)')">
-      <div class="thumb-img">
-        <img src="../uat_target3_cicodecm/ecms_step0_dashboard_entry.png" alt="ECMS Overview" loading="lazy">
-      </div>
-      <div class="thumb-caption">00. ECMS Portal Overview Landing</div>
-    </div>
-    <div class="thumb-card" onclick="openLightbox('../uat_target3_cicodecm/ecms_step1_dashboard_expanded.png', 'Step 1: Dashboard Left Menu Accordion Expanded')">
-      <div class="thumb-img">
-        <img src="../uat_target3_cicodecm/ecms_step1_dashboard_expanded.png" alt="Dashboard Menu Expanded" loading="lazy">
-      </div>
-      <div class="thumb-caption">01. Dashboard Menu Expanded</div>
-    </div>
-    <div class="thumb-card" onclick="openLightbox('../uat_target3_cicodecm/ecms_step2_workflow_dashboard_loaded.png', 'Step 2: Workflow Dashboard Loaded (Task Status &amp; Filters)')">
-      <div class="thumb-img">
-        <img src="../uat_target3_cicodecm/ecms_step2_workflow_dashboard_loaded.png" alt="Workflow Dashboard Loaded" loading="lazy">
-      </div>
-      <div class="thumb-caption">02. Workflow Dashboard Loaded</div>
-    </div>
-    <div class="thumb-card" onclick="openLightbox('../uat_target3_cicodecm/ecms_step3_new_ticket_tooltip.png', 'Step 3: New Ticket / Task Status Hover State')">
-      <div class="thumb-img">
-        <img src="../uat_target3_cicodecm/ecms_step3_new_ticket_tooltip.png" alt="New Ticket Tooltip" loading="lazy">
-      </div>
-      <div class="thumb-caption">03. New Task Tooltip &amp; Metric</div>
-    </div>
-    <div class="thumb-card" onclick="openLightbox('../uat_target3_cicodecm/ecms_step4_filter_today.png', 'Step 4: Filter Today Active')">
-      <div class="thumb-img">
-        <img src="../uat_target3_cicodecm/ecms_step4_filter_today.png" alt="Filter Today" loading="lazy">
-      </div>
-      <div class="thumb-caption">04. Filter Today Selected</div>
-    </div>
-    <div class="thumb-card" onclick="openLightbox('../uat_target3_cicodecm/ecms_step5_filter_week.png', 'Step 5: Filter Week Active')">
-      <div class="thumb-img">
-        <img src="../uat_target3_cicodecm/ecms_step5_filter_week.png" alt="Filter Week" loading="lazy">
-      </div>
-      <div class="thumb-caption">05. Filter Week Selected</div>
-    </div>
-    <div class="thumb-card" onclick="openLightbox('../uat_target3_cicodecm/ecms_step6_filter_month.png', 'Step 6: Filter Month Active (Open Count: 8)')">
-      <div class="thumb-img">
-        <img src="../uat_target3_cicodecm/ecms_step6_filter_month.png" alt="Filter Month" loading="lazy">
-      </div>
-      <div class="thumb-caption">06. Filter Month (Dynamic Update)</div>
-    </div>
-    <div class="thumb-card" onclick="openLightbox('../uat_target3_cicodecm/ecms_step7_filter_custom_range.png', 'Step 7: Custom Date Range Selector')">
-      <div class="thumb-img">
-        <img src="../uat_target3_cicodecm/ecms_step7_filter_custom_range.png" alt="Custom Date Range" loading="lazy">
-      </div>
-      <div class="thumb-caption">07. Custom Date Range Selector</div>
-    </div>
-    <div class="thumb-card" onclick="openLightbox('../uat_target3_cicodecm/ecms_step9_bar_chart_view.png', 'Step 9: Workflow Ticket Summary AmCharts Bar Chart')">
-      <div class="thumb-img">
-        <img src="../uat_target3_cicodecm/ecms_step9_bar_chart_view.png" alt="Bar Chart View" loading="lazy">
-      </div>
-      <div class="thumb-caption">09. Workflow Summary Bar Chart</div>
-    </div>
-    <div class="thumb-card" onclick="openLightbox('../uat_target3_cicodecm/ecms_step11_chart_legend_interaction.png', 'Step 11: Interactive Legend Toggling')">
-      <div class="thumb-img">
-        <img src="../uat_target3_cicodecm/ecms_step11_chart_legend_interaction.png" alt="Legend Toggling" loading="lazy">
-      </div>
-      <div class="thumb-caption">11. Interactive Chart Legend</div>
-    </div>
-    <div class="thumb-card" onclick="openLightbox('../uat_target3_cicodecm/ecms_step18_end_test.png', 'Step 18: Concluded Session State')">
-      <div class="thumb-img">
-        <img src="../uat_target3_cicodecm/ecms_step18_end_test.png" alt="Session End" loading="lazy">
-      </div>
-      <div class="thumb-caption">18. Test Concluded Successfully</div>
-    </div>
-  </div>
-
-</div>
-
-<!-- Lightbox -->
-<div class="lightbox" id="lightbox" onclick="closeLightbox()">
-  <div class="lightbox-box" onclick="event.stopPropagation()">
-    <button class="lightbox-close" onclick="closeLightbox()">&times;</button>
-    <img id="lightboxImg" src="" alt="Evidence Full Resolution">
-    <div class="lightbox-caption" id="lightboxCaption"></div>
-  </div>
-</div>
-
-<script>
-  function openLightbox(src, cap) {
-    document.getElementById('lightboxImg').src = src;
-    document.getElementById('lightboxCaption').innerText = cap || '';
-    document.getElementById('lightbox').classList.add('active');
-  }
-  function closeLightbox() {
-    document.getElementById('lightbox').classList.remove('active');
-  }
-  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
-</script>
-
+  <script src="../assets/js/modules-data.js"></script>
+  <script src="../assets/js/test-cases-data.js"></script>
+  <script src="../assets/js/html2pdf.bundle.min.js"></script>
+  <script src="../assets/js/exec-report-generator.js"></script>
 </body>
 </html>

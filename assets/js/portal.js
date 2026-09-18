@@ -9,12 +9,12 @@
   'use strict';
 
   // State Management
-  let activeModuleId = (typeof window.appModules !== 'undefined' && window.appModules.length) 
-    ? window.appModules[0].id 
+  let activeModuleId = (typeof window.appModules !== 'undefined' && window.appModules.length)
+    ? window.appModules[0].id
     : 'module_drive';
-    
-  let activeFeatureId = (typeof window.appModules !== 'undefined' && window.appModules.length && window.appModules[0].features.length) 
-    ? window.appModules[0].features[0].id 
+
+  let activeFeatureId = (typeof window.appModules !== 'undefined' && window.appModules.length && window.appModules[0].features.length)
+    ? window.appModules[0].features[0].id
     : 'login';
 
   /**
@@ -48,7 +48,7 @@
 
     try {
       localStorage.setItem('portal_sidebar_collapsed', isCollapsed ? '1' : '0');
-    } catch (e) {}
+    } catch (e) { }
   }
 
   /**
@@ -66,7 +66,7 @@
           toggleBtn.setAttribute('aria-expanded', 'false');
         }
       }
-    } catch (e) {}
+    } catch (e) { }
   }
 
   /**
@@ -125,27 +125,27 @@
 
           <div class="features-list ${mod.expanded ? '' : 'collapsed'}">
             ${mod.features.map(f => {
-              const isActive = mod.id === activeModuleId && f.id === activeFeatureId;
-              const isUpcoming = !!f.isUpcoming;
-              const rateNum = parseFloat(f.passRate);
-              const is100 = !isUpcoming && !isNaN(rateNum) && rateNum >= 99;
-              const isBlocked = (f.passRate || '').toLowerCase().includes('blocked');
-              let pillClass = 'pill-rate';
-              let pillStyle = '';
-              if (isUpcoming) {
-                pillStyle = 'background:rgba(56,189,248,0.15);color:#38bdf8;border:1px solid rgba(56,189,248,0.3);';
-              } else if (isBlocked) {
-                pillStyle = 'background:rgba(239,68,68,0.15);color:#f87171;border:1px solid rgba(239,68,68,0.3);';
-              } else if (!is100) {
-                pillClass += ' gap';
-              }
-              return `
+        const isActive = mod.id === activeModuleId && f.id === activeFeatureId;
+        const isUpcoming = !!f.isUpcoming;
+        const rateNum = parseFloat(f.passRate);
+        const is100 = !isUpcoming && !isNaN(rateNum) && rateNum >= 99;
+        const isBlocked = (f.passRate || '').toLowerCase().includes('blocked');
+        let pillClass = 'pill-rate';
+        let pillStyle = '';
+        if (isUpcoming) {
+          pillStyle = 'background:rgba(56,189,248,0.15);color:#38bdf8;border:1px solid rgba(56,189,248,0.3);';
+        } else if (isBlocked) {
+          pillStyle = 'background:rgba(239,68,68,0.15);color:#f87171;border:1px solid rgba(239,68,68,0.3);';
+        } else if (!is100) {
+          pillClass += ' gap';
+        }
+        return `
                 <div class="feature-item ${isActive ? 'active' : ''}" onclick="selectFeature('${mod.id}', '${f.id}')">
                   <span>${f.sheetName}</span>
                   <span class="${pillClass}" style="${pillStyle}">${f.passRate}</span>
                 </div>
               `;
-            }).join('')}
+      }).join('')}
           </div>
         </div>
       `;
@@ -289,7 +289,7 @@
   }
 
   // Keyboard shortcuts: Escape to close modal, Ctrl+B to toggle sidebar
-  document.addEventListener('keydown', function(e) {
+  document.addEventListener('keydown', function (e) {
     if (e.key === 'Escape') closeModal();
     if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'b') {
       e.preventDefault();

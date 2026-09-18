@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>UAT Report - REPORTS Module (ECMS)</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0b0f19; --surface: #121826; --surface-card: #182235; --border: #223049;
+      --text: #f1f5f9; --text-muted: #94a3b8; --pass: #10b981; --not-impl: #f59e0b; --dev: #38bdf8; --bug: #ef4444; --accent: #10b981;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background-color: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; padding: 36px 24px; line-height: 1.5; }
+    .container { max-width: 1440px; margin: 0 auto; }
+    .header-box { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 28px; margin-bottom: 28px; }
+    h1 { font-size: 1.8rem; font-weight: 700; margin-bottom: 6px; color: #fff; }
+    .sub { color: var(--text-muted); font-size: 0.92rem; margin-bottom: 20px; }
+    .meta-bar { display: flex; flex-wrap: wrap; gap: 24px; font-size: 0.88rem; border-top: 1px solid var(--border); padding-top: 18px; }
+    .meta-bar span { color: var(--text-muted); }
+    .meta-bar strong { color: #e2e8f0; font-family: 'JetBrains Mono', monospace; }
+    .summary-badge { display: inline-block; padding: 5px 14px; background: rgba(239, 68, 68, 0.15); border: 1px solid rgba(239, 68, 68, 0.3); color: #f87171; border-radius: 20px; font-weight: 700; font-size: 0.82rem; margin-bottom: 12px; }
+    .kpi-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 16px; margin-bottom: 28px; }
+    .kpi-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 20px; }
+    .kpi-num { font-size: 2rem; font-weight: 700; font-family: 'JetBrains Mono', monospace; margin-top: 6px; }
+    .kpi-label { color: var(--text-muted); font-size: 0.84rem; text-transform: uppercase; letter-spacing: 0.05em; }
+    .filter-bar { display: flex; gap: 10px; margin-bottom: 24px; flex-wrap: wrap; }
+    .filter-btn { background: var(--surface); border: 1px solid var(--border); color: var(--text-muted); padding: 8px 16px; border-radius: 8px; font-size: 0.85rem; font-weight: 600; cursor: pointer; transition: all 0.2s ease; }
+    .filter-btn:hover, .filter-btn.active { background: var(--accent); color: #0b0f19; border-color: var(--accent); }
+    .case-section { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; margin-bottom: 28px; overflow: hidden; }
+    .case-header { padding: 18px 24px; background: var(--surface-card); border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; }
+    .case-title { font-size: 1.15rem; font-weight: 700; color: #fff; }
+    .case-tag { font-size: 0.76rem; font-family: 'JetBrains Mono', monospace; padding: 4px 10px; border-radius: 6px; background: rgba(16, 185, 129, 0.15); border: 1px solid rgba(16, 185, 129, 0.3); color: #34d399; }
+    .table-scroll { overflow-x: auto; max-width: 100%; }
+    table { width: 100%; min-width: 1350px; table-layout: fixed; border-collapse: collapse; font-size: 0.88rem; }
+    th { background: rgba(11, 15, 25, 0.6); text-align: left; padding: 14px 16px; color: var(--text-muted); font-weight: 600; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.04em; border-bottom: 1px solid var(--border); }
+    td { padding: 14px 16px; border-bottom: 1px solid var(--border); vertical-align: top; overflow-wrap: break-word; word-break: break-word; }
+    tr:last-child td { border-bottom: none; }
+    tr:hover td { background: rgba(255, 255, 255, 0.02); }
+    .step-name { font-weight: 600; color: #fff; }
+    .expected-text { color: #cbd5e1; font-size: 0.86rem; }
+    .actual-text { color: #93c5fd; font-size: 0.86rem; font-family: 'JetBrains Mono', monospace; overflow-wrap: anywhere; }
+    .deviation-text { color: #fbbf24; font-size: 0.84rem; }
+    .badge { display: inline-block; padding: 3px 10px; border-radius: 6px; font-size: 0.74rem; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; }
+    .badge-pass { background: rgba(16, 185, 129, 0.2); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.3); }
+    .badge-not-impl { background: rgba(245, 158, 11, 0.2); color: #fbbf24; border: 1px solid rgba(245, 158, 11, 0.3); }
+    .badge-dev { background: rgba(56, 189, 248, 0.2); color: #38bdf8; border: 1px solid rgba(56, 189, 248, 0.3); }
+    .badge-bug { background: rgba(239, 68, 68, 0.2); color: #f87171; border: 1px solid rgba(239, 68, 68, 0.35); }
+    .thumb { width: 80px; height: 50px; object-fit: cover; border-radius: 6px; border: 1px solid var(--border); cursor: pointer; transition: transform 0.15s ease, border-color 0.15s ease; }
+    .thumb:hover { transform: scale(1.08); border-color: var(--accent); }
+    .no-img-badge { display: inline-block; padding: 4px 8px; border-radius: 6px; background: rgba(245, 158, 11, 0.1); border: 1px dashed rgba(245, 158, 11, 0.3); color: #fbbf24; font-size: 0.72rem; font-weight: 600; text-align: center; line-height: 1.3; }
+    .modal { display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0, 0, 0, 0.88); backdrop-filter: blur(4px); z-index: 999; justify-content: center; align-items: center; padding: 24px; }
+    .modal.active { display: flex; }
+    .modal-content { max-width: 90vw; max-height: 90vh; border-radius: 10px; border: 1px solid var(--border); box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6); }
+    .modal-close { position: absolute; top: 24px; right: 28px; color: #fff; font-size: 2rem; cursor: pointer; font-weight: 700; }
+  </style>
+  <link rel="stylesheet" href="../assets/css/test-report-addon.css">
+</head>
+<body>
+  <div class="container">
+    <div class="header-box">
+      <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;margin-bottom:12px;">
+        <div class="summary-badge">⚠ REPORTS MODULE UAT — SEARCH WORKS, BUT DOWNLOAD THROWS "undefined" (P1)</div>
+        <button class="btn-exec-download" onclick="if(window.ExecReportGenerator) ExecReportGenerator.downloadExecReportPdf('ecms_reports')" title="Download Official Executive &amp; Engineering PDF Report with Detailed Test Cases">
+          <span class="btn-icon-pulse">📄</span>
+          <span>Download PDF Report</span>
+          <span class="btn-exec-badge">PDF</span>
+        </button>
+      </div>
+      <h1>UAT Execution Report: REPORTS Module</h1>
+      <p class="sub">Live functional/UI verification of the standalone Reports feature — not represented in <code>ECMS TEST SCRIPT RECENT VERSION.xlsx</code>, so this scenario/step breakdown was derived from direct UI exploration. This session covered 10 checkpoints across 6 scenarios. Report search itself works correctly, confirmed via a ground-truth cross-check against the Tasks module: the cascading Queue/Queue Type filters populate correctly, and empty results for two queues were confirmed genuine (not a search bug) while Queue=PLANNING AND SCHEDULING correctly returned its 1 matching task. However, clicking Download on a populated report throws a raw, unhandled "undefined" alert instead of exporting a file (P1, confirmed 2/2).</p>
+      <div class="meta-bar">
+        <div><span>Test Script:</span> <strong>test/ReportsTest_Results.md</strong></div>
+        <div><span>Target URL:</span> <strong>https://cicodecms.cicodsaasstaging.com/ecms/index.php?r=report/*</strong></div>
+        <div><span>Tenant / Account:</span> <strong>cicodecms / raissa.boyomo@crowninteractive.com</strong></div>
+        <div><span>Execution Engine:</span> <strong>Headless Edge CDP</strong></div>
+        <div><span>Execution Date:</span> <strong>September 17, 2026</strong></div>
+      </div>
+    </div>
+
+    <div class="kpi-grid">
+      <div class="kpi-card"><div class="kpi-label">Total Scenarios</div><div class="kpi-num" style="color: #10b981;">6</div></div>
+      <div class="kpi-card"><div class="kpi-label">Checkpoints Verified</div><div class="kpi-num" style="color: #38bdf8;">10</div></div>
+      <div class="kpi-card"><div class="kpi-label">Functional Passed</div><div class="kpi-num" style="color: #10b981;">8</div></div>
+      <div class="kpi-card"><div class="kpi-label">Deviations</div><div class="kpi-num" style="color: #fbbf24;">1</div></div>
+      <div class="kpi-card"><div class="kpi-label">Confirmed Bugs</div><div class="kpi-num" style="color: #ef4444;">1</div></div>
+      <div class="kpi-card"><div class="kpi-label">Blocked (by defect)</div><div class="kpi-num" style="color: #94a3b8;">0</div></div>
+    </div>
+
+    <div class="filter-bar">
+      <button class="filter-btn active" onclick="filterCases('all', this)">All Scenarios (6)</button>
+      <button class="filter-btn" onclick="filterCases('sc1', this)">MENU NAVIGATION &amp; GENERATE REPORT FORM (1)</button>
+      <button class="filter-btn" onclick="filterCases('sc2', this)">SEARCH VALIDATION — REQUIRED QUEUE FIELD (1)</button>
+      <button class="filter-btn" onclick="filterCases('sc3', this)">CASCADING QUEUE / QUEUE TYPE DROPDOWNS (2)</button>
+      <button class="filter-btn" onclick="filterCases('sc4', this)">GENERATE REPORT — ZERO-RESULT QUEUES (3)</button>
+      <button class="filter-btn" onclick="filterCases('sc5', this)">GROUND-TRUTH CROSS-CHECK &amp; CONFIRMED WORKING SEARCH (2)</button>
+      <button class="filter-btn" onclick="filterCases('sc6', this)">DOWNLOAD REPORT (P1 DEFECT) (1)</button>
+    </div>
+
+    <div class="case-section" data-case="sc1">
+      <div class="case-header">
+        <div class="case-title">Scenario 1: MENU NAVIGATION &amp; GENERATE REPORT FORM</div>
+        <div class="case-tag">Row 1</div>
+      </div>
+      <div class="table-scroll">
+      <table>
+        <thead>
+          <tr>
+            <th style="width: 55px;">Row</th>
+            <th style="width: 220px;">Steps to Reproduce</th>
+            <th style="width: 250px;">Expected Result</th>
+            <th>Actual Result (Live Execution)</th>
+            <th style="width: 230px;">Deviations & Defect Notes</th>
+            <th style="width: 150px;">Status</th>
+            <th style="width: 140px;">Screenshot Evidence</th>
+          </tr>
+        </thead>
+        <tbody>
+
+          <tr>
+            <td><strong>1</strong></td>
+            <td><span class="step-name">From the sidebar click &quot;Reports&quot;, then click the &quot;Reports&quot; sub-item</span></td>
+            <td><div class="expected-text">Sub-menu shows &quot;Reports&quot; / &quot;Audit Log&quot;; &quot;Reports&quot; loads a &quot;Generate Report&quot; filter form</div></td>
+            <td><div class="actual-text">Confirmed: sub-menu expands to Reports / Audit Log, and the form loads with Queue* (required), Queue Type, Status, Priority, Date, Task State, Created By, Assigned To, plus Clear all / Search buttons.</div></td>
+            <td><div class="deviation-text">None.</div></td>
+            <td><span class="badge badge-pass">PASSED</span></td>
+            <td><img src="../uat_target3_cicodecm/reports_step1_index.png" class="thumb" alt="reports_step1_index.png" onclick="openModal(this.src)"></td>
+          </tr>
+        </tbody>
+      </table>
+      </div>
+    </div>
+
+    <div class="case-section" data-case="sc2">
+      <div class="case-header">
+        <div class="case-title">Scenario 2: SEARCH VALIDATION — REQUIRED QUEUE FIELD</div>
+        <div class="case-tag">Deviation</div>
+      </div>
+      <div class="table-scroll">
+      <table>
+        <thead>
+          <tr>
+            <th style="width: 55px;">Row</th>
+            <th style="width: 220px;">Steps to Reproduce</th>
+            <th style="width: 250px;">Expected Result</th>
+            <th>Actual Result (Live Execution)</th>
+            <th style="width: 230px;">Deviations & Defect Notes</th>
+            <th style="width: 150px;">Status</th>
+            <th style="width: 140px;">Screenshot Evidence</th>
+          </tr>
+        </thead>
+        <tbody>
+
+          <tr>
+            <td><strong>2</strong></td>
+            <td><span class="step-name">Click Search without selecting a Queue</span></td>
+            <td><div class="expected-text">Queue is marked required (*) — should not silently run a report</div></td>
+            <td><div class="actual-text">No result table was rendered and the form stayed in place, so the required-field guard held; a validation toast appeared but had already faded to a barely-legible ghost overlay by the time the screenshot was captured, so its exact wording could not be confirmed.</div></td>
+            <td><div class="deviation-text">[Deviation]: validation toast not legible in evidence — fades too fast to read.</div></td>
+            <td><span class="badge badge-dev">PASSED (minor deviation)</span></td>
+            <td><img src="../uat_target3_cicodecm/reports_step4b_empty_search_toast.png" class="thumb" alt="reports_step4b_empty_search_toast.png" onclick="openModal(this.src)"></td>
+          </tr>
+        </tbody>
+      </table>
+      </div>
+    </div>
+
+    <div class="case-section" data-case="sc3">
+      <div class="case-header">
+        <div class="case-title">Scenario 3: CASCADING QUEUE / QUEUE TYPE DROPDOWNS</div>
+        <div class="case-tag">Rows 3-4</div>
+      </div>
+      <div class="table-scroll">
+      <table>
+        <thead>
+          <tr>
+            <th style="width: 55px;">Row</th>
+            <th style="width: 220px;">Steps to Reproduce</th>
+            <th style="width: 250px;">Expected Result</th>
+            <th>Actual Result (Live Execution)</th>
+            <th style="width: 230px;">Deviations & Defect Notes</th>
+            <th style="width: 150px;">Status</th>
+            <th style="width: 140px;">Screenshot Evidence</th>
+          </tr>
+        </thead>
+        <tbody>
+
+          <tr>
+            <td><strong>3</strong></td>
+            <td><span class="step-name">Select &quot;Complaints&quot; from the Queue dropdown</span></td>
+            <td><div class="expected-text">Queue Type dropdown should unlock/populate</div></td>
+            <td><div class="actual-text">Confirmed: Queue Type changed from the disabled &quot;Select Queue first&quot; placeholder to a live, selectable dropdown.</div></td>
+            <td><div class="deviation-text">None.</div></td>
+            <td><span class="badge badge-pass">PASSED</span></td>
+            <td><img src="../uat_target3_cicodecm/reports_step5_queue_selected.png" class="thumb" alt="reports_step5_queue_selected.png" onclick="openModal(this.src)"></td>
+          </tr>
+
+          <tr>
+            <td><strong>4</strong></td>
+            <td><span class="step-name">Select &quot;Product/Service Complaint&quot; from Queue Type</span></td>
+            <td><div class="expected-text">Value should be accepted, ready to search</div></td>
+            <td><div class="actual-text">Confirmed: dropdown correctly shows &quot;Product/Service Complaint&quot; selected.</div></td>
+            <td><div class="deviation-text">None.</div></td>
+            <td><span class="badge badge-pass">PASSED</span></td>
+            <td><img src="../uat_target3_cicodecm/reports_step6_queuetype_selected.png" class="thumb" alt="reports_step6_queuetype_selected.png" onclick="openModal(this.src)"></td>
+          </tr>
+        </tbody>
+      </table>
+      </div>
+    </div>
+
+    <div class="case-section" data-case="sc4">
+      <div class="case-header">
+        <div class="case-title">Scenario 4: GENERATE REPORT — ZERO-RESULT QUEUES</div>
+        <div class="case-tag">Rows 5-7</div>
+      </div>
+      <div class="table-scroll">
+      <table>
+        <thead>
+          <tr>
+            <th style="width: 55px;">Row</th>
+            <th style="width: 220px;">Steps to Reproduce</th>
+            <th style="width: 250px;">Expected Result</th>
+            <th>Actual Result (Live Execution)</th>
+            <th style="width: 230px;">Deviations & Defect Notes</th>
+            <th style="width: 150px;">Status</th>
+            <th style="width: 140px;">Screenshot Evidence</th>
+          </tr>
+        </thead>
+        <tbody>
+
+          <tr>
+            <td><strong>5</strong></td>
+            <td><span class="step-name">Click Search with Queue=Complaints, Queue Type=Product/Service Complaint</span></td>
+            <td><div class="expected-text">Should display a results grid</div></td>
+            <td><div class="actual-text">Grid renders with correct headers (Task ID / Title / Queue / Queue Type / Assigned to / Status / Actions) and pagination &quot;1 of 1&quot;, but zero data rows and no Bulk Actions/Download/Custom View buttons — a clean, correctly-rendered empty state.</div></td>
+            <td><div class="deviation-text">None.</div></td>
+            <td><span class="badge badge-pass">PASSED</span></td>
+            <td><img src="../uat_target3_cicodecm/reports_step7_search_result.png" class="thumb" alt="reports_step7_search_result.png" onclick="openModal(this.src)"></td>
+          </tr>
+
+          <tr>
+            <td><strong>6</strong></td>
+            <td><span class="step-name">Clear Queue Type, search with Queue=Complaints alone</span></td>
+            <td><div class="expected-text">Should widen the match, if any exist</div></td>
+            <td><div class="actual-text">Still zero rows returned — consistent with row 5, not a narrower-filter artifact.</div></td>
+            <td><div class="deviation-text">None.</div></td>
+            <td><span class="badge badge-pass">PASSED</span></td>
+            <td><img src="../uat_target3_cicodecm/reports_step9_broad_search_complaints.png" class="thumb" alt="reports_step9_broad_search_complaints.png" onclick="openModal(this.src)"></td>
+          </tr>
+
+          <tr>
+            <td><strong>7</strong></td>
+            <td><span class="step-name">Select Queue=&quot;UAT Test Queue 90355&quot;, search</span></td>
+            <td><div class="expected-text">Should display that queue's tasks, if any exist</div></td>
+            <td><div class="actual-text">Still zero rows returned.</div></td>
+            <td><div class="deviation-text">None.</div></td>
+            <td><span class="badge badge-pass">PASSED</span></td>
+            <td><img src="../uat_target3_cicodecm/reports_step10_uat_queue_search.png" class="thumb" alt="reports_step10_uat_queue_search.png" onclick="openModal(this.src)"></td>
+          </tr>
+        </tbody>
+      </table>
+      </div>
+    </div>
+
+    <div class="case-section" data-case="sc5">
+      <div class="case-header">
+        <div class="case-title">Scenario 5: GROUND-TRUTH CROSS-CHECK &amp; CONFIRMED WORKING SEARCH</div>
+        <div class="case-tag">Rows 8-9</div>
+      </div>
+      <div class="table-scroll">
+      <table>
+        <thead>
+          <tr>
+            <th style="width: 55px;">Row</th>
+            <th style="width: 220px;">Steps to Reproduce</th>
+            <th style="width: 250px;">Expected Result</th>
+            <th>Actual Result (Live Execution)</th>
+            <th style="width: 230px;">Deviations & Defect Notes</th>
+            <th style="width: 150px;">Status</th>
+            <th style="width: 140px;">Screenshot Evidence</th>
+          </tr>
+        </thead>
+        <tbody>
+
+          <tr>
+            <td><strong>8</strong></td>
+            <td><span class="step-name">Navigate to Tasks → All Tasks (independent of Reports)</span></td>
+            <td><div class="expected-text">Confirm whether real task data exists anywhere in the tenant</div></td>
+            <td><div class="actual-text">Confirmed: 48 Total Tasks exist tenant-wide, with several tied to Queue &quot;PLANNING AND SCHEDULING&quot; (Task IDs 1048, 1045, 1044, 1043, 1041, etc.) — establishes ground truth for row 9.</div></td>
+            <td><div class="deviation-text">None.</div></td>
+            <td><span class="badge badge-pass">PASSED</span></td>
+            <td><img src="../uat_target3_cicodecm/reports_step11_tasks_ground_truth.png" class="thumb" alt="reports_step11_tasks_ground_truth.png" onclick="openModal(this.src)"></td>
+          </tr>
+
+          <tr>
+            <td><strong>9</strong></td>
+            <td><span class="step-name">Back in Reports, select Queue=&quot;PLANNING AND SCHEDULING&quot;, click Search</span></td>
+            <td><div class="expected-text">Should return the task(s) confirmed in row 8</div></td>
+            <td><div class="actual-text">Correctly returned 1 matching row (Task 1048, &quot;UAT Sanity Check Original Que…&quot;, Queue Type &quot;WORK BREAKDOWN STRUCTURE&quot;, Status OPEN); Bulk Actions / Download / Custom View buttons correctly appeared now that results exist. Confirms rows 5–7's zero-row results were genuine, not a search defect.</div></td>
+            <td><div class="deviation-text">None.</div></td>
+            <td><span class="badge badge-pass">PASSED</span></td>
+            <td><img src="../uat_target3_cicodecm/reports_step12_planning_search.png" class="thumb" alt="reports_step12_planning_search.png" onclick="openModal(this.src)"></td>
+          </tr>
+        </tbody>
+      </table>
+      </div>
+    </div>
+
+    <div class="case-section" data-case="sc6">
+      <div class="case-header">
+        <div class="case-title">Scenario 6: DOWNLOAD REPORT (P1 DEFECT)</div>
+        <div class="case-tag">P1 Defect</div>
+      </div>
+      <div class="table-scroll">
+      <table>
+        <thead>
+          <tr>
+            <th style="width: 55px;">Row</th>
+            <th style="width: 220px;">Steps to Reproduce</th>
+            <th style="width: 250px;">Expected Result</th>
+            <th>Actual Result (Live Execution)</th>
+            <th style="width: 230px;">Deviations & Defect Notes</th>
+            <th style="width: 150px;">Status</th>
+            <th style="width: 140px;">Screenshot Evidence</th>
+          </tr>
+        </thead>
+        <tbody>
+
+          <tr>
+            <td><strong>10</strong></td>
+            <td><span class="step-name">With the row-9 result set on screen, click &quot;Download&quot;</span></td>
+            <td><div class="expected-text">Should export/download the report (e.g. as a file)</div></td>
+            <td><div class="actual-text">CONFIRMED BUG (2/2 reproductions): clicking Download pops a native browser alert reading literally &quot;undefined&quot;. No file is downloaded, and the dialog is a raw, un-caught value rather than any real message. Repeated once more — identical result.</div></td>
+            <td><div class="deviation-text">[Defect - P1]: Download action surfaces an unhandled &quot;undefined&quot; alert instead of exporting a file.</div></td>
+            <td><span class="badge badge-bug">CONFIRMED BUG (P1, 2/2)</span></td>
+            <td><img src="../uat_target3_cicodecm/reports_step13c_after_download_click.png" class="thumb" alt="reports_step13c_after_download_click.png" onclick="openModal(this.src)"></td>
+          </tr>
+        </tbody>
+      </table>
+      </div>
+    </div>
+
+  </div>
+
+  <div id="imageModal" class="modal" onclick="closeModal()">
+    <span class="modal-close">&times;</span>
+    <img id="modalImg" class="modal-content" src="" alt="Full Preview">
+  </div>
+
+  <script>
+    function filterCases(filter, btn) {
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      document.querySelectorAll('.case-section').forEach(sec => {
+        sec.style.display = (filter === 'all' || sec.getAttribute('data-case') === filter) ? 'block' : 'none';
+      });
+    }
+    function openModal(src) {
+      document.getElementById('modalImg').src = src;
+      document.getElementById('imageModal').classList.add('active');
+    }
+    function closeModal() { document.getElementById('imageModal').classList.remove('active'); }
+    document.addEventListener('keydown', function(e) { if (e.key === 'Escape') closeModal(); });
+  </script>
+
+  <script src="../assets/js/modules-data.js"></script>
+  <script src="../assets/js/test-cases-data.js"></script>
+  <script src="../assets/js/html2pdf.bundle.min.js"></script>
+  <script src="../assets/js/exec-report-generator.js"></script>
+</body>
+</html>

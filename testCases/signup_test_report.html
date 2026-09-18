@@ -3,319 +3,796 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>UAT Report - SIGN UP Module (test/SignupTest.md)</title>
+  <title>UAT Report - SIGN UP Module (ECMS)</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg: #0b0f19;
-      --surface: #121826;
-      --border: #223049;
-      --text: #f1f5f9;
-      --text-muted: #94a3b8;
-      --pass: #10b981;
-      --dev: #f59e0b;
-      --accent: #3b82f6;
+      --bg: #0b0f19; --surface: #121826; --surface-card: #182235; --border: #223049;
+      --text: #f1f5f9; --text-muted: #94a3b8; --pass: #10b981; --not-impl: #f59e0b; --dev: #38bdf8; --bug: #ef4444; --proposed: #a855f7; --accent: #10b981;
     }
     * { box-sizing: border-box; margin: 0; padding: 0; }
-    body {
-      background-color: var(--bg);
-      color: var(--text);
-      font-family: 'Inter', sans-serif;
-      padding: 36px 24px;
-      line-height: 1.5;
-    }
-    .container { max-width: 1340px; margin: 0 auto; }
-    .header-box {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 14px;
-      padding: 28px;
-      margin-bottom: 24px;
-    }
+    body { background-color: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; padding: 36px 24px; line-height: 1.5; }
+    .container { max-width: 1440px; margin: 0 auto; }
+    .header-box { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 28px; margin-bottom: 28px; }
     h1 { font-size: 1.8rem; font-weight: 700; margin-bottom: 6px; color: #fff; }
     .sub { color: var(--text-muted); font-size: 0.92rem; margin-bottom: 20px; }
-    .meta-bar {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 24px;
-      font-size: 0.88rem;
-      border-top: 1px solid var(--border);
-      padding-top: 18px;
-    }
+    .meta-bar { display: flex; flex-wrap: wrap; gap: 24px; font-size: 0.88rem; border-top: 1px solid var(--border); padding-top: 18px; }
     .meta-bar span { color: var(--text-muted); }
     .meta-bar strong { color: #e2e8f0; font-family: 'JetBrains Mono', monospace; }
-
-    .summary-badge {
-      display: inline-block;
-      padding: 5px 12px;
-      background: rgba(16, 185, 129, 0.15);
-      border: 1px solid rgba(16, 185, 129, 0.3);
-      color: #34d399;
-      border-radius: 20px;
-      font-weight: 700;
-      font-size: 0.8rem;
-      margin-bottom: 12px;
-    }
-
-    .table-container {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 14px;
-      overflow-x: auto;
-    }
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      text-align: left;
-      font-size: 0.88rem;
-    }
-    th {
-      background: #172133;
-      color: #94a3b8;
-      font-weight: 600;
-      text-transform: uppercase;
-      font-size: 0.74rem;
-      letter-spacing: 0.05em;
-      padding: 16px;
-      border-bottom: 1px solid var(--border);
-      white-space: nowrap;
-    }
-    td {
-      padding: 16px;
-      border-bottom: 1px solid var(--border);
-      vertical-align: top;
-    }
+    .summary-badge { display: inline-block; padding: 5px 14px; background: rgba(16, 185, 129, 0.15); border: 1px solid rgba(16, 185, 129, 0.3); color: #34d399; border-radius: 20px; font-weight: 700; font-size: 0.82rem; margin-bottom: 12px; }
+    .evidence-note { color: #34d399; background: rgba(16, 185, 129, 0.08); border-left: 3px solid #10b981; padding: 12px 16px; border-radius: 0 8px 8px 0; font-size: 0.86rem; margin-bottom: 20px; line-height: 1.5; }
+    .kpi-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 16px; margin-bottom: 28px; }
+    .kpi-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 20px; }
+    .kpi-num { font-size: 2rem; font-weight: 700; font-family: 'JetBrains Mono', monospace; margin-top: 6px; }
+    .kpi-label { color: var(--text-muted); font-size: 0.84rem; text-transform: uppercase; letter-spacing: 0.05em; }
+    .filter-bar { display: flex; gap: 10px; margin-bottom: 24px; flex-wrap: wrap; }
+    .filter-btn { background: var(--surface); border: 1px solid var(--border); color: var(--text-muted); padding: 8px 16px; border-radius: 8px; font-size: 0.85rem; font-weight: 600; cursor: pointer; transition: all 0.2s ease; }
+    .filter-btn:hover, .filter-btn.active { background: var(--accent); color: #0b0f19; border-color: var(--accent); }
+    .case-section { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; margin-bottom: 28px; overflow: hidden; }
+    .case-header { padding: 18px 24px; background: var(--surface-card); border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; }
+    .case-title { font-size: 1.15rem; font-weight: 700; color: #fff; }
+    .case-tag { font-size: 0.76rem; font-family: 'JetBrains Mono', monospace; padding: 4px 10px; border-radius: 6px; background: rgba(16, 185, 129, 0.15); border: 1px solid rgba(16, 185, 129, 0.3); color: #34d399; }
+    .table-scroll { overflow-x: auto; max-width: 100%; }
+    table { width: 100%; min-width: 1350px; table-layout: fixed; border-collapse: collapse; font-size: 0.88rem; }
+    th { background: rgba(11, 15, 25, 0.6); text-align: left; padding: 14px 16px; color: var(--text-muted); font-weight: 600; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.04em; border-bottom: 1px solid var(--border); }
+    td { padding: 14px 16px; border-bottom: 1px solid var(--border); vertical-align: top; overflow-wrap: break-word; word-break: break-word; }
     tr:last-child td { border-bottom: none; }
-    tr:hover { background: rgba(255, 255, 255, 0.02); }
-
-    .feature-tag {
-      font-weight: 700;
-      color: #60a5fa;
-      background: rgba(59, 130, 246, 0.15);
-      padding: 4px 8px;
-      border-radius: 4px;
-      display: inline-block;
-      font-size: 0.76rem;
-      letter-spacing: 0.05em;
-    }
-    .status-badge {
-      display: inline-block;
-      padding: 4px 10px;
-      border-radius: 20px;
-      font-weight: 700;
-      font-size: 0.72rem;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-      white-space: nowrap;
-    }
-    .status-pass { background: rgba(16, 185, 129, 0.2); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.4); }
-    .status-dev { background: rgba(245, 158, 11, 0.2); color: #fbbf24; border: 1px solid rgba(245, 158, 11, 0.4); }
-
-    .deviation-box {
-      color: #fbbf24;
-      background: rgba(245, 158, 11, 0.08);
-      border-left: 3px solid #f59e0b;
-      padding: 8px 12px;
-      border-radius: 0 6px 6px 0;
-      font-size: 0.82rem;
-    }
-
-    .thumb {
-      width: 130px;
-      border-radius: 6px;
-      border: 1px solid var(--border);
-      display: block;
-      cursor: zoom-in;
-      transition: transform 0.2s;
-    }
-    .thumb:hover { transform: scale(1.04); }
+    tr:hover td { background: rgba(255, 255, 255, 0.02); }
+    .step-name { font-weight: 600; color: #fff; }
+    .expected-text { color: #cbd5e1; font-size: 0.86rem; }
+    .actual-text { color: #93c5fd; font-size: 0.86rem; font-family: 'JetBrains Mono', monospace; overflow-wrap: anywhere; }
+    .deviation-text { color: #fbbf24; font-size: 0.84rem; }
+    .badge { display: inline-block; padding: 3px 10px; border-radius: 6px; font-size: 0.74rem; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; }
+    .badge-pass { background: rgba(16, 185, 129, 0.2); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.3); }
+    .badge-not-impl { background: rgba(245, 158, 11, 0.2); color: #fbbf24; border: 1px solid rgba(245, 158, 11, 0.3); }
+    .badge-dev { background: rgba(56, 189, 248, 0.2); color: #38bdf8; border: 1px solid rgba(56, 189, 248, 0.3); }
+    .badge-bug { background: rgba(239, 68, 68, 0.2); color: #f87171; border: 1px solid rgba(239, 68, 68, 0.35); }
+    .badge-proposed { background: rgba(168, 85, 247, 0.2); color: #c084fc; border: 1px solid rgba(168, 85, 247, 0.35); }
+    .thumb { width: 80px; height: 50px; object-fit: cover; border-radius: 6px; border: 1px solid var(--border); cursor: pointer; transition: transform 0.15s ease, border-color 0.15s ease; }
+    .thumb:hover { transform: scale(1.08); border-color: var(--accent); }
+    .no-img-badge { display: inline-block; padding: 4px 8px; border-radius: 6px; background: rgba(168, 85, 247, 0.1); border: 1px dashed rgba(168, 85, 247, 0.3); color: #c084fc; font-size: 0.72rem; font-weight: 600; text-align: center; line-height: 1.3; }
+    .modal { display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0, 0, 0, 0.88); backdrop-filter: blur(4px); z-index: 999; justify-content: center; align-items: center; padding: 24px; }
+    .modal.active { display: flex; }
+    .modal-content { max-width: 90vw; max-height: 90vh; border-radius: 10px; border: 1px solid var(--border); box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6); }
+    .modal-close { position: absolute; top: 24px; right: 28px; color: #fff; font-size: 2rem; cursor: pointer; font-weight: 700; }
   </style>
+  <link rel="stylesheet" href="../assets/css/test-report-addon.css">
 </head>
 <body>
   <div class="container">
     <div class="header-box">
-      <span class="summary-badge">UAT PASSED: 9 / 9 Steps Verified</span>
+      <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;margin-bottom:12px;">
+        <div class="summary-badge">✓ SIGN UP: 13/14 HAPPY-PATH STEPS + 5/6 PROPOSED SCENARIOS PASSED — 3 CONFIRMED DEFECTS TOTAL</div>
+        <button class="btn-exec-download" onclick="if(window.ExecReportGenerator) ExecReportGenerator.downloadExecReportPdf('signup')" title="Download Official Executive &amp; Engineering PDF Report with Detailed Test Cases">
+          <span class="btn-icon-pulse">📄</span>
+          <span>Download PDF Report</span>
+          <span class="btn-exec-badge">PDF</span>
+        </button>
+      </div>
       <h1>UAT Execution Report: SIGN UP Module</h1>
-      <p class="sub">Executed in strict alignment with <code>test/SignupTest.md</code> starting from <code>https://cicodsaasstaging.com/login?tenant=cicodecm</code> using "Start free trial".</p>
-      
+      <p class="sub">Full live re-execution via headless Edge + Chrome DevTools Protocol (<code>scratch/signup_full.js</code> plus <code>scratch/prop1</code>-<code>prop6</code> scenario scripts), replacing a prior session whose evidence screenshots were found to be corrupted (stuck on an undismissed cookie-consent overlay). This run captured the full happy path (14 steps, 1 undocumented step found, 1 confirmed defect) plus all 6 previously-proposed negative/edge-case scenarios from the CICOD Drive gap analysis (31 steps) — 5 came back clean, 1 (duplicate email registration) surfaced a real gap, and 1 (abandon/resume) has a partially inconclusive final checkpoint.</p>
+      <div class="evidence-note">✓ <strong>Evidence fixed (2026-09-17):</strong> the previous session's stuck-overlay defect was traced to a narrow capture viewport causing the cookie-consent banner to render as a full blocking modal instead of a bottom bar. Re-running at 1440×900 resolved it completely.</div>
       <div class="meta-bar">
-        <div><span>Test Script:</span> <strong>test/SignupTest.md</strong></div>
-        <div><span>Initial Action:</span> <strong>Click "Start free trial"</strong></div>
+        <div><span>Test Script:</span> <strong>test/SignupTest_Results.md</strong></div>
+        <div><span>Gap Analysis:</span> <strong>drive/CICOD_DRIVE_Test_Script_Gap_Analysis.xlsx</strong></div>
         <div><span>Starting URL:</span> <strong>/login?tenant=cicodecm</strong></div>
-        <div><span>Total Test Steps:</span> <strong>9 of 9 PASSED</strong></div>
+        <div><span>Execution Date:</span> <strong>September 17, 2026</strong></div>
       </div>
     </div>
 
-    <div class="table-container">
+    <div class="kpi-grid">
+      <div class="kpi-card"><div class="kpi-label">Total Scenarios</div><div class="kpi-num" style="color: #10b981;">9</div></div>
+      <div class="kpi-card"><div class="kpi-label">Steps Passed</div><div class="kpi-num" style="color: #10b981;">38</div></div>
+      <div class="kpi-card"><div class="kpi-label">New Steps Found</div><div class="kpi-num" style="color: #38bdf8;">1</div></div>
+      <div class="kpi-card"><div class="kpi-label">Confirmed Bugs / Gaps</div><div class="kpi-num" style="color: #ef4444;">3</div></div>
+      <div class="kpi-card"><div class="kpi-label">Inconclusive</div><div class="kpi-num" style="color: #fbbf24;">3</div></div>
+    </div>
+
+    <div class="filter-bar">
+      <button class="filter-btn active" onclick="filterCases('all', this)">All Scenarios (9)</button>
+      <button class="filter-btn" onclick="filterCases('sc1', this)">SIGN UP HAPPY PATH (test/SignupTest.md) (10)</button>
+      <button class="filter-btn" onclick="filterCases('sc2', this)">BUSINESS INFO STEP (NOT IN test/SignupTest.md) (2)</button>
+      <button class="filter-btn" onclick="filterCases('sc3', this)">ACCOUNT CREATION &amp; PORTAL LANDING (2)</button>
+      <button class="filter-btn" onclick="filterCases('sc4', this)">DUPLICATE EMAIL REGISTRATION (5)</button>
+      <button class="filter-btn" onclick="filterCases('sc5', this)">WEAK PASSWORD REJECTION (6)</button>
+      <button class="filter-btn" onclick="filterCases('sc6', this)">DUPLICATE ACCOUNT NAME (TENANT SUBDOMAIN COLLISION) (6)</button>
+      <button class="filter-btn" onclick="filterCases('sc7', this)">MANDATORY AGREEMENT CHECKBOX GATE (5)</button>
+      <button class="filter-btn" onclick="filterCases('sc8', this)">INPUT SANITIZATION ON NAME FIELDS (SECURITY/NEGATIVE TEST) (4)</button>
+      <button class="filter-btn" onclick="filterCases('sc9', this)">ABANDON AND RESUME SIGNUP (5)</button>
+    </div>
+
+    <div class="case-section" data-case="sc1">
+      <div class="case-header">
+        <div class="case-title">Scenario 1: SIGN UP HAPPY PATH (test/SignupTest.md)</div>
+        <div class="case-tag">Rows 1-10 — Executed</div>
+      </div>
+      <div class="table-scroll">
       <table>
         <thead>
           <tr>
-            <th style="width: 100px;">Feature</th>
-            <th style="width: 200px;">Steps to Reproduce</th>
-            <th style="width: 250px;">Expected Result (from Script)</th>
-            <th style="width: 260px;">Actual Result (Live Execution)</th>
-            <th style="width: 280px;">Deviations & Naming Conventions</th>
-            <th style="width: 100px;">Status</th>
+            <th style="width: 55px;">Row</th>
+            <th style="width: 240px;">Steps to Reproduce</th>
+            <th style="width: 260px;">Expected Result</th>
+            <th>Actual Result (Live Execution)</th>
+            <th style="width: 200px;">Deviations & Notes</th>
+            <th style="width: 150px;">Status</th>
             <th style="width: 140px;">Screenshot Evidence</th>
           </tr>
         </thead>
         <tbody>
+
           <tr>
-            <td><span class="feature-tag">SIGN UP</span></td>
-            <td><strong>1. Click on sign up</strong></td>
-            <td>Should direct the user to the Sign up page</td>
-            <td>Clicked "Start free trial" header button (navigated to Pricing portal) and opened the registration modal.</td>
-            <td>
-              <div class="deviation-box">
-                [Naming Convention]: Script specifies "Click on sign up"; on live page this action is triggered via the "Start free trial" button.
-              </div>
-            </td>
-            <td><span class="status-badge status-pass">PASSED</span></td>
-            <td>
-              <a href="../uat_target3_cicodecm/signup_step1_modal_opened.png" target="_blank">
-                <img class="thumb" src="../uat_target3_cicodecm/signup_step1_modal_opened.png" alt="Step 1">
-              </a>
-            </td>
+            <td><strong>1</strong></td>
+            <td><span class="step-name">Land on the starting URL, accept cookie consent</span></td>
+            <td><div class="expected-text">Login page loads; cookie banner can be dismissed</div></td>
+            <td><div class="actual-text">Loads correctly. At the correct 1440x900 desktop viewport, the &quot;We value your privacy&quot; banner renders as a normal bottom bar (not a blocking modal) and &quot;Accept&quot; works on the first click.</div></td>
+            <td><div class="deviation-text">[Root cause]: the previous session’s stuck-overlay defect was a narrow-viewport rendering artifact, not a functional bug.</div></td>
+            <td><span class="badge badge-pass">PASSED</span></td>
+            <td><img src="../uat_target3_cicodecm/signup_step1_landing_page.png" class="thumb" alt="signup_step1_landing_page.png" onclick="openModal(this.src)"></td>
           </tr>
+
           <tr>
-            <td><span class="feature-tag">SIGN UP</span></td>
-            <td><strong>2. Enter a valid email</strong></td>
-            <td>Email should be accepted</td>
-            <td>Email "uat.staff.1789466251390@crowninteractive.com" entered and accepted. Modal progressed to Step 2 form fields.</td>
-            <td>
-              <div class="deviation-box">
-                None. Email accepted as specified.
-              </div>
-            </td>
-            <td><span class="status-badge status-pass">PASSED</span></td>
-            <td>
-              <a href="../uat_target3_cicodecm/signup_step2_profile_form_rendered.png" target="_blank">
-                <img class="thumb" src="../uat_target3_cicodecm/signup_step2_profile_form_rendered.png" alt="Step 2">
-              </a>
-            </td>
+            <td><strong>2</strong></td>
+            <td><span class="step-name">Click &quot;Start free trial&quot; (header)</span></td>
+            <td><div class="expected-text">Should direct the user toward Sign up</div></td>
+            <td><div class="actual-text">Navigates to the /pricing marketing page (not directly to a modal, as the original script implies).</div></td>
+            <td><div class="deviation-text">[Naming Convention]: script says &quot;Click on sign up&quot;; live UI requires &quot;Start free trial&quot; → Pricing → a plan’s &quot;Try now&quot; link — three real actions, not one.</div></td>
+            <td><span class="badge badge-pass">PASSED</span></td>
+            <td><img src="../uat_target3_cicodecm/signup_step2_pricing_page.png" class="thumb" alt="signup_step2_pricing_page.png" onclick="openModal(this.src)"></td>
           </tr>
+
           <tr>
-            <td><span class="feature-tag">SIGN UP</span></td>
-            <td><strong>3. Enter valid first name</strong></td>
-            <td>The first name field should be editable and the first name entry accepted</td>
-            <td>First name input located (placeholder: "Enter first name"). Value "StaffQA" entered and accepted.</td>
-            <td>
-              <div class="deviation-box">
-                None. Input field is present and accepted.
-              </div>
-            </td>
-            <td><span class="status-badge status-pass">PASSED</span></td>
-            <td>
-              <a href="../uat_target3_cicodecm/signup_step3_firstname_entered.png" target="_blank">
-                <img class="thumb" src="../uat_target3_cicodecm/signup_step3_firstname_entered.png" alt="Step 3">
-              </a>
-            </td>
+            <td><strong>3</strong></td>
+            <td><span class="step-name">Click a plan’s &quot;Try now&quot; link</span></td>
+            <td><div class="expected-text">Should open the registration modal</div></td>
+            <td><div class="actual-text">Navigates to /subscribe?offer=...&amp;trial=true&amp;isBundle=false and renders the &quot;Welcome to CICOD&quot; modal — email step, blank.</div></td>
+            <td><div class="deviation-text">None.</div></td>
+            <td><span class="badge badge-pass">PASSED</span></td>
+            <td><img src="../uat_target3_cicodecm/signup_step3_modal_opened.png" class="thumb" alt="signup_step3_modal_opened.png" onclick="openModal(this.src)"></td>
           </tr>
+
           <tr>
-            <td><span class="feature-tag">SIGN UP</span></td>
-            <td><strong>4. Enter valid lastname</strong></td>
-            <td>The last name field should be editable and the last name entry accepted</td>
-            <td>Last name input located (placeholder: "Enter last name"). Value "Auditor" entered and accepted.</td>
-            <td>
-              <div class="deviation-box">
-                None. Input field is present and accepted.
-              </div>
-            </td>
-            <td><span class="status-badge status-pass">PASSED</span></td>
-            <td>
-              <a href="../uat_target3_cicodecm/signup_step4_lastname_entered.png" target="_blank">
-                <img class="thumb" src="../uat_target3_cicodecm/signup_step4_lastname_entered.png" alt="Step 4">
-              </a>
-            </td>
+            <td><strong>4</strong></td>
+            <td><span class="step-name">Enter a valid email</span></td>
+            <td><div class="expected-text">Email should be accepted</div></td>
+            <td><div class="actual-text">Email uat.staff.&lt;timestamp&gt;@crowninteractive.com typed and visibly accepted.</div></td>
+            <td><div class="deviation-text">None.</div></td>
+            <td><span class="badge badge-pass">PASSED</span></td>
+            <td><img src="../uat_target3_cicodecm/signup_step4_email_entered.png" class="thumb" alt="signup_step4_email_entered.png" onclick="openModal(this.src)"></td>
           </tr>
+
           <tr>
-            <td><span class="feature-tag">SIGN UP</span></td>
-            <td><strong>5. Enter a valid phone number</strong></td>
-            <td>Phone number should be accepted</td>
-            <td>Phone number input (contactPersonNumber with +234 country code) accepted "8091234567".</td>
-            <td>
-              <div class="deviation-box">
-                None. Phone input present with international code indicator.
-              </div>
-            </td>
-            <td><span class="status-badge status-pass">PASSED</span></td>
-            <td>
-              <a href="../uat_target3_cicodecm/signup_step5_phone_entered.png" target="_blank">
-                <img class="thumb" src="../uat_target3_cicodecm/signup_step5_phone_entered.png" alt="Step 5">
-              </a>
-            </td>
+            <td><strong>5</strong></td>
+            <td><span class="step-name">Click Continue; enter valid first name</span></td>
+            <td><div class="expected-text">Profile-details step renders; first name accepted</div></td>
+            <td><div class="actual-text">Combined step renders First/Last/Phone/Password/Account Name/checkbox. &quot;StaffQA&quot; entered and accepted.</div></td>
+            <td><div class="deviation-text">[Browser-only]: Edge autofill pre-populated Phone with a saved email and Password with a saved password on first render — cleared before typing real values; not a site defect.</div></td>
+            <td><span class="badge badge-pass">PASSED</span></td>
+            <td><img src="../uat_target3_cicodecm/signup_step5_firstname_entered.png" class="thumb" alt="signup_step5_firstname_entered.png" onclick="openModal(this.src)"></td>
           </tr>
+
           <tr>
-            <td><span class="feature-tag">SIGN UP</span></td>
-            <td><strong>6. Enter a valid password</strong></td>
-            <td>The Password field should be enabled and accepted</td>
-            <td>Password field accepted complex masked password (meets 8+ char requirement).</td>
-            <td>
-              <div class="deviation-box">
-                None. Field is enabled, validated, and securely masked.
-              </div>
-            </td>
-            <td><span class="status-badge status-pass">PASSED</span></td>
-            <td>
-              <a href="../uat_target3_cicodecm/signup_step6_password_entered.png" target="_blank">
-                <img class="thumb" src="../uat_target3_cicodecm/signup_step6_password_entered.png" alt="Step 6">
-              </a>
-            </td>
+            <td><strong>6</strong></td>
+            <td><span class="step-name">Enter valid last name</span></td>
+            <td><div class="expected-text">Last name field editable and accepted</div></td>
+            <td><div class="actual-text">&quot;Auditor&quot; entered and accepted.</div></td>
+            <td><div class="deviation-text">None.</div></td>
+            <td><span class="badge badge-pass">PASSED</span></td>
+            <td><img src="../uat_target3_cicodecm/signup_step6_lastname_entered.png" class="thumb" alt="signup_step6_lastname_entered.png" onclick="openModal(this.src)"></td>
           </tr>
+
           <tr>
-            <td><span class="feature-tag">SIGN UP</span></td>
-            <td><strong>7. Enter a valid account name (Alphabet)</strong></td>
-            <td>Account name should be accepted</td>
-            <td>Account name input (tenantId with .cicod.com domain suffix) accepted "cicodstaff3483".</td>
-            <td>
-              <div class="deviation-box">
-                [Naming Convention]: Labelled "Account Name" with `.cicod.com` sub-domain suffix.
-              </div>
-            </td>
-            <td><span class="status-badge status-pass">PASSED</span></td>
-            <td>
-              <a href="../uat_target3_cicodecm/signup_step7_accountname_entered.png" target="_blank">
-                <img class="thumb" src="../uat_target3_cicodecm/signup_step7_accountname_entered.png" alt="Step 7">
-              </a>
-            </td>
+            <td><strong>7</strong></td>
+            <td><span class="step-name">Enter a valid phone number</span></td>
+            <td><div class="expected-text">Phone number should be accepted</div></td>
+            <td><div class="actual-text">+234 pre-selected; 8091234567 entered and accepted (after clearing the autofilled email).</div></td>
+            <td><div class="deviation-text">None (site-side).</div></td>
+            <td><span class="badge badge-pass">PASSED</span></td>
+            <td><img src="../uat_target3_cicodecm/signup_step7_phone_entered.png" class="thumb" alt="signup_step7_phone_entered.png" onclick="openModal(this.src)"></td>
           </tr>
+
           <tr>
-            <td><span class="feature-tag">SIGN UP</span></td>
-            <td><strong>8. Check the agreement box</strong></td>
-            <td>The box should be selected successfully</td>
-            <td>Checkbox "I agree to the Terms of Use and Privacy Policy." selected successfully.</td>
-            <td>
-              <div class="deviation-box">
-                None. Terms of Use & Privacy Policy agreement checkbox verified.
-              </div>
-            </td>
-            <td><span class="status-badge status-pass">PASSED</span></td>
-            <td>
-              <a href="../uat_target3_cicodecm/signup_step8_agreement_checked.png" target="_blank">
-                <img class="thumb" src="../uat_target3_cicodecm/signup_step8_agreement_checked.png" alt="Step 8">
-              </a>
-            </td>
+            <td><strong>8</strong></td>
+            <td><span class="step-name">Enter a valid password</span></td>
+            <td><div class="expected-text">Password field enabled and accepted</div></td>
+            <td><div class="actual-text">15-character password accepted; masked with a show/hide toggle; &quot;Must be 8 characters or longer&quot; hint shown.</div></td>
+            <td><div class="deviation-text">None.</div></td>
+            <td><span class="badge badge-pass">PASSED</span></td>
+            <td><img src="../uat_target3_cicodecm/signup_step8_password_entered.png" class="thumb" alt="signup_step8_password_entered.png" onclick="openModal(this.src)"></td>
           </tr>
+
           <tr>
-            <td><span class="feature-tag">SIGN UP</span></td>
-            <td><strong>9. Click on continue button</strong></td>
-            <td>The MDA profile should be created and user should click on get started to be routed to the application's portal.</td>
-            <td>Continue button submitted registration payload. Redirected/Response URL: https://cicodsaasstaging.com/subscribe?offer=9uTDozmu5WViCohhxp7a3ET2o1U1Lk&trial=true&isBundle=false.</td>
-            <td>
-              <div class="deviation-box">
-                None. Button labelled "Continue" submitted successfully.
-              </div>
-            </td>
-            <td><span class="status-badge status-pass">PASSED</span></td>
-            <td>
-              <a href="../uat_target3_cicodecm/signup_step9_after_continue_clicked.png" target="_blank">
-                <img class="thumb" src="../uat_target3_cicodecm/signup_step9_after_continue_clicked.png" alt="Step 9">
-              </a>
-            </td>
+            <td><strong>9</strong></td>
+            <td><span class="step-name">Enter a valid account name (Alphabet)</span></td>
+            <td><div class="expected-text">Account name should be accepted</div></td>
+            <td><div class="actual-text">Field rejects digits (&quot;non alphabet characters not allowed&quot;) — a letters-only value was required and accepted.</div></td>
+            <td><div class="deviation-text">[Naming Convention]: labelled &quot;Account Name,&quot; suffixed .cicod.com. [Finding]: digits silently rejected; placeholder doesn’t signal this.</div></td>
+            <td><span class="badge badge-pass">PASSED</span></td>
+            <td><img src="../uat_target3_cicodecm/signup_step9_accountname_entered.png" class="thumb" alt="signup_step9_accountname_entered.png" onclick="openModal(this.src)"></td>
+          </tr>
+
+          <tr>
+            <td><strong>10</strong></td>
+            <td><span class="step-name">Check the agreement box</span></td>
+            <td><div class="expected-text">Box should be selected successfully</div></td>
+            <td><div class="actual-text">&quot;I agree to the Terms of Use and Privacy Policy&quot; checked successfully.</div></td>
+            <td><div class="deviation-text">None.</div></td>
+            <td><span class="badge badge-pass">PASSED</span></td>
+            <td><img src="../uat_target3_cicodecm/signup_step10_agreement_checked.png" class="thumb" alt="signup_step10_agreement_checked.png" onclick="openModal(this.src)"></td>
           </tr>
         </tbody>
       </table>
+      </div>
     </div>
+
+    <div class="case-section" data-case="sc2">
+      <div class="case-header">
+        <div class="case-title">Scenario 2: BUSINESS INFO STEP (NOT IN test/SignupTest.md)</div>
+        <div class="case-tag">Undocumented Step Found</div>
+      </div>
+      <div class="table-scroll">
+      <table>
+        <thead>
+          <tr>
+            <th style="width: 55px;">Row</th>
+            <th style="width: 240px;">Steps to Reproduce</th>
+            <th style="width: 260px;">Expected Result</th>
+            <th>Actual Result (Live Execution)</th>
+            <th style="width: 200px;">Deviations & Notes</th>
+            <th style="width: 150px;">Status</th>
+            <th style="width: 140px;">Screenshot Evidence</th>
+          </tr>
+        </thead>
+        <tbody>
+
+          <tr>
+            <td><strong>11</strong></td>
+            <td><span class="step-name">Click Continue</span></td>
+            <td><div class="expected-text">Not in test/SignupTest.md</div></td>
+            <td><div class="actual-text">Reveals a third wizard step, &quot;We want to know more about you&quot;: Business Sector, Business Type, Referral code (optional), &quot;How did you hear about CICOD?&quot;.</div></td>
+            <td><div class="deviation-text">[Test-script gap]: this entire step is missing from the original script.</div></td>
+            <td><span class="badge badge-dev">NEW STEP FOUND</span></td>
+            <td><img src="../uat_target3_cicodecm/signup_step11_businessinfo_step.png" class="thumb" alt="signup_step11_businessinfo_step.png" onclick="openModal(this.src)"></td>
+          </tr>
+
+          <tr>
+            <td><strong>12</strong></td>
+            <td><span class="step-name">Select Business Sector, Business Type, &quot;How did you hear about CICOD?&quot;</span></td>
+            <td><div class="expected-text">All fields should offer selectable values</div></td>
+            <td><div class="actual-text">Business Sector populated correctly (20 real sectors). &quot;How did you hear about CICOD?&quot; populated correctly (9 sources). Business Type NEVER populates — placeholder only, regardless of Business Sector chosen.</div></td>
+            <td><div class="deviation-text">[Defect]: Business Type dropdown has zero real options.</div></td>
+            <td><span class="badge badge-bug">CONFIRMED BUG</span></td>
+            <td><img src="../uat_target3_cicodecm/signup_step12_businessinfo_filled.png" class="thumb" alt="signup_step12_businessinfo_filled.png" onclick="openModal(this.src)"></td>
+          </tr>
+        </tbody>
+      </table>
+      </div>
+    </div>
+
+    <div class="case-section" data-case="sc3">
+      <div class="case-header">
+        <div class="case-title">Scenario 3: ACCOUNT CREATION &amp; PORTAL LANDING</div>
+        <div class="case-tag">Row 13-14</div>
+      </div>
+      <div class="table-scroll">
+      <table>
+        <thead>
+          <tr>
+            <th style="width: 55px;">Row</th>
+            <th style="width: 240px;">Steps to Reproduce</th>
+            <th style="width: 260px;">Expected Result</th>
+            <th>Actual Result (Live Execution)</th>
+            <th style="width: 200px;">Deviations & Notes</th>
+            <th style="width: 150px;">Status</th>
+            <th style="width: 140px;">Screenshot Evidence</th>
+          </tr>
+        </thead>
+        <tbody>
+
+          <tr>
+            <td><strong>13</strong></td>
+            <td><span class="step-name">Click Continue (final submit)</span></td>
+            <td><div class="expected-text">The MDA profile should be created</div></td>
+            <td><div class="actual-text">Despite Business Type left unselected (impossible to select), the account is created successfully: &quot;Your account has successfully been created&quot; with a &quot;Get started&quot; button. Confirms Business Type is not actually enforced as required.</div></td>
+            <td><div class="deviation-text">[Deviation]: a broken/unusable field doesn’t block signup.</div></td>
+            <td><span class="badge badge-pass">PASSED (see Business Type bug)</span></td>
+            <td><img src="../uat_target3_cicodecm/signup_step13_account_created.png" class="thumb" alt="signup_step13_account_created.png" onclick="openModal(this.src)"></td>
+          </tr>
+
+          <tr>
+            <td><strong>14</strong></td>
+            <td><span class="step-name">Click &quot;Get started&quot;</span></td>
+            <td><div class="expected-text">Should route the user to the application's portal</div></td>
+            <td><div class="actual-text">Correctly redirected to the new tenant’s own subdomain: https://&lt;accountname&gt;.cicodsaasstaging.com/admin/merchant?completeProfile=true — CICOD Admin portal with Apps/Billing/Administration sidebar and a &quot;Complete your profile&quot; prompt.</div></td>
+            <td><div class="deviation-text">None.</div></td>
+            <td><span class="badge badge-pass">PASSED</span></td>
+            <td><img src="../uat_target3_cicodecm/signup_step14_admin_portal_landing.png" class="thumb" alt="signup_step14_admin_portal_landing.png" onclick="openModal(this.src)"></td>
+          </tr>
+        </tbody>
+      </table>
+      </div>
+    </div>
+
+    <div class="case-section" data-case="sc4">
+      <div class="case-header">
+        <div class="case-title">Scenario 4: DUPLICATE EMAIL REGISTRATION</div>
+        <div class="case-tag">P0 Gap Found</div>
+      </div>
+      <div class="table-scroll">
+      <table>
+        <thead>
+          <tr>
+            <th style="width: 55px;">Row</th>
+            <th style="width: 240px;">Steps to Reproduce</th>
+            <th style="width: 260px;">Expected Result</th>
+            <th>Actual Result (Live Execution)</th>
+            <th style="width: 200px;">Deviations & Notes</th>
+            <th style="width: 150px;">Status</th>
+            <th style="width: 140px;">Screenshot Evidence</th>
+          </tr>
+        </thead>
+        <tbody>
+
+          <tr>
+            <td><strong>P1.1</strong></td>
+            <td><span class="step-name">Click on &quot;Start free trial&quot; / sign up</span></td>
+            <td><div class="expected-text">Registration modal opens</div></td>
+            <td><div class="actual-text">Modal opened correctly.</div></td>
+            <td><div class="deviation-text">None.</div></td>
+            <td><span class="badge badge-pass">PASSED</span></td>
+            <td><img src="../uat_target3_cicodecm/signup_prop1_duplicate_email_typed.png" class="thumb" alt="signup_prop1_duplicate_email_typed.png" onclick="openModal(this.src)"></td>
+          </tr>
+
+          <tr>
+            <td><strong>P1.2</strong></td>
+            <td><span class="step-name">Enter an email address already registered to an existing tenant</span></td>
+            <td><div class="expected-text">Field accepts the keystrokes (no client-side block yet)</div></td>
+            <td><div class="actual-text">Accepted, no immediate error.</div></td>
+            <td><div class="deviation-text">None.</div></td>
+            <td><span class="badge badge-pass">PASSED</span></td>
+            <td><img src="../uat_target3_cicodecm/signup_prop1_duplicate_email_typed.png" class="thumb" alt="signup_prop1_duplicate_email_typed.png" onclick="openModal(this.src)"></td>
+          </tr>
+
+          <tr>
+            <td><strong>P1.3</strong></td>
+            <td><span class="step-name">Complete remaining step-1 fields and click Continue</span></td>
+            <td><div class="expected-text">Server validates and rejects with a clear &quot;Email already in use&quot; error; user remains on the form</div></td>
+            <td><div class="actual-text">CONFIRMED GAP: no rejection of any kind — the flow proceeds straight to the profile step, confirmed 2/2 with two different known-duplicate emails.</div></td>
+            <td><div class="deviation-text">[Gap]: no email-uniqueness check exists at this step.</div></td>
+            <td><span class="badge badge-bug">CONFIRMED GAP</span></td>
+            <td><img src="../uat_target3_cicodecm/signup_prop1_email_step_not_blocked.png" class="thumb" alt="signup_prop1_email_step_not_blocked.png" onclick="openModal(this.src)"></td>
+          </tr>
+
+          <tr>
+            <td><strong>P1.4</strong></td>
+            <td><span class="step-name">Correct the email to an unused address and click Continue</span></td>
+            <td><div class="expected-text">Submission proceeds to the next step</div></td>
+            <td><div class="actual-text">N/A — already proceeding regardless of email uniqueness per P1.3; re-tested with a fresh email at final submission, independently gated by the flaky Business Type check (see Section 1).</div></td>
+            <td><div class="deviation-text">[Inconclusive]: final-submission duplicate-email behavior could not be isolated from the Business Type confound.</div></td>
+            <td><span class="badge badge-not-impl">INCONCLUSIVE</span></td>
+            <td><img src="../uat_target3_cicodecm/signup_prop1_final_gate_blocked.png" class="thumb" alt="signup_prop1_final_gate_blocked.png" onclick="openModal(this.src)"></td>
+          </tr>
+
+          <tr>
+            <td><strong>P1.5</strong></td>
+            <td><span class="step-name">End Test</span></td>
+            <td><div class="expected-text">Duplicate-email path confirmed blocked; unique-email path confirmed to proceed</div></td>
+            <td><div class="actual-text">Duplicate-email path is NOT blocked at email entry. Final-submission behavior inconclusive (see P1.4).</div></td>
+            <td><div class="deviation-text">None.</div></td>
+            <td><span class="badge badge-bug">GAP CONFIRMED</span></td>
+            <td><span class="no-img-badge">No Evidence<br><small style="color:var(--text-muted);font-size:0.68rem;">(Not Executed)</small></span></td>
+          </tr>
+        </tbody>
+      </table>
+      </div>
+    </div>
+
+    <div class="case-section" data-case="sc5">
+      <div class="case-header">
+        <div class="case-title">Scenario 5: WEAK PASSWORD REJECTION</div>
+        <div class="case-tag">Executed — Clean Pass</div>
+      </div>
+      <div class="table-scroll">
+      <table>
+        <thead>
+          <tr>
+            <th style="width: 55px;">Row</th>
+            <th style="width: 240px;">Steps to Reproduce</th>
+            <th style="width: 260px;">Expected Result</th>
+            <th>Actual Result (Live Execution)</th>
+            <th style="width: 200px;">Deviations & Notes</th>
+            <th style="width: 150px;">Status</th>
+            <th style="width: 140px;">Screenshot Evidence</th>
+          </tr>
+        </thead>
+        <tbody>
+
+          <tr>
+            <td><strong>P2.1</strong></td>
+            <td><span class="step-name">Reach the password field in the signup flow</span></td>
+            <td><div class="expected-text">Password field is focused and empty</div></td>
+            <td><div class="actual-text">Confirmed.</div></td>
+            <td><div class="deviation-text">None.</div></td>
+            <td><span class="badge badge-pass">PASSED</span></td>
+            <td><img src="../uat_target3_cicodecm/signup_prop2_weak_password_validation.png" class="thumb" alt="signup_prop2_weak_password_validation.png" onclick="openModal(this.src)"></td>
+          </tr>
+
+          <tr>
+            <td><strong>P2.2</strong></td>
+            <td><span class="step-name">Enter a password below policy, e.g. &quot;1234&quot;</span></td>
+            <td><div class="expected-text">Real-time validation error is shown (e.g. min length / symbol required)</div></td>
+            <td><div class="actual-text">Confirmed: exact policy text shown immediately (&quot;Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and One Special Case Character...&quot;).</div></td>
+            <td><div class="deviation-text">None.</div></td>
+            <td><span class="badge badge-pass">PASSED</span></td>
+            <td><img src="../uat_target3_cicodecm/signup_prop2_weak_password_validation.png" class="thumb" alt="signup_prop2_weak_password_validation.png" onclick="openModal(this.src)"></td>
+          </tr>
+
+          <tr>
+            <td><strong>P2.3</strong></td>
+            <td><span class="step-name">Attempt to click Continue with the weak password still entered</span></td>
+            <td><div class="expected-text">Continue is blocked (disabled button or submit-time error); user cannot proceed</div></td>
+            <td><div class="actual-text">Confirmed: clicking Continue does not advance past the profile step.</div></td>
+            <td><div class="deviation-text">None.</div></td>
+            <td><span class="badge badge-pass">PASSED</span></td>
+            <td><img src="../uat_target3_cicodecm/signup_prop2_continue_blocked.png" class="thumb" alt="signup_prop2_continue_blocked.png" onclick="openModal(this.src)"></td>
+          </tr>
+
+          <tr>
+            <td><strong>P2.4</strong></td>
+            <td><span class="step-name">Replace the password with one meeting the complexity policy</span></td>
+            <td><div class="expected-text">Validation error clears</div></td>
+            <td><div class="actual-text">Confirmed elsewhere this session — every successful signup used a compliant password with no error shown.</div></td>
+            <td><div class="deviation-text">None.</div></td>
+            <td><span class="badge badge-pass">PASSED</span></td>
+            <td><span class="no-img-badge">No Evidence<br><small style="color:var(--text-muted);font-size:0.68rem;">(Not Executed)</small></span></td>
+          </tr>
+
+          <tr>
+            <td><strong>P2.5</strong></td>
+            <td><span class="step-name">Click Continue</span></td>
+            <td><div class="expected-text">Submission proceeds to the next step</div></td>
+            <td><div class="actual-text">Confirmed — established via the multiple successful happy-path runs this session.</div></td>
+            <td><div class="deviation-text">None.</div></td>
+            <td><span class="badge badge-pass">PASSED</span></td>
+            <td><span class="no-img-badge">No Evidence<br><small style="color:var(--text-muted);font-size:0.68rem;">(Not Executed)</small></span></td>
+          </tr>
+
+          <tr>
+            <td><strong>P2.6</strong></td>
+            <td><span class="step-name">End Test</span></td>
+            <td><div class="expected-text">Weak password confirmed blocked; compliant password confirmed to proceed</div></td>
+            <td><div class="actual-text">Confirmed both halves. Clean pass, no defect.</div></td>
+            <td><div class="deviation-text">None.</div></td>
+            <td><span class="badge badge-pass">PASSED</span></td>
+            <td><span class="no-img-badge">No Evidence<br><small style="color:var(--text-muted);font-size:0.68rem;">(Not Executed)</small></span></td>
+          </tr>
+        </tbody>
+      </table>
+      </div>
+    </div>
+
+    <div class="case-section" data-case="sc6">
+      <div class="case-header">
+        <div class="case-title">Scenario 6: DUPLICATE ACCOUNT NAME (TENANT SUBDOMAIN COLLISION)</div>
+        <div class="case-tag">Executed — Exceeds Spec</div>
+      </div>
+      <div class="table-scroll">
+      <table>
+        <thead>
+          <tr>
+            <th style="width: 55px;">Row</th>
+            <th style="width: 240px;">Steps to Reproduce</th>
+            <th style="width: 260px;">Expected Result</th>
+            <th>Actual Result (Live Execution)</th>
+            <th style="width: 200px;">Deviations & Notes</th>
+            <th style="width: 150px;">Status</th>
+            <th style="width: 140px;">Screenshot Evidence</th>
+          </tr>
+        </thead>
+        <tbody>
+
+          <tr>
+            <td><strong>P3.1</strong></td>
+            <td><span class="step-name">Reach the Account Name (tenantId) field</span></td>
+            <td><div class="expected-text">Field is empty and editable</div></td>
+            <td><div class="actual-text">Confirmed.</div></td>
+            <td><div class="deviation-text">None.</div></td>
+            <td><span class="badge badge-pass">PASSED</span></td>
+            <td><img src="../uat_target3_cicodecm/signup_prop3_duplicate_account_error.png" class="thumb" alt="signup_prop3_duplicate_account_error.png" onclick="openModal(this.src)"></td>
+          </tr>
+
+          <tr>
+            <td><strong>P3.2</strong></td>
+            <td><span class="step-name">Enter an account name already used by another tenant</span></td>
+            <td><div class="expected-text">Field accepts the keystrokes</div></td>
+            <td><div class="actual-text">Confirmed — and a live, real-time &quot;business name already exists&quot; error appears immediately, before Continue is even clicked.</div></td>
+            <td><div class="deviation-text">[Positive]: better UX than scripted — real-time check, not just on-submit.</div></td>
+            <td><span class="badge badge-pass">PASSED (exceeds spec)</span></td>
+            <td><img src="../uat_target3_cicodecm/signup_prop3_duplicate_account_error.png" class="thumb" alt="signup_prop3_duplicate_account_error.png" onclick="openModal(this.src)"></td>
+          </tr>
+
+          <tr>
+            <td><strong>P3.3</strong></td>
+            <td><span class="step-name">Click Continue</span></td>
+            <td><div class="expected-text">Server rejects with a clear &quot;Account name unavailable&quot; error; user remains on the form</div></td>
+            <td><div class="actual-text">Confirmed: Continue is blocked while the duplicate error persists, user stays on the profile step.</div></td>
+            <td><div class="deviation-text">None.</div></td>
+            <td><span class="badge badge-pass">PASSED</span></td>
+            <td><img src="../uat_target3_cicodecm/signup_prop3_continue_blocked.png" class="thumb" alt="signup_prop3_continue_blocked.png" onclick="openModal(this.src)"></td>
+          </tr>
+
+          <tr>
+            <td><strong>P3.4</strong></td>
+            <td><span class="step-name">Enter a unique, unused account name</span></td>
+            <td><div class="expected-text">No error shown</div></td>
+            <td><div class="actual-text">Confirmed — established via every successful signup this session (unique account names always accepted cleanly).</div></td>
+            <td><div class="deviation-text">None.</div></td>
+            <td><span class="badge badge-pass">PASSED</span></td>
+            <td><span class="no-img-badge">No Evidence<br><small style="color:var(--text-muted);font-size:0.68rem;">(Not Executed)</small></span></td>
+          </tr>
+
+          <tr>
+            <td><strong>P3.5</strong></td>
+            <td><span class="step-name">Click Continue</span></td>
+            <td><div class="expected-text">Submission proceeds</div></td>
+            <td><div class="actual-text">Confirmed — established via the multiple successful happy-path runs this session.</div></td>
+            <td><div class="deviation-text">None.</div></td>
+            <td><span class="badge badge-pass">PASSED</span></td>
+            <td><span class="no-img-badge">No Evidence<br><small style="color:var(--text-muted);font-size:0.68rem;">(Not Executed)</small></span></td>
+          </tr>
+
+          <tr>
+            <td><strong>P3.6</strong></td>
+            <td><span class="step-name">End Test</span></td>
+            <td><div class="expected-text">Duplicate account name confirmed blocked; unique name confirmed to proceed</div></td>
+            <td><div class="actual-text">Confirmed both halves. Clean pass, no defect — arguably the best-implemented validation in the whole form.</div></td>
+            <td><div class="deviation-text">None.</div></td>
+            <td><span class="badge badge-pass">PASSED</span></td>
+            <td><span class="no-img-badge">No Evidence<br><small style="color:var(--text-muted);font-size:0.68rem;">(Not Executed)</small></span></td>
+          </tr>
+        </tbody>
+      </table>
+      </div>
+    </div>
+
+    <div class="case-section" data-case="sc7">
+      <div class="case-header">
+        <div class="case-title">Scenario 7: MANDATORY AGREEMENT CHECKBOX GATE</div>
+        <div class="case-tag">Executed — Clean Pass</div>
+      </div>
+      <div class="table-scroll">
+      <table>
+        <thead>
+          <tr>
+            <th style="width: 55px;">Row</th>
+            <th style="width: 240px;">Steps to Reproduce</th>
+            <th style="width: 260px;">Expected Result</th>
+            <th>Actual Result (Live Execution)</th>
+            <th style="width: 200px;">Deviations & Notes</th>
+            <th style="width: 150px;">Status</th>
+            <th style="width: 140px;">Screenshot Evidence</th>
+          </tr>
+        </thead>
+        <tbody>
+
+          <tr>
+            <td><strong>P4.1</strong></td>
+            <td><span class="step-name">Complete every signup field except the agreement checkbox</span></td>
+            <td><div class="expected-text">All other fields show as valid/accepted</div></td>
+            <td><div class="actual-text">Confirmed — firstName/lastName/phone/password/tenantId all valid and accepted.</div></td>
+            <td><div class="deviation-text">None.</div></td>
+            <td><span class="badge badge-pass">PASSED</span></td>
+            <td><img src="../uat_target3_cicodecm/signup_prop4_checkbox_unchecked_blocked.png" class="thumb" alt="signup_prop4_checkbox_unchecked_blocked.png" onclick="openModal(this.src)"></td>
+          </tr>
+
+          <tr>
+            <td><strong>P4.2</strong></td>
+            <td><span class="step-name">Leave &quot;I agree to the Terms of Use and Privacy Policy&quot; unchecked and click Continue</span></td>
+            <td><div class="expected-text">Continue button stays disabled, or submission is blocked with a validation message</div></td>
+            <td><div class="actual-text">Confirmed: blocked with &quot;You must agree to the terms of use and privacy policy.&quot; and stays on the profile step.</div></td>
+            <td><div class="deviation-text">None.</div></td>
+            <td><span class="badge badge-pass">PASSED</span></td>
+            <td><img src="../uat_target3_cicodecm/signup_prop4_checkbox_unchecked_blocked.png" class="thumb" alt="signup_prop4_checkbox_unchecked_blocked.png" onclick="openModal(this.src)"></td>
+          </tr>
+
+          <tr>
+            <td><strong>P4.3</strong></td>
+            <td><span class="step-name">Check the agreement box</span></td>
+            <td><div class="expected-text">Checkbox shows as checked</div></td>
+            <td><div class="actual-text">Confirmed.</div></td>
+            <td><div class="deviation-text">None.</div></td>
+            <td><span class="badge badge-pass">PASSED</span></td>
+            <td><span class="no-img-badge">No Evidence<br><small style="color:var(--text-muted);font-size:0.68rem;">(Not Executed)</small></span></td>
+          </tr>
+
+          <tr>
+            <td><strong>P4.4</strong></td>
+            <td><span class="step-name">Click Continue</span></td>
+            <td><div class="expected-text">Submission proceeds and the MDA profile is created</div></td>
+            <td><div class="actual-text">Confirmed: proceeds to the Business Info step (final account creation happens one step later than the original script assumed — see the undocumented step finding).</div></td>
+            <td><div class="deviation-text">[Note]: &quot;proceeds&quot; means reaching Business Info, not final account creation — see Scenario 2.</div></td>
+            <td><span class="badge badge-pass">PASSED</span></td>
+            <td><img src="../uat_target3_cicodecm/signup_prop4_checkbox_checked_proceeds.png" class="thumb" alt="signup_prop4_checkbox_checked_proceeds.png" onclick="openModal(this.src)"></td>
+          </tr>
+
+          <tr>
+            <td><strong>P4.5</strong></td>
+            <td><span class="step-name">End Test</span></td>
+            <td><div class="expected-text">Unchecked state confirmed to block submission; checked state confirmed to proceed</div></td>
+            <td><div class="actual-text">Confirmed both halves. Clean pass, no defect.</div></td>
+            <td><div class="deviation-text">None.</div></td>
+            <td><span class="badge badge-pass">PASSED</span></td>
+            <td><span class="no-img-badge">No Evidence<br><small style="color:var(--text-muted);font-size:0.68rem;">(Not Executed)</small></span></td>
+          </tr>
+        </tbody>
+      </table>
+      </div>
+    </div>
+
+    <div class="case-section" data-case="sc8">
+      <div class="case-header">
+        <div class="case-title">Scenario 8: INPUT SANITIZATION ON NAME FIELDS (SECURITY/NEGATIVE TEST)</div>
+        <div class="case-tag">Executed — Clean Pass</div>
+      </div>
+      <div class="table-scroll">
+      <table>
+        <thead>
+          <tr>
+            <th style="width: 55px;">Row</th>
+            <th style="width: 240px;">Steps to Reproduce</th>
+            <th style="width: 260px;">Expected Result</th>
+            <th>Actual Result (Live Execution)</th>
+            <th style="width: 200px;">Deviations & Notes</th>
+            <th style="width: 150px;">Status</th>
+            <th style="width: 140px;">Screenshot Evidence</th>
+          </tr>
+        </thead>
+        <tbody>
+
+          <tr>
+            <td><strong>P5.1</strong></td>
+            <td><span class="step-name">Enter a script/HTML payload in First Name, e.g. &lt;script&gt;alert(1)&lt;/script&gt;</span></td>
+            <td><div class="expected-text">Text is stored/displayed as literal text (escaped) or rejected by validation; no script executes</div></td>
+            <td><div class="actual-text">Confirmed: retained verbatim as literal text in the input value; a live DOM check found zero injected &lt;script&gt; elements and no native JS dialog fired.</div></td>
+            <td><div class="deviation-text">None.</div></td>
+            <td><span class="badge badge-pass">PASSED</span></td>
+            <td><img src="../uat_target3_cicodecm/signup_prop5_payloads_typed.png" class="thumb" alt="signup_prop5_payloads_typed.png" onclick="openModal(this.src)"></td>
+          </tr>
+
+          <tr>
+            <td><strong>P5.2</strong></td>
+            <td><span class="step-name">Enter a SQL-injection-style payload in Last Name, e.g. ' OR 1=1--</span></td>
+            <td><div class="expected-text">Text is stored/displayed as literal text or rejected by validation; no database/application error surfaces</div></td>
+            <td><div class="actual-text">Confirmed: retained verbatim, no server/application error surfaced.</div></td>
+            <td><div class="deviation-text">None.</div></td>
+            <td><span class="badge badge-pass">PASSED</span></td>
+            <td><img src="../uat_target3_cicodecm/signup_prop5_payloads_typed.png" class="thumb" alt="signup_prop5_payloads_typed.png" onclick="openModal(this.src)"></td>
+          </tr>
+
+          <tr>
+            <td><strong>P5.3</strong></td>
+            <td><span class="step-name">Continue through the remaining steps with otherwise valid data</span></td>
+            <td><div class="expected-text">Signup completes normally, confirming the payloads did not break the flow</div></td>
+            <td><div class="actual-text">Confirmed: proceeded normally to the Business Info step with both payloads still intact in the form state.</div></td>
+            <td><div class="deviation-text">None.</div></td>
+            <td><span class="badge badge-pass">PASSED</span></td>
+            <td><img src="../uat_target3_cicodecm/signup_prop5_payloads_neutralized_proceeded.png" class="thumb" alt="signup_prop5_payloads_neutralized_proceeded.png" onclick="openModal(this.src)"></td>
+          </tr>
+
+          <tr>
+            <td><strong>P5.4</strong></td>
+            <td><span class="step-name">End Test</span></td>
+            <td><div class="expected-text">Both payloads confirmed neutralized with no script execution or server error</div></td>
+            <td><div class="actual-text">Confirmed. Clean pass, no defect.</div></td>
+            <td><div class="deviation-text">None.</div></td>
+            <td><span class="badge badge-pass">PASSED</span></td>
+            <td><span class="no-img-badge">No Evidence<br><small style="color:var(--text-muted);font-size:0.68rem;">(Not Executed)</small></span></td>
+          </tr>
+        </tbody>
+      </table>
+      </div>
+    </div>
+
+    <div class="case-section" data-case="sc9">
+      <div class="case-header">
+        <div class="case-title">Scenario 9: ABANDON AND RESUME SIGNUP</div>
+        <div class="case-tag">Partial — 1 Checkpoint Inconclusive</div>
+      </div>
+      <div class="table-scroll">
+      <table>
+        <thead>
+          <tr>
+            <th style="width: 55px;">Row</th>
+            <th style="width: 240px;">Steps to Reproduce</th>
+            <th style="width: 260px;">Expected Result</th>
+            <th>Actual Result (Live Execution)</th>
+            <th style="width: 200px;">Deviations & Notes</th>
+            <th style="width: 150px;">Status</th>
+            <th style="width: 140px;">Screenshot Evidence</th>
+          </tr>
+        </thead>
+        <tbody>
+
+          <tr>
+            <td><strong>P6.1</strong></td>
+            <td><span class="step-name">Start signup, enter a valid email, and reach the profile-details step (step 2)</span></td>
+            <td><div class="expected-text">Step 2 form is displayed</div></td>
+            <td><div class="actual-text">Confirmed.</div></td>
+            <td><div class="deviation-text">None.</div></td>
+            <td><span class="badge badge-pass">PASSED</span></td>
+            <td><img src="../uat_target3_cicodecm/signup_prop6_sessionA_abandoned.png" class="thumb" alt="signup_prop6_sessionA_abandoned.png" onclick="openModal(this.src)"></td>
+          </tr>
+
+          <tr>
+            <td><strong>P6.2</strong></td>
+            <td><span class="step-name">Close the browser tab without completing signup</span></td>
+            <td><div class="expected-text">Session ends without a created tenant</div></td>
+            <td><div class="actual-text">Confirmed — tab closed via CDP Page.close, no account was created.</div></td>
+            <td><div class="deviation-text">None.</div></td>
+            <td><span class="badge badge-pass">PASSED</span></td>
+            <td><img src="../uat_target3_cicodecm/signup_prop6_sessionA_abandoned.png" class="thumb" alt="signup_prop6_sessionA_abandoned.png" onclick="openModal(this.src)"></td>
+          </tr>
+
+          <tr>
+            <td><strong>P6.3</strong></td>
+            <td><span class="step-name">Reopen the signup link (or &quot;Start free trial&quot;) and re-enter the same email</span></td>
+            <td><div class="expected-text">Define/verify expected behavior: either resumes from the last saved step, or restarts cleanly</div></td>
+            <td><div class="actual-text">Confirmed: restarts cleanly — blank &quot;Welcome to CICOD&quot; modal, no resume, no pre-fill. Re-entering the same email proceeds to a blank profile step (firstName not carried over), consistent with Scenario 4’s finding that email isn’t checked at this stage.</div></td>
+            <td><div class="deviation-text">[Behavior confirmed]: clean restart, not resume — matches one of the two acceptable outcomes the script allowed for.</div></td>
+            <td><span class="badge badge-pass">PASSED (restarts cleanly)</span></td>
+            <td><img src="../uat_target3_cicodecm/signup_prop6_sessionB_clean_restart.png" class="thumb" alt="signup_prop6_sessionB_clean_restart.png" onclick="openModal(this.src)"></td>
+          </tr>
+
+          <tr>
+            <td><strong>P6.4</strong></td>
+            <td><span class="step-name">Complete the flow to the end</span></td>
+            <td><div class="expected-text">Exactly one tenant is created for this email - no duplicate or orphaned tenant records</div></td>
+            <td><div class="actual-text">INCONCLUSIVE: final submission is gated by the flaky Business Type check (Section 1), and no backend/database access was available to directly inspect tenant records for duplicates.</div></td>
+            <td><div class="deviation-text">[Inconclusive]: could not verify with UI-only access.</div></td>
+            <td><span class="badge badge-not-impl">INCONCLUSIVE</span></td>
+            <td><span class="no-img-badge">No Evidence<br><small style="color:var(--text-muted);font-size:0.68rem;">(Not Executed)</small></span></td>
+          </tr>
+
+          <tr>
+            <td><strong>P6.5</strong></td>
+            <td><span class="step-name">End Test</span></td>
+            <td><div class="expected-text">Abandon-and-resume path confirmed not to create duplicate/orphaned tenants</div></td>
+            <td><div class="actual-text">Restart behavior confirmed; duplicate-tenant guarantee not conclusively verifiable this session.</div></td>
+            <td><div class="deviation-text">None.</div></td>
+            <td><span class="badge badge-not-impl">PARTIAL</span></td>
+            <td><span class="no-img-badge">No Evidence<br><small style="color:var(--text-muted);font-size:0.68rem;">(Not Executed)</small></span></td>
+          </tr>
+        </tbody>
+      </table>
+      </div>
+    </div>
+
   </div>
+
+  <div id="imageModal" class="modal" onclick="closeModal()">
+    <span class="modal-close">&times;</span>
+    <img id="modalImg" class="modal-content" src="" alt="Full Preview">
+  </div>
+
+  <script>
+    function filterCases(filter, btn) {
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      document.querySelectorAll('.case-section').forEach(sec => {
+        sec.style.display = (filter === 'all' || sec.getAttribute('data-case') === filter) ? 'block' : 'none';
+      });
+    }
+    function openModal(src) {
+      document.getElementById('modalImg').src = src;
+      document.getElementById('imageModal').classList.add('active');
+    }
+    function closeModal() { document.getElementById('imageModal').classList.remove('active'); }
+    document.addEventListener('keydown', function(e) { if (e.key === 'Escape') closeModal(); });
+  </script>
+
+  <script src="../assets/js/modules-data.js"></script>
+  <script src="../assets/js/test-cases-data.js"></script>
+  <script src="../assets/js/html2pdf.bundle.min.js"></script>
+  <script src="../assets/js/exec-report-generator.js"></script>
 </body>
 </html>

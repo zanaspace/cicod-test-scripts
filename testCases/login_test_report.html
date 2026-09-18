@@ -1,10 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>UAT Report - LOGIN Module (test/LoginTest.md)</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap"
+    rel="stylesheet">
   <style>
     :root {
       --bg: #0b0f19;
@@ -16,7 +19,13 @@
       --dev: #f59e0b;
       --accent: #3b82f6;
     }
-    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
     body {
       background-color: var(--bg);
       color: var(--text);
@@ -24,7 +33,12 @@
       padding: 36px 24px;
       line-height: 1.5;
     }
-    .container { max-width: 1380px; margin: 0 auto; }
+
+    .container {
+      max-width: 1380px;
+      margin: 0 auto;
+    }
+
     .header-box {
       background: var(--surface);
       border: 1px solid var(--border);
@@ -32,8 +46,20 @@
       padding: 28px;
       margin-bottom: 28px;
     }
-    h1 { font-size: 1.8rem; font-weight: 700; margin-bottom: 6px; color: #fff; }
-    .sub { color: var(--text-muted); font-size: 0.92rem; margin-bottom: 20px; }
+
+    h1 {
+      font-size: 1.8rem;
+      font-weight: 700;
+      margin-bottom: 6px;
+      color: #fff;
+    }
+
+    .sub {
+      color: var(--text-muted);
+      font-size: 0.92rem;
+      margin-bottom: 20px;
+    }
+
     .meta-bar {
       display: flex;
       flex-wrap: wrap;
@@ -42,8 +68,15 @@
       border-top: 1px solid var(--border);
       padding-top: 18px;
     }
-    .meta-bar span { color: var(--text-muted); }
-    .meta-bar strong { color: #e2e8f0; font-family: 'JetBrains Mono', monospace; }
+
+    .meta-bar span {
+      color: var(--text-muted);
+    }
+
+    .meta-bar strong {
+      color: #e2e8f0;
+      font-family: 'JetBrains Mono', monospace;
+    }
 
     .summary-badge {
       display: inline-block;
@@ -60,6 +93,7 @@
     .case-section {
       margin-bottom: 36px;
     }
+
     .case-header {
       display: flex;
       align-items: center;
@@ -70,6 +104,7 @@
       border-radius: 12px 12px 0 0;
       padding: 16px 22px;
     }
+
     .case-title {
       display: flex;
       align-items: center;
@@ -78,6 +113,7 @@
       font-weight: 700;
       color: #fff;
     }
+
     .case-badge {
       background: rgba(59, 130, 246, 0.2);
       border: 1px solid rgba(59, 130, 246, 0.4);
@@ -96,12 +132,14 @@
       border-radius: 0 0 12px 12px;
       overflow-x: auto;
     }
+
     table {
       width: 100%;
       border-collapse: collapse;
       text-align: left;
       font-size: 0.88rem;
     }
+
     th {
       background: #0f1523;
       color: #94a3b8;
@@ -113,13 +151,20 @@
       border-bottom: 1px solid var(--border);
       white-space: nowrap;
     }
+
     td {
       padding: 15px 16px;
       border-bottom: 1px solid var(--border);
       vertical-align: top;
     }
-    tr:last-child td { border-bottom: none; }
-    tr:hover { background: rgba(255, 255, 255, 0.02); }
+
+    tr:last-child td {
+      border-bottom: none;
+    }
+
+    tr:hover {
+      background: rgba(255, 255, 255, 0.02);
+    }
 
     .step-tag {
       font-weight: 700;
@@ -127,6 +172,7 @@
       display: block;
       font-size: 0.88rem;
     }
+
     .status-badge {
       display: inline-block;
       padding: 4px 10px;
@@ -137,8 +183,18 @@
       letter-spacing: 0.05em;
       white-space: nowrap;
     }
-    .status-pass { background: rgba(16, 185, 129, 0.2); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.4); }
-    .status-dev { background: rgba(245, 158, 11, 0.2); color: #fbbf24; border: 1px solid rgba(245, 158, 11, 0.4); }
+
+    .status-pass {
+      background: rgba(16, 185, 129, 0.2);
+      color: #34d399;
+      border: 1px solid rgba(16, 185, 129, 0.4);
+    }
+
+    .status-dev {
+      background: rgba(245, 158, 11, 0.2);
+      color: #fbbf24;
+      border: 1px solid rgba(245, 158, 11, 0.4);
+    }
 
     .deviation-box {
       color: #fbbf24;
@@ -148,6 +204,7 @@
       border-radius: 0 6px 6px 0;
       font-size: 0.82rem;
     }
+
     .nodev-box {
       color: var(--text-muted);
       font-size: 0.82rem;
@@ -161,16 +218,33 @@
       cursor: zoom-in;
       transition: transform 0.2s;
     }
-    .thumb:hover { transform: scale(1.05); }
+
+    .thumb:hover {
+      transform: scale(1.05);
+    }
   </style>
+  <link rel="stylesheet" href="../assets/css/test-report-addon.css">
 </head>
+
 <body>
   <div class="container">
     <div class="header-box">
-      <span class="summary-badge">UAT PASSED: 5 Cases / 30 Sub-Steps Individually Executed</span>
+      <div
+        style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;margin-bottom:12px;">
+        <span class="summary-badge">UAT PASSED: 5 Cases / 30 Sub-Steps Individually Executed</span>
+        <button class="btn-exec-download"
+          onclick="if(window.ExecReportGenerator) ExecReportGenerator.downloadExecReportPdf('login')"
+          title="Download Official Executive &amp; Engineering PDF Report with Detailed Test Cases">
+          <span class="btn-icon-pulse">📄</span>
+          <span>Download PDF Report</span>
+          <span class="btn-exec-badge">PDF</span>
+        </button>
+      </div>
       <h1>UAT Execution Report: LOGIN Module</h1>
-      <p class="sub">Executed in strict alignment with <code>test/LoginTest.md</code> on <code>https://cicodsaasstaging.com/login?tenant=cicodecm</code> with dedicated step-by-step verification.</p>
-      
+      <p class="sub">Executed in strict alignment with <code>test/LoginTest.md</code> on
+        <code>https://cicodsaasstaging.com/login?tenant=cicodecm</code> with dedicated step-by-step verification.
+      </p>
+
       <div class="meta-bar">
         <div><span>Test Script:</span> <strong>test/LoginTest.md</strong></div>
         <div><span>Target URL:</span> <strong>https://cicodsaasstaging.com/login?tenant=cicodecm</strong></div>
@@ -206,7 +280,8 @@
             <tr>
               <td><strong class="step-tag">1. Click on Login</strong></td>
               <td>Displays Login page</td>
-              <td>Login page displayed at https://cicodsaasstaging.com/login?tenant=cicodecm with tenant domain, email, password fields and "Login" button.</td>
+              <td>Login page displayed at https://cicodsaasstaging.com/login?tenant=cicodecm with tenant domain, email,
+                password fields and "Login" button.</td>
               <td><span class="nodev-box">None. Navigation displays login page components.</span></td>
               <td><span class="status-badge status-pass">PASSED</span></td>
               <td>
@@ -218,10 +293,12 @@
             <tr>
               <td><strong class="step-tag">2. Enter Your Domain</strong></td>
               <td>Domain name field should display and accept entry</td>
-              <td>Domain name field displayed (placeholder: "Your domain", label suffix: ".cicod.com") and accepted entry "cicodecm".</td>
+              <td>Domain name field displayed (placeholder: "Your domain", label suffix: ".cicod.com") and accepted
+                entry "cicodecm".</td>
               <td>
                 <div class="deviation-box">
-                  [Naming Convention]: Field labelled "Your domain" with ".cicod.com" sub-domain suffix; script specifies "Enter Your Domain".
+                  [Naming Convention]: Field labelled "Your domain" with ".cicod.com" sub-domain suffix; script
+                  specifies "Enter Your Domain".
                 </div>
               </td>
               <td><span class="status-badge status-pass">PASSED</span></td>
@@ -234,7 +311,8 @@
             <tr>
               <td><strong class="step-tag">3. Enter Email</strong></td>
               <td>Email field should be editable and validate format</td>
-              <td>Email field is editable, accepted entry "raissa.boyomo@crowninteractive.com", and validates standard RFC email format.</td>
+              <td>Email field is editable, accepted entry "raissa.boyomo@crowninteractive.com", and validates standard
+                RFC email format.</td>
               <td><span class="nodev-box">None. Email field is editable and strictly validates format.</span></td>
               <td><span class="status-badge status-pass">PASSED</span></td>
               <td>
@@ -246,8 +324,10 @@
             <tr>
               <td><strong class="step-tag">4. Enter Password</strong></td>
               <td>Password field should be enabled, masked, and toggleable</td>
-              <td>Password field is enabled (disabled=false), masked (type="password" with bullet glyphs), and toggleable via eye icon.</td>
-              <td><span class="nodev-box">None. Password field is enabled, masked by default, and toggleable.</span></td>
+              <td>Password field is enabled (disabled=false), masked (type="password" with bullet glyphs), and
+                toggleable via eye icon.</td>
+              <td><span class="nodev-box">None. Password field is enabled, masked by default, and toggleable.</span>
+              </td>
               <td><span class="status-badge status-pass">PASSED</span></td>
               <td>
                 <a href="../uat_target3_cicodecm/login_tc1_step4_password_masked.png" target="_blank">
@@ -258,7 +338,8 @@
             <tr>
               <td><strong class="step-tag">5. Click Login</strong></td>
               <td>opens the Home Page of the MDA</td>
-              <td>Login request submitted. URL: https://cicodsaasstaging.com/login?tenant=cicodecm. Tenant authentication payload processed without client validation errors.</td>
+              <td>Login request submitted. URL: https://cicodsaasstaging.com/login?tenant=cicodecm. Tenant
+                authentication payload processed without client validation errors.</td>
               <td>
                 <div class="deviation-box">
                   [Naming Convention]: Submit button text is "Login".
@@ -267,7 +348,8 @@
               <td><span class="status-badge status-pass">PASSED</span></td>
               <td>
                 <a href="../uat_target3_cicodecm/login_tc1_step5_click_login_response.png" target="_blank">
-                  <img class="thumb" src="../uat_target3_cicodecm/login_tc1_step5_click_login_response.png" alt="Step 5">
+                  <img class="thumb" src="../uat_target3_cicodecm/login_tc1_step5_click_login_response.png"
+                    alt="Step 5">
                 </a>
               </td>
             </tr>
@@ -332,7 +414,8 @@
               <td><span class="status-badge status-pass">PASSED</span></td>
               <td>
                 <a href="../uat_target3_cicodecm/login_tc2_step2_wrong_domain_entered.png" target="_blank">
-                  <img class="thumb" src="../uat_target3_cicodecm/login_tc2_step2_wrong_domain_entered.png" alt="Step 2">
+                  <img class="thumb" src="../uat_target3_cicodecm/login_tc2_step2_wrong_domain_entered.png"
+                    alt="Step 2">
                 </a>
               </td>
             </tr>
@@ -368,7 +451,8 @@
               <td><span class="status-badge status-pass">PASSED</span></td>
               <td>
                 <a href="../uat_target3_cicodecm/login_tc2_step5_invalid_domain_toast.png" target="_blank">
-                  <img class="thumb" src="../uat_target3_cicodecm/login_tc2_step5_invalid_domain_toast.png" alt="Step 5">
+                  <img class="thumb" src="../uat_target3_cicodecm/login_tc2_step5_invalid_domain_toast.png"
+                    alt="Step 5">
                 </a>
               </td>
             </tr>
@@ -558,7 +642,8 @@
               <td><span class="status-badge status-pass">PASSED</span></td>
               <td>
                 <a href="../uat_target3_cicodecm/login_tc4_step4_wrong_password_entered.png" target="_blank">
-                  <img class="thumb" src="../uat_target3_cicodecm/login_tc4_step4_wrong_password_entered.png" alt="Step 4">
+                  <img class="thumb" src="../uat_target3_cicodecm/login_tc4_step4_wrong_password_entered.png"
+                    alt="Step 4">
                 </a>
               </td>
             </tr>
@@ -566,11 +651,13 @@
               <td><strong class="step-tag">5. Click Login</strong></td>
               <td>Display 'Invalid Email or Password'</td>
               <td>System rejected invalid password and displayed error toast: ["Invalid Email or Password"].</td>
-              <td><span class="nodev-box">None. Exact match to test script specification ("Invalid Email or Password").</span></td>
+              <td><span class="nodev-box">None. Exact match to test script specification ("Invalid Email or
+                  Password").</span></td>
               <td><span class="status-badge status-pass">PASSED</span></td>
               <td>
                 <a href="../uat_target3_cicodecm/login_tc4_step5_invalid_password_toast.png" target="_blank">
-                  <img class="thumb" src="../uat_target3_cicodecm/login_tc4_step5_invalid_password_toast.png" alt="Step 5">
+                  <img class="thumb" src="../uat_target3_cicodecm/login_tc4_step5_invalid_password_toast.png"
+                    alt="Step 5">
                 </a>
               </td>
             </tr>
@@ -666,7 +753,8 @@
             <tr>
               <td><strong class="step-tag">5. Show Password/hide Password</strong></td>
               <td>Password is hidden/Dispalyed to the user</td>
-              <td>Password revealed successfully on click (type="text"), and re-masked on subsequent click (type="password").</td>
+              <td>Password revealed successfully on click (type="text"), and re-masked on subsequent click
+                (type="password").</td>
               <td><span class="nodev-box">None. Toggle behavior conforms directly to test specification.</span></td>
               <td><span class="status-badge status-pass">PASSED</span></td>
               <td>
@@ -693,5 +781,14 @@
     </div>
 
   </div>
+
+
+  pt src="../assets/js/test-cases-data.js"></script>
+
+  <script src="../assets/js/modules-data.js"></script>
+  <script src="../assets/js/test-cases-data.js"></script>
+  <script src="../assets/js/html2pdf.bundle.min.js"></script>
+  <script src="../assets/js/exec-report-generator.js"></script>
 </body>
+
 </html>

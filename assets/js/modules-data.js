@@ -164,16 +164,19 @@ const appModules = [
         id: 'signup',
         sheetName: 'Sign Up',
         reportUrl: 'testCases/signup_test_report.html',
-        passRate: '100.0%',
-        passCount: 9,
-        gapCount: 0,
-        totalSteps: 9,
-        status: '100% VERIFIED',
+        passRate: '84.4%',
+        passCount: 38,
+        gapCount: 7,
+        totalSteps: 45,
+        status: 'PARTIAL — 3 CONFIRMED DEFECTS/GAPS (BUSINESS TYPE DROPDOWN, ITS FLAKY VALIDATION, NO DUPLICATE-EMAIL CHECK)',
+        summary: 'Multi-step registration wizard: email capture, MDA profile details, an undocumented Business Info step, and Terms of Use agreement, ending in real tenant provisioning — plus all 6 previously-proposed negative/edge-case scenarios (31 steps), now executed live. Re-executed live end-to-end this session after the prior session\'s evidence was found corrupted (6 of 9 screenshots were stuck on an undismissed cookie-consent overlay — a narrow-viewport capture artifact, fixed by re-running at 1440x900). 38 of 45 checkpoints passed. Three confirmed defects: (1) a wizard step, "We want to know more about you," exists live but is missing from test/SignupTest.md, and within it the Business Type dropdown never populates with any options; (2) that field\'s "required" enforcement is flaky — across 4 attempts, final submission succeeded once and was blocked 3 times with the same unfilled field; (3) no email-uniqueness check exists at the point of email entry — a known-duplicate email proceeds straight to the profile step with zero warning. Of the 6 proposed scenarios, 5 came back clean (weak password rejection, duplicate account name with a better-than-spec real-time check, the mandatory agreement checkbox, input sanitization against XSS/SQLi payloads, and abandon/resume restarting cleanly); duplicate email registration surfaced defect 3, and abandon/resume\'s final "no duplicate tenant" checkpoint is inconclusive due to defect 2 confounding final submission.',
         images: [
-          { file: 'uat_01_signup_page.png', caption: 'Initial Registration & Landing Portal' },
-          { file: 'uat_p1_02_signup_form.png', caption: 'MDA Profile & Credentials Form' },
-          { file: 'uat_p1_03_signup_filled.png', caption: 'Account Data & Agreement Terms Populated' },
-          { file: 'uat_p1_04_signup_after_submit.png', caption: 'Submission Verification & Routing Confirmation' }
+          { file: 'uat_target3_cicodecm/signup_step3_modal_opened.png', caption: 'Registration Modal Opened via a Plan\'s "Try Now" Link' },
+          { file: 'uat_target3_cicodecm/signup_step12_businessinfo_filled.png', caption: 'BUG: Business Type Dropdown Never Populates (Placeholder Only)' },
+          { file: 'uat_target3_cicodecm/signup_prop1_email_step_not_blocked.png', caption: 'GAP: Duplicate Email Proceeds With Zero Warning' },
+          { file: 'uat_target3_cicodecm/signup_prop3_duplicate_account_error.png', caption: 'Duplicate Account Name Correctly Caught in Real Time (Exceeds Spec)' },
+          { file: 'uat_target3_cicodecm/signup_step13_account_created.png', caption: 'Account Successfully Created Despite the Business Type Bug' },
+          { file: 'uat_target3_cicodecm/signup_step14_admin_portal_landing.png', caption: 'Final Landing: New Tenant\'s CICOD Admin Portal' }
         ]
       },
       {
@@ -471,46 +474,62 @@ const appModules = [
         id: 'ecms_users',
         sheetName: 'Users',
         reportUrl: 'testCases/users_test_report.html',
-        passRate: '70.0%',
-        passCount: 7,
-        gapCount: 3,
-        totalSteps: 10,
-        status: 'PARTIAL — CREATE USER IS COMPLETELY BROKEN (P0)',
+        passRate: '63.0%',
+        passCount: 17,
+        gapCount: 10,
+        totalSteps: 27,
+        status: 'PARTIAL — CREATE USER & DEPARTMENT BOTH BROKEN (P0)',
         isUpcoming: false,
-        summary: 'Staff & hierarchy directory: departmental rosters, line manager approval trees, role-based access control (RBAC), and delegation settings. 10 checkpoints verified across 4 scenarios (7 passed, 2 confirmed-bug rows sharing one P0 defect, 1 blocked). Create User silently fails with fully valid data — confirmed 2/2, no error or success message of any kind — which also blocks the duplicate-Staff-ID negative test since no user can be created to duplicate against. Invalid email/phone format validation on the same form works correctly.',
+        summary: 'Staff & hierarchy directory: user CRUD, Make A Resource, departmental rosters, and role-based access control (RBAC). 27 checkpoints verified across 8 scenarios (17 passed, 2 deviations, 3 confirmed defects, 5 rows blocked by one of those defects). Create User silently fails with fully valid data (P0, confirmed 2/2, no error shown); the entire Department page is inaccessible ("Oops! Something went wrong", P0, confirmed 2/2), blocking Create/Edit/Suspend/Unsuspend/Search Department outright; Suspend User can be blocked by an unrelated "Job Title cannot be blank" validation when the target user\'s Job Title was never filled in (P1, confirmed via A/B test). In contrast, View User, Edit User, Unsuspend User, Make A Resource, Search Users, and every Role scenario (Create/Edit/Suspend/Unsuspend/Search) all work correctly.',
         targetRoute: '/ecms/users',
         images: [
           { file: 'uat_target3_cicodecm/users_step4_create_form.png', caption: 'New User Form — All Scripted Fields Present' },
           { file: 'uat_target3_cicodecm/users_step13_search_check.png', caption: 'BUG (P0): Create User Silently Fails — User Never Persisted' },
           { file: 'uat_target3_cicodecm/users_step22_invalid_result.png', caption: 'Invalid Email Format Correctly Rejected' },
-          { file: 'uat_target3_cicodecm/users_step23_invalid_phone_result.png', caption: 'Invalid Phone Format Correctly Rejected' }
+          { file: 'uat_target3_cicodecm/users_step23_invalid_phone_result.png', caption: 'Invalid Phone Format Correctly Rejected' },
+          { file: 'uat_target3_cicodecm/users_step45_dept_retry.png', caption: 'BUG (P0): Department Page Is Entirely Inaccessible' },
+          { file: 'uat_target3_cicodecm/users_step32_after_suspend_error.png', caption: 'BUG: Suspend User Blocked by "Job Title cannot be blank"' },
+          { file: 'uat_target3_cicodecm/users_step28_update_result.png', caption: 'Edit User Works Correctly — "Successful"' },
+          { file: 'uat_target3_cicodecm/users_step41_resource_list.png', caption: 'Make A Resource — User Correctly Converted to Resource' }
         ]
       },
       {
         id: 'ecms_resources',
         sheetName: 'Resources',
-        passRate: 'Queued',
-        passCount: 0,
-        gapCount: 0,
-        totalSteps: 12,
-        status: 'QUEUED FOR TESTING',
-        isUpcoming: true,
-        summary: 'Field dispatch & physical assets: officer equipment allocation, regional dispatch zones, and capacity load-balancing.',
+        reportUrl: 'testCases/resource_test_report.html',
+        passRate: '75.0%',
+        passCount: 6,
+        gapCount: 2,
+        totalSteps: 8,
+        status: 'PASSED — MINOR UI DEVIATIONS ONLY (NO BLOCKING DEFECTS)',
+        isUpcoming: false,
+        summary: 'Field dispatch & physical assets: Resource list/search plus the Resource Type sub-page (list, create, suspend). 8 checkpoints verified across 5 scenarios (6 passed, 2 minor deviations, 0 confirmed defects). Resource Type\'s Create and Suspend actions both work correctly and persist as expected. Two deviations found: the Resource list\'s KPI header (Total Records: 2) doesn\'t match the 1 row actually rendered in the grid, and the New Resource Type form leaves a stale "Please select a queue type" message on screen after a valid selection is made (cosmetic only — Create still succeeds). Resource Level, Resource Shift, Resource Schedule, and Update/Unsuspend/Search on Resource Type were not exercised this session.',
         targetRoute: '/ecms/resources',
-        images: []
+        images: [
+          { file: 'uat_target3_cicodecm/resource_step1_list.png', caption: 'Deviation: Resource List KPI Shows 2 Records, Only 1 Row Rendered' },
+          { file: 'uat_target3_cicodecm/resource_step9_real_click.png', caption: 'Deviation: Stale "Please select a queue type" Message After Valid Selection' },
+          { file: 'uat_target3_cicodecm/resource_step10_after_create_click.png', caption: 'Create Resource Type Works Correctly — "Successful"' },
+          { file: 'uat_target3_cicodecm/resource_step12_type_suspend.png', caption: 'Suspend Resource Type Works Correctly — "Suspended"' }
+        ]
       },
       {
         id: 'ecms_reports',
         sheetName: 'Reports',
-        passRate: 'Queued',
-        passCount: 0,
-        gapCount: 0,
-        totalSteps: 20,
-        status: 'QUEUED FOR TESTING',
-        isUpcoming: true,
-        summary: 'Audit & compliance reporting: SLA breach logs, executive memo cycle audits, departmental throughput, and archival records.',
+        reportUrl: 'testCases/reports_test_report.html',
+        passRate: '80.0%',
+        passCount: 8,
+        gapCount: 2,
+        totalSteps: 10,
+        status: 'PARTIAL — DOWNLOAD REPORT THROWS "undefined" ERROR (P1)',
+        isUpcoming: false,
+        summary: 'Report generation & audit workflows: cascading Queue/Queue Type filters, results grid, and per-report Download export. 10 checkpoints verified across 6 scenarios (8 passed, 1 minor deviation, 1 confirmed defect). Report search itself works correctly — cross-checked against the Tasks module as ground truth, confirming that two queues returning zero rows (Complaints, UAT Test Queue 90355) genuinely have no matching tasks, while Queue=PLANNING AND SCHEDULING correctly returns its 1 matching task. However, clicking Download on a populated report throws a raw, unhandled "undefined" alert instead of exporting a file (confirmed 2/2) — a P1 defect since export is a core Reports capability. Audit Log (the module\'s second sub-page) and the Status/Priority/Date/Task State/Created By/Assigned To filters were not exercised this session.',
         targetRoute: '/ecms/reports',
-        images: []
+        images: [
+          { file: 'uat_target3_cicodecm/reports_step12_planning_search.png', caption: 'Report Search Confirmed Working — Queue=PLANNING AND SCHEDULING Returns Its 1 Matching Task' },
+          { file: 'uat_target3_cicodecm/reports_step13c_after_download_click.png', caption: 'BUG (P1): Download Report Throws Raw "undefined" Alert Instead of Exporting' },
+          { file: 'uat_target3_cicodecm/reports_step9_broad_search_complaints.png', caption: 'Zero Results for Complaints Queue — Confirmed Genuine via Tasks Ground-Truth Check' },
+          { file: 'uat_target3_cicodecm/reports_step11_tasks_ground_truth.png', caption: 'Ground-Truth Check: Tasks Module Confirms Real Data Exists (48 Total Tasks)' }
+        ]
       }
     ]
   }

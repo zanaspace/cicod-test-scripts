@@ -236,11 +236,19 @@
       font-weight: 700;
     }
   </style>
+  <link rel="stylesheet" href="../assets/css/test-report-addon.css">
 </head>
 <body>
   <div class="container">
     <div class="header-box">
-      <div class="summary-badge">✓ RECENT DOCUMENT MODULE UAT COMPLETED</div>
+      <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;margin-bottom:12px;">
+        <div class="summary-badge">✓ RECENT DOCUMENT MODULE UAT COMPLETED</div>
+        <button class="btn-exec-download" onclick="if(window.ExecReportGenerator) ExecReportGenerator.downloadExecReportPdf('recent')" title="Download Official Executive &amp; Engineering PDF Report with Detailed Test Cases">
+          <span class="btn-icon-pulse">📄</span>
+          <span>Download PDF Report</span>
+          <span class="btn-exec-badge">PDF</span>
+        </button>
+      </div>
       <h1>UAT Execution Report: RECENT DOCUMENT Module</h1>
       <p class="sub">Executed in strict accordance with the Excel Test Script (<code>CICOD DRIVE TEST SCRIPT.xlsx</code>, Rows 440 to 477) against Target 3 Environment (<code>cicodsaasstaging.com</code> / tenant: <code>cicodecms</code>).</p>
       
@@ -1040,5 +1048,10 @@
       if (e.key === 'Escape') closeModal();
     });
   </script>
+
+  <script src="../assets/js/modules-data.js"></script>
+  <script src="../assets/js/test-cases-data.js"></script>
+  <script src="../assets/js/html2pdf.bundle.min.js"></script>
+  <script src="../assets/js/exec-report-generator.js"></script>
 </body>
 </html>

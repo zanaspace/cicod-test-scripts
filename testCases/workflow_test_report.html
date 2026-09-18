@@ -1,10 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>UAT Report - WORKFLOW Module (ECMS TEST SCRIPT RECENT VERSION.xlsx)</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap"
+    rel="stylesheet">
   <style>
     :root {
       --bg: #0b0f19;
@@ -19,7 +22,13 @@
       --bug: #ef4444;
       --accent: #10b981;
     }
-    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
     body {
       background-color: var(--bg);
       color: var(--text);
@@ -27,7 +36,12 @@
       padding: 36px 24px;
       line-height: 1.5;
     }
-    .container { max-width: 1440px; margin: 0 auto; }
+
+    .container {
+      max-width: 1440px;
+      margin: 0 auto;
+    }
+
     .header-box {
       background: var(--surface);
       border: 1px solid var(--border);
@@ -35,8 +49,20 @@
       padding: 28px;
       margin-bottom: 28px;
     }
-    h1 { font-size: 1.8rem; font-weight: 700; margin-bottom: 6px; color: #fff; }
-    .sub { color: var(--text-muted); font-size: 0.92rem; margin-bottom: 20px; }
+
+    h1 {
+      font-size: 1.8rem;
+      font-weight: 700;
+      margin-bottom: 6px;
+      color: #fff;
+    }
+
+    .sub {
+      color: var(--text-muted);
+      font-size: 0.92rem;
+      margin-bottom: 20px;
+    }
+
     .meta-bar {
       display: flex;
       flex-wrap: wrap;
@@ -45,8 +71,15 @@
       border-top: 1px solid var(--border);
       padding-top: 18px;
     }
-    .meta-bar span { color: var(--text-muted); }
-    .meta-bar strong { color: #e2e8f0; font-family: 'JetBrains Mono', monospace; }
+
+    .meta-bar span {
+      color: var(--text-muted);
+    }
+
+    .meta-bar strong {
+      color: #e2e8f0;
+      font-family: 'JetBrains Mono', monospace;
+    }
 
     .summary-badge {
       display: inline-block;
@@ -66,19 +99,27 @@
       gap: 16px;
       margin-bottom: 28px;
     }
+
     .kpi-card {
       background: var(--surface);
       border: 1px solid var(--border);
       border-radius: 12px;
       padding: 20px;
     }
+
     .kpi-num {
       font-size: 2rem;
       font-weight: 700;
       font-family: 'JetBrains Mono', monospace;
       margin-top: 6px;
     }
-    .kpi-label { color: var(--text-muted); font-size: 0.84rem; text-transform: uppercase; letter-spacing: 0.05em; }
+
+    .kpi-label {
+      color: var(--text-muted);
+      font-size: 0.84rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
 
     .filter-bar {
       display: flex;
@@ -86,6 +127,7 @@
       margin-bottom: 24px;
       flex-wrap: wrap;
     }
+
     .filter-btn {
       background: var(--surface);
       border: 1px solid var(--border);
@@ -97,7 +139,9 @@
       cursor: pointer;
       transition: all 0.2s ease;
     }
-    .filter-btn:hover, .filter-btn.active {
+
+    .filter-btn:hover,
+    .filter-btn.active {
       background: var(--accent);
       color: #0b0f19;
       border-color: var(--accent);
@@ -110,6 +154,7 @@
       margin-bottom: 28px;
       overflow: hidden;
     }
+
     .case-header {
       padding: 18px 24px;
       background: var(--surface-card);
@@ -120,7 +165,13 @@
       flex-wrap: wrap;
       gap: 12px;
     }
-    .case-title { font-size: 1.15rem; font-weight: 700; color: #fff; }
+
+    .case-title {
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: #fff;
+    }
+
     .case-tag {
       font-size: 0.76rem;
       font-family: 'JetBrains Mono', monospace;
@@ -136,6 +187,7 @@
       border-collapse: collapse;
       font-size: 0.88rem;
     }
+
     th {
       background: rgba(11, 15, 25, 0.6);
       text-align: left;
@@ -147,18 +199,41 @@
       letter-spacing: 0.04em;
       border-bottom: 1px solid var(--border);
     }
+
     td {
       padding: 14px 16px;
       border-bottom: 1px solid var(--border);
       vertical-align: top;
     }
-    tr:last-child td { border-bottom: none; }
-    tr:hover td { background: rgba(255, 255, 255, 0.02); }
 
-    .step-name { font-weight: 600; color: #fff; }
-    .expected-text { color: #cbd5e1; font-size: 0.86rem; }
-    .actual-text { color: #93c5fd; font-size: 0.86rem; font-family: 'JetBrains Mono', monospace; }
-    .deviation-text { color: #fbbf24; font-size: 0.84rem; }
+    tr:last-child td {
+      border-bottom: none;
+    }
+
+    tr:hover td {
+      background: rgba(255, 255, 255, 0.02);
+    }
+
+    .step-name {
+      font-weight: 600;
+      color: #fff;
+    }
+
+    .expected-text {
+      color: #cbd5e1;
+      font-size: 0.86rem;
+    }
+
+    .actual-text {
+      color: #93c5fd;
+      font-size: 0.86rem;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .deviation-text {
+      color: #fbbf24;
+      font-size: 0.84rem;
+    }
 
     .badge {
       display: inline-block;
@@ -169,10 +244,30 @@
       letter-spacing: 0.04em;
       text-transform: uppercase;
     }
-    .badge-pass { background: rgba(16, 185, 129, 0.2); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.3); }
-    .badge-not-impl { background: rgba(245, 158, 11, 0.2); color: #fbbf24; border: 1px solid rgba(245, 158, 11, 0.3); }
-    .badge-dev { background: rgba(56, 189, 248, 0.2); color: #38bdf8; border: 1px solid rgba(56, 189, 248, 0.3); }
-    .badge-bug { background: rgba(239, 68, 68, 0.2); color: #f87171; border: 1px solid rgba(239, 68, 68, 0.35); }
+
+    .badge-pass {
+      background: rgba(16, 185, 129, 0.2);
+      color: #34d399;
+      border: 1px solid rgba(16, 185, 129, 0.3);
+    }
+
+    .badge-not-impl {
+      background: rgba(245, 158, 11, 0.2);
+      color: #fbbf24;
+      border: 1px solid rgba(245, 158, 11, 0.3);
+    }
+
+    .badge-dev {
+      background: rgba(56, 189, 248, 0.2);
+      color: #38bdf8;
+      border: 1px solid rgba(56, 189, 248, 0.3);
+    }
+
+    .badge-bug {
+      background: rgba(239, 68, 68, 0.2);
+      color: #f87171;
+      border: 1px solid rgba(239, 68, 68, 0.35);
+    }
 
     .thumb {
       width: 80px;
@@ -183,7 +278,11 @@
       cursor: pointer;
       transition: transform 0.15s ease, border-color 0.15s ease;
     }
-    .thumb:hover { transform: scale(1.08); border-color: var(--accent); }
+
+    .thumb:hover {
+      transform: scale(1.08);
+      border-color: var(--accent);
+    }
 
     .no-img-badge {
       display: inline-block;
@@ -202,7 +301,10 @@
     .modal {
       display: none;
       position: fixed;
-      top: 0; left: 0; width: 100vw; height: 100vh;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
       background: rgba(0, 0, 0, 0.88);
       backdrop-filter: blur(4px);
       z-index: 999;
@@ -210,7 +312,11 @@
       align-items: center;
       padding: 24px;
     }
-    .modal.active { display: flex; }
+
+    .modal.active {
+      display: flex;
+    }
+
     .modal-content {
       max-width: 90vw;
       max-height: 90vh;
@@ -218,6 +324,7 @@
       border: 1px solid var(--border);
       box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
     }
+
     .modal-close {
       position: absolute;
       top: 24px;
@@ -228,17 +335,30 @@
       font-weight: 700;
     }
   </style>
+  <link rel="stylesheet" href="../assets/css/test-report-addon.css">
 </head>
+
 <body>
   <div class="container">
     <div class="header-box">
-      <div class="summary-badge">⚠ WORKFLOW MODULE UAT — 4 CONFIRMED DEFECTS, 1 IS A FULL FEATURE OUTAGE (P0)</div>
+      <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;margin-bottom:12px;">
+        <div class="summary-badge">⚠ WORKFLOW MODULE UAT — 4 CONFIRMED DEFECTS, 1 IS A FULL FEATURE OUTAGE (P0)</div>
+        <button class="btn-exec-download" onclick="if(window.ExecReportGenerator) ExecReportGenerator.downloadExecReportPdf('ecms_workflows')" title="Download Official Executive &amp; Engineering PDF Report with Detailed Test Cases">
+          <span class="btn-icon-pulse">📄</span>
+          <span>Download PDF Report</span>
+          <span class="btn-exec-badge">PDF</span>
+        </button>
+      </div>
       <h1>UAT Execution Report: WORKFLOW Module</h1>
-      <p class="sub">Live functional/UI verification against the Excel Test Script (<code>ECMS TEST SCRIPT RECENT VERSION.xlsx</code>, sheet "WORKFLOW", ~208 rows) on Target 3 Environment (<code>cicodsaasstaging.com</code> / tenant: <code>cicodecms</code>). This session covered 42 checkpoints across 8 scenarios; the remaining script rows are explicitly marked BLOCKED rather than assumed passing.</p>
+      <p class="sub">Live functional/UI verification against the Excel Test Script
+        (<code>ECMS TEST SCRIPT RECENT VERSION.xlsx</code>, sheet "WORKFLOW", ~208 rows) on Target 3 Environment
+        (<code>cicodsaasstaging.com</code> / tenant: <code>cicodecms</code>). This session covered 42 checkpoints across
+        8 scenarios; the remaining script rows are explicitly marked BLOCKED rather than assumed passing.</p>
 
       <div class="meta-bar">
         <div><span>Test Script:</span> <strong>test/WorkflowTest_Results.md</strong></div>
-        <div><span>Target URL:</span> <strong>https://cicodecms.cicodsaasstaging.com/ecms/index.php?r=workflows/*</strong></div>
+        <div><span>Target URL:</span>
+          <strong>https://cicodecms.cicodsaasstaging.com/ecms/index.php?r=workflows/*</strong></div>
         <div><span>Tenant / Account:</span> <strong>cicodecms / raissa.boyomo@crowninteractive.com</strong></div>
         <div><span>Execution Engine:</span> <strong>Headless Edge CDP</strong></div>
         <div><span>Execution Date:</span> <strong>September 17, 2026</strong></div>
@@ -274,13 +394,16 @@
 
     <div class="filter-bar">
       <button class="filter-btn active" onclick="filterCases('all', this)">All Scenarios (8)</button>
-      <button class="filter-btn" onclick="filterCases('sc1', this)">MENU NAVIGATION &amp; CREATE WORKFLOW SETUP (2)</button>
-      <button class="filter-btn" onclick="filterCases('sc2', this)">PROCESS TAB — QUEUE, QUEUE TYPE &amp; STATUS SETUP (5)</button>
+      <button class="filter-btn" onclick="filterCases('sc1', this)">MENU NAVIGATION &amp; CREATE WORKFLOW SETUP
+        (2)</button>
+      <button class="filter-btn" onclick="filterCases('sc2', this)">PROCESS TAB — QUEUE, QUEUE TYPE &amp; STATUS SETUP
+        (5)</button>
       <button class="filter-btn" onclick="filterCases('sc3', this)">FORM TAB — FIELD BUILDER (3)</button>
       <button class="filter-btn" onclick="filterCases('sc4', this)">ESCALATION &amp; APPROVAL TABS (6)</button>
       <button class="filter-btn" onclick="filterCases('sc5', this)">WORKFLOW COMPLETION &amp; GRANT ACCESS (4)</button>
       <button class="filter-btn" onclick="filterCases('sc6', this)">MY WORKFLOWS — LIST, VIEW &amp; SUSPEND (5)</button>
-      <button class="filter-btn" onclick="filterCases('sc7', this)">QUEUE / QUEUE TYPE / STATUS TABS — ACTION MENU DEFECT (9)</button>
+      <button class="filter-btn" onclick="filterCases('sc7', this)">QUEUE / QUEUE TYPE / STATUS TABS — ACTION MENU
+        DEFECT (9)</button>
       <button class="filter-btn" onclick="filterCases('sc8', this)">LINK A WORKFLOW TO A DEPARTMENT (8)</button>
     </div>
 
@@ -306,28 +429,45 @@
           <tr>
             <td><strong>1</strong></td>
             <td><span class="step-name">From the Menu click on Workflow</span></td>
-            <td><div class="expected-text">Sub-menus: 1. Create workflow 2. My workflow</div></td>
-            <td><div class="actual-text">Sidebar item is &quot;Workflows&quot; (plural); expands to reveal &quot;Create Workflow&quot; and &quot;My Workflows&quot; — exact match, minor pluralization only.</div></td>
-            <td><div class="deviation-text">None. Matches script intent.</div></td>
+            <td>
+              <div class="expected-text">Sub-menus: 1. Create workflow 2. My workflow</div>
+            </td>
+            <td>
+              <div class="actual-text">Sidebar item is &quot;Workflows&quot; (plural); expands to reveal &quot;Create
+                Workflow&quot; and &quot;My Workflows&quot; — exact match, minor pluralization only.</div>
+            </td>
+            <td>
+              <div class="deviation-text">None. Matches script intent.</div>
+            </td>
             <td>
               <span class="badge badge-pass">PASSED</span>
             </td>
             <td>
-              <img src="../uat_target3_cicodecm/wf_step1_sidebar_submenu.png" class="thumb" alt="wf_step1_sidebar_submenu.png" onclick="openModal(this.src)">
+              <img src="../uat_target3_cicodecm/wf_step1_sidebar_submenu.png" class="thumb"
+                alt="wf_step1_sidebar_submenu.png" onclick="openModal(this.src)">
             </td>
           </tr>
 
           <tr>
             <td><strong>2</strong></td>
             <td><span class="step-name">Click on Create workflow sub-menu</span></td>
-            <td><div class="expected-text">4 tabs: Process, Forms, Escalations, Approvals</div></td>
-            <td><div class="actual-text">Page loads with 4 tabs: Process, Form, Escalation, Approval (singular). A one-time coach-mark must be dismissed via &quot;Ignore&quot;.</div></td>
-            <td><div class="deviation-text">[Naming Convention]: Script says plural tab names; live UI uses singular.</div></td>
+            <td>
+              <div class="expected-text">4 tabs: Process, Forms, Escalations, Approvals</div>
+            </td>
+            <td>
+              <div class="actual-text">Page loads with 4 tabs: Process, Form, Escalation, Approval (singular). A
+                one-time coach-mark must be dismissed via &quot;Ignore&quot;.</div>
+            </td>
+            <td>
+              <div class="deviation-text">[Naming Convention]: Script says plural tab names; live UI uses singular.
+              </div>
+            </td>
             <td>
               <span class="badge badge-pass">PASSED</span>
             </td>
             <td>
-              <img src="../uat_target3_cicodecm/wf_step2_create_workflow_page.png" class="thumb" alt="wf_step2_create_workflow_page.png" onclick="openModal(this.src)">
+              <img src="../uat_target3_cicodecm/wf_step2_create_workflow_page.png" class="thumb"
+                alt="wf_step2_create_workflow_page.png" onclick="openModal(this.src)">
             </td>
           </tr>
         </tbody>
@@ -356,70 +496,115 @@
           <tr>
             <td><strong>3</strong></td>
             <td><span class="step-name">Click &quot;Select Queue&quot;</span></td>
-            <td><div class="expected-text">Displays already-created Queues for selection</div></td>
-            <td><div class="actual-text">Dropdown opens with full existing queue list plus a &quot;Create new queue&quot; action and search box.</div></td>
-            <td><div class="deviation-text">None.</div></td>
+            <td>
+              <div class="expected-text">Displays already-created Queues for selection</div>
+            </td>
+            <td>
+              <div class="actual-text">Dropdown opens with full existing queue list plus a &quot;Create new queue&quot;
+                action and search box.</div>
+            </td>
+            <td>
+              <div class="deviation-text">None.</div>
+            </td>
             <td>
               <span class="badge badge-pass">PASSED</span>
             </td>
             <td>
-              <img src="../uat_target3_cicodecm/wf_step3_queue_dropdown_options.png" class="thumb" alt="wf_step3_queue_dropdown_options.png" onclick="openModal(this.src)">
+              <img src="../uat_target3_cicodecm/wf_step3_queue_dropdown_options.png" class="thumb"
+                alt="wf_step3_queue_dropdown_options.png" onclick="openModal(this.src)">
             </td>
           </tr>
 
           <tr>
             <td><strong>4</strong></td>
             <td><span class="step-name">Click Create Queue → enter name &amp; description → Save and select</span></td>
-            <td><div class="expected-text">Should create and select queue on Process tab</div></td>
-            <td><div class="actual-text">&quot;Create Queue&quot; modal opened; &quot;UAT Test Queue 90355&quot; created and auto-populated into the Queue field immediately.</div></td>
-            <td><div class="deviation-text">None.</div></td>
+            <td>
+              <div class="expected-text">Should create and select queue on Process tab</div>
+            </td>
+            <td>
+              <div class="actual-text">&quot;Create Queue&quot; modal opened; &quot;UAT Test Queue 90355&quot; created
+                and auto-populated into the Queue field immediately.</div>
+            </td>
+            <td>
+              <div class="deviation-text">None.</div>
+            </td>
             <td>
               <span class="badge badge-pass">PASSED</span>
             </td>
             <td>
-              <img src="../uat_target3_cicodecm/wf_step4_create_queue_modal.png" class="thumb" alt="wf_step4_create_queue_modal.png" onclick="openModal(this.src)">
+              <img src="../uat_target3_cicodecm/wf_step4_create_queue_modal.png" class="thumb"
+                alt="wf_step4_create_queue_modal.png" onclick="openModal(this.src)">
             </td>
           </tr>
 
           <tr>
             <td><strong>5</strong></td>
-            <td><span class="step-name">Click create new queue type → enter name &amp; description → Save and select</span></td>
-            <td><div class="expected-text">Should create and select queue type on Process form</div></td>
-            <td><div class="actual-text">&quot;Create Queue Type&quot; modal opened; &quot;UAT Queue Type 53252&quot; created and auto-populated into the Queue Type field.</div></td>
-            <td><div class="deviation-text">None.</div></td>
+            <td><span class="step-name">Click create new queue type → enter name &amp; description → Save and
+                select</span></td>
+            <td>
+              <div class="expected-text">Should create and select queue type on Process form</div>
+            </td>
+            <td>
+              <div class="actual-text">&quot;Create Queue Type&quot; modal opened; &quot;UAT Queue Type 53252&quot;
+                created and auto-populated into the Queue Type field.</div>
+            </td>
+            <td>
+              <div class="deviation-text">None.</div>
+            </td>
             <td>
               <span class="badge badge-pass">PASSED</span>
             </td>
             <td>
-              <img src="../uat_target3_cicodecm/wf_step5b_create_queuetype_modal.png" class="thumb" alt="wf_step5b_create_queuetype_modal.png" onclick="openModal(this.src)">
+              <img src="../uat_target3_cicodecm/wf_step5b_create_queuetype_modal.png" class="thumb"
+                alt="wf_step5b_create_queuetype_modal.png" onclick="openModal(this.src)">
             </td>
           </tr>
 
           <tr>
             <td><strong>6</strong></td>
             <td><span class="step-name">Click Select Status</span></td>
-            <td><div class="expected-text">Should display Status (Open) and Closed as default</div></td>
-            <td><div class="actual-text">For a brand-new Queue Type, the &quot;Add Status&quot; search list shows &quot;No record found&quot; — default Open/Close chips are informational only and must still be explicitly created before use (confirmed by a native alert &quot;Queue type and Status is Required&quot; when skipped).</div></td>
-            <td><div class="deviation-text">[Deviation]: Script implies defaults are immediately usable; a real status must still be created first.</div></td>
+            <td>
+              <div class="expected-text">Should display Status (Open) and Closed as default</div>
+            </td>
+            <td>
+              <div class="actual-text">For a brand-new Queue Type, the &quot;Add Status&quot; search list shows &quot;No
+                record found&quot; — default Open/Close chips are informational only and must still be explicitly
+                created before use (confirmed by a native alert &quot;Queue type and Status is Required&quot; when
+                skipped).</div>
+            </td>
+            <td>
+              <div class="deviation-text">[Deviation]: Script implies defaults are immediately usable; a real status
+                must still be created first.</div>
+            </td>
             <td>
               <span class="badge badge-dev">PARTIAL / DEVIATION</span>
             </td>
             <td>
-              <img src="../uat_target3_cicodecm/wf_step6_status_dropdown_norecord.png" class="thumb" alt="wf_step6_status_dropdown_norecord.png" onclick="openModal(this.src)">
+              <img src="../uat_target3_cicodecm/wf_step6_status_dropdown_norecord.png" class="thumb"
+                alt="wf_step6_status_dropdown_norecord.png" onclick="openModal(this.src)">
             </td>
           </tr>
 
           <tr>
             <td><strong>7</strong></td>
             <td><span class="step-name">Click Create Status → enter name/description → Save and select</span></td>
-            <td><div class="expected-text">Should create and select status on the process form</div></td>
-            <td><div class="actual-text">Status is created and linked correctly on the backend and shows checked when the dropdown is reopened.</div></td>
-            <td><div class="deviation-text">[Minor UX gap]: closed dropdown field still shows placeholder text instead of the chosen name.</div></td>
+            <td>
+              <div class="expected-text">Should create and select status on the process form</div>
+            </td>
+            <td>
+              <div class="actual-text">Status is created and linked correctly on the backend and shows checked when the
+                dropdown is reopened.</div>
+            </td>
+            <td>
+              <div class="deviation-text">[Minor UX gap]: closed dropdown field still shows placeholder text instead of
+                the chosen name.</div>
+            </td>
             <td>
               <span class="badge badge-pass">PASSED</span>
             </td>
             <td>
-              <img src="../uat_target3_cicodecm/wf_step6i_status_list_after_create.png" class="thumb" alt="wf_step6i_status_list_after_create.png" onclick="openModal(this.src)">
+              <img src="../uat_target3_cicodecm/wf_step6i_status_list_after_create.png" class="thumb"
+                alt="wf_step6i_status_list_after_create.png" onclick="openModal(this.src)">
             </td>
           </tr>
         </tbody>
@@ -448,42 +633,67 @@
           <tr>
             <td><strong>8</strong></td>
             <td><span class="step-name">View Fields / Default fields (Title, Description) / Help Guide</span></td>
-            <td><div class="expected-text">Should display all three</div></td>
-            <td><div class="actual-text">Confirmed. Additional field types beyond the script are also available: Text Field, Text Area, Contact, Address, Organization, Section Title, Add Image, Business Sector.</div></td>
-            <td><div class="deviation-text">None (exceeds spec).</div></td>
+            <td>
+              <div class="expected-text">Should display all three</div>
+            </td>
+            <td>
+              <div class="actual-text">Confirmed. Additional field types beyond the script are also available: Text
+                Field, Text Area, Contact, Address, Organization, Section Title, Add Image, Business Sector.</div>
+            </td>
+            <td>
+              <div class="deviation-text">None (exceeds spec).</div>
+            </td>
             <td>
               <span class="badge badge-pass">PASSED</span>
             </td>
             <td>
-              <img src="../uat_target3_cicodecm/wf_step7_form_tab.png" class="thumb" alt="wf_step7_form_tab.png" onclick="openModal(this.src)">
+              <img src="../uat_target3_cicodecm/wf_step7_form_tab.png" class="thumb" alt="wf_step7_form_tab.png"
+                onclick="openModal(this.src)">
             </td>
           </tr>
 
           <tr>
             <td><strong>9</strong></td>
             <td><span class="step-name">Check the &quot;Hide Field&quot; boxes for Title/Description</span></td>
-            <td><div class="expected-text">Fields should be checked and hidden from the ticket-creation form</div></td>
-            <td><div class="actual-text">Both checkboxes toggle correctly.</div></td>
-            <td><div class="deviation-text">None.</div></td>
+            <td>
+              <div class="expected-text">Fields should be checked and hidden from the ticket-creation form</div>
+            </td>
+            <td>
+              <div class="actual-text">Both checkboxes toggle correctly.</div>
+            </td>
+            <td>
+              <div class="deviation-text">None.</div>
+            </td>
             <td>
               <span class="badge badge-pass">PASSED</span>
             </td>
             <td>
-              <img src="../uat_target3_cicodecm/wf_step7b_title_desc_hidden.png" class="thumb" alt="wf_step7b_title_desc_hidden.png" onclick="openModal(this.src)">
+              <img src="../uat_target3_cicodecm/wf_step7b_title_desc_hidden.png" class="thumb"
+                alt="wf_step7b_title_desc_hidden.png" onclick="openModal(this.src)">
             </td>
           </tr>
 
           <tr>
             <td><strong>10</strong></td>
             <td><span class="step-name">Drag and drop a field into the form</span></td>
-            <td><div class="expected-text">Field should be added to the form panel</div></td>
-            <td><div class="actual-text">Fields are added via click (each field type is a button, not an HTML5-draggable element); clicking &quot;Dropdown&quot; opens a config panel and Save adds it to the form correctly.</div></td>
-            <td><div class="deviation-text">[Deviation]: script specifies drag-and-drop; live implementation is click-to-configure-then-save.</div></td>
+            <td>
+              <div class="expected-text">Field should be added to the form panel</div>
+            </td>
+            <td>
+              <div class="actual-text">Fields are added via click (each field type is a button, not an HTML5-draggable
+                element); clicking &quot;Dropdown&quot; opens a config panel and Save adds it to the form correctly.
+              </div>
+            </td>
+            <td>
+              <div class="deviation-text">[Deviation]: script specifies drag-and-drop; live implementation is
+                click-to-configure-then-save.</div>
+            </td>
             <td>
               <span class="badge badge-dev">PARTIAL / DEVIATION</span>
             </td>
             <td>
-              <img src="../uat_target3_cicodecm/wf_step7e_field_added.png" class="thumb" alt="wf_step7e_field_added.png" onclick="openModal(this.src)">
+              <img src="../uat_target3_cicodecm/wf_step7e_field_added.png" class="thumb" alt="wf_step7e_field_added.png"
+                onclick="openModal(this.src)">
             </td>
           </tr>
         </tbody>
@@ -512,84 +722,130 @@
           <tr>
             <td><strong>11</strong></td>
             <td><span class="step-name">Click Next → should display escalation page</span></td>
-            <td><div class="expected-text">Escalation tab with &quot;Add Escalation on status&quot; per status</div></td>
-            <td><div class="actual-text">Confirmed. Automation note: two &quot;Next&quot; buttons exist in the DOM (one hidden) — harmless in normal use.</div></td>
-            <td><div class="deviation-text">None.</div></td>
+            <td>
+              <div class="expected-text">Escalation tab with &quot;Add Escalation on status&quot; per status</div>
+            </td>
+            <td>
+              <div class="actual-text">Confirmed. Automation note: two &quot;Next&quot; buttons exist in the DOM (one
+                hidden) — harmless in normal use.</div>
+            </td>
+            <td>
+              <div class="deviation-text">None.</div>
+            </td>
             <td>
               <span class="badge badge-pass">PASSED</span>
             </td>
             <td>
-              <img src="../uat_target3_cicodecm/wf_step8_escalation_tab_v2.png" class="thumb" alt="wf_step8_escalation_tab_v2.png" onclick="openModal(this.src)">
+              <img src="../uat_target3_cicodecm/wf_step8_escalation_tab_v2.png" class="thumb"
+                alt="wf_step8_escalation_tab_v2.png" onclick="openModal(this.src)">
             </td>
           </tr>
 
           <tr>
             <td><strong>12</strong></td>
             <td><span class="step-name">Click &quot;+ Add new escalation level(s)&quot; → Add</span></td>
-            <td><div class="expected-text">Modal &quot;Escalation Levels for Status: X&quot; → Add</div></td>
-            <td><div class="actual-text">Confirmed exact match.</div></td>
-            <td><div class="deviation-text">None.</div></td>
+            <td>
+              <div class="expected-text">Modal &quot;Escalation Levels for Status: X&quot; → Add</div>
+            </td>
+            <td>
+              <div class="actual-text">Confirmed exact match.</div>
+            </td>
+            <td>
+              <div class="deviation-text">None.</div>
+            </td>
             <td>
               <span class="badge badge-pass">PASSED</span>
             </td>
             <td>
-              <img src="../uat_target3_cicodecm/wf_step9_add_escalation_modal.png" class="thumb" alt="wf_step9_add_escalation_modal.png" onclick="openModal(this.src)">
+              <img src="../uat_target3_cicodecm/wf_step9_add_escalation_modal.png" class="thumb"
+                alt="wf_step9_add_escalation_modal.png" onclick="openModal(this.src)">
             </td>
           </tr>
 
           <tr>
             <td><strong>13</strong></td>
             <td><span class="step-name">Select escalation type from dropdown</span></td>
-            <td><div class="expected-text">Line Manager / Role options; Line Manager reveals a time-value box</div></td>
-            <td><div class="actual-text">Dropdown options are exactly Line Manager, Role; selecting Line Manager reveals &quot;Time Value (hrs) *&quot;.</div></td>
-            <td><div class="deviation-text">None.</div></td>
+            <td>
+              <div class="expected-text">Line Manager / Role options; Line Manager reveals a time-value box</div>
+            </td>
+            <td>
+              <div class="actual-text">Dropdown options are exactly Line Manager, Role; selecting Line Manager reveals
+                &quot;Time Value (hrs) *&quot;.</div>
+            </td>
+            <td>
+              <div class="deviation-text">None.</div>
+            </td>
             <td>
               <span class="badge badge-pass">PASSED</span>
             </td>
             <td>
-              <img src="../uat_target3_cicodecm/wf_step9d_linemanager_selected.png" class="thumb" alt="wf_step9d_linemanager_selected.png" onclick="openModal(this.src)">
+              <img src="../uat_target3_cicodecm/wf_step9d_linemanager_selected.png" class="thumb"
+                alt="wf_step9d_linemanager_selected.png" onclick="openModal(this.src)">
             </td>
           </tr>
 
           <tr>
             <td><strong>14</strong></td>
             <td><span class="step-name">Enter time value → Save</span></td>
-            <td><div class="expected-text">Escalation record should be saved</div></td>
-            <td><div class="actual-text">Saved successfully; modal closed, returned to Escalation tab.</div></td>
-            <td><div class="deviation-text">None.</div></td>
+            <td>
+              <div class="expected-text">Escalation record should be saved</div>
+            </td>
+            <td>
+              <div class="actual-text">Saved successfully; modal closed, returned to Escalation tab.</div>
+            </td>
+            <td>
+              <div class="deviation-text">None.</div>
+            </td>
             <td>
               <span class="badge badge-pass">PASSED</span>
             </td>
             <td>
-              <img src="../uat_target3_cicodecm/wf_step9e_escalation_saved.png" class="thumb" alt="wf_step9e_escalation_saved.png" onclick="openModal(this.src)">
+              <img src="../uat_target3_cicodecm/wf_step9e_escalation_saved.png" class="thumb"
+                alt="wf_step9e_escalation_saved.png" onclick="openModal(this.src)">
             </td>
           </tr>
 
           <tr>
             <td><strong>15</strong></td>
             <td><span class="step-name">Click Approval tab (not detailed in script)</span></td>
-            <td><div class="expected-text">Not specified</div></td>
-            <td><div class="actual-text">Tab loads, mirroring the Escalation tab structure (&quot;Setup Approvals on status&quot; / &quot;+ Add New Approval Level(s)&quot;).</div></td>
-            <td><div class="deviation-text">None (undocumented in script).</div></td>
+            <td>
+              <div class="expected-text">Not specified</div>
+            </td>
+            <td>
+              <div class="actual-text">Tab loads, mirroring the Escalation tab structure (&quot;Setup Approvals on
+                status&quot; / &quot;+ Add New Approval Level(s)&quot;).</div>
+            </td>
+            <td>
+              <div class="deviation-text">None (undocumented in script).</div>
+            </td>
             <td>
               <span class="badge badge-pass">PASSED</span>
             </td>
             <td>
-              <img src="../uat_target3_cicodecm/wf_step10_approval_tab_v2.png" class="thumb" alt="wf_step10_approval_tab_v2.png" onclick="openModal(this.src)">
+              <img src="../uat_target3_cicodecm/wf_step10_approval_tab_v2.png" class="thumb"
+                alt="wf_step10_approval_tab_v2.png" onclick="openModal(this.src)">
             </td>
           </tr>
 
           <tr>
             <td><strong>16</strong></td>
             <td><span class="step-name">Click Add on Approval Levels</span></td>
-            <td><div class="expected-text">Modal &quot;Approval Levels for Status: X&quot; → Add</div></td>
-            <td><div class="actual-text">Form is richer than Escalation: includes &quot;Next Status After Approval&quot; and &quot;Next Status After Rejection&quot; branching fields, undocumented in script.</div></td>
-            <td><div class="deviation-text">None (exceeds spec).</div></td>
+            <td>
+              <div class="expected-text">Modal &quot;Approval Levels for Status: X&quot; → Add</div>
+            </td>
+            <td>
+              <div class="actual-text">Form is richer than Escalation: includes &quot;Next Status After Approval&quot;
+                and &quot;Next Status After Rejection&quot; branching fields, undocumented in script.</div>
+            </td>
+            <td>
+              <div class="deviation-text">None (exceeds spec).</div>
+            </td>
             <td>
               <span class="badge badge-pass">PASSED</span>
             </td>
             <td>
-              <img src="../uat_target3_cicodecm/wf_step11b_approval_add_form.png" class="thumb" alt="wf_step11b_approval_add_form.png" onclick="openModal(this.src)">
+              <img src="../uat_target3_cicodecm/wf_step11b_approval_add_form.png" class="thumb"
+                alt="wf_step11b_approval_add_form.png" onclick="openModal(this.src)">
             </td>
           </tr>
         </tbody>
@@ -618,56 +874,89 @@
           <tr>
             <td><strong>17</strong></td>
             <td><span class="step-name">Navigate to workflows/update&amp;id=X</span></td>
-            <td><div class="expected-text">Wizard re-opens pre-filled with Process/Form/Escalation/Approval</div></td>
-            <td><div class="actual-text">Confirmed; Queue and Queue Type data persisted correctly.</div></td>
-            <td><div class="deviation-text">None.</div></td>
+            <td>
+              <div class="expected-text">Wizard re-opens pre-filled with Process/Form/Escalation/Approval</div>
+            </td>
+            <td>
+              <div class="actual-text">Confirmed; Queue and Queue Type data persisted correctly.</div>
+            </td>
+            <td>
+              <div class="deviation-text">None.</div>
+            </td>
             <td>
               <span class="badge badge-pass">PASSED</span>
             </td>
             <td>
-              <img src="../uat_target3_cicodecm/wf_step16c_update_page.png" class="thumb" alt="wf_step16c_update_page.png" onclick="openModal(this.src)">
+              <img src="../uat_target3_cicodecm/wf_step16c_update_page.png" class="thumb"
+                alt="wf_step16c_update_page.png" onclick="openModal(this.src)">
             </td>
           </tr>
 
           <tr>
             <td><strong>18</strong></td>
             <td><span class="step-name">Click Finish on Approval tab</span></td>
-            <td><div class="expected-text">&quot;Successfully created your first workflow&quot; + Grant/Skip access modal</div></td>
-            <td><div class="actual-text">Exact match, including the copy about roles requiring access to view tickets.</div></td>
-            <td><div class="deviation-text">None.</div></td>
+            <td>
+              <div class="expected-text">&quot;Successfully created your first workflow&quot; + Grant/Skip access modal
+              </div>
+            </td>
+            <td>
+              <div class="actual-text">Exact match, including the copy about roles requiring access to view tickets.
+              </div>
+            </td>
+            <td>
+              <div class="deviation-text">None.</div>
+            </td>
             <td>
               <span class="badge badge-pass">PASSED</span>
             </td>
             <td>
-              <img src="../uat_target3_cicodecm/wf_step17_finish_clicked.png" class="thumb" alt="wf_step17_finish_clicked.png" onclick="openModal(this.src)">
+              <img src="../uat_target3_cicodecm/wf_step17_finish_clicked.png" class="thumb"
+                alt="wf_step17_finish_clicked.png" onclick="openModal(this.src)">
             </td>
           </tr>
 
           <tr>
             <td><strong>19</strong></td>
             <td><span class="step-name">Click &quot;Grant access&quot;</span></td>
-            <td><div class="expected-text">Should display the role page</div></td>
-            <td><div class="actual-text">Navigates to rightTemplate/index?grant-access=true; &quot;Manage Role&quot; page loads with correct summary cards (5 total / 5 active / 0 suspended).</div></td>
-            <td><div class="deviation-text">None.</div></td>
+            <td>
+              <div class="expected-text">Should display the role page</div>
+            </td>
+            <td>
+              <div class="actual-text">Navigates to rightTemplate/index?grant-access=true; &quot;Manage Role&quot; page
+                loads with correct summary cards (5 total / 5 active / 0 suspended).</div>
+            </td>
+            <td>
+              <div class="deviation-text">None.</div>
+            </td>
             <td>
               <span class="badge badge-pass">PASSED</span>
             </td>
             <td>
-              <img src="../uat_target3_cicodecm/wf_step18_grant_access_page.png" class="thumb" alt="wf_step18_grant_access_page.png" onclick="openModal(this.src)">
+              <img src="../uat_target3_cicodecm/wf_step18_grant_access_page.png" class="thumb"
+                alt="wf_step18_grant_access_page.png" onclick="openModal(this.src)">
             </td>
           </tr>
 
           <tr>
             <td><strong>20</strong></td>
             <td><span class="step-name">Update a role → give role access → check features → Save</span></td>
-            <td><div class="expected-text">Role list should be selectable to grant workflow access</div></td>
-            <td><div class="actual-text">CONFIRMED BUG: the role table body renders zero rows despite showing correct summary counts. Reproducible after a full page reload. No role can be selected — the &quot;give role access&quot; journey is fully blocked.</div></td>
-            <td><div class="deviation-text">[Defect]: Role grid data-loading is broken on this route.</div></td>
+            <td>
+              <div class="expected-text">Role list should be selectable to grant workflow access</div>
+            </td>
+            <td>
+              <div class="actual-text">CONFIRMED BUG: the role table body renders zero rows despite showing correct
+                summary counts. Reproducible after a full page reload. No role can be selected — the &quot;give role
+                access&quot; journey is fully blocked.</div>
+            </td>
+            <td>
+              <div class="deviation-text">[Defect]: Role grid data-loading is broken on this route.</div>
+            </td>
             <td>
               <span class="badge badge-bug">CONFIRMED BUG</span>
             </td>
             <td>
-              <img src="../uat_target3_cicodecm/wf_step18c_role_table_empty_bug.png" class="thumb" alt="wf_step18c_role_table_empty_bug.png" onclick="openModal(this.src)">
+              <img src="../uat_target3_cicodecm/wf_step18c_role_table_empty_bug.png" class="thumb"
+                alt="wf_step18c_role_table_empty_bug.png" onclick="openModal(this.src)">
             </td>
           </tr>
         </tbody>
@@ -696,70 +985,110 @@
           <tr>
             <td><strong>21</strong></td>
             <td><span class="step-name">Click My workflows sub-menu</span></td>
-            <td><div class="expected-text">Should display my workflow page</div></td>
-            <td><div class="actual-text">Confirmed: 4 tabs (My workflows / Queue / Queue Type / Status), Search, Sort By, Custom View, Filter, and summary cards.</div></td>
-            <td><div class="deviation-text">None.</div></td>
+            <td>
+              <div class="expected-text">Should display my workflow page</div>
+            </td>
+            <td>
+              <div class="actual-text">Confirmed: 4 tabs (My workflows / Queue / Queue Type / Status), Search, Sort By,
+                Custom View, Filter, and summary cards.</div>
+            </td>
+            <td>
+              <div class="deviation-text">None.</div>
+            </td>
             <td>
               <span class="badge badge-pass">PASSED</span>
             </td>
             <td>
-              <img src="../uat_target3_cicodecm/wf_step12_my_workflows_list.png" class="thumb" alt="wf_step12_my_workflows_list.png" onclick="openModal(this.src)">
+              <img src="../uat_target3_cicodecm/wf_step12_my_workflows_list.png" class="thumb"
+                alt="wf_step12_my_workflows_list.png" onclick="openModal(this.src)">
             </td>
           </tr>
 
           <tr>
             <td><strong>22</strong></td>
             <td><span class="step-name">Click action button on a workflow item</span></td>
-            <td><div class="expected-text">Drop-down: View, suspend, update workflow</div></td>
-            <td><div class="actual-text">Exact match: View / Suspend / Update workflow.</div></td>
-            <td><div class="deviation-text">None.</div></td>
+            <td>
+              <div class="expected-text">Drop-down: View, suspend, update workflow</div>
+            </td>
+            <td>
+              <div class="actual-text">Exact match: View / Suspend / Update workflow.</div>
+            </td>
+            <td>
+              <div class="deviation-text">None.</div>
+            </td>
             <td>
               <span class="badge badge-pass">PASSED</span>
             </td>
             <td>
-              <img src="../uat_target3_cicodecm/wf_step13_action_dropdown.png" class="thumb" alt="wf_step13_action_dropdown.png" onclick="openModal(this.src)">
+              <img src="../uat_target3_cicodecm/wf_step13_action_dropdown.png" class="thumb"
+                alt="wf_step13_action_dropdown.png" onclick="openModal(this.src)">
             </td>
           </tr>
 
           <tr>
             <td><strong>23</strong></td>
             <td><span class="step-name">Click View</span></td>
-            <td><div class="expected-text">Should display the workflow page</div></td>
-            <td><div class="actual-text">&quot;Workflow Details&quot; page loads: Date Created, Created by, Status, Last updated, plus Process/Departments/Roles tabs.</div></td>
-            <td><div class="deviation-text">None.</div></td>
+            <td>
+              <div class="expected-text">Should display the workflow page</div>
+            </td>
+            <td>
+              <div class="actual-text">&quot;Workflow Details&quot; page loads: Date Created, Created by, Status, Last
+                updated, plus Process/Departments/Roles tabs.</div>
+            </td>
+            <td>
+              <div class="deviation-text">None.</div>
+            </td>
             <td>
               <span class="badge badge-pass">PASSED</span>
             </td>
             <td>
-              <img src="../uat_target3_cicodecm/wf_step14_view_workflow.png" class="thumb" alt="wf_step14_view_workflow.png" onclick="openModal(this.src)">
+              <img src="../uat_target3_cicodecm/wf_step14_view_workflow.png" class="thumb"
+                alt="wf_step14_view_workflow.png" onclick="openModal(this.src)">
             </td>
           </tr>
 
           <tr>
             <td><strong>24</strong></td>
             <td><span class="step-name">Verify role-access on Workflow Details → Roles tab</span></td>
-            <td><div class="expected-text">Not explicitly scripted</div></td>
-            <td><div class="actual-text">&quot;Name of Roles linked to this workflow&quot; panel renders with no button at all — no persistent way to grant role access after the one-time creation prompt is skipped or dismissed.</div></td>
-            <td><div class="deviation-text">[Deviation / Gap]: no recurring entry point for role management.</div></td>
+            <td>
+              <div class="expected-text">Not explicitly scripted</div>
+            </td>
+            <td>
+              <div class="actual-text">&quot;Name of Roles linked to this workflow&quot; panel renders with no button at
+                all — no persistent way to grant role access after the one-time creation prompt is skipped or dismissed.
+              </div>
+            </td>
+            <td>
+              <div class="deviation-text">[Deviation / Gap]: no recurring entry point for role management.</div>
+            </td>
             <td>
               <span class="badge badge-dev">PARTIAL / DEVIATION</span>
             </td>
             <td>
-              <img src="../uat_target3_cicodecm/wf_step15b_roles_scrolled.png" class="thumb" alt="wf_step15b_roles_scrolled.png" onclick="openModal(this.src)">
+              <img src="../uat_target3_cicodecm/wf_step15b_roles_scrolled.png" class="thumb"
+                alt="wf_step15b_roles_scrolled.png" onclick="openModal(this.src)">
             </td>
           </tr>
 
           <tr>
             <td><strong>25</strong></td>
             <td><span class="step-name">Click action button → Suspend</span></td>
-            <td><div class="expected-text">Workflow items should be suspended</div></td>
-            <td><div class="actual-text">Triggers a native browser confirm() dialog (&quot;Suspend this workflow?&quot;). Accepting correctly moves the workflow Active → Suspended (counters updated 20/0 → 19/1).</div></td>
-            <td><div class="deviation-text">None.</div></td>
+            <td>
+              <div class="expected-text">Workflow items should be suspended</div>
+            </td>
+            <td>
+              <div class="actual-text">Triggers a native browser confirm() dialog (&quot;Suspend this workflow?&quot;).
+                Accepting correctly moves the workflow Active → Suspended (counters updated 20/0 → 19/1).</div>
+            </td>
+            <td>
+              <div class="deviation-text">None.</div>
+            </td>
             <td>
               <span class="badge badge-pass">PASSED</span>
             </td>
             <td>
-              <img src="../uat_target3_cicodecm/wf_step19b_suspend_result.png" class="thumb" alt="wf_step19b_suspend_result.png" onclick="openModal(this.src)">
+              <img src="../uat_target3_cicodecm/wf_step19b_suspend_result.png" class="thumb"
+                alt="wf_step19b_suspend_result.png" onclick="openModal(this.src)">
             </td>
           </tr>
         </tbody>
@@ -788,126 +1117,197 @@
           <tr>
             <td><strong>26</strong></td>
             <td><span class="step-name">Click Queue tab (also Queue Type, Status)</span></td>
-            <td><div class="expected-text">Should display Queue / Queue Type / Status page</div></td>
-            <td><div class="actual-text">All three tabs load correctly when reached via in-app tab click, listing existing entities with name &amp; description.</div></td>
-            <td><div class="deviation-text">None.</div></td>
+            <td>
+              <div class="expected-text">Should display Queue / Queue Type / Status page</div>
+            </td>
+            <td>
+              <div class="actual-text">All three tabs load correctly when reached via in-app tab click, listing existing
+                entities with name &amp; description.</div>
+            </td>
+            <td>
+              <div class="deviation-text">None.</div>
+            </td>
             <td>
               <span class="badge badge-pass">PASSED</span>
             </td>
             <td>
-              <img src="../uat_target3_cicodecm/wf_step20_queue_tab.png" class="thumb" alt="wf_step20_queue_tab.png" onclick="openModal(this.src)">
+              <img src="../uat_target3_cicodecm/wf_step20_queue_tab.png" class="thumb" alt="wf_step20_queue_tab.png"
+                onclick="openModal(this.src)">
             </td>
           </tr>
 
           <tr>
             <td><strong>27</strong></td>
             <td><span class="step-name">Reload or directly open a Queue/Queue-Type/Status tab URL</span></td>
-            <td><div class="expected-text">Not scripted, reasonable robustness expectation</div></td>
-            <td><div class="actual-text">CONFIRMED BUG: direct navigation to ?r=workflows/queue (or refresh) renders a generic &quot;Oops! Something went wrong&quot; error page. These views only work via in-app client-side tab switches.</div></td>
-            <td><div class="deviation-text">[Defect]: sub-tab routes are not reload-safe.</div></td>
+            <td>
+              <div class="expected-text">Not scripted, reasonable robustness expectation</div>
+            </td>
+            <td>
+              <div class="actual-text">CONFIRMED BUG: direct navigation to ?r=workflows/queue (or refresh) renders a
+                generic &quot;Oops! Something went wrong&quot; error page. These views only work via in-app client-side
+                tab switches.</div>
+            </td>
+            <td>
+              <div class="deviation-text">[Defect]: sub-tab routes are not reload-safe.</div>
+            </td>
             <td>
               <span class="badge badge-bug">CONFIRMED BUG</span>
             </td>
             <td>
-              <img src="../uat_target3_cicodecm/wf_step22_queue_search.png" class="thumb" alt="wf_step22_queue_search.png" onclick="openModal(this.src)">
+              <img src="../uat_target3_cicodecm/wf_step22_queue_search.png" class="thumb"
+                alt="wf_step22_queue_search.png" onclick="openModal(this.src)">
             </td>
           </tr>
 
           <tr>
             <td><strong>28</strong></td>
-            <td><span class="step-name">Click the action button on a Queue (or Queue Type, or Status) row → select Update</span></td>
-            <td><div class="expected-text">Should display the respective Update page (Edit Name/Description → Save)</div></td>
-            <td><div class="actual-text">CONFIRMED BUG (systemic): on all three tabs, clicking a row action button opens the wrong, stale &quot;View / Unsuspend / Update workflow&quot; menu instead of a row-specific Update action. Reproduced 3/3 across all three tabs.</div></td>
-            <td><div class="deviation-text">[Defect]: blocks all downstream Update/Suspend/Linked-status rows below.</div></td>
+            <td><span class="step-name">Click the action button on a Queue (or Queue Type, or Status) row → select
+                Update</span></td>
+            <td>
+              <div class="expected-text">Should display the respective Update page (Edit Name/Description → Save)</div>
+            </td>
+            <td>
+              <div class="actual-text">CONFIRMED BUG (systemic): on all three tabs, clicking a row action button opens
+                the wrong, stale &quot;View / Unsuspend / Update workflow&quot; menu instead of a row-specific Update
+                action. Reproduced 3/3 across all three tabs.</div>
+            </td>
+            <td>
+              <div class="deviation-text">[Defect]: blocks all downstream Update/Suspend/Linked-status rows below.</div>
+            </td>
             <td>
               <span class="badge badge-bug">CONFIRMED BUG</span>
             </td>
             <td>
-              <img src="../uat_target3_cicodecm/wf_step23_queue_wrong_menu_bug.png" class="thumb" alt="wf_step23_queue_wrong_menu_bug.png" onclick="openModal(this.src)">
+              <img src="../uat_target3_cicodecm/wf_step23_queue_wrong_menu_bug.png" class="thumb"
+                alt="wf_step23_queue_wrong_menu_bug.png" onclick="openModal(this.src)">
             </td>
           </tr>
 
           <tr>
             <td><strong>—</strong></td>
             <td><span class="step-name">Update Queue Item (edit name/description, Save, Cancel confirmation)</span></td>
-            <td><div class="expected-text">As scripted (rows ~1310–1431)</div></td>
-            <td><div class="actual-text">BLOCKED by the defect above — no reachable Update entry point for a Queue row.</div></td>
-            <td><div class="deviation-text">Not executable.</div></td>
+            <td>
+              <div class="expected-text">As scripted (rows ~1310–1431)</div>
+            </td>
+            <td>
+              <div class="actual-text">BLOCKED by the defect above — no reachable Update entry point for a Queue row.
+              </div>
+            </td>
+            <td>
+              <div class="deviation-text">Not executable.</div>
+            </td>
             <td>
               <span class="badge badge-not-impl">BLOCKED</span>
             </td>
             <td>
-              <span class="no-img-badge">No UI Component<br><small style="color:var(--text-muted);font-size:0.68rem;">(Blocked — unreachable)</small></span>
+              <span class="no-img-badge">No UI Component<br><small
+                  style="color:var(--text-muted);font-size:0.68rem;">(Blocked — unreachable)</small></span>
             </td>
           </tr>
 
           <tr>
             <td><strong>—</strong></td>
             <td><span class="step-name">Update Queue Type Item</span></td>
-            <td><div class="expected-text">As scripted (rows ~1466–1596)</div></td>
-            <td><div class="actual-text">BLOCKED — same defect.</div></td>
-            <td><div class="deviation-text">Not executable.</div></td>
+            <td>
+              <div class="expected-text">As scripted (rows ~1466–1596)</div>
+            </td>
+            <td>
+              <div class="actual-text">BLOCKED — same defect.</div>
+            </td>
+            <td>
+              <div class="deviation-text">Not executable.</div>
+            </td>
             <td>
               <span class="badge badge-not-impl">BLOCKED</span>
             </td>
             <td>
-              <span class="no-img-badge">No UI Component<br><small style="color:var(--text-muted);font-size:0.68rem;">(Blocked — unreachable)</small></span>
+              <span class="no-img-badge">No UI Component<br><small
+                  style="color:var(--text-muted);font-size:0.68rem;">(Blocked — unreachable)</small></span>
             </td>
           </tr>
 
           <tr>
             <td><strong>—</strong></td>
             <td><span class="step-name">Update Status Item</span></td>
-            <td><div class="expected-text">As scripted (rows ~1630–1751)</div></td>
-            <td><div class="actual-text">BLOCKED — same defect.</div></td>
-            <td><div class="deviation-text">Not executable.</div></td>
+            <td>
+              <div class="expected-text">As scripted (rows ~1630–1751)</div>
+            </td>
+            <td>
+              <div class="actual-text">BLOCKED — same defect.</div>
+            </td>
+            <td>
+              <div class="deviation-text">Not executable.</div>
+            </td>
             <td>
               <span class="badge badge-not-impl">BLOCKED</span>
             </td>
             <td>
-              <span class="no-img-badge">No UI Component<br><small style="color:var(--text-muted);font-size:0.68rem;">(Blocked — unreachable)</small></span>
+              <span class="no-img-badge">No UI Component<br><small
+                  style="color:var(--text-muted);font-size:0.68rem;">(Blocked — unreachable)</small></span>
             </td>
           </tr>
 
           <tr>
             <td><strong>—</strong></td>
             <td><span class="step-name">Linked Status: Trigger / Suspend / Hide from Resource</span></td>
-            <td><div class="expected-text">As scripted (rows ~1784–1992)</div></td>
-            <td><div class="actual-text">BLOCKED — reaching &quot;link-statuses&quot; requires the same broken row action menu.</div></td>
-            <td><div class="deviation-text">Not executable.</div></td>
+            <td>
+              <div class="expected-text">As scripted (rows ~1784–1992)</div>
+            </td>
+            <td>
+              <div class="actual-text">BLOCKED — reaching &quot;link-statuses&quot; requires the same broken row action
+                menu.</div>
+            </td>
+            <td>
+              <div class="deviation-text">Not executable.</div>
+            </td>
             <td>
               <span class="badge badge-not-impl">BLOCKED</span>
             </td>
             <td>
-              <span class="no-img-badge">No UI Component<br><small style="color:var(--text-muted);font-size:0.68rem;">(Blocked — unreachable)</small></span>
+              <span class="no-img-badge">No UI Component<br><small
+                  style="color:var(--text-muted);font-size:0.68rem;">(Blocked — unreachable)</small></span>
             </td>
           </tr>
 
           <tr>
             <td><strong>—</strong></td>
             <td><span class="step-name">Create Status via Queue Type → link-statuses → Add status</span></td>
-            <td><div class="expected-text">As scripted (rows ~2015–2135)</div></td>
-            <td><div class="actual-text">BLOCKED — same entry-point issue.</div></td>
-            <td><div class="deviation-text">Not executable.</div></td>
+            <td>
+              <div class="expected-text">As scripted (rows ~2015–2135)</div>
+            </td>
+            <td>
+              <div class="actual-text">BLOCKED — same entry-point issue.</div>
+            </td>
+            <td>
+              <div class="deviation-text">Not executable.</div>
+            </td>
             <td>
               <span class="badge badge-not-impl">BLOCKED</span>
             </td>
             <td>
-              <span class="no-img-badge">No UI Component<br><small style="color:var(--text-muted);font-size:0.68rem;">(Blocked — unreachable)</small></span>
+              <span class="no-img-badge">No UI Component<br><small
+                  style="color:var(--text-muted);font-size:0.68rem;">(Blocked — unreachable)</small></span>
             </td>
           </tr>
 
           <tr>
             <td><strong>—</strong></td>
             <td><span class="step-name">Suspend Queue / Queue Type / Status individually</span></td>
-            <td><div class="expected-text">As scripted (rows ~2158–2289)</div></td>
-            <td><div class="actual-text">BLOCKED — same defect; only workflow-level Suspend could be verified.</div></td>
-            <td><div class="deviation-text">Not executable.</div></td>
+            <td>
+              <div class="expected-text">As scripted (rows ~2158–2289)</div>
+            </td>
+            <td>
+              <div class="actual-text">BLOCKED — same defect; only workflow-level Suspend could be verified.</div>
+            </td>
+            <td>
+              <div class="deviation-text">Not executable.</div>
+            </td>
             <td>
               <span class="badge badge-not-impl">BLOCKED</span>
             </td>
             <td>
-              <span class="no-img-badge">No UI Component<br><small style="color:var(--text-muted);font-size:0.68rem;">(Blocked — unreachable)</small></span>
+              <span class="no-img-badge">No UI Component<br><small
+                  style="color:var(--text-muted);font-size:0.68rem;">(Blocked — unreachable)</small></span>
             </td>
           </tr>
         </tbody>
@@ -936,112 +1336,181 @@
           <tr>
             <td><strong>D1</strong></td>
             <td><span class="step-name">Create/select a Queue and Queue Type on the Process tab</span></td>
-            <td><div class="expected-text">Process form displayed</div></td>
-            <td><div class="actual-text">&quot;UAT Dept Link Queue 61363&quot; / &quot;UAT Dept Link QType 99496&quot; created and selected successfully.</div></td>
-            <td><div class="deviation-text">None.</div></td>
+            <td>
+              <div class="expected-text">Process form displayed</div>
+            </td>
+            <td>
+              <div class="actual-text">&quot;UAT Dept Link Queue 61363&quot; / &quot;UAT Dept Link QType 99496&quot;
+                created and selected successfully.</div>
+            </td>
+            <td>
+              <div class="deviation-text">None.</div>
+            </td>
             <td>
               <span class="badge badge-pass">PASSED</span>
             </td>
             <td>
-              <img src="../uat_target3_cicodecm/wf2_step5_queuetype_created.png" class="thumb" alt="wf2_step5_queuetype_created.png" onclick="openModal(this.src)">
+              <img src="../uat_target3_cicodecm/wf2_step5_queuetype_created.png" class="thumb"
+                alt="wf2_step5_queuetype_created.png" onclick="openModal(this.src)">
             </td>
           </tr>
 
           <tr>
             <td><strong>D2</strong></td>
-            <td><span class="step-name">Select &quot;Yes&quot; on &quot;Would you like to link this workflow to a department?&quot;</span></td>
-            <td><div class="expected-text">Departments and Folder Path fields should appear</div></td>
-            <td><div class="actual-text">Confirmed: &quot;Departments&quot; (searchable multi-select) and &quot;Folder Path&quot; (disabled text field) both appear immediately.</div></td>
-            <td><div class="deviation-text">None.</div></td>
+            <td><span class="step-name">Select &quot;Yes&quot; on &quot;Would you like to link this workflow to a
+                department?&quot;</span></td>
+            <td>
+              <div class="expected-text">Departments and Folder Path fields should appear</div>
+            </td>
+            <td>
+              <div class="actual-text">Confirmed: &quot;Departments&quot; (searchable multi-select) and &quot;Folder
+                Path&quot; (disabled text field) both appear immediately.</div>
+            </td>
+            <td>
+              <div class="deviation-text">None.</div>
+            </td>
             <td>
               <span class="badge badge-pass">PASSED</span>
             </td>
             <td>
-              <img src="../uat_target3_cicodecm/wf2_step4_dept_yes_clicked.png" class="thumb" alt="wf2_step4_dept_yes_clicked.png" onclick="openModal(this.src)">
+              <img src="../uat_target3_cicodecm/wf2_step4_dept_yes_clicked.png" class="thumb"
+                alt="wf2_step4_dept_yes_clicked.png" onclick="openModal(this.src)">
             </td>
           </tr>
 
           <tr>
             <td><strong>D3</strong></td>
             <td><span class="step-name">Click &quot;Select department&quot; and choose &quot;Sales&quot;</span></td>
-            <td><div class="expected-text">Department should be selected and shown</div></td>
-            <td><div class="actual-text">&quot;Sales&quot; selected correctly from 7 existing departments (Logistics, Customer Service, Sales, Finance, IT Support, Human Resources, Marketing).</div></td>
-            <td><div class="deviation-text">None.</div></td>
+            <td>
+              <div class="expected-text">Department should be selected and shown</div>
+            </td>
+            <td>
+              <div class="actual-text">&quot;Sales&quot; selected correctly from 7 existing departments (Logistics,
+                Customer Service, Sales, Finance, IT Support, Human Resources, Marketing).</div>
+            </td>
+            <td>
+              <div class="deviation-text">None.</div>
+            </td>
             <td>
               <span class="badge badge-pass">PASSED</span>
             </td>
             <td>
-              <img src="../uat_target3_cicodecm/wf2_step7_sales_selected.png" class="thumb" alt="wf2_step7_sales_selected.png" onclick="openModal(this.src)">
+              <img src="../uat_target3_cicodecm/wf2_step7_sales_selected.png" class="thumb"
+                alt="wf2_step7_sales_selected.png" onclick="openModal(this.src)">
             </td>
           </tr>
 
           <tr>
             <td><strong>D4</strong></td>
             <td><span class="step-name">Click &quot;Generate Folder Path&quot;</span></td>
-            <td><div class="expected-text">Should generate/assign a CICOD Drive folder path</div></td>
-            <td><div class="actual-text">CONFIRMED BUG (P0): embedded &quot;Gov Drive&quot; panel loads indefinitely showing &quot;Session Expired&quot;, despite a valid active session. Folder Path field is disabled — no manual workaround exists.</div></td>
-            <td><div class="deviation-text">[Defect]: full feature outage, not an edge case.</div></td>
+            <td>
+              <div class="expected-text">Should generate/assign a CICOD Drive folder path</div>
+            </td>
+            <td>
+              <div class="actual-text">CONFIRMED BUG (P0): embedded &quot;Gov Drive&quot; panel loads indefinitely
+                showing &quot;Session Expired&quot;, despite a valid active session. Folder Path field is disabled — no
+                manual workaround exists.</div>
+            </td>
+            <td>
+              <div class="deviation-text">[Defect]: full feature outage, not an edge case.</div>
+            </td>
             <td>
               <span class="badge badge-bug">CONFIRMED BUG (P0)</span>
             </td>
             <td>
-              <img src="../uat_target3_cicodecm/wf2_step9c_govdrive_stuck.png" class="thumb" alt="wf2_step9c_govdrive_stuck.png" onclick="openModal(this.src)">
+              <img src="../uat_target3_cicodecm/wf2_step9c_govdrive_stuck.png" class="thumb"
+                alt="wf2_step9c_govdrive_stuck.png" onclick="openModal(this.src)">
             </td>
           </tr>
 
           <tr>
             <td><strong>D5</strong></td>
-            <td><span class="step-name">Retry Generate Folder Path on the same queue, then on an established queue (&quot;Complaints&quot;)</span></td>
-            <td><div class="expected-text">Should succeed at least once if queue-specific</div></td>
-            <td><div class="actual-text">Reproduced identically 3/3 attempts across 2 different queues — confirms a general integration failure, not a one-off or new-queue-specific glitch.</div></td>
-            <td><div class="deviation-text">[Defect confirmed 3/3]</div></td>
+            <td><span class="step-name">Retry Generate Folder Path on the same queue, then on an established queue
+                (&quot;Complaints&quot;)</span></td>
+            <td>
+              <div class="expected-text">Should succeed at least once if queue-specific</div>
+            </td>
+            <td>
+              <div class="actual-text">Reproduced identically 3/3 attempts across 2 different queues — confirms a
+                general integration failure, not a one-off or new-queue-specific glitch.</div>
+            </td>
+            <td>
+              <div class="deviation-text">[Defect confirmed 3/3]</div>
+            </td>
             <td>
               <span class="badge badge-bug">CONFIRMED BUG</span>
             </td>
             <td>
-              <img src="../uat_target3_cicodecm/wf2_step17_existing_queue_govdrive.png" class="thumb" alt="wf2_step17_existing_queue_govdrive.png" onclick="openModal(this.src)">
+              <img src="../uat_target3_cicodecm/wf2_step17_existing_queue_govdrive.png" class="thumb"
+                alt="wf2_step17_existing_queue_govdrive.png" onclick="openModal(this.src)">
             </td>
           </tr>
 
           <tr>
             <td><strong>D6</strong></td>
             <td><span class="step-name">Click Next with Department=Yes but no Folder Path generated</span></td>
-            <td><div class="expected-text">Should clearly explain why progress is blocked</div></td>
-            <td><div class="actual-text">Modal correctly blocks progress: &quot;Please generate cde folder path&quot; — validation itself works and is clear.</div></td>
-            <td><div class="deviation-text">None (validation correct).</div></td>
+            <td>
+              <div class="expected-text">Should clearly explain why progress is blocked</div>
+            </td>
+            <td>
+              <div class="actual-text">Modal correctly blocks progress: &quot;Please generate cde folder path&quot; —
+                validation itself works and is clear.</div>
+            </td>
+            <td>
+              <div class="deviation-text">None (validation correct).</div>
+            </td>
             <td>
               <span class="badge badge-pass">PASSED</span>
             </td>
             <td>
-              <img src="../uat_target3_cicodecm/wf2_step11_next_clicked.png" class="thumb" alt="wf2_step11_next_clicked.png" onclick="openModal(this.src)">
+              <img src="../uat_target3_cicodecm/wf2_step11_next_clicked.png" class="thumb"
+                alt="wf2_step11_next_clicked.png" onclick="openModal(this.src)">
             </td>
           </tr>
 
           <tr>
             <td><strong>D7</strong></td>
-            <td><span class="step-name">Switch Department back to No and continue through Form/Escalation/Approval/Finish</span></td>
-            <td><div class="expected-text">Workflow creation should proceed normally</div></td>
-            <td><div class="actual-text">Confirmed: full pipeline completed normally and workflow was created successfully once Department was set to No.</div></td>
-            <td><div class="deviation-text">None.</div></td>
+            <td><span class="step-name">Switch Department back to No and continue through
+                Form/Escalation/Approval/Finish</span></td>
+            <td>
+              <div class="expected-text">Workflow creation should proceed normally</div>
+            </td>
+            <td>
+              <div class="actual-text">Confirmed: full pipeline completed normally and workflow was created successfully
+                once Department was set to No.</div>
+            </td>
+            <td>
+              <div class="deviation-text">None.</div>
+            </td>
             <td>
               <span class="badge badge-pass">PASSED</span>
             </td>
             <td>
-              <img src="../uat_target3_cicodecm/wf2_step34_finish_result.png" class="thumb" alt="wf2_step34_finish_result.png" onclick="openModal(this.src)">
+              <img src="../uat_target3_cicodecm/wf2_step34_finish_result.png" class="thumb"
+                alt="wf2_step34_finish_result.png" onclick="openModal(this.src)">
             </td>
           </tr>
 
           <tr>
             <td><strong>D8</strong></td>
             <td><span class="step-name">Check the finished workflow in My Workflows</span></td>
-            <td><div class="expected-text">Departments column should reflect the link if made</div></td>
-            <td><div class="actual-text">Workflow appears ACTIVE, but Departments column correctly shows &quot;No&quot; — confirms the department link was never applied, since its Folder Path prerequisite could never be generated.</div></td>
-            <td><div class="deviation-text">Confirms real-world impact of defect D4/D5.</div></td>
+            <td>
+              <div class="expected-text">Departments column should reflect the link if made</div>
+            </td>
+            <td>
+              <div class="actual-text">Workflow appears ACTIVE, but Departments column correctly shows &quot;No&quot; —
+                confirms the department link was never applied, since its Folder Path prerequisite could never be
+                generated.</div>
+            </td>
+            <td>
+              <div class="deviation-text">Confirms real-world impact of defect D4/D5.</div>
+            </td>
             <td>
               <span class="badge badge-pass">PASSED</span>
             </td>
             <td>
-              <img src="../uat_target3_cicodecm/wf2_step38_final_state.png" class="thumb" alt="wf2_step38_final_state.png" onclick="openModal(this.src)">
+              <img src="../uat_target3_cicodecm/wf2_step38_final_state.png" class="thumb"
+                alt="wf2_step38_final_state.png" onclick="openModal(this.src)">
             </td>
           </tr>
         </tbody>
@@ -1080,9 +1549,14 @@
       document.getElementById('imageModal').classList.remove('active');
     }
 
-    document.addEventListener('keydown', function(e) {
+    document.addEventListener('keydown', function (e) {
       if (e.key === 'Escape') closeModal();
     });
   </script>
+
+  <script src="../assets/js/modules-data.js"></script>
+  <script src="../assets/js/test-cases-data.js"></script>
+  <script src="../assets/js/html2pdf.bundle.min.js"></script>
+  <script src="../assets/js/exec-report-generator.js"></script>
 </body>
 </html>

@@ -1,69 +1,374 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>UAT Report - USERS Module (ECMS TEST SCRIPT RECENT VERSION.xlsx)</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap"
+    rel="stylesheet">
   <style>
     :root {
-      --bg: #0b0f19; --surface: #121826; --surface-card: #182235; --border: #223049;
-      --text: #f1f5f9; --text-muted: #94a3b8; --pass: #10b981; --not-impl: #f59e0b; --dev: #38bdf8; --bug: #ef4444; --accent: #10b981;
+      --bg: #0b0f19;
+      --surface: #121826;
+      --surface-card: #182235;
+      --border: #223049;
+      --text: #f1f5f9;
+      --text-muted: #94a3b8;
+      --pass: #10b981;
+      --not-impl: #f59e0b;
+      --dev: #38bdf8;
+      --bug: #ef4444;
+      --accent: #10b981;
     }
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body { background-color: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; padding: 36px 24px; line-height: 1.5; }
-    .container { max-width: 1440px; margin: 0 auto; }
-    .header-box { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 28px; margin-bottom: 28px; }
-    h1 { font-size: 1.8rem; font-weight: 700; margin-bottom: 6px; color: #fff; }
-    .sub { color: var(--text-muted); font-size: 0.92rem; margin-bottom: 20px; }
-    .meta-bar { display: flex; flex-wrap: wrap; gap: 24px; font-size: 0.88rem; border-top: 1px solid var(--border); padding-top: 18px; }
-    .meta-bar span { color: var(--text-muted); }
-    .meta-bar strong { color: #e2e8f0; font-family: 'JetBrains Mono', monospace; }
-    .summary-badge { display: inline-block; padding: 5px 14px; background: rgba(239, 68, 68, 0.15); border: 1px solid rgba(239, 68, 68, 0.3); color: #f87171; border-radius: 20px; font-weight: 700; font-size: 0.82rem; margin-bottom: 12px; }
-    .kpi-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 16px; margin-bottom: 28px; }
-    .kpi-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 20px; }
-    .kpi-num { font-size: 2rem; font-weight: 700; font-family: 'JetBrains Mono', monospace; margin-top: 6px; }
-    .kpi-label { color: var(--text-muted); font-size: 0.84rem; text-transform: uppercase; letter-spacing: 0.05em; }
-    .filter-bar { display: flex; gap: 10px; margin-bottom: 24px; flex-wrap: wrap; }
-    .filter-btn { background: var(--surface); border: 1px solid var(--border); color: var(--text-muted); padding: 8px 16px; border-radius: 8px; font-size: 0.85rem; font-weight: 600; cursor: pointer; transition: all 0.2s ease; }
-    .filter-btn:hover, .filter-btn.active { background: var(--accent); color: #0b0f19; border-color: var(--accent); }
-    .case-section { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; margin-bottom: 28px; overflow: hidden; }
-    .case-header { padding: 18px 24px; background: var(--surface-card); border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; }
-    .case-title { font-size: 1.15rem; font-weight: 700; color: #fff; }
-    .case-tag { font-size: 0.76rem; font-family: 'JetBrains Mono', monospace; padding: 4px 10px; border-radius: 6px; background: rgba(16, 185, 129, 0.15); border: 1px solid rgba(16, 185, 129, 0.3); color: #34d399; }
-    .table-scroll { overflow-x: auto; max-width: 100%; }
-    table { width: 100%; min-width: 1350px; table-layout: fixed; border-collapse: collapse; font-size: 0.88rem; }
-    th { background: rgba(11, 15, 25, 0.6); text-align: left; padding: 14px 16px; color: var(--text-muted); font-weight: 600; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.04em; border-bottom: 1px solid var(--border); }
-    td { padding: 14px 16px; border-bottom: 1px solid var(--border); vertical-align: top; overflow-wrap: break-word; word-break: break-word; }
-    tr:last-child td { border-bottom: none; }
-    tr:hover td { background: rgba(255, 255, 255, 0.02); }
-    .step-name { font-weight: 600; color: #fff; }
-    .expected-text { color: #cbd5e1; font-size: 0.86rem; }
-    .actual-text { color: #93c5fd; font-size: 0.86rem; font-family: 'JetBrains Mono', monospace; overflow-wrap: anywhere; }
-    .deviation-text { color: #fbbf24; font-size: 0.84rem; }
-    .badge { display: inline-block; padding: 3px 10px; border-radius: 6px; font-size: 0.74rem; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; }
-    .badge-pass { background: rgba(16, 185, 129, 0.2); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.3); }
-    .badge-not-impl { background: rgba(245, 158, 11, 0.2); color: #fbbf24; border: 1px solid rgba(245, 158, 11, 0.3); }
-    .badge-dev { background: rgba(56, 189, 248, 0.2); color: #38bdf8; border: 1px solid rgba(56, 189, 248, 0.3); }
-    .badge-bug { background: rgba(239, 68, 68, 0.2); color: #f87171; border: 1px solid rgba(239, 68, 68, 0.35); }
-    .thumb { width: 80px; height: 50px; object-fit: cover; border-radius: 6px; border: 1px solid var(--border); cursor: pointer; transition: transform 0.15s ease, border-color 0.15s ease; }
-    .thumb:hover { transform: scale(1.08); border-color: var(--accent); }
-    .no-img-badge { display: inline-block; padding: 4px 8px; border-radius: 6px; background: rgba(245, 158, 11, 0.1); border: 1px dashed rgba(245, 158, 11, 0.3); color: #fbbf24; font-size: 0.72rem; font-weight: 600; text-align: center; line-height: 1.3; }
-    .modal { display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0, 0, 0, 0.88); backdrop-filter: blur(4px); z-index: 999; justify-content: center; align-items: center; padding: 24px; }
-    .modal.active { display: flex; }
-    .modal-content { max-width: 90vw; max-height: 90vh; border-radius: 10px; border: 1px solid var(--border); box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6); }
-    .modal-close { position: absolute; top: 24px; right: 28px; color: #fff; font-size: 2rem; cursor: pointer; font-weight: 700; }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      padding: 36px 24px;
+      line-height: 1.5;
+    }
+
+    .container {
+      max-width: 1440px;
+      margin: 0 auto;
+    }
+
+    .header-box {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 28px;
+      margin-bottom: 28px;
+    }
+
+    h1 {
+      font-size: 1.8rem;
+      font-weight: 700;
+      margin-bottom: 6px;
+      color: #fff;
+    }
+
+    .sub {
+      color: var(--text-muted);
+      font-size: 0.92rem;
+      margin-bottom: 20px;
+    }
+
+    .meta-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 24px;
+      font-size: 0.88rem;
+      border-top: 1px solid var(--border);
+      padding-top: 18px;
+    }
+
+    .meta-bar span {
+      color: var(--text-muted);
+    }
+
+    .meta-bar strong {
+      color: #e2e8f0;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .summary-badge {
+      display: inline-block;
+      padding: 5px 14px;
+      background: rgba(239, 68, 68, 0.15);
+      border: 1px solid rgba(239, 68, 68, 0.3);
+      color: #f87171;
+      border-radius: 20px;
+      font-weight: 700;
+      font-size: 0.82rem;
+      margin-bottom: 12px;
+    }
+
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 16px;
+      margin-bottom: 28px;
+    }
+
+    .kpi-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 20px;
+    }
+
+    .kpi-num {
+      font-size: 2rem;
+      font-weight: 700;
+      font-family: 'JetBrains Mono', monospace;
+      margin-top: 6px;
+    }
+
+    .kpi-label {
+      color: var(--text-muted);
+      font-size: 0.84rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .filter-bar {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 24px;
+      flex-wrap: wrap;
+    }
+
+    .filter-btn {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      padding: 8px 16px;
+      border-radius: 8px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .filter-btn:hover,
+    .filter-btn.active {
+      background: var(--accent);
+      color: #0b0f19;
+      border-color: var(--accent);
+    }
+
+    .case-section {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      margin-bottom: 28px;
+      overflow: hidden;
+    }
+
+    .case-header {
+      padding: 18px 24px;
+      background: var(--surface-card);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .case-title {
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    .case-tag {
+      font-size: 0.76rem;
+      font-family: 'JetBrains Mono', monospace;
+      padding: 4px 10px;
+      border-radius: 6px;
+      background: rgba(16, 185, 129, 0.15);
+      border: 1px solid rgba(16, 185, 129, 0.3);
+      color: #34d399;
+    }
+
+    .table-scroll {
+      overflow-x: auto;
+      max-width: 100%;
+    }
+
+    table {
+      width: 100%;
+      min-width: 1350px;
+      table-layout: fixed;
+      border-collapse: collapse;
+      font-size: 0.88rem;
+    }
+
+    th {
+      background: rgba(11, 15, 25, 0.6);
+      text-align: left;
+      padding: 14px 16px;
+      color: var(--text-muted);
+      font-weight: 600;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      border-bottom: 1px solid var(--border);
+    }
+
+    td {
+      padding: 14px 16px;
+      border-bottom: 1px solid var(--border);
+      vertical-align: top;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+
+    tr:last-child td {
+      border-bottom: none;
+    }
+
+    tr:hover td {
+      background: rgba(255, 255, 255, 0.02);
+    }
+
+    .step-name {
+      font-weight: 600;
+      color: #fff;
+    }
+
+    .expected-text {
+      color: #cbd5e1;
+      font-size: 0.86rem;
+    }
+
+    .actual-text {
+      color: #93c5fd;
+      font-size: 0.86rem;
+      font-family: 'JetBrains Mono', monospace;
+      overflow-wrap: anywhere;
+    }
+
+    .deviation-text {
+      color: #fbbf24;
+      font-size: 0.84rem;
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 3px 10px;
+      border-radius: 6px;
+      font-size: 0.74rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .badge-pass {
+      background: rgba(16, 185, 129, 0.2);
+      color: #34d399;
+      border: 1px solid rgba(16, 185, 129, 0.3);
+    }
+
+    .badge-not-impl {
+      background: rgba(245, 158, 11, 0.2);
+      color: #fbbf24;
+      border: 1px solid rgba(245, 158, 11, 0.3);
+    }
+
+    .badge-dev {
+      background: rgba(56, 189, 248, 0.2);
+      color: #38bdf8;
+      border: 1px solid rgba(56, 189, 248, 0.3);
+    }
+
+    .badge-bug {
+      background: rgba(239, 68, 68, 0.2);
+      color: #f87171;
+      border: 1px solid rgba(239, 68, 68, 0.35);
+    }
+
+    .thumb {
+      width: 80px;
+      height: 50px;
+      object-fit: cover;
+      border-radius: 6px;
+      border: 1px solid var(--border);
+      cursor: pointer;
+      transition: transform 0.15s ease, border-color 0.15s ease;
+    }
+
+    .thumb:hover {
+      transform: scale(1.08);
+      border-color: var(--accent);
+    }
+
+    .no-img-badge {
+      display: inline-block;
+      padding: 4px 8px;
+      border-radius: 6px;
+      background: rgba(245, 158, 11, 0.1);
+      border: 1px dashed rgba(245, 158, 11, 0.3);
+      color: #fbbf24;
+      font-size: 0.72rem;
+      font-weight: 600;
+      text-align: center;
+      line-height: 1.3;
+    }
+
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0, 0, 0, 0.88);
+      backdrop-filter: blur(4px);
+      z-index: 999;
+      justify-content: center;
+      align-items: center;
+      padding: 24px;
+    }
+
+    .modal.active {
+      display: flex;
+    }
+
+    .modal-content {
+      max-width: 90vw;
+      max-height: 90vh;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 24px;
+      right: 28px;
+      color: #fff;
+      font-size: 2rem;
+      cursor: pointer;
+      font-weight: 700;
+    }
   </style>
+  <link rel="stylesheet" href="../assets/css/test-report-addon.css">
 </head>
+
 <body>
   <div class="container">
     <div class="header-box">
-      <div class="summary-badge">⚠ USERS MODULE UAT — CREATE USER IS COMPLETELY BROKEN (P0)</div>
+      <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;margin-bottom:12px;">
+        <div class="summary-badge">⚠ USERS MODULE UAT — CREATE USER & DEPARTMENT ARE BOTH BROKEN (P0)</div>
+        <button class="btn-exec-download" onclick="if(window.ExecReportGenerator) ExecReportGenerator.downloadExecReportPdf('ecms_users')" title="Download Official Executive &amp; Engineering PDF Report with Detailed Test Cases">
+          <span class="btn-icon-pulse">📄</span>
+          <span>Download PDF Report</span>
+          <span class="btn-exec-badge">PDF</span>
+        </button>
+      </div>
       <h1>UAT Execution Report: USERS Module</h1>
-      <p class="sub">Live functional/UI verification against the Excel Test Script (<code>ECMS TEST SCRIPT RECENT VERSION.xlsx</code> — content physically embedded at the tail of the CONTACTS sheet, reconciled here as its own module) on Target 3 Environment (<code>cicodsaasstaging.com</code> / tenant: <code>cicodecms</code>). This session covered 10 checkpoints across 4 scenarios. Create User was attempted twice with fully valid data and failed silently both times; the duplicate-Staff-ID negative test is blocked as a direct consequence and could not be executed.</p>
+      <p class="sub">Live functional/UI verification against the Excel Test Script
+        (<code>ECMS TEST SCRIPT RECENT VERSION.xlsx</code>, sheet "USER", 19 real scenarios). This session covered 27
+        checkpoints across 8 scenarios. Create User is completely broken (P0, silent failure); the entire Department
+        page is inaccessible (P0), blocking 5 scenarios outright; Suspend User can be blocked by an unrelated "Job Title
+        cannot be blank" validation (P1). View User, Edit User, Unsuspend User, Make A Resource, Search Users, and every
+        Role scenario all work correctly.</p>
       <div class="meta-bar">
         <div><span>Test Script:</span> <strong>test/UsersTest_Results.md</strong></div>
-        <div><span>Target URL:</span> <strong>https://cicodecms.cicodsaasstaging.com/ecms/index.php?r=users/*</strong></div>
+        <div><span>Target URL:</span> <strong>https://cicodecms.cicodsaasstaging.com/ecms/index.php?r=users/*, r=team/*,
+            r=rightTemplate/*</strong></div>
         <div><span>Tenant / Account:</span> <strong>cicodecms / raissa.boyomo@crowninteractive.com</strong></div>
         <div><span>Execution Engine:</span> <strong>Headless Edge CDP</strong></div>
         <div><span>Execution Date:</span> <strong>September 17, 2026</strong></div>
@@ -71,215 +376,740 @@
     </div>
 
     <div class="kpi-grid">
-      <div class="kpi-card"><div class="kpi-label">Total Scenarios</div><div class="kpi-num" style="color: #10b981;">4</div></div>
-      <div class="kpi-card"><div class="kpi-label">Checkpoints Verified</div><div class="kpi-num" style="color: #38bdf8;">10</div></div>
-      <div class="kpi-card"><div class="kpi-label">Functional Passed</div><div class="kpi-num" style="color: #10b981;">7</div></div>
-      <div class="kpi-card"><div class="kpi-label">Deviations</div><div class="kpi-num" style="color: #fbbf24;">0</div></div>
-      <div class="kpi-card"><div class="kpi-label">Confirmed Bugs</div><div class="kpi-num" style="color: #ef4444;">2</div></div>
-      <div class="kpi-card"><div class="kpi-label">Blocked (by defect)</div><div class="kpi-num" style="color: #94a3b8;">1</div></div>
+      <div class="kpi-card">
+        <div class="kpi-label">Total Scenarios</div>
+        <div class="kpi-num" style="color: #10b981;">8</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">Checkpoints Verified</div>
+        <div class="kpi-num" style="color: #38bdf8;">27</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">Functional Passed</div>
+        <div class="kpi-num" style="color: #10b981;">17</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">Deviations</div>
+        <div class="kpi-num" style="color: #fbbf24;">2</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">Confirmed Bugs</div>
+        <div class="kpi-num" style="color: #ef4444;">3</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">Blocked (by defect)</div>
+        <div class="kpi-num" style="color: #94a3b8;">5</div>
+      </div>
     </div>
 
     <div class="filter-bar">
-      <button class="filter-btn active" onclick="filterCases('all', this)">All Scenarios (4)</button>
-      <button class="filter-btn" onclick="filterCases('sc1', this)">MENU NAVIGATION &amp; NEW USER FORM (3)</button>
-      <button class="filter-btn" onclick="filterCases('sc2', this)">VALID FIELD ENTRY (2)</button>
-      <button class="filter-btn" onclick="filterCases('sc3', this)">CREATE USER SUBMISSION (P0 DEFECT) (2)</button>
-      <button class="filter-btn" onclick="filterCases('sc4', this)">CREATE USER (INVALID CREDENTIAL) (3)</button>
+      <button class="filter-btn active" onclick="filterCases('all', this)">All Scenarios (8)</button>
+      <button class="filter-btn" onclick="filterCases('sc1', this)">MENU NAVIGATION &amp; NEW USER FORM (4)</button>
+      <button class="filter-btn" onclick="filterCases('sc2', this)">CREATE USER SUBMISSION (P0 DEFECT) (1)</button>
+      <button class="filter-btn" onclick="filterCases('sc3', this)">CREATE USER (INVALID CREDENTIAL) (4)</button>
+      <button class="filter-btn" onclick="filterCases('sc4', this)">VIEW USER &amp; EDIT USER (3)</button>
+      <button class="filter-btn" onclick="filterCases('sc5', this)">SUSPEND / UNSUSPEND USER (3)</button>
+      <button class="filter-btn" onclick="filterCases('sc6', this)">MAKE A RESOURCE &amp; SEARCH USERS (2)</button>
+      <button class="filter-btn" onclick="filterCases('sc7', this)">DEPARTMENT (CREATE / EDIT / SUSPEND / UNSUSPEND /
+        SEARCH) (5)</button>
+      <button class="filter-btn" onclick="filterCases('sc8', this)">ROLES (CREATE / EDIT / SUSPEND / UNSUSPEND / SEARCH)
+        (5)</button>
     </div>
 
     <div class="case-section" data-case="sc1">
       <div class="case-header">
         <div class="case-title">Scenario 1: MENU NAVIGATION &amp; NEW USER FORM</div>
-        <div class="case-tag">Rows 1-3</div>
+        <div class="case-tag">Rows 1-4</div>
       </div>
       <div class="table-scroll">
-      <table>
-        <thead>
-          <tr>
-            <th style="width: 55px;">Row</th>
-            <th style="width: 220px;">Steps to Reproduce</th>
-            <th style="width: 250px;">Expected Result</th>
-            <th>Actual Result (Live Execution)</th>
-            <th style="width: 230px;">Deviations & Defect Notes</th>
-            <th style="width: 150px;">Status</th>
-            <th style="width: 140px;">Screenshot Evidence</th>
-          </tr>
-        </thead>
-        <tbody>
+        <table>
+          <thead>
+            <tr>
+              <th style="width: 55px;">Row</th>
+              <th style="width: 220px;">Steps to Reproduce</th>
+              <th style="width: 250px;">Expected Result</th>
+              <th>Actual Result (Live Execution)</th>
+              <th style="width: 230px;">Deviations & Defect Notes</th>
+              <th style="width: 150px;">Status</th>
+              <th style="width: 140px;">Screenshot Evidence</th>
+            </tr>
+          </thead>
+          <tbody>
 
-          <tr>
-            <td><strong>1</strong></td>
-            <td><span class="step-name">From the Menu click on User</span></td>
-            <td><div class="expected-text">A sub menu &quot;roles, Department, user&quot; should be displayed</div></td>
-            <td><div class="actual-text">Confirmed: sidebar &quot;Users&quot; expands to Department / Roles / Users — exact match (different order, same 3 items).</div></td>
-            <td><div class="deviation-text">None.</div></td>
-            <td><span class="badge badge-pass">PASSED</span></td>
-            <td><img src="../uat_target3_cicodecm/users_step1_menu.png" class="thumb" alt="users_step1_menu.png" onclick="openModal(this.src)"></td>
-          </tr>
+            <tr>
+              <td><strong>1</strong></td>
+              <td><span class="step-name">From the Menu click on User</span></td>
+              <td>
+                <div class="expected-text">A sub menu &quot;roles, Department, user&quot; should be displayed</div>
+              </td>
+              <td>
+                <div class="actual-text">Confirmed: sidebar &quot;Users&quot; expands to Department / Roles / Users —
+                  exact match (different order, same 3 items).</div>
+              </td>
+              <td>
+                <div class="deviation-text">None.</div>
+              </td>
+              <td><span class="badge badge-pass">PASSED</span></td>
+              <td><img src="../uat_target3_cicodecm/users_step1_menu.png" class="thumb" alt="users_step1_menu.png"
+                  onclick="openModal(this.src)"></td>
+            </tr>
 
-          <tr>
-            <td><strong>2</strong></td>
-            <td><span class="step-name">Click on User sub-menu</span></td>
-            <td><div class="expected-text">Display User page</div></td>
-            <td><div class="actual-text">&quot;Users&quot; list loads: Total Records 12, Total Active 11, Total Suspended 1, with Name/Email/Phone/Department/Status/Actions columns.</div></td>
-            <td><div class="deviation-text">None.</div></td>
-            <td><span class="badge badge-pass">PASSED</span></td>
-            <td><img src="../uat_target3_cicodecm/users_step3_list.png" class="thumb" alt="users_step3_list.png" onclick="openModal(this.src)"></td>
-          </tr>
+            <tr>
+              <td><strong>2</strong></td>
+              <td><span class="step-name">Click on User sub-menu</span></td>
+              <td>
+                <div class="expected-text">Display User page</div>
+              </td>
+              <td>
+                <div class="actual-text">&quot;Users&quot; list loads: Total Records 12, Total Active 11, Total
+                  Suspended 1, with Name/Email/Phone/Department/Status/Actions columns.</div>
+              </td>
+              <td>
+                <div class="deviation-text">None.</div>
+              </td>
+              <td><span class="badge badge-pass">PASSED</span></td>
+              <td><img src="../uat_target3_cicodecm/users_step3_list.png" class="thumb" alt="users_step3_list.png"
+                  onclick="openModal(this.src)"></td>
+            </tr>
 
-          <tr>
-            <td><strong>3</strong></td>
-            <td><span class="step-name">Click on Create button</span></td>
-            <td><div class="expected-text">Display new user page</div></td>
-            <td><div class="actual-text">&quot;New User&quot; form loads with Firstname*, Lastname*, Email*, Phone*, Role, Department, Grade Level*, Line Manager, Profile Picture, Staff ID, Job Title*, Regions*, Address1/2, City, State — matches and exceeds the script's field list.</div></td>
-            <td><div class="deviation-text">None.</div></td>
-            <td><span class="badge badge-pass">PASSED</span></td>
-            <td><img src="../uat_target3_cicodecm/users_step4_create_form.png" class="thumb" alt="users_step4_create_form.png" onclick="openModal(this.src)"></td>
-          </tr>
-        </tbody>
-      </table>
+            <tr>
+              <td><strong>3</strong></td>
+              <td><span class="step-name">Click on Create button</span></td>
+              <td>
+                <div class="expected-text">Display new user page</div>
+              </td>
+              <td>
+                <div class="actual-text">&quot;New User&quot; form loads with Firstname*, Lastname*, Email*, Phone*,
+                  Role, Department, Grade Level*, Line Manager, Profile Picture, Staff ID, Job Title*, Regions*,
+                  Address1/2, City, State — matches and exceeds the script’s field list.</div>
+              </td>
+              <td>
+                <div class="deviation-text">None.</div>
+              </td>
+              <td><span class="badge badge-pass">PASSED</span></td>
+              <td><img src="../uat_target3_cicodecm/users_step4_create_form.png" class="thumb"
+                  alt="users_step4_create_form.png" onclick="openModal(this.src)"></td>
+            </tr>
+
+            <tr>
+              <td><strong>4</strong></td>
+              <td><span class="step-name">Enter valid Firstname/Lastname/Email/Phone; select Role/Department/Grade
+                  Level/Line Manager/Regions; enter Staff ID/Job Title</span></td>
+              <td>
+                <div class="expected-text">Display each field correctly</div>
+              </td>
+              <td>
+                <div class="actual-text">All fields accepted and confirmed via the underlying native &lt;select&gt;
+                  elements immediately before submit — ruling out a widget-sync bug as the cause of the next row.</div>
+              </td>
+              <td>
+                <div class="deviation-text">None.</div>
+              </td>
+              <td><span class="badge badge-pass">PASSED</span></td>
+              <td><img src="../uat_target3_cicodecm/users_step10_before_submit.png" class="thumb"
+                  alt="users_step10_before_submit.png" onclick="openModal(this.src)"></td>
+            </tr>
+          </tbody>
+        </table>
       </div>
     </div>
 
     <div class="case-section" data-case="sc2">
       <div class="case-header">
-        <div class="case-title">Scenario 2: VALID FIELD ENTRY</div>
-        <div class="case-tag">Rows 4-5</div>
+        <div class="case-title">Scenario 2: CREATE USER SUBMISSION (P0 DEFECT)</div>
+        <div class="case-tag">P0 Defect</div>
       </div>
       <div class="table-scroll">
-      <table>
-        <thead>
-          <tr>
-            <th style="width: 55px;">Row</th>
-            <th style="width: 220px;">Steps to Reproduce</th>
-            <th style="width: 250px;">Expected Result</th>
-            <th>Actual Result (Live Execution)</th>
-            <th style="width: 230px;">Deviations & Defect Notes</th>
-            <th style="width: 150px;">Status</th>
-            <th style="width: 140px;">Screenshot Evidence</th>
-          </tr>
-        </thead>
-        <tbody>
+        <table>
+          <thead>
+            <tr>
+              <th style="width: 55px;">Row</th>
+              <th style="width: 220px;">Steps to Reproduce</th>
+              <th style="width: 250px;">Expected Result</th>
+              <th>Actual Result (Live Execution)</th>
+              <th style="width: 230px;">Deviations & Defect Notes</th>
+              <th style="width: 150px;">Status</th>
+              <th style="width: 140px;">Screenshot Evidence</th>
+            </tr>
+          </thead>
+          <tbody>
 
-          <tr>
-            <td><strong>4</strong></td>
-            <td><span class="step-name">Enter FirstName / Last Name / Email address / Phone number</span></td>
-            <td><div class="expected-text">Should display First Name / Last Name / Email address / Phone number</div></td>
-            <td><div class="actual-text">&quot;UATValid&quot; / &quot;UserTest&quot; / a fresh unique email / +2348099887766 all accepted with no validation complaints.</div></td>
-            <td><div class="deviation-text">None.</div></td>
-            <td><span class="badge badge-pass">PASSED</span></td>
-            <td><img src="../uat_target3_cicodecm/users_step9_filled.png" class="thumb" alt="users_step9_filled.png" onclick="openModal(this.src)"></td>
-          </tr>
-
-          <tr>
-            <td><strong>5</strong></td>
-            <td><span class="step-name">Click and select role / Department / Grade Level / Line Manager; enter Staff ID / Job Title / Regions</span></td>
-            <td><div class="expected-text">Display role / Department / list of grade levels / list of users / Region</div></td>
-            <td><div class="actual-text">All selected and confirmed via the underlying native &lt;select&gt; elements (not just the display widget): Role=QUALITY ASSURANCE TESTER, Department=Customer Service, Grade Level=Level 1, Line Manager=Raissa Boyomo, Regions=&quot;45b,admiralty road,Eti Osa&quot;. Staff ID/Job Title free text accepted.</div></td>
-            <td><div class="deviation-text">None — the custom multi-select widgets do correctly sync to their real form fields (verified via DOM), ruling out a widget-sync bug as the cause of Scenario 3.</div></td>
-            <td><span class="badge badge-pass">PASSED</span></td>
-            <td><img src="../uat_target3_cicodecm/users_step10_before_submit.png" class="thumb" alt="users_step10_before_submit.png" onclick="openModal(this.src)"></td>
-          </tr>
-        </tbody>
-      </table>
+            <tr>
+              <td><strong>5</strong></td>
+              <td><span class="step-name">Click on Create button (fully valid data)</span></td>
+              <td>
+                <div class="expected-text">Display a successful message, &quot;successfully Created.&quot;</div>
+              </td>
+              <td>
+                <div class="actual-text">CONFIRMED BUG (P0, 2/2 reproductions): the form silently resets to a blank
+                  &quot;New User&quot; page. No success message, no error message, no toast. Verified via full page
+                  reload and text search that the user was never created (search returned &quot;1 of 0&quot;). Repeated
+                  with entirely fresh data — identical silent failure.</div>
+              </td>
+              <td>
+                <div class="deviation-text">[Defect - P0]: Create User does not persist despite fully valid input.</div>
+              </td>
+              <td><span class="badge badge-bug">CONFIRMED BUG (P0, 2/2)</span></td>
+              <td><img src="../uat_target3_cicodecm/users_step13_search_check.png" class="thumb"
+                  alt="users_step13_search_check.png" onclick="openModal(this.src)"></td>
+            </tr>
+          </tbody>
+        </table>
       </div>
     </div>
 
     <div class="case-section" data-case="sc3">
       <div class="case-header">
-        <div class="case-title">Scenario 3: CREATE USER SUBMISSION (P0 DEFECT)</div>
-        <div class="case-tag">P0 Defect</div>
+        <div class="case-title">Scenario 3: CREATE USER (INVALID CREDENTIAL)</div>
+        <div class="case-tag">Rows 6-9</div>
       </div>
       <div class="table-scroll">
-      <table>
-        <thead>
-          <tr>
-            <th style="width: 55px;">Row</th>
-            <th style="width: 220px;">Steps to Reproduce</th>
-            <th style="width: 250px;">Expected Result</th>
-            <th>Actual Result (Live Execution)</th>
-            <th style="width: 230px;">Deviations & Defect Notes</th>
-            <th style="width: 150px;">Status</th>
-            <th style="width: 140px;">Screenshot Evidence</th>
-          </tr>
-        </thead>
-        <tbody>
+        <table>
+          <thead>
+            <tr>
+              <th style="width: 55px;">Row</th>
+              <th style="width: 220px;">Steps to Reproduce</th>
+              <th style="width: 250px;">Expected Result</th>
+              <th>Actual Result (Live Execution)</th>
+              <th style="width: 230px;">Deviations & Defect Notes</th>
+              <th style="width: 150px;">Status</th>
+              <th style="width: 140px;">Screenshot Evidence</th>
+            </tr>
+          </thead>
+          <tbody>
 
-          <tr>
-            <td><strong>6</strong></td>
-            <td><span class="step-name">Click on Create button (1st attempt, fully valid data)</span></td>
-            <td><div class="expected-text">Display a successful message, &quot;successfully Created.&quot;</div></td>
-            <td><div class="actual-text">CONFIRMED BUG (P0): the form silently reset to a blank &quot;New User&quot; page. No success message, no error message, no toast. A full page reload of the Users list and a text search for &quot;UATValid&quot; confirmed the user was never created (Total Records remained 12; search returned &quot;1 of 0&quot;).</div></td>
-            <td><div class="deviation-text">[Defect - P0]: Create User does not persist despite fully valid input.</div></td>
-            <td><span class="badge badge-bug">CONFIRMED BUG (P0)</span></td>
-            <td><img src="../uat_target3_cicodecm/users_step13_search_check.png" class="thumb" alt="users_step13_search_check.png" onclick="openModal(this.src)"></td>
-          </tr>
+            <tr>
+              <td><strong>6</strong></td>
+              <td><span class="step-name">Enter invalid Email address (missing &quot;@&quot;)</span></td>
+              <td>
+                <div class="expected-text">Should not accept invalid email address</div>
+              </td>
+              <td>
+                <div class="actual-text">Native browser validation correctly blocked submission: &quot;Please include an
+                  '@' in the email address...&quot;</div>
+              </td>
+              <td>
+                <div class="deviation-text">None.</div>
+              </td>
+              <td><span class="badge badge-pass">PASSED</span></td>
+              <td><img src="../uat_target3_cicodecm/users_step22_invalid_result.png" class="thumb"
+                  alt="users_step22_invalid_result.png" onclick="openModal(this.src)"></td>
+            </tr>
 
-          <tr>
-            <td><strong>7</strong></td>
-            <td><span class="step-name">Reproducibility check (2nd attempt, different valid data)</span></td>
-            <td><div class="expected-text">Display a successful message, &quot;successfully Created.&quot;</div></td>
-            <td><div class="actual-text">Repeated with entirely fresh data (&quot;UATValid2&quot;/&quot;UserTest2&quot;, Staff ID &quot;UAT-STAFF-002&quot;), additionally confirming the underlying Teams[] and Users[districts][] selects held correct values immediately before submit. Identical result: silent reset, user never created. Confirmed 2/2, ruling out a one-off fluke.</div></td>
-            <td><div class="deviation-text">[Defect confirmed 2/2]: not a transient issue.</div></td>
-            <td><span class="badge badge-bug">CONFIRMED BUG (P0, 2/2)</span></td>
-            <td><img src="../uat_target3_cicodecm/users_step17_regions_open.png" class="thumb" alt="users_step17_regions_open.png" onclick="openModal(this.src)"></td>
-          </tr>
-        </tbody>
-      </table>
+            <tr>
+              <td><strong>7</strong></td>
+              <td><span class="step-name">Enter invalid Phone number (&quot;abc123XYZ&quot;) with a valid email</span>
+              </td>
+              <td>
+                <div class="expected-text">Should not accept invalid phone number</div>
+              </td>
+              <td>
+                <div class="actual-text">Native browser validation correctly blocked submission: &quot;Please match the
+                  requested format...&quot;</div>
+              </td>
+              <td>
+                <div class="deviation-text">None.</div>
+              </td>
+              <td><span class="badge badge-pass">PASSED</span></td>
+              <td><img src="../uat_target3_cicodecm/users_step23_invalid_phone_result.png" class="thumb"
+                  alt="users_step23_invalid_phone_result.png" onclick="openModal(this.src)"></td>
+            </tr>
+
+            <tr>
+              <td><strong>8</strong></td>
+              <td><span class="step-name">Enter duplicate Staff ID and click Create</span></td>
+              <td>
+                <div class="expected-text">Display an error message, &quot;Staff ID has been entered already.&quot;
+                </div>
+              </td>
+              <td>
+                <div class="actual-text">Could not be executed — requires a Staff ID belonging to a successfully-created
+                  user, but Scenario 2 confirmed no user can currently be created at all. Blocked by that defect, not
+                  skipped by choice.</div>
+              </td>
+              <td>
+                <div class="deviation-text">[Blocked]: no valid baseline user exists to duplicate against.</div>
+              </td>
+              <td><span class="badge badge-not-impl">BLOCKED (by defect)</span></td>
+              <td><span class="no-img-badge">No UI Component<br><small
+                    style="color:var(--text-muted);font-size:0.68rem;">(Blocked)</small></span></td>
+            </tr>
+
+            <tr>
+              <td><strong>9</strong></td>
+              <td><span class="step-name">Leave all compulsory fields empty and click Create</span></td>
+              <td>
+                <div class="expected-text">Should not accept blank required fields</div>
+              </td>
+              <td>
+                <div class="actual-text">Native browser validation correctly blocked submission on the first required
+                  field: &quot;Please fill out this field.&quot;</div>
+              </td>
+              <td>
+                <div class="deviation-text">None.</div>
+              </td>
+              <td><span class="badge badge-pass">PASSED</span></td>
+              <td><img src="../uat_target3_cicodecm/users_step68_empty_submit.png" class="thumb"
+                  alt="users_step68_empty_submit.png" onclick="openModal(this.src)"></td>
+            </tr>
+          </tbody>
+        </table>
       </div>
     </div>
 
     <div class="case-section" data-case="sc4">
       <div class="case-header">
-        <div class="case-title">Scenario 4: CREATE USER (INVALID CREDENTIAL)</div>
-        <div class="case-tag">Rows 8-10</div>
+        <div class="case-title">Scenario 4: VIEW USER &amp; EDIT USER</div>
+        <div class="case-tag">Rows 10-12</div>
       </div>
       <div class="table-scroll">
-      <table>
-        <thead>
-          <tr>
-            <th style="width: 55px;">Row</th>
-            <th style="width: 220px;">Steps to Reproduce</th>
-            <th style="width: 250px;">Expected Result</th>
-            <th>Actual Result (Live Execution)</th>
-            <th style="width: 230px;">Deviations & Defect Notes</th>
-            <th style="width: 150px;">Status</th>
-            <th style="width: 140px;">Screenshot Evidence</th>
-          </tr>
-        </thead>
-        <tbody>
+        <table>
+          <thead>
+            <tr>
+              <th style="width: 55px;">Row</th>
+              <th style="width: 220px;">Steps to Reproduce</th>
+              <th style="width: 250px;">Expected Result</th>
+              <th>Actual Result (Live Execution)</th>
+              <th style="width: 230px;">Deviations & Defect Notes</th>
+              <th style="width: 150px;">Status</th>
+              <th style="width: 140px;">Screenshot Evidence</th>
+            </tr>
+          </thead>
+          <tbody>
 
-          <tr>
-            <td><strong>8</strong></td>
-            <td><span class="step-name">Enter invalid Email address (missing &quot;@&quot;)</span></td>
-            <td><div class="expected-text">Should not accept invalid email address</div></td>
-            <td><div class="actual-text">Native browser validation correctly blocked submission: &quot;Please include an '@' in the email address. 'not-a-valid-email' is missing an '@'.&quot;</div></td>
-            <td><div class="deviation-text">None.</div></td>
-            <td><span class="badge badge-pass">PASSED</span></td>
-            <td><img src="../uat_target3_cicodecm/users_step22_invalid_result.png" class="thumb" alt="users_step22_invalid_result.png" onclick="openModal(this.src)"></td>
-          </tr>
+            <tr>
+              <td><strong>10</strong></td>
+              <td><span class="step-name">Click into an existing user</span></td>
+              <td>
+                <div class="expected-text">Display user profile page</div>
+              </td>
+              <td>
+                <div class="actual-text">Opened &quot;Chinwuba Okafor&quot; — full profile renders correctly: Email,
+                  Phone, Role, Job Title, Department, Grade Level, Location, Assigned Tasks summary, &quot;Assign to
+                  region&quot;/&quot;Assign to department&quot; actions.</div>
+              </td>
+              <td>
+                <div class="deviation-text">None.</div>
+              </td>
+              <td><span class="badge badge-pass">PASSED</span></td>
+              <td><img src="../uat_target3_cicodecm/users_step25_view_user.png" class="thumb"
+                  alt="users_step25_view_user.png" onclick="openModal(this.src)"></td>
+            </tr>
 
-          <tr>
-            <td><strong>9</strong></td>
-            <td><span class="step-name">Enter invalid Phone number (&quot;abc123XYZ&quot;) with a valid email</span></td>
-            <td><div class="expected-text">Should not accept invalid phone number</div></td>
-            <td><div class="actual-text">Native browser validation correctly blocked submission: &quot;Please match the requested format. Enter a valid phone number.&quot;</div></td>
-            <td><div class="deviation-text">None.</div></td>
-            <td><span class="badge badge-pass">PASSED</span></td>
-            <td><img src="../uat_target3_cicodecm/users_step23_invalid_phone_result.png" class="thumb" alt="users_step23_invalid_phone_result.png" onclick="openModal(this.src)"></td>
-          </tr>
+            <tr>
+              <td><strong>11</strong></td>
+              <td><span class="step-name">Click Update on a user</span></td>
+              <td>
+                <div class="expected-text">Display the update form, pre-filled</div>
+              </td>
+              <td>
+                <div class="actual-text">Update User form correctly pre-fills every field including the multi-select
+                  Regions (shown as &quot;45b,admiralty road,Eti Osa , SELF-SERVICE&quot;) and State (&quot;Lagos&quot;)
+                  — a clean contrast to the equivalent Contacts-module bug.</div>
+              </td>
+              <td>
+                <div class="deviation-text">None.</div>
+              </td>
+              <td><span class="badge badge-pass">PASSED</span></td>
+              <td><img src="../uat_target3_cicodecm/users_step27_scrolled_fields.png" class="thumb"
+                  alt="users_step27_scrolled_fields.png" onclick="openModal(this.src)"></td>
+            </tr>
 
-          <tr>
-            <td><strong>10</strong></td>
-            <td><span class="step-name">Enter duplicate Staff ID and click Create</span></td>
-            <td><div class="expected-text">Display an error message, &quot;Staff ID has been entered already.&quot;</div></td>
-            <td><div class="actual-text">Could not be executed — this check requires a Staff ID that already belongs to a successfully-created user, but rows 6-7 confirmed no user can currently be created at all on this tenant. Blocked by the Scenario 3 defect, not skipped by choice.</div></td>
-            <td><div class="deviation-text">[Blocked]: no valid baseline user exists to duplicate against.</div></td>
-            <td><span class="badge badge-not-impl">BLOCKED (by defect)</span></td>
-            <td><span class="no-img-badge">No UI Component<br><small style="color:var(--text-muted);font-size:0.68rem;">(Blocked)</small></span></td>
-          </tr>
-        </tbody>
-      </table>
+            <tr>
+              <td><strong>12</strong></td>
+              <td><span class="step-name">Update a field (Job Title) and save</span></td>
+              <td>
+                <div class="expected-text">Should update successfully</div>
+              </td>
+              <td>
+                <div class="actual-text">Set Job Title to &quot;UAT Updated Job Title&quot; and saved.
+                  &quot;Successful&quot; confirmation shown; reopening the profile confirmed the new Job Title persisted
+                  correctly.</div>
+              </td>
+              <td>
+                <div class="deviation-text">None.</div>
+              </td>
+              <td><span class="badge badge-pass">PASSED</span></td>
+              <td><img src="../uat_target3_cicodecm/users_step28_update_result.png" class="thumb"
+                  alt="users_step28_update_result.png" onclick="openModal(this.src)"></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="case-section" data-case="sc5">
+      <div class="case-header">
+        <div class="case-title">Scenario 5: SUSPEND / UNSUSPEND USER</div>
+        <div class="case-tag">P1 Defect</div>
+      </div>
+      <div class="table-scroll">
+        <table>
+          <thead>
+            <tr>
+              <th style="width: 55px;">Row</th>
+              <th style="width: 220px;">Steps to Reproduce</th>
+              <th style="width: 250px;">Expected Result</th>
+              <th>Actual Result (Live Execution)</th>
+              <th style="width: 230px;">Deviations & Defect Notes</th>
+              <th style="width: 150px;">Status</th>
+              <th style="width: 140px;">Screenshot Evidence</th>
+            </tr>
+          </thead>
+          <tbody>
+
+            <tr>
+              <td><strong>13</strong></td>
+              <td><span class="step-name">Suspend a user whose Job Title was never filled in (&quot;Reb
+                  Saku&quot;)</span></td>
+              <td>
+                <div class="expected-text">Should suspend the user</div>
+              </td>
+              <td>
+                <div class="actual-text">CONFIRMED BUG: failed with &quot;Job Title cannot be blank.&quot; — an
+                  unrelated full-profile validation error blocking what should be a simple status toggle. User remained
+                  ACTIVE.</div>
+              </td>
+              <td>
+                <div class="deviation-text">[Defect]: Suspend User blocked by unrelated Job Title validation.</div>
+              </td>
+              <td><span class="badge badge-bug">CONFIRMED BUG</span></td>
+              <td><img src="../uat_target3_cicodecm/users_step32_after_suspend_error.png" class="thumb"
+                  alt="users_step32_after_suspend_error.png" onclick="openModal(this.src)"></td>
+            </tr>
+
+            <tr>
+              <td><strong>14</strong></td>
+              <td><span class="step-name">Suspend a user whose Job Title IS filled (&quot;Chinwuba Okafor&quot;) —
+                  isolating control</span></td>
+              <td>
+                <div class="expected-text">Should suspend the user</div>
+              </td>
+              <td>
+                <div class="actual-text">Succeeded cleanly: &quot;Suspended&quot; confirmation, status flipped to
+                  SUSPENDED, Total Suspended incremented. Confirms the root cause is specifically the blank Job Title,
+                  not a general Suspend failure.</div>
+              </td>
+              <td>
+                <div class="deviation-text">None (isolates row 13’s root cause).</div>
+              </td>
+              <td><span class="badge badge-pass">PASSED</span></td>
+              <td><img src="../uat_target3_cicodecm/users_step34_okafor_suspend_result.png" class="thumb"
+                  alt="users_step34_okafor_suspend_result.png" onclick="openModal(this.src)"></td>
+            </tr>
+
+            <tr>
+              <td><strong>15</strong></td>
+              <td><span class="step-name">Unsuspend the same user</span></td>
+              <td>
+                <div class="expected-text">Should unsuspend the user</div>
+              </td>
+              <td>
+                <div class="actual-text">&quot;Un-Suspended&quot; confirmation shown, status correctly reverted to
+                  ACTIVE.</div>
+              </td>
+              <td>
+                <div class="deviation-text">None.</div>
+              </td>
+              <td><span class="badge badge-pass">PASSED</span></td>
+              <td><img src="../uat_target3_cicodecm/users_step36_unsuspend_result.png" class="thumb"
+                  alt="users_step36_unsuspend_result.png" onclick="openModal(this.src)"></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="case-section" data-case="sc6">
+      <div class="case-header">
+        <div class="case-title">Scenario 6: MAKE A RESOURCE &amp; SEARCH USERS</div>
+        <div class="case-tag">Rows 16-17</div>
+      </div>
+      <div class="table-scroll">
+        <table>
+          <thead>
+            <tr>
+              <th style="width: 55px;">Row</th>
+              <th style="width: 220px;">Steps to Reproduce</th>
+              <th style="width: 250px;">Expected Result</th>
+              <th>Actual Result (Live Execution)</th>
+              <th style="width: 230px;">Deviations & Defect Notes</th>
+              <th style="width: 150px;">Status</th>
+              <th style="width: 140px;">Screenshot Evidence</th>
+            </tr>
+          </thead>
+          <tbody>
+
+            <tr>
+              <td><strong>16</strong></td>
+              <td><span class="step-name">Convert an existing user into a Resource</span></td>
+              <td>
+                <div class="expected-text">Should convert the user into a bookable Resource</div>
+              </td>
+              <td>
+                <div class="actual-text">&quot;New Resource&quot; form opened (Next of Kin, Address, State*, Date
+                  Joined* defaulted to 01-01-1970, Resource Type*, Resource Level*, Resource Schedule). Filled
+                  State/Type/Level and submitted: &quot;Successful&quot;. User removed from standard Users list (12→11)
+                  and correctly appeared in the Resource module instead.</div>
+              </td>
+              <td>
+                <div class="deviation-text">[Deviation]: Date Joined defaults to Unix epoch (01-01-1970) instead of
+                  blank/today.</div>
+              </td>
+              <td><span class="badge badge-dev">PASSED (minor deviation)</span></td>
+              <td><img src="../uat_target3_cicodecm/users_step41_resource_list.png" class="thumb"
+                  alt="users_step41_resource_list.png" onclick="openModal(this.src)"></td>
+            </tr>
+
+            <tr>
+              <td><strong>17</strong></td>
+              <td><span class="step-name">Search users by name</span></td>
+              <td>
+                <div class="expected-text">Filter user by name</div>
+              </td>
+              <td>
+                <div class="actual-text">Confirmed: searching &quot;Prince&quot; correctly narrowed the list to the
+                  single matching user, &quot;Prince Ekpenyong.&quot;</div>
+              </td>
+              <td>
+                <div class="deviation-text">None.</div>
+              </td>
+              <td><span class="badge badge-pass">PASSED</span></td>
+              <td><img src="../uat_target3_cicodecm/users_step42_search_result.png" class="thumb"
+                  alt="users_step42_search_result.png" onclick="openModal(this.src)"></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="case-section" data-case="sc7">
+      <div class="case-header">
+        <div class="case-title">Scenario 7: DEPARTMENT (CREATE / EDIT / SUSPEND / UNSUSPEND / SEARCH)</div>
+        <div class="case-tag">P0 Defect</div>
+      </div>
+      <div class="table-scroll">
+        <table>
+          <thead>
+            <tr>
+              <th style="width: 55px;">Row</th>
+              <th style="width: 220px;">Steps to Reproduce</th>
+              <th style="width: 250px;">Expected Result</th>
+              <th>Actual Result (Live Execution)</th>
+              <th style="width: 230px;">Deviations & Defect Notes</th>
+              <th style="width: 150px;">Status</th>
+              <th style="width: 140px;">Screenshot Evidence</th>
+            </tr>
+          </thead>
+          <tbody>
+
+            <tr>
+              <td><strong>18</strong></td>
+              <td><span class="step-name">Click on Department (sidebar link and direct URL)</span></td>
+              <td>
+                <div class="expected-text">Display Department page, then create a new department</div>
+              </td>
+              <td>
+                <div class="actual-text">CONFIRMED BUG (P0, 2/2 reproductions): both clicking the sidebar
+                  &quot;Department&quot; link and navigating directly to r=team/index return &quot;Oops! Something went
+                  wrong. We are fixing it!&quot; every time. The page never loads.</div>
+              </td>
+              <td>
+                <div class="deviation-text">[Defect - P0]: Department page is entirely inaccessible.</div>
+              </td>
+              <td><span class="badge badge-bug">CONFIRMED BUG (P0)</span></td>
+              <td><img src="../uat_target3_cicodecm/users_step45_dept_retry.png" class="thumb"
+                  alt="users_step45_dept_retry.png" onclick="openModal(this.src)"></td>
+            </tr>
+
+            <tr>
+              <td><strong>19</strong></td>
+              <td><span class="step-name">Edit Department</span></td>
+              <td>
+                <div class="expected-text">Display Department page, then update an existing department</div>
+              </td>
+              <td>
+                <div class="actual-text">Blocked by row 18’s defect — the Department page itself never loads.</div>
+              </td>
+              <td>
+                <div class="deviation-text">[Blocked]: cannot reach the feature at all.</div>
+              </td>
+              <td><span class="badge badge-not-impl">BLOCKED (by defect)</span></td>
+              <td><img src="../uat_target3_cicodecm/users_step45_dept_retry.png" class="thumb"
+                  alt="users_step45_dept_retry.png" onclick="openModal(this.src)"></td>
+            </tr>
+
+            <tr>
+              <td><strong>20</strong></td>
+              <td><span class="step-name">Suspend Department</span></td>
+              <td>
+                <div class="expected-text">Display Department page, then suspend a department</div>
+              </td>
+              <td>
+                <div class="actual-text">Blocked by row 18’s defect.</div>
+              </td>
+              <td>
+                <div class="deviation-text">[Blocked]: cannot reach the feature at all.</div>
+              </td>
+              <td><span class="badge badge-not-impl">BLOCKED (by defect)</span></td>
+              <td><img src="../uat_target3_cicodecm/users_step45_dept_retry.png" class="thumb"
+                  alt="users_step45_dept_retry.png" onclick="openModal(this.src)"></td>
+            </tr>
+
+            <tr>
+              <td><strong>21</strong></td>
+              <td><span class="step-name">Unsuspend Department</span></td>
+              <td>
+                <div class="expected-text">Display Department page, then unsuspend a department</div>
+              </td>
+              <td>
+                <div class="actual-text">Blocked by row 18’s defect.</div>
+              </td>
+              <td>
+                <div class="deviation-text">[Blocked]: cannot reach the feature at all.</div>
+              </td>
+              <td><span class="badge badge-not-impl">BLOCKED (by defect)</span></td>
+              <td><img src="../uat_target3_cicodecm/users_step45_dept_retry.png" class="thumb"
+                  alt="users_step45_dept_retry.png" onclick="openModal(this.src)"></td>
+            </tr>
+
+            <tr>
+              <td><strong>22</strong></td>
+              <td><span class="step-name">Search Department</span></td>
+              <td>
+                <div class="expected-text">Display Department page, then filter by name</div>
+              </td>
+              <td>
+                <div class="actual-text">Blocked by row 18’s defect.</div>
+              </td>
+              <td>
+                <div class="deviation-text">[Blocked]: cannot reach the feature at all.</div>
+              </td>
+              <td><span class="badge badge-not-impl">BLOCKED (by defect)</span></td>
+              <td><img src="../uat_target3_cicodecm/users_step45_dept_retry.png" class="thumb"
+                  alt="users_step45_dept_retry.png" onclick="openModal(this.src)"></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="case-section" data-case="sc8">
+      <div class="case-header">
+        <div class="case-title">Scenario 8: ROLES (CREATE / EDIT / SUSPEND / UNSUSPEND / SEARCH)</div>
+        <div class="case-tag">Rows 23-27</div>
+      </div>
+      <div class="table-scroll">
+        <table>
+          <thead>
+            <tr>
+              <th style="width: 55px;">Row</th>
+              <th style="width: 220px;">Steps to Reproduce</th>
+              <th style="width: 250px;">Expected Result</th>
+              <th>Actual Result (Live Execution)</th>
+              <th style="width: 230px;">Deviations & Defect Notes</th>
+              <th style="width: 150px;">Status</th>
+              <th style="width: 140px;">Screenshot Evidence</th>
+            </tr>
+          </thead>
+          <tbody>
+
+            <tr>
+              <td><strong>23</strong></td>
+              <td><span class="step-name">Create a new Role</span></td>
+              <td>
+                <div class="expected-text">Should display Create Role form, then save successfully</div>
+              </td>
+              <td>
+                <div class="actual-text">&quot;Create Role&quot; form (Role Name, Description) accepted &quot;UAT Test
+                  Role&quot; / description. Proceeding through the &quot;Give role access&quot; feature-checklist wizard
+                  (1 of 2) and workflow-queue-access wizard (2 of 2, left unchecked), &quot;Role Successfully
+                  Created.&quot; confirmed and persisted on reload.</div>
+              </td>
+              <td>
+                <div class="deviation-text">None.</div>
+              </td>
+              <td><span class="badge badge-pass">PASSED</span></td>
+              <td><img src="../uat_target3_cicodecm/users_step49_role_step2.png" class="thumb"
+                  alt="users_step49_role_step2.png" onclick="openModal(this.src)"></td>
+            </tr>
+
+            <tr>
+              <td><strong>24</strong></td>
+              <td><span class="step-name">Edit Role — form pre-fill and save</span></td>
+              <td>
+                <div class="expected-text">Should display Update Role form pre-filled, then save</div>
+              </td>
+              <td>
+                <div class="actual-text">Role Name and Description correctly pre-filled, feature-access checklist
+                  correctly pre-checked from creation. Edited the description and completed the same 2-step wizard
+                  through to Finish: change persisted correctly on reload.</div>
+              </td>
+              <td>
+                <div class="deviation-text">None.</div>
+              </td>
+              <td><span class="badge badge-pass">PASSED</span></td>
+              <td><img src="../uat_target3_cicodecm/users_step62_role_updated_view.png" class="thumb"
+                  alt="users_step62_role_updated_view.png" onclick="openModal(this.src)"></td>
+            </tr>
+
+            <tr>
+              <td><strong>25</strong></td>
+              <td><span class="step-name">Suspend Role</span></td>
+              <td>
+                <div class="expected-text">Should suspend the role</div>
+              </td>
+              <td>
+                <div class="actual-text">Confirmed working: &quot;Suspended&quot; message shown, status flipped, Total
+                  Suspended incremented. The native confirm dialog reads &quot;Suspend this Region to Role?&quot; — a
+                  minor copy/label bug, not functional.</div>
+              </td>
+              <td>
+                <div class="deviation-text">[Deviation]: confirm-dialog text says &quot;...Region to Role?&quot; instead
+                  of &quot;...this Role?&quot;.</div>
+              </td>
+              <td><span class="badge badge-dev">PASSED (minor deviation)</span></td>
+              <td><img src="../uat_target3_cicodecm/users_step64_role_suspend_result.png" class="thumb"
+                  alt="users_step64_role_suspend_result.png" onclick="openModal(this.src)"></td>
+            </tr>
+
+            <tr>
+              <td><strong>26</strong></td>
+              <td><span class="step-name">Unsuspend Role</span></td>
+              <td>
+                <div class="expected-text">Should unsuspend the role</div>
+              </td>
+              <td>
+                <div class="actual-text">Confirmed working: &quot;Un-Suspended&quot; message shown, status correctly
+                  reverted to ACTIVE. Same minor dialog-text quirk as row 25.</div>
+              </td>
+              <td>
+                <div class="deviation-text">None (same noted deviation as row 25).</div>
+              </td>
+              <td><span class="badge badge-pass">PASSED</span></td>
+              <td><img src="../uat_target3_cicodecm/users_step66_role_unsuspend_result.png" class="thumb"
+                  alt="users_step66_role_unsuspend_result.png" onclick="openModal(this.src)"></td>
+            </tr>
+
+            <tr>
+              <td><strong>27</strong></td>
+              <td><span class="step-name">Search Roles by name</span></td>
+              <td>
+                <div class="expected-text">Filter role by name</div>
+              </td>
+              <td>
+                <div class="actual-text">Confirmed: searching &quot;QUALITY&quot; correctly narrowed the list to the
+                  single matching role, &quot;QUALITY ASSURANCE TESTER.&quot;</div>
+              </td>
+              <td>
+                <div class="deviation-text">None.</div>
+              </td>
+              <td><span class="badge badge-pass">PASSED</span></td>
+              <td><img src="../uat_target3_cicodecm/users_step67_role_search_result.png" class="thumb"
+                  alt="users_step67_role_search_result.png" onclick="openModal(this.src)"></td>
+            </tr>
+          </tbody>
+        </table>
       </div>
     </div>
 
@@ -303,7 +1133,12 @@
       document.getElementById('imageModal').classList.add('active');
     }
     function closeModal() { document.getElementById('imageModal').classList.remove('active'); }
-    document.addEventListener('keydown', function(e) { if (e.key === 'Escape') closeModal(); });
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeModal(); });
   </script>
+
+  <script src="../assets/js/modules-data.js"></script>
+  <script src="../assets/js/test-cases-data.js"></script>
+  <script src="../assets/js/html2pdf.bundle.min.js"></script>
+  <script src="../assets/js/exec-report-generator.js"></script>
 </body>
 </html>

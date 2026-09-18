@@ -16,6 +16,8 @@
 *oauth*.json
 *.keys.json
 *credentials*.json
+*driveauth*
+*auth*.md
 
 # Allow .env.example template
 !.env.example

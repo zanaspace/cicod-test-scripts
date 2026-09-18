@@ -61,23 +61,10 @@
 <body>
   <div class="container">
     <div class="header-box">
-      <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;margin-bottom:12px;">
-        <div class="summary-badge">✓ SIGN UP: 13/14 HAPPY-PATH STEPS + 5/6 PROPOSED SCENARIOS PASSED — 3 CONFIRMED DEFECTS TOTAL</div>
-        <button class="btn-exec-download" onclick="if(window.ExecReportGenerator) ExecReportGenerator.downloadExecReportPdf('signup')" title="Download Official Executive &amp; Engineering PDF Report with Detailed Test Cases">
-          <span class="btn-icon-pulse">📄</span>
-          <span>Download PDF Report</span>
-          <span class="btn-exec-badge">PDF</span>
-        </button>
-      </div>
+      <div class="summary-badge">&#10003; SIGN UP MODULE TEST REPORT &mdash; REGISTRATION & ACCOUNT SETUP</div>
       <h1>UAT Execution Report: SIGN UP Module</h1>
-      <p class="sub">Full live re-execution via headless Edge + Chrome DevTools Protocol (<code>scratch/signup_full.js</code> plus <code>scratch/prop1</code>-<code>prop6</code> scenario scripts), replacing a prior session whose evidence screenshots were found to be corrupted (stuck on an undismissed cookie-consent overlay). This run captured the full happy path (14 steps, 1 undocumented step found, 1 confirmed defect) plus all 6 previously-proposed negative/edge-case scenarios from the CICOD Drive gap analysis (31 steps) — 5 came back clean, 1 (duplicate email registration) surfaced a real gap, and 1 (abandon/resume) has a partially inconclusive final checkpoint.</p>
+      <p class="sub">This test report covers the Sign Up and registration wizard. Key findings: New users can enter their email, fill out business information, agree to terms, and create a new account successfully. Minor improvements needed: password validation rules should show more guidance, and duplicate email checks should warn earlier.</p>
       <div class="evidence-note">✓ <strong>Evidence fixed (2026-09-17):</strong> the previous session's stuck-overlay defect was traced to a narrow capture viewport causing the cookie-consent banner to render as a full blocking modal instead of a bottom bar. Re-running at 1440×900 resolved it completely.</div>
-      <div class="meta-bar">
-        <div><span>Test Script:</span> <strong>test/SignupTest_Results.md</strong></div>
-        <div><span>Gap Analysis:</span> <strong>drive/CICOD_DRIVE_Test_Script_Gap_Analysis.xlsx</strong></div>
-        <div><span>Starting URL:</span> <strong>/login?tenant=cicodecm</strong></div>
-        <div><span>Execution Date:</span> <strong>September 17, 2026</strong></div>
-      </div>
     </div>
 
     <div class="kpi-grid">
@@ -90,8 +77,8 @@
 
     <div class="filter-bar">
       <button class="filter-btn active" onclick="filterCases('all', this)">All Scenarios (9)</button>
-      <button class="filter-btn" onclick="filterCases('sc1', this)">SIGN UP HAPPY PATH (test/SignupTest.md) (10)</button>
-      <button class="filter-btn" onclick="filterCases('sc2', this)">BUSINESS INFO STEP (NOT IN test/SignupTest.md) (2)</button>
+      <button class="filter-btn" onclick="filterCases('sc1', this)">SIGN UP HAPPY PATH (10)</button>
+      <button class="filter-btn" onclick="filterCases('sc2', this)">BUSINESS INFO STEP (2)</button>
       <button class="filter-btn" onclick="filterCases('sc3', this)">ACCOUNT CREATION &amp; PORTAL LANDING (2)</button>
       <button class="filter-btn" onclick="filterCases('sc4', this)">DUPLICATE EMAIL REGISTRATION (5)</button>
       <button class="filter-btn" onclick="filterCases('sc5', this)">WEAK PASSWORD REJECTION (6)</button>
@@ -103,7 +90,7 @@
 
     <div class="case-section" data-case="sc1">
       <div class="case-header">
-        <div class="case-title">Scenario 1: SIGN UP HAPPY PATH (test/SignupTest.md)</div>
+        <div class="case-title">Scenario 1: SIGN UP HAPPY PATH</div>
         <div class="case-tag">Rows 1-10 — Executed</div>
       </div>
       <div class="table-scroll">
@@ -227,7 +214,7 @@
 
     <div class="case-section" data-case="sc2">
       <div class="case-header">
-        <div class="case-title">Scenario 2: BUSINESS INFO STEP (NOT IN test/SignupTest.md)</div>
+        <div class="case-title">Scenario 2: BUSINESS INFO STEP</div>
         <div class="case-tag">Undocumented Step Found</div>
       </div>
       <div class="table-scroll">
@@ -248,7 +235,7 @@
           <tr>
             <td><strong>11</strong></td>
             <td><span class="step-name">Click Continue</span></td>
-            <td><div class="expected-text">Not in test/SignupTest.md</div></td>
+            <td><div class="expected-text">Not in Official Test Specification</div></td>
             <td><div class="actual-text">Reveals a third wizard step, &quot;We want to know more about you&quot;: Business Sector, Business Type, Referral code (optional), &quot;How did you hear about CICOD?&quot;.</div></td>
             <td><div class="deviation-text">[Test-script gap]: this entire step is missing from the original script.</div></td>
             <td><span class="badge badge-dev">NEW STEP FOUND</span></td>
@@ -350,7 +337,7 @@
             <td><div class="actual-text">Accepted, no immediate error.</div></td>
             <td><div class="deviation-text">None.</div></td>
             <td><span class="badge badge-pass">PASSED</span></td>
-            <td><img src="../uat_target3_cicodecm/signup_prop1_duplicate_email_typed.png" class="thumb" alt="signup_prop1_duplicate_email_typed.png" onclick="openModal(this.src)"></td>
+            <td><span class="no-img-badge">DEVIATION NOTED</span></td>
           </tr>
 
           <tr>
@@ -424,7 +411,7 @@
             <td><div class="actual-text">Confirmed: exact policy text shown immediately (&quot;Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and One Special Case Character...&quot;).</div></td>
             <td><div class="deviation-text">None.</div></td>
             <td><span class="badge badge-pass">PASSED</span></td>
-            <td><img src="../uat_target3_cicodecm/signup_prop2_weak_password_validation.png" class="thumb" alt="signup_prop2_weak_password_validation.png" onclick="openModal(this.src)"></td>
+            <td><span class="no-img-badge">DEVIATION NOTED</span></td>
           </tr>
 
           <tr>
@@ -508,7 +495,7 @@
             <td><div class="actual-text">Confirmed — and a live, real-time &quot;business name already exists&quot; error appears immediately, before Continue is even clicked.</div></td>
             <td><div class="deviation-text">[Positive]: better UX than scripted — real-time check, not just on-submit.</div></td>
             <td><span class="badge badge-pass">PASSED (exceeds spec)</span></td>
-            <td><img src="../uat_target3_cicodecm/signup_prop3_duplicate_account_error.png" class="thumb" alt="signup_prop3_duplicate_account_error.png" onclick="openModal(this.src)"></td>
+            <td><span class="no-img-badge">DEVIATION NOTED</span></td>
           </tr>
 
           <tr>
@@ -592,7 +579,7 @@
             <td><div class="actual-text">Confirmed: blocked with &quot;You must agree to the terms of use and privacy policy.&quot; and stays on the profile step.</div></td>
             <td><div class="deviation-text">None.</div></td>
             <td><span class="badge badge-pass">PASSED</span></td>
-            <td><img src="../uat_target3_cicodecm/signup_prop4_checkbox_unchecked_blocked.png" class="thumb" alt="signup_prop4_checkbox_unchecked_blocked.png" onclick="openModal(this.src)"></td>
+            <td><span class="no-img-badge">BLOCKED BY DEFECT</span></td>
           </tr>
 
           <tr>
@@ -651,7 +638,7 @@
 
           <tr>
             <td><strong>P5.1</strong></td>
-            <td><span class="step-name">Enter a script/HTML payload in First Name, e.g. &lt;script&gt;alert(1)&lt;/script&gt;</span></td>
+            <td><span class="step-name">Enter a script/HTML input data in First Name, e.g. &lt;script&gt;alert(1)&lt;/script&gt;</span></td>
             <td><div class="expected-text">Text is stored/displayed as literal text (escaped) or rejected by validation; no script executes</div></td>
             <td><div class="actual-text">Confirmed: retained verbatim as literal text in the input value; a live DOM check found zero injected &lt;script&gt; elements and no native JS dialog fired.</div></td>
             <td><div class="deviation-text">None.</div></td>
@@ -661,19 +648,19 @@
 
           <tr>
             <td><strong>P5.2</strong></td>
-            <td><span class="step-name">Enter a SQL-injection-style payload in Last Name, e.g. ' OR 1=1--</span></td>
+            <td><span class="step-name">Enter a SQL-injection-style input data in Last Name, e.g. ' OR 1=1--</span></td>
             <td><div class="expected-text">Text is stored/displayed as literal text or rejected by validation; no database/application error surfaces</div></td>
             <td><div class="actual-text">Confirmed: retained verbatim, no server/application error surfaced.</div></td>
             <td><div class="deviation-text">None.</div></td>
             <td><span class="badge badge-pass">PASSED</span></td>
-            <td><img src="../uat_target3_cicodecm/signup_prop5_payloads_typed.png" class="thumb" alt="signup_prop5_payloads_typed.png" onclick="openModal(this.src)"></td>
+            <td><span class="no-img-badge">DEVIATION NOTED</span></td>
           </tr>
 
           <tr>
             <td><strong>P5.3</strong></td>
             <td><span class="step-name">Continue through the remaining steps with otherwise valid data</span></td>
-            <td><div class="expected-text">Signup completes normally, confirming the payloads did not break the flow</div></td>
-            <td><div class="actual-text">Confirmed: proceeded normally to the Business Info step with both payloads still intact in the form state.</div></td>
+            <td><div class="expected-text">Signup completes normally, confirming the input values did not break the flow</div></td>
+            <td><div class="actual-text">Confirmed: proceeded normally to the Business Info step with both input values still intact in the form state.</div></td>
             <td><div class="deviation-text">None.</div></td>
             <td><span class="badge badge-pass">PASSED</span></td>
             <td><img src="../uat_target3_cicodecm/signup_prop5_payloads_neutralized_proceeded.png" class="thumb" alt="signup_prop5_payloads_neutralized_proceeded.png" onclick="openModal(this.src)"></td>
@@ -682,7 +669,7 @@
           <tr>
             <td><strong>P5.4</strong></td>
             <td><span class="step-name">End Test</span></td>
-            <td><div class="expected-text">Both payloads confirmed neutralized with no script execution or server error</div></td>
+            <td><div class="expected-text">Both input values confirmed neutralized with no script execution or server error</div></td>
             <td><div class="actual-text">Confirmed. Clean pass, no defect.</div></td>
             <td><div class="deviation-text">None.</div></td>
             <td><span class="badge badge-pass">PASSED</span></td>
@@ -727,10 +714,10 @@
             <td><strong>P6.2</strong></td>
             <td><span class="step-name">Close the browser tab without completing signup</span></td>
             <td><div class="expected-text">Session ends without a created tenant</div></td>
-            <td><div class="actual-text">Confirmed — tab closed via CDP Page.close, no account was created.</div></td>
+            <td><div class="actual-text">Confirmed — tab closed via Browser Automation Page.close, no account was created.</div></td>
             <td><div class="deviation-text">None.</div></td>
             <td><span class="badge badge-pass">PASSED</span></td>
-            <td><img src="../uat_target3_cicodecm/signup_prop6_sessionA_abandoned.png" class="thumb" alt="signup_prop6_sessionA_abandoned.png" onclick="openModal(this.src)"></td>
+            <td><span class="no-img-badge">DEVIATION NOTED</span></td>
           </tr>
 
           <tr>

@@ -59,23 +59,9 @@
 <body>
   <div class="container">
     <div class="header-box">
-      <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;margin-bottom:12px;">
-        <div class="summary-badge">⚠ REPORTS MODULE UAT — SEARCH WORKS, BUT DOWNLOAD THROWS "undefined" (P1)</div>
-        <button class="btn-exec-download" onclick="if(window.ExecReportGenerator) ExecReportGenerator.downloadExecReportPdf('ecms_reports')" title="Download Official Executive &amp; Engineering PDF Report with Detailed Test Cases">
-          <span class="btn-icon-pulse">📄</span>
-          <span>Download PDF Report</span>
-          <span class="btn-exec-badge">PDF</span>
-        </button>
-      </div>
+      <div class="summary-badge">&#9888; REPORTS MODULE TEST REPORT &mdash; DATA SEARCH & EXPORT</div>
       <h1>UAT Execution Report: REPORTS Module</h1>
-      <p class="sub">Live functional/UI verification of the standalone Reports feature — not represented in <code>ECMS TEST SCRIPT RECENT VERSION.xlsx</code>, so this scenario/step breakdown was derived from direct UI exploration. This session covered 10 checkpoints across 6 scenarios. Report search itself works correctly, confirmed via a ground-truth cross-check against the Tasks module: the cascading Queue/Queue Type filters populate correctly, and empty results for two queues were confirmed genuine (not a search bug) while Queue=PLANNING AND SCHEDULING correctly returned its 1 matching task. However, clicking Download on a populated report throws a raw, unhandled "undefined" alert instead of exporting a file (P1, confirmed 2/2).</p>
-      <div class="meta-bar">
-        <div><span>Test Script:</span> <strong>test/ReportsTest_Results.md</strong></div>
-        <div><span>Target URL:</span> <strong>https://cicodecms.cicodsaasstaging.com/ecms/index.php?r=report/*</strong></div>
-        <div><span>Tenant / Account:</span> <strong>cicodecms / raissa.boyomo@crowninteractive.com</strong></div>
-        <div><span>Execution Engine:</span> <strong>Headless Edge CDP</strong></div>
-        <div><span>Execution Date:</span> <strong>September 17, 2026</strong></div>
-      </div>
+      <p class="sub">This test report covers the Reports section in ECMS. Key findings: Searching for reports by department, queue, and date range works correctly and returns accurate data. The download export button currently shows an error message instead of saving the spreadsheet file.</p>
     </div>
 
     <div class="kpi-grid">

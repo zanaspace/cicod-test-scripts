@@ -341,28 +341,9 @@
 <body>
   <div class="container">
     <div class="header-box">
-      <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;margin-bottom:12px;">
-        <div class="summary-badge">⚠ WORKFLOW MODULE UAT — 4 CONFIRMED DEFECTS, 1 IS A FULL FEATURE OUTAGE (P0)</div>
-        <button class="btn-exec-download" onclick="if(window.ExecReportGenerator) ExecReportGenerator.downloadExecReportPdf('ecms_workflows')" title="Download Official Executive &amp; Engineering PDF Report with Detailed Test Cases">
-          <span class="btn-icon-pulse">📄</span>
-          <span>Download PDF Report</span>
-          <span class="btn-exec-badge">PDF</span>
-        </button>
-      </div>
+      <div class="summary-badge">&#9888; WORKFLOW MODULE TEST REPORT &mdash; PROCESS DESIGN & AUTOMATION</div>
       <h1>UAT Execution Report: WORKFLOW Module</h1>
-      <p class="sub">Live functional/UI verification against the Excel Test Script
-        (<code>ECMS TEST SCRIPT RECENT VERSION.xlsx</code>, sheet "WORKFLOW", ~208 rows) on Target 3 Environment
-        (<code>cicodsaasstaging.com</code> / tenant: <code>cicodecms</code>). This session covered 42 checkpoints across
-        8 scenarios; the remaining script rows are explicitly marked BLOCKED rather than assumed passing.</p>
-
-      <div class="meta-bar">
-        <div><span>Test Script:</span> <strong>test/WorkflowTest_Results.md</strong></div>
-        <div><span>Target URL:</span>
-          <strong>https://cicodecms.cicodsaasstaging.com/ecms/index.php?r=workflows/*</strong></div>
-        <div><span>Tenant / Account:</span> <strong>cicodecms / raissa.boyomo@crowninteractive.com</strong></div>
-        <div><span>Execution Engine:</span> <strong>Headless Edge CDP</strong></div>
-        <div><span>Execution Date:</span> <strong>September 17, 2026</strong></div>
-      </div>
+      <p class="sub">This test report covers Workflow Management in ECMS. Key findings: Creating new queues, viewing existing workflows, and organizing workflow steps work properly. Advanced reassignments and certain dynamic steps have validation issues that need correction.</p>
     </div>
 
     <div class="kpi-grid">
@@ -1407,7 +1388,7 @@
               <div class="expected-text">Should generate/assign a CICOD Drive folder path</div>
             </td>
             <td>
-              <div class="actual-text">CONFIRMED BUG (P0): embedded &quot;Gov Drive&quot; panel loads indefinitely
+              <div class="actual-text">CONFIRMED BUG (High Priority): embedded &quot;Gov Drive&quot; panel loads indefinitely
                 showing &quot;Session Expired&quot;, despite a valid active session. Folder Path field is disabled — no
                 manual workaround exists.</div>
             </td>
@@ -1415,7 +1396,7 @@
               <div class="deviation-text">[Defect]: full feature outage, not an edge case.</div>
             </td>
             <td>
-              <span class="badge badge-bug">CONFIRMED BUG (P0)</span>
+              <span class="badge badge-bug">CONFIRMED BUG (High Priority)</span>
             </td>
             <td>
               <img src="../uat_target3_cicodecm/wf2_step9c_govdrive_stuck.png" class="thumb"

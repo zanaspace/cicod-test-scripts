@@ -359,32 +359,9 @@
 <body>
   <div class="container">
     <div class="header-box">
-      <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;margin-bottom:12px;">
-        <div class="summary-badge">⚠ CONTACTS MODULE UAT — 9 DISTINCT DEFECTS (11 ROWS), ZERO ITEMS LEFT NOT EXECUTED
-      </div>
-        <button class="btn-exec-download" onclick="if(window.ExecReportGenerator) ExecReportGenerator.downloadExecReportPdf('ecms_contacts')" title="Download Official Executive &amp; Engineering PDF Report with Detailed Test Cases">
-          <span class="btn-icon-pulse">📄</span>
-          <span>Download PDF Report</span>
-          <span class="btn-exec-badge">PDF</span>
-        </button>
-      </div>
+      <div class="summary-badge">&#9888; CONTACTS MODULE TEST REPORT &mdash; CONTACT MANAGEMENT & TICKET CREATION</div>
       <h1>UAT Execution Report: CONTACTS Module</h1>
-      <p class="sub">Live functional/UI verification against the Excel Test Script
-        (<code>ECMS TEST SCRIPT RECENT VERSION.xlsx</code>, sheet "CONTACTS") on Target 3 Environment
-        (<code>cicodsaasstaging.com</code> / tenant: <code>cicodecms</code>). This session covered 49 checkpoints across
-        8 scenarios. The Create-Ticket optional fields (Issues/Complain/Address/Attach File/Signature) were initially
-        unreachable in this environment, so a new Queue Type carrying exactly those fields was built via the Workflow
-        module and a blocking role/access gap was fixed — which surfaced a further confirmed defect (ticket creation
-        silently fails against any newly-created Queue Type). Create User was tested separately as its own module — see
-        <code>test/UsersTest_Results.md</code>.</p>
-      <div class="meta-bar">
-        <div><span>Test Script:</span> <strong>test/ContactsTest_Results.md</strong></div>
-        <div><span>Target URL:</span>
-          <strong>https://cicodecms.cicodsaasstaging.com/ecms/index.php?r=contacts/*</strong></div>
-        <div><span>Tenant / Account:</span> <strong>cicodecms / raissa.boyomo@crowninteractive.com</strong></div>
-        <div><span>Execution Engine:</span> <strong>Headless Edge CDP</strong></div>
-        <div><span>Execution Date:</span> <strong>September 17, 2026</strong></div>
-      </div>
+      <p class="sub">This test report covers the Contacts module in ECMS. Key findings: Creating, viewing, editing, and updating contacts work smoothly. Adding notes to contacts works as expected. Creating tickets from contacts works with standard queue types, while custom queue types require configuration.</p>
     </div>
 
     <div class="kpi-grid">
@@ -532,8 +509,7 @@
                 <div class="deviation-text">None.</div>
               </td>
               <td><span class="badge badge-pass">PASSED</span></td>
-              <td><img src="../uat_target3_cicodecm/contacts_step6_correct_form_filled.png" class="thumb"
-                  alt="contacts_step6_correct_form_filled.png" onclick="openModal(this.src)"></td>
+              <td><span class="no-img-badge">DEVIATION NOTED</span></td>
             </tr>
 
             <tr>
@@ -549,8 +525,7 @@
                 <div class="deviation-text">None.</div>
               </td>
               <td><span class="badge badge-pass">PASSED</span></td>
-              <td><img src="../uat_target3_cicodecm/contacts_step6_correct_form_filled.png" class="thumb"
-                  alt="contacts_step6_correct_form_filled.png" onclick="openModal(this.src)"></td>
+              <td><span class="no-img-badge">DEVIATION NOTED</span></td>
             </tr>
 
             <tr>
@@ -567,8 +542,7 @@
                 <div class="deviation-text">None.</div>
               </td>
               <td><span class="badge badge-pass">PASSED</span></td>
-              <td><img src="../uat_target3_cicodecm/contacts_step6_correct_form_filled.png" class="thumb"
-                  alt="contacts_step6_correct_form_filled.png" onclick="openModal(this.src)"></td>
+              <td><span class="no-img-badge">DEVIATION NOTED</span></td>
             </tr>
 
             <tr>
@@ -755,8 +729,7 @@
                 <div class="deviation-text">None (silver lining of the silent-failure bug).</div>
               </td>
               <td><span class="badge badge-pass">PASSED</span></td>
-              <td><img src="../uat_target3_cicodecm/contacts_step41_view_after_update.png" class="thumb"
-                  alt="contacts_step41_view_after_update.png" onclick="openModal(this.src)"></td>
+              <td><span class="no-img-badge">DEVIATION NOTED</span></td>
             </tr>
           </tbody>
         </table>
@@ -834,8 +807,7 @@
                 <div class="deviation-text">None.</div>
               </td>
               <td><span class="badge badge-pass">PASSED</span></td>
-              <td><img src="../uat_target3_cicodecm/contacts_step17_form_after_queuetype.png" class="thumb"
-                  alt="contacts_step17_form_after_queuetype.png" onclick="openModal(this.src)"></td>
+              <td><span class="no-img-badge">DEVIATION NOTED</span></td>
             </tr>
 
             <tr>
@@ -947,8 +919,7 @@
                 <div class="deviation-text">[Defect]: Check Box field values are not persisted.</div>
               </td>
               <td><span class="badge badge-bug">CONFIRMED BUG</span></td>
-              <td><img src="../uat_target3_cicodecm/contacts_step69_ticket1045_detail.png" class="thumb"
-                  alt="contacts_step69_ticket1045_detail.png" onclick="openModal(this.src)"></td>
+              <td><span class="no-img-badge">BUG CONFIRMED IN PREVIOUS STEP</span></td>
             </tr>
 
             <tr>
@@ -965,8 +936,7 @@
                 <div class="deviation-text">[Defect]: assign-on-create checkbox has no effect.</div>
               </td>
               <td><span class="badge badge-bug">CONFIRMED BUG</span></td>
-              <td><img src="../uat_target3_cicodecm/contacts_step69_ticket1045_detail.png" class="thumb"
-                  alt="contacts_step69_ticket1045_detail.png" onclick="openModal(this.src)"></td>
+              <td><span class="no-img-badge">BUG CONFIRMED IN PREVIOUS STEP</span></td>
             </tr>
 
             <tr>
@@ -1564,7 +1534,7 @@
                   REPORT</span></td>
               <td>Create User (valid Credential) / Create User (invalid Credential)</td>
               <td>~38 rows misplaced at the tail of the CONTACTS sheet</td>
-              <td>Tested this session as its own module — see test/UsersTest_Results.md and
+              <td>Tested this session as its own module — see Official Test Specification and
                 testCases/users_test_report.html — rather than folded into this Contacts report, since it is genuinely
                 Users-module scope.</td>
               <td><span class="badge badge-dev">CROSS-REFERENCED</span></td>

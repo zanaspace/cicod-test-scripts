@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>UAT Report - LOGIN Module (test/LoginTest.md)</title>
+  <title>UAT Report - LOGIN Module</title>
   <link
     href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap"
     rel="stylesheet">
@@ -222,6 +222,20 @@
     .thumb:hover {
       transform: scale(1.05);
     }
+  
+    .no-img-badge {
+      display: inline-block;
+      padding: 4px 8px;
+      border-radius: 6px;
+      background: rgba(245, 158, 11, 0.1);
+      border: 1px dashed rgba(245, 158, 11, 0.3);
+      color: #fbbf24;
+      font-size: 0.72rem;
+      font-weight: 600;
+      text-align: center;
+      line-height: 1.3;
+    }
+
   </style>
   <link rel="stylesheet" href="../assets/css/test-report-addon.css">
 </head>
@@ -231,26 +245,11 @@
     <div class="header-box">
       <div
         style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;margin-bottom:12px;">
-        <span class="summary-badge">UAT PASSED: 5 Cases / 30 Sub-Steps Individually Executed</span>
-        <button class="btn-exec-download"
-          onclick="if(window.ExecReportGenerator) ExecReportGenerator.downloadExecReportPdf('login')"
-          title="Download Official Executive &amp; Engineering PDF Report with Detailed Test Cases">
-          <span class="btn-icon-pulse">📄</span>
-          <span>Download PDF Report</span>
-          <span class="btn-exec-badge">PDF</span>
-        </button>
+        <div class="summary-badge">UAT PASSED: 5 Cases / 30 Sub-Steps Individually Executed</div>
+        
       </div>
       <h1>UAT Execution Report: LOGIN Module</h1>
-      <p class="sub">Executed in strict alignment with <code>test/LoginTest.md</code> on
-        <code>https://cicodsaasstaging.com/login?tenant=cicodecm</code> with dedicated step-by-step verification.
-      </p>
-
-      <div class="meta-bar">
-        <div><span>Test Script:</span> <strong>test/LoginTest.md</strong></div>
-        <div><span>Target URL:</span> <strong>https://cicodsaasstaging.com/login?tenant=cicodecm</strong></div>
-        <div><span>Total Test Cases:</span> <strong>5 of 5 PASSED</strong></div>
-        <div><span>Total Sub-Steps:</span> <strong>30 of 30 PASSED</strong></div>
-      </div>
+      <p class="sub">This test report covers User Login across 5 scenarios and 30 test steps. Key findings: Correct login credentials take users straight to their dashboard. Password masking and show/hide toggles work cleanly. Entering wrong domains, invalid emails, or wrong passwords correctly shows clear error messages.</p>
     </div>
 
     <!-- ===================================================================== -->
@@ -339,7 +338,7 @@
               <td><strong class="step-tag">5. Click Login</strong></td>
               <td>opens the Home Page of the MDA</td>
               <td>Login request submitted. URL: https://cicodsaasstaging.com/login?tenant=cicodecm. Tenant
-                authentication payload processed without client validation errors.</td>
+                authentication input data processed without client validation errors.</td>
               <td>
                 <div class="deviation-box">
                   [Naming Convention]: Submit button text is "Login".

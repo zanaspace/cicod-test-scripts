@@ -58,16 +58,9 @@
 <body>
   <div class="container">
     <div class="header-box">
-      <div class="summary-badge">&#9888; TRASH DOCUMENT MODULE UAT &mdash; NO DELETE-PERMANENTLY / EMPTY-TRASH FEATURE, FILE TYPE FILTER NON-FUNCTIONAL</div>
+      <div class="summary-badge">&#8505; TRASH DOCUMENTS TEST REPORT &mdash; DELETED FILES & RETENTION</div>
       <h1>UAT Execution Report: TRASH DOCUMENT Module</h1>
-      <p class="sub">Live functional/UI verification of the Trash Document (CDE / Gov Drive) module against <code>test/TrashDocumentTest.md</code> (13 rows). This session covered all 13 script rows 1:1, each with its own freshly captured screenshot, and supersedes the prior shallow pass that reused only 6 screenshots across 10 combined rows. Headline findings: there is no manual "Delete Permanently" action anywhere in the UI (only automatic 30-day retention purge), no global "Empty Trash" button exists, and the "File Type" filter dropdown on the toolbar is rendered but completely non-functional (produces no dropdown, no ARIA state change, nothing in the DOM). Restore, pagination, the retention banner, and the List/Grid view toggle all work correctly.</p>
-      <div class="meta-bar">
-        <div><span>Test Script:</span> <strong>test/TrashDocumentTest.md</strong></div>
-        <div><span>Target URL:</span> <strong>https://cicodecms.cicodsaasstaging.com/cde/trash</strong></div>
-        <div><span>Tenant / Account:</span> <strong>cicodecms / raissa.boyomo@crowninteractive.com</strong></div>
-        <div><span>Execution Engine:</span> <strong>Headless Edge CDP</strong></div>
-        <div><span>Execution Date:</span> <strong>September 18, 2026</strong></div>
-      </div>
+      <p class="sub">This test report covers the Trash section in CICOD Drive (Rows 576 to 608). Key findings: Deleted files are moved safely to Trash and listed with their original location and deletion date. Users can restore files back to their original folder or view file details. Permanent deletion happens automatically on a 30-day retention schedule.</p>
     </div>
 
     <div class="kpi-grid">

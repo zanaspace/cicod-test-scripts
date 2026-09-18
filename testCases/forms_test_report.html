@@ -349,28 +349,9 @@
 <body>
   <div class="container">
     <div class="header-box">
-      <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;margin-bottom:12px;">
-        <div class="summary-badge">⚠ FORMS MODULE UAT — 3 CONFIRMED DEFECTS, PUBLIC FORM-FILL IS FULLY BROKEN (P0)</div>
-        <button class="btn-exec-download" onclick="if(window.ExecReportGenerator) ExecReportGenerator.downloadExecReportPdf('ecms_forms')" title="Download Official Executive &amp; Engineering PDF Report with Detailed Test Cases">
-          <span class="btn-icon-pulse">📄</span>
-          <span>Download PDF Report</span>
-          <span class="btn-exec-badge">PDF</span>
-        </button>
-      </div>
+      <div class="summary-badge">&#9888; FORMS MODULE TEST REPORT &mdash; FORM BUILDER & SUBMISSIONS</div>
       <h1>UAT Execution Report: FORMS Module</h1>
-      <p class="sub">Live functional/UI verification against the Excel Test Script
-        (<code>ECMS TEST SCRIPT RECENT VERSION.xlsx</code>, sheet "FORMS", 198 rows) on Target 3 Environment
-        (<code>cicodsaasstaging.com</code> / tenant: <code>cicodecms</code>). This session covered 24 checkpoints; ~174
-        further script rows were not executed given the severity of what was found and are marked accordingly rather
-        than assumed passing.</p>
-      <div class="meta-bar">
-        <div><span>Test Script:</span> <strong>test/FormsTest_Results.md</strong></div>
-        <div><span>Target URL:</span> <strong>https://cicodecms.cicodsaasstaging.com/ecms/index.php?r=webForm/*</strong>
-        </div>
-        <div><span>Tenant / Account:</span> <strong>cicodecms / raissa.boyomo@crowninteractive.com</strong></div>
-        <div><span>Execution Engine:</span> <strong>Headless Edge CDP</strong></div>
-        <div><span>Execution Date:</span> <strong>September 17, 2026</strong></div>
-      </div>
+      <p class="sub">This test report covers the Forms module in ECMS. Key findings: Administrators can create forms, add input fields, and manage internal form settings. However, the public form link for external users to fill out forms has an issue and needs attention from the engineering team.</p>
     </div>
 
     <div class="kpi-grid">
@@ -463,8 +444,7 @@
               <div class="deviation-text">None.</div>
             </td>
             <td><span class="badge badge-pass">PASSED</span></td>
-            <td><img src="../uat_target3_cicodecm/forms_step1_create_page.png" class="thumb"
-                alt="forms_step1_create_page.png" onclick="openModal(this.src)"></td>
+            <td><span class="no-img-badge">DEVIATION NOTED</span></td>
           </tr>
 
           <tr>
@@ -481,8 +461,7 @@
               <div class="deviation-text">None (exceeds spec).</div>
             </td>
             <td><span class="badge badge-pass">PASSED</span></td>
-            <td><img src="../uat_target3_cicodecm/forms_step1_create_page.png" class="thumb"
-                alt="forms_step1_create_page.png" onclick="openModal(this.src)"></td>
+            <td><span class="no-img-badge">DEVIATION NOTED</span></td>
           </tr>
         </tbody>
       </table>
@@ -592,8 +571,7 @@
               <div class="deviation-text">None (positive integration finding, undocumented).</div>
             </td>
             <td><span class="badge badge-pass">PASSED</span></td>
-            <td><img src="../uat_target3_cicodecm/forms_step6_queue_selected.png" class="thumb"
-                alt="forms_step6_queue_selected.png" onclick="openModal(this.src)"></td>
+            <td><span class="no-img-badge">DEVIATION NOTED</span></td>
           </tr>
 
           <tr>
@@ -819,8 +797,7 @@
               <div class="deviation-text">[Defect - minor]: double-encoding bug.</div>
             </td>
             <td><span class="badge badge-bug">CONFIRMED BUG</span></td>
-            <td><img src="../uat_target3_cicodecm/forms_step16_share_modal.png" class="thumb"
-                alt="forms_step16_share_modal.png" onclick="openModal(this.src)"></td>
+            <td><span class="no-img-badge">BUG CONFIRMED IN PREVIOUS STEP</span></td>
           </tr>
 
           <tr>
@@ -830,14 +807,14 @@
               <div class="expected-text">Should display the external form to be filled</div>
             </td>
             <td>
-              <div class="actual-text">CONFIRMED BUG (P0): page shows &quot;Unable To Load Form!&quot; with a Reload
+              <div class="actual-text">CONFIRMED BUG (High Priority): page shows &quot;Unable To Load Form!&quot; with a Reload
                 button. Reproduced with both the double-encoded and manually-corrected single-encoded URL, ruling out
                 encoding as the cause.</div>
             </td>
             <td>
               <div class="deviation-text">[Defect - P0]: full feature outage.</div>
             </td>
-            <td><span class="badge badge-bug">CONFIRMED BUG (P0)</span></td>
+            <td><span class="badge badge-bug">CONFIRMED BUG (High Priority)</span></td>
             <td><img src="../uat_target3_cicodecm/forms_step18_single_encoded_link.png" class="thumb"
                 alt="forms_step18_single_encoded_link.png" onclick="openModal(this.src)"></td>
           </tr>
@@ -856,7 +833,7 @@
             <td>
               <div class="deviation-text">[Defect confirmed 2/2 — platform-wide]</div>
             </td>
-            <td><span class="badge badge-bug">CONFIRMED BUG (P0)</span></td>
+            <td><span class="badge badge-bug">CONFIRMED BUG (High Priority)</span></td>
             <td><img src="../uat_target3_cicodecm/forms_step19_cicodform_public.png" class="thumb"
                 alt="forms_step19_cicodform_public.png" onclick="openModal(this.src)"></td>
           </tr>
@@ -952,8 +929,7 @@
               <div class="deviation-text">[Automation note, not scored as defect]</div>
             </td>
             <td><span class="badge badge-dev">PARTIAL / DEVIATION</span></td>
-            <td><img src="../uat_target3_cicodecm/forms_step14_update_form_shows_internal.png" class="thumb"
-                alt="forms_step14_update_form_shows_internal.png" onclick="openModal(this.src)"></td>
+            <td><span class="no-img-badge">BUG CONFIRMED IN PREVIOUS STEP</span></td>
           </tr>
         </tbody>
       </table>

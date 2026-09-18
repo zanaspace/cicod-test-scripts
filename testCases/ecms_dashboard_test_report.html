@@ -406,6 +406,20 @@
       align-items: center;
       justify-content: center;
     }
+  
+    .no-img-badge {
+      display: inline-block;
+      padding: 4px 8px;
+      border-radius: 6px;
+      background: rgba(245, 158, 11, 0.1);
+      border: 1px dashed rgba(245, 158, 11, 0.3);
+      color: #fbbf24;
+      font-size: 0.72rem;
+      font-weight: 600;
+      text-align: center;
+      line-height: 1.3;
+    }
+
   </style>
   <link rel="stylesheet" href="../assets/css/test-report-addon.css">
 </head>
@@ -418,24 +432,12 @@
     <div class="header-box">
       <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;margin-bottom:12px;">
         <div class="summary-badge-live">✓ 100% VERIFIED &amp; OPERATIONAL ON STAGING</div>
-        <button class="btn-exec-download" onclick="if(window.ExecReportGenerator) ExecReportGenerator.downloadExecReportPdf('ecms_dashboard')" title="Download Official Executive &amp; Engineering PDF Report with Detailed Test Cases">
-          <span class="btn-icon-pulse">📄</span>
-          <span>Download PDF Report</span>
-          <span class="btn-exec-badge">PDF</span>
-        </button>
+        
       </div>
       <h1>UAT Test Report: ECMS Workflow Dashboard</h1>
       <div class="sub">Live verification against official sheet specifications on staging tenant:
         <code>cicodecms.cicodsaasstaging.com</code></div>
-
-      <div class="meta-bar">
-        <div><span>Source Sheet: </span><strong>ECMS TEST SCRIPT RECENT VERSION.xlsx (DASHBOARD)</strong></div>
-        <div><span>Target URL:
-          </span><strong>https://cicodecms.cicodsaasstaging.com/ecms/index.php?r=dashboard/workOrder</strong></div>
-        <div><span>Tenant ID: </span><strong>cicodecms</strong></div>
-        <div><span>Tester User: </span><strong>raissa.boyomo@crowninteractive.com</strong></div>
-        <div><span>Execution Date: </span><strong>September 17, 2026</strong></div>
-      </div>
+    </div>
     </div>
 
     <!-- Success Notification Block -->
@@ -750,97 +752,7 @@
       </table>
     </div>
 
-    <!-- Photographic Evidence Gallery -->
-    <div class="gallery-title">
-      <span>📸 Live Photographic Evidence Captured on Staging (cicodecms.cicodsaasstaging.com)</span>
-    </div>
-    <div class="gallery-grid">
-      <div class="thumb-card"
-        onclick="openLightbox('../uat_target3_cicodecm/ecms_step0_dashboard_entry.png', 'Step 0: ECMS Portal Entry Overview (cicodecms.cicodsaasstaging.com/ecms/)')">
-        <div class="thumb-img">
-          <img src="../uat_target3_cicodecm/ecms_step0_dashboard_entry.png" alt="ECMS Overview" loading="lazy">
-        </div>
-        <div class="thumb-caption">00. ECMS Portal Overview Landing</div>
-      </div>
-      <div class="thumb-card"
-        onclick="openLightbox('../uat_target3_cicodecm/ecms_step1_dashboard_expanded.png', 'Step 1: Dashboard Left Menu Accordion Expanded')">
-        <div class="thumb-img">
-          <img src="../uat_target3_cicodecm/ecms_step1_dashboard_expanded.png" alt="Dashboard Menu Expanded"
-            loading="lazy">
-        </div>
-        <div class="thumb-caption">01. Dashboard Menu Expanded</div>
-      </div>
-      <div class="thumb-card"
-        onclick="openLightbox('../uat_target3_cicodecm/ecms_step2_workflow_dashboard_loaded.png', 'Step 2: Workflow Dashboard Loaded (Task Status &amp; Filters)')">
-        <div class="thumb-img">
-          <img src="../uat_target3_cicodecm/ecms_step2_workflow_dashboard_loaded.png" alt="Workflow Dashboard Loaded"
-            loading="lazy">
-        </div>
-        <div class="thumb-caption">02. Workflow Dashboard Loaded</div>
-      </div>
-      <div class="thumb-card"
-        onclick="openLightbox('../uat_target3_cicodecm/ecms_step3_new_ticket_tooltip.png', 'Step 3: New Ticket / Task Status Hover State')">
-        <div class="thumb-img">
-          <img src="../uat_target3_cicodecm/ecms_step3_new_ticket_tooltip.png" alt="New Ticket Tooltip" loading="lazy">
-        </div>
-        <div class="thumb-caption">03. New Task Tooltip &amp; Metric</div>
-      </div>
-      <div class="thumb-card"
-        onclick="openLightbox('../uat_target3_cicodecm/ecms_step4_filter_today.png', 'Step 4: Filter Today Active')">
-        <div class="thumb-img">
-          <img src="../uat_target3_cicodecm/ecms_step4_filter_today.png" alt="Filter Today" loading="lazy">
-        </div>
-        <div class="thumb-caption">04. Filter Today Selected</div>
-      </div>
-      <div class="thumb-card"
-        onclick="openLightbox('../uat_target3_cicodecm/ecms_step5_filter_week.png', 'Step 5: Filter Week Active')">
-        <div class="thumb-img">
-          <img src="../uat_target3_cicodecm/ecms_step5_filter_week.png" alt="Filter Week" loading="lazy">
-        </div>
-        <div class="thumb-caption">05. Filter Week Selected</div>
-      </div>
-      <div class="thumb-card"
-        onclick="openLightbox('../uat_target3_cicodecm/ecms_step6_filter_month.png', 'Step 6: Filter Month Active (Open Count: 8)')">
-        <div class="thumb-img">
-          <img src="../uat_target3_cicodecm/ecms_step6_filter_month.png" alt="Filter Month" loading="lazy">
-        </div>
-        <div class="thumb-caption">06. Filter Month (Dynamic Update)</div>
-      </div>
-      <div class="thumb-card"
-        onclick="openLightbox('../uat_target3_cicodecm/ecms_step7_filter_custom_range.png', 'Step 7: Custom Date Range Selector')">
-        <div class="thumb-img">
-          <img src="../uat_target3_cicodecm/ecms_step7_filter_custom_range.png" alt="Custom Date Range" loading="lazy">
-        </div>
-        <div class="thumb-caption">07. Custom Date Range Selector</div>
-      </div>
-      <div class="thumb-card"
-        onclick="openLightbox('../uat_target3_cicodecm/ecms_step9_bar_chart_view.png', 'Step 9: Workflow Ticket Summary AmCharts Bar Chart')">
-        <div class="thumb-img">
-          <img src="../uat_target3_cicodecm/ecms_step9_bar_chart_view.png" alt="Bar Chart View" loading="lazy">
-        </div>
-        <div class="thumb-caption">09. Workflow Summary Bar Chart</div>
-      </div>
-      <div class="thumb-card"
-        onclick="openLightbox('../uat_target3_cicodecm/ecms_step11_chart_legend_interaction.png', 'Step 11: Interactive Legend Toggling')">
-        <div class="thumb-img">
-          <img src="../uat_target3_cicodecm/ecms_step11_chart_legend_interaction.png" alt="Legend Toggling"
-            loading="lazy">
-        </div>
-        <div class="thumb-caption">11. Interactive Chart Legend</div>
-      </div>
-      <div class="thumb-card"
-        onclick="openLightbox('../uat_target3_cicodecm/ecms_step18_end_test.png', 'Step 18: Concluded Session State')">
-        <div class="thumb-img">
-          <img src="../uat_target3_cicodecm/ecms_step18_end_test.png" alt="Session End" loading="lazy">
-        </div>
-        <div class="thumb-caption">18. Test Concluded Successfully</div>
-      </div>
-    </div>
-
-  </div>
-
-  <!-- Lightbox -->
-  <div class="lightbox" id="lightbox" onclick="closeLightbox()">
+    <div class="lightbox" id="lightbox" onclick="closeLightbox()">
     <div class="lightbox-box" onclick="event.stopPropagation()">
       <button class="lightbox-close" onclick="closeLightbox()">&times;</button>
       <img id="lightboxImg" src="" alt="Evidence Full Resolution">

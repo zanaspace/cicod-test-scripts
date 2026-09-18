@@ -1,387 +1,95 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>UAT Report - APPLICATION DOCUMENT Module (test/ApplicationDocumentTest.md)</title>
-  <link
-    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap"
-    rel="stylesheet">
+  <title>UAT Report - APPLICATION DOCUMENT Module (CDE)</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg: #0b0f19;
-      --surface: #121826;
-      --surface-card: #182235;
-      --border: #223049;
-      --text: #f1f5f9;
-      --text-muted: #94a3b8;
-      --pass: #10b981;
-      --not-impl: #f59e0b;
-      --dev: #38bdf8;
-      --accent: #06b6d4;
+      --bg: #0b0f19; --surface: #121826; --surface-card: #182235; --border: #223049;
+      --text: #f1f5f9; --text-muted: #94a3b8; --pass: #10b981; --not-impl: #f59e0b; --dev: #38bdf8; --bug: #ef4444; --blocked: #a78bfa; --accent: #10b981;
     }
-
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
-    body {
-      background-color: var(--bg);
-      color: var(--text);
-      font-family: 'Inter', sans-serif;
-      padding: 36px 24px;
-      line-height: 1.5;
-    }
-
-    .container {
-      max-width: 1440px;
-      margin: 0 auto;
-    }
-
-    .header-box {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 14px;
-      padding: 28px;
-      margin-bottom: 28px;
-    }
-
-    h1 {
-      font-size: 1.8rem;
-      font-weight: 700;
-      margin-bottom: 6px;
-      color: #fff;
-    }
-
-    .sub {
-      color: var(--text-muted);
-      font-size: 0.92rem;
-      margin-bottom: 20px;
-    }
-
-    .meta-bar {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 24px;
-      font-size: 0.88rem;
-      border-top: 1px solid var(--border);
-      padding-top: 18px;
-    }
-
-    .meta-bar span {
-      color: var(--text-muted);
-    }
-
-    .meta-bar strong {
-      color: #e2e8f0;
-      font-family: 'JetBrains Mono', monospace;
-    }
-
-    .summary-badge {
-      display: inline-block;
-      padding: 5px 14px;
-      background: rgba(6, 182, 212, 0.15);
-      border: 1px solid rgba(6, 182, 212, 0.3);
-      color: #67e8f9;
-      border-radius: 20px;
-      font-weight: 700;
-      font-size: 0.82rem;
-      margin-bottom: 12px;
-    }
-
-    .kpi-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 16px;
-      margin-bottom: 28px;
-    }
-
-    .kpi-card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 20px;
-    }
-
-    .kpi-num {
-      font-size: 2rem;
-      font-weight: 700;
-      font-family: 'JetBrains Mono', monospace;
-      margin-top: 6px;
-    }
-
-    .kpi-label {
-      color: var(--text-muted);
-      font-size: 0.84rem;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-    }
-
-    .filter-bar {
-      display: flex;
-      gap: 10px;
-      margin-bottom: 24px;
-      flex-wrap: wrap;
-    }
-
-    .filter-btn {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      color: var(--text-muted);
-      padding: 8px 16px;
-      border-radius: 8px;
-      font-size: 0.85rem;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.2s ease;
-    }
-
-    .filter-btn:hover,
-    .filter-btn.active {
-      background: var(--accent);
-      color: #0b0f19;
-      border-color: var(--accent);
-    }
-
-    .case-section {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 14px;
-      margin-bottom: 28px;
-      overflow: hidden;
-    }
-
-    .case-header {
-      padding: 18px 24px;
-      background: var(--surface-card);
-      border-bottom: 1px solid var(--border);
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 12px;
-    }
-
-    .case-title {
-      font-size: 1.15rem;
-      font-weight: 700;
-      color: #fff;
-    }
-
-    .case-tag {
-      font-size: 0.76rem;
-      font-family: 'JetBrains Mono', monospace;
-      padding: 4px 10px;
-      border-radius: 6px;
-      background: rgba(6, 182, 212, 0.15);
-      border: 1px solid rgba(6, 182, 212, 0.3);
-      color: #67e8f9;
-    }
-
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      font-size: 0.88rem;
-    }
-
-    th {
-      background: rgba(11, 15, 25, 0.6);
-      text-align: left;
-      padding: 14px 16px;
-      color: var(--text-muted);
-      font-weight: 600;
-      font-size: 0.8rem;
-      text-transform: uppercase;
-      letter-spacing: 0.04em;
-      border-bottom: 1px solid var(--border);
-    }
-
-    td {
-      padding: 14px 16px;
-      border-bottom: 1px solid var(--border);
-      vertical-align: top;
-    }
-
-    tr:last-child td {
-      border-bottom: none;
-    }
-
-    tr:hover td {
-      background: rgba(255, 255, 255, 0.02);
-    }
-
-    .step-name {
-      font-weight: 600;
-      color: #fff;
-    }
-
-    .expected-text {
-      color: #cbd5e1;
-      font-size: 0.86rem;
-    }
-
-    .actual-text {
-      color: #93c5fd;
-      font-size: 0.86rem;
-      font-family: 'JetBrains Mono', monospace;
-    }
-
-    .deviation-text {
-      color: #fbbf24;
-      font-size: 0.84rem;
-    }
-
-    .badge {
-      display: inline-block;
-      padding: 3px 10px;
-      border-radius: 6px;
-      font-size: 0.74rem;
-      font-weight: 700;
-      letter-spacing: 0.04em;
-      text-transform: uppercase;
-    }
-
-    .badge-pass {
-      background: rgba(16, 185, 129, 0.2);
-      color: #34d399;
-      border: 1px solid rgba(16, 185, 129, 0.3);
-    }
-
-    .badge-not-impl {
-      background: rgba(245, 158, 11, 0.2);
-      color: #fbbf24;
-      border: 1px solid rgba(245, 158, 11, 0.3);
-    }
-
-    .badge-dev {
-      background: rgba(56, 189, 248, 0.2);
-      color: #38bdf8;
-      border: 1px solid rgba(56, 189, 248, 0.3);
-    }
-
-    .thumb {
-      width: 72px;
-      height: 48px;
-      object-fit: cover;
-      border-radius: 6px;
-      border: 1px solid var(--border);
-      cursor: pointer;
-      transition: transform 0.15s ease, border-color 0.15s ease;
-    }
-
-    .thumb:hover {
-      transform: scale(1.08);
-      border-color: var(--accent);
-    }
-
-    /* Modal */
-    .modal {
-      display: none;
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      background: rgba(0, 0, 0, 0.88);
-      backdrop-filter: blur(4px);
-      z-index: 999;
-      justify-content: center;
-      align-items: center;
-      padding: 24px;
-    }
-
-    .modal.active {
-      display: flex;
-    }
-
-    .modal-content {
-      max-width: 90vw;
-      max-height: 90vh;
-      border-radius: 10px;
-      border: 1px solid var(--border);
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
-    }
-
-    .modal-close {
-      position: absolute;
-      top: 24px;
-      right: 28px;
-      color: #fff;
-      font-size: 2rem;
-      cursor: pointer;
-      font-weight: 700;
-    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background-color: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; padding: 36px 24px; line-height: 1.5; }
+    .container { max-width: 1440px; margin: 0 auto; }
+    .header-box { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 28px; margin-bottom: 28px; }
+    h1 { font-size: 1.8rem; font-weight: 700; margin-bottom: 6px; color: #fff; }
+    .sub { color: var(--text-muted); font-size: 0.92rem; margin-bottom: 20px; }
+    .meta-bar { display: flex; flex-wrap: wrap; gap: 24px; font-size: 0.88rem; border-top: 1px solid var(--border); padding-top: 18px; }
+    .meta-bar span { color: var(--text-muted); }
+    .meta-bar strong { color: #e2e8f0; font-family: 'JetBrains Mono', monospace; }
+    .summary-badge { display: inline-block; padding: 5px 14px; background: rgba(239, 68, 68, 0.15); border: 1px solid rgba(239, 68, 68, 0.3); color: #f87171; border-radius: 20px; font-weight: 700; font-size: 0.82rem; margin-bottom: 12px; }
+    .kpi-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 16px; margin-bottom: 28px; }
+    .kpi-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 20px; }
+    .kpi-num { font-size: 2rem; font-weight: 700; font-family: 'JetBrains Mono', monospace; margin-top: 6px; }
+    .kpi-label { color: var(--text-muted); font-size: 0.84rem; text-transform: uppercase; letter-spacing: 0.05em; }
+    .filter-bar { display: flex; gap: 10px; margin-bottom: 24px; flex-wrap: wrap; }
+    .filter-btn { background: var(--surface); border: 1px solid var(--border); color: var(--text-muted); padding: 8px 16px; border-radius: 8px; font-size: 0.85rem; font-weight: 600; cursor: pointer; transition: all 0.2s ease; }
+    .filter-btn:hover, .filter-btn.active { background: var(--accent); color: #0b0f19; border-color: var(--accent); }
+    .case-section { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; margin-bottom: 28px; overflow: hidden; }
+    .case-header { padding: 18px 24px; background: var(--surface-card); border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; }
+    .case-title { font-size: 1.15rem; font-weight: 700; color: #fff; }
+    .case-tag { font-size: 0.76rem; font-family: 'JetBrains Mono', monospace; padding: 4px 10px; border-radius: 6px; background: rgba(16, 185, 129, 0.15); border: 1px solid rgba(16, 185, 129, 0.3); color: #34d399; }
+    .table-scroll { overflow-x: auto; max-width: 100%; }
+    table { width: 100%; min-width: 1350px; table-layout: fixed; border-collapse: collapse; font-size: 0.88rem; }
+    th { background: rgba(11, 15, 25, 0.6); text-align: left; padding: 14px 16px; color: var(--text-muted); font-weight: 600; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.04em; border-bottom: 1px solid var(--border); }
+    td { padding: 14px 16px; border-bottom: 1px solid var(--border); vertical-align: top; overflow-wrap: break-word; word-break: break-word; }
+    tr:last-child td { border-bottom: none; }
+    tr:hover td { background: rgba(255, 255, 255, 0.02); }
+    .step-name { font-weight: 600; color: #fff; }
+    .expected-text { color: #cbd5e1; font-size: 0.86rem; }
+    .actual-text { color: #93c5fd; font-size: 0.86rem; font-family: 'JetBrains Mono', monospace; overflow-wrap: anywhere; }
+    .deviation-text { color: #fbbf24; font-size: 0.84rem; }
+    .badge { display: inline-block; padding: 3px 10px; border-radius: 6px; font-size: 0.74rem; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; }
+    .badge-pass { background: rgba(16, 185, 129, 0.2); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.3); }
+    .badge-not-impl { background: rgba(245, 158, 11, 0.2); color: #fbbf24; border: 1px solid rgba(245, 158, 11, 0.3); }
+    .badge-dev { background: rgba(56, 189, 248, 0.2); color: #38bdf8; border: 1px solid rgba(56, 189, 248, 0.3); }
+    .badge-bug { background: rgba(239, 68, 68, 0.2); color: #f87171; border: 1px solid rgba(239, 68, 68, 0.35); }
+    .badge-blocked { background: rgba(167, 139, 250, 0.2); color: #c4b5fd; border: 1px solid rgba(167, 139, 250, 0.35); }
+    .thumb { width: 80px; height: 50px; object-fit: cover; border-radius: 6px; border: 1px solid var(--border); cursor: pointer; transition: transform 0.15s ease, border-color 0.15s ease; }
+    .thumb:hover { transform: scale(1.08); border-color: var(--accent); }
+    .no-img-badge { display: inline-block; padding: 4px 8px; border-radius: 6px; background: rgba(245, 158, 11, 0.1); border: 1px dashed rgba(245, 158, 11, 0.3); color: #fbbf24; font-size: 0.72rem; font-weight: 600; text-align: center; line-height: 1.3; }
+    .modal { display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0, 0, 0, 0.88); backdrop-filter: blur(4px); z-index: 999; justify-content: center; align-items: center; padding: 24px; }
+    .modal.active { display: flex; }
+    .modal-content { max-width: 90vw; max-height: 90vh; border-radius: 10px; border: 1px solid var(--border); box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6); }
+    .modal-close { position: absolute; top: 24px; right: 28px; color: #fff; font-size: 2rem; cursor: pointer; font-weight: 700; }
   </style>
-  <link rel="stylesheet" href="../assets/css/test-report-addon.css">
 </head>
-
 <body>
   <div class="container">
     <div class="header-box">
-      <div
-        style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;margin-bottom:12px;">
-        <div class="summary-badge">✓ APPLICATION DOCUMENT MODULE UAT COMPLETED</div>
-        <button class="btn-exec-download"
-          onclick="if(window.ExecReportGenerator) ExecReportGenerator.downloadExecReportPdf('appdoc')"
-          title="Download Official Executive &amp; Engineering PDF Report with Detailed Test Cases">
-          <span class="btn-icon-pulse">📄</span>
-          <span>Download PDF Report</span>
-          <span class="btn-exec-badge">PDF</span>
-        </button>
-      </div>
+      <div class="summary-badge">&#9888; APPLICATION DOCUMENTS TEST REPORT &mdash; ACCESS ISSUE IN ECMS FOLDERS & ASSET MANAGEMENT NOT AVAILABLE</div>
       <h1>UAT Execution Report: APPLICATION DOCUMENT Module</h1>
-      <p class="sub">Executed in strict accordance with the Excel Test Script
-        (<code>CICOD DRIVE TEST SCRIPT.xlsx</code>, Rows 274 to 355) against Target 3 Environment (cicodsaasstaging.com
-        / cicodecms).</p>
-
-      <div class="meta-bar">
-        <div><span>Test Script:</span> <strong>test/ApplicationDocumentTest.md</strong></div>
-        <div><span>Target URL:</span>
-          <strong>https://govtest.convergenceondemand.com/cde/application-documents/queue/...</strong>
-        </div>
-        <div><span>Execution Engine:</span> <strong>Headless Edge CDP (Port 9245)</strong></div>
-        <div><span>Execution Date:</span> <strong>September 15, 2026</strong></div>
-      </div>
+      <p class="sub">This test report covers the Application Documents section in CICOD Drive. We verified the ECMS Document folders and checked for Asset Management. Key findings: Clicking into folders inside ECMS Documents displays an "Access denied" notice, preventing users from opening files inside (blocking 29 test steps). The Asset Management section is not available in this version of the application (80 test steps not implemented).</p>
     </div>
 
     <div class="kpi-grid">
-      <div class="kpi-card">
-        <div class="kpi-label">Total Scenarios</div>
-        <div class="kpi-num" style="color: #06b6d4;">5</div>
-      </div>
-      <div class="kpi-card">
-        <div class="kpi-label">Total Test Rows</div>
-        <div class="kpi-num" style="color: #38bdf8;">80</div>
-      </div>
-      <div class="kpi-card">
-        <div class="kpi-label">Functional Passed</div>
-        <div class="kpi-num" style="color: #10b981;">42</div>
-      </div>
-      <div class="kpi-card">
-        <div class="kpi-label">Documented Gaps</div>
-        <div class="kpi-num" style="color: #f59e0b;">38</div>
-      </div>
+      <div class="kpi-card"><div class="kpi-label">Total Scenarios</div><div class="kpi-num" style="color: #10b981;">6</div></div>
+      <div class="kpi-card"><div class="kpi-label">Script Rows Covered</div><div class="kpi-num" style="color: #38bdf8;">160 / 160</div></div>
+      <div class="kpi-card"><div class="kpi-label">Passed</div><div class="kpi-num" style="color: #10b981;">14</div></div>
+      <div class="kpi-card"><div class="kpi-label">Deviations</div><div class="kpi-num" style="color: #fbbf24;">6</div></div>
+      <div class="kpi-card"><div class="kpi-label">Blocked</div><div class="kpi-num" style="color: #a78bfa;">28</div></div>
+      <div class="kpi-card"><div class="kpi-label">Confirmed Bugs</div><div class="kpi-num" style="color: #ef4444;">1</div></div>
+      <div class="kpi-card"><div class="kpi-label">Not Implemented</div><div class="kpi-num" style="color: #94a3b8;">111</div></div>
     </div>
 
     <div class="filter-bar">
-      <button class="filter-btn active" onclick="filterCases('all', this)">All Scenarios</button>
-      <button class="filter-btn" onclick="filterCases('sc1', this)">ECMS Docs Navigation</button>
-      <button class="filter-btn" onclick="filterCases('sc2', this)">Queue Folders</button>
-      <button class="filter-btn" onclick="filterCases('sc3', this)">File Actions & Ops</button>
-      <button class="filter-btn" onclick="filterCases('sc4', this)">Grid View & Viewer</button>
-      <button class="filter-btn" onclick="filterCases('sc5', this)">Nested Audit & Session</button>
+      <button class="filter-btn active" onclick="filterCases('all', this)">All Scenarios (6)</button>
+      <button class="filter-btn" onclick="filterCases('sc1', this)">ECMS Documents Navigation &amp; Queue-Root Folder Menu (Rows 274–282) (9)</button>
+      <button class="filter-btn" onclick="filterCases('sc2', this)">Queue-Type Folder Level (Rows 283–292) (10)</button>
+      <button class="filter-btn" onclick="filterCases('sc3', this)">File-Level Actions &amp; Advanced Operations — Blocked by Row 292 (Rows 293–311) (18)</button>
+      <button class="filter-btn" onclick="filterCases('sc4', this)">Grid View &amp; Document Viewer / Signature Tools — Blocked by Row 292 (Rows 312–327) (16)</button>
+      <button class="filter-btn" onclick="filterCases('sc5', this)">Second Folder Pass, Nested Audit Trail &amp; Conclusion (Rows 328–355) (27)</button>
+      <button class="filter-btn" onclick="filterCases('sc6', this)">Asset Management — Full Scenario Unreachable (Rows 357–438) (80)</button>
     </div>
-
-    <!-- Scenarios -->
 
     <div class="case-section" data-case="sc1">
       <div class="case-header">
-        <div class="case-title">Scenario 1: ECMS DOCUMENTS NAVIGATION & QUEUE VIEW</div>
-        <div class="case-tag">Rows 274 - 282</div>
+        <div class="case-title">Scenario 1: ECMS Documents Navigation &amp; Queue-Root Folder Menu (Rows 274–282)</div>
+        <div class="case-tag">9 rows</div>
       </div>
+      <div class="table-scroll">
       <table>
         <thead>
           <tr>
@@ -389,8 +97,8 @@
             <th style="width: 220px;">Steps to Reproduce</th>
             <th style="width: 250px;">Expected Result</th>
             <th>Actual Result (Live Execution)</th>
-            <th style="width: 230px;">Deviations & Naming Notes</th>
-            <th style="width: 130px;">Status</th>
+            <th style="width: 180px;">Deviations / Notes</th>
+            <th style="width: 170px;">Status</th>
             <th style="width: 140px;">Screenshot Evidence</th>
           </tr>
         </thead>
@@ -398,226 +106,104 @@
 
           <tr>
             <td><strong>274</strong></td>
-            <td><span class="step-name">Application Document / ECMS Document</span></td>
-            <td>
-              <div class="expected-text">View the general document Folder</div>
-            </td>
-            <td>
-              <div class="actual-text">Application Documents section contains "ECMS Documents" sub-item in sidebar.
-              </div>
-            </td>
-            <td>
-              <div class="deviation-text">None. Sub-item accessible directly from sidebar.</div>
-            </td>
-            <td>
-              <span class="badge badge-pass">
-                PASSED
-              </span>
-            </td>
-            <td>
-              <img src="../uat_target3_cicodecm/t3_appdoc_landing.png" class="thumb" alt="Evidence"
-                onclick="openModal(this.src)">
-            </td>
+            <td><span class="step-name">Application Document / ECMS Document — View the general document Folder</span></td>
+            <td><div class="expected-text">View the general document folder</div></td>
+            <td><div class="actual-text">Sidebar &quot;Application Documents&quot; item expanded to reveal two children: &quot;ECMS Documents&quot; and &quot;WFM Documents&quot;.</div></td>
+            <td><div class="deviation-text"></div></td>
+            <td><span class="badge badge-pass">PASSED</span></td>
+            <td><img src="../uat_target3_cicodecm/appdoc_ecms_step274_sidebar_expanded.png" class="thumb" alt="appdoc_ecms_step274_sidebar_expanded.png" onclick="openModal(this.src)"></td>
           </tr>
 
           <tr>
             <td><strong>275</strong></td>
-            <td><span class="step-name">Click the menu ECMS document side menu on the file on the general document
-                created</span></td>
-            <td>
-              <div class="expected-text">All ECMS files should be displayed in the side menu</div>
-            </td>
-            <td>
-              <div class="actual-text">Clicking "ECMS Documents" opens queue overview page at
-                /cde/application-documents/queue/4a2cbee0-6499-4cad-b006-cf2636c3587b displaying application queue
-                folders: "complaints" and "1gov test".</div>
-            </td>
-            <td>
-              <div class="deviation-text">None. Dedicated queue route rendered.</div>
-            </td>
-            <td>
-              <span class="badge badge-pass">
-                PASSED
-              </span>
-            </td>
-            <td>
-              <img src="../uat_target3_cicodecm/t3_appdoc_landing.png" class="thumb" alt="Evidence"
-                onclick="openModal(this.src)">
-            </td>
+            <td><span class="step-name">Click the menu ECMS document side menu on the file on the general document created</span></td>
+            <td><div class="expected-text">All ECMS files should be displayed in the side menu</div></td>
+            <td><div class="actual-text">Clicking &quot;ECMS Documents&quot; navigates to `/cde/application-documents/queue/&lt;id&gt;`, sidebar item highlighted, queue table loads showing 1 queue folder: &quot;complaints&quot; (owner Raissa Boyomo, &quot;ME&quot;).</div></td>
+            <td><div class="deviation-text"></div></td>
+            <td><span class="badge badge-pass">PASSED</span></td>
+            <td><img src="../uat_target3_cicodecm/appdoc_ecms_step275_queue_landing.png" class="thumb" alt="appdoc_ecms_step275_queue_landing.png" onclick="openModal(this.src)"></td>
           </tr>
 
           <tr>
             <td><strong>276</strong></td>
             <td><span class="step-name">Click on open folder</span></td>
-            <td>
-              <div class="expected-text">Folder should be opened successfully</div>
-            </td>
-            <td>
-              <div class="actual-text">Folder row clicked and navigated into child contents.</div>
-            </td>
-            <td>
-              <div class="deviation-text">None.</div>
-            </td>
-            <td>
-              <span class="badge badge-pass">
-                PASSED
-              </span>
-            </td>
-            <td>
-              <img src="../uat_target3_cicodecm/t3_appdoc_queue_folder_click.png" class="thumb" alt="Evidence"
-                onclick="openModal(this.src)">
-            </td>
+            <td><div class="expected-text">Folder should be opened successfully</div></td>
+            <td><div class="actual-text">A plain single click on the &quot;complaints&quot; row does **not** open it — it only selects the row and populates the Properties panel. The three-dot menu's &quot;Open Folder&quot; item is the actual way to descend; confirmed via URL change and matching API calls (`findFolder2`, `getDirectChildFolders`, `getQueueTypesFolder`).</div></td>
+            <td><div class="deviation-text"></div></td>
+            <td><span class="badge badge-dev">PASSED (deviation — single click selects, does not open)</span></td>
+            <td><img src="../uat_target3_cicodecm/appdoc_ecms_step283_queue_type_ACTUAL.png" class="thumb" alt="appdoc_ecms_step283_queue_type_ACTUAL.png" onclick="openModal(this.src)"></td>
           </tr>
 
           <tr>
             <td><strong>277</strong></td>
             <td><span class="step-name">View Audit trail: Click on the menu three dotted column</span></td>
-            <td>
-              <div class="expected-text">Displays a drop-down as Pin, Get link, share, star, and Archive</div>
-            </td>
-            <td>
-              <div class="actual-text">Folder three-dot menu renders: "Open Folder", "Share Folder", "View Access", and
-                "Star".</div>
-            </td>
-            <td>
-              <div class="deviation-text">[Naming Convention]: Context menu provides Open Folder, Share Folder, View
-                Access, and Star.</div>
-            </td>
-            <td>
-              <span class="badge badge-pass">
-                PASSED
-              </span>
-            </td>
-            <td>
-              <img src="../uat_target3_cicodecm/t3_appdoc_folder_actions_menu.png" class="thumb" alt="Evidence"
-                onclick="openModal(this.src)">
-            </td>
+            <td><div class="expected-text">Displays a drop-down as Pin, Get link, share, star, and Archive</div></td>
+            <td><div class="actual-text">Live dropdown on the &quot;complaints&quot; row shows only two items: **&quot;Open Folder&quot;** and **&quot;Star&quot;**. No Pin, Get Link, Share, or Archive item exists.</div></td>
+            <td><div class="deviation-text"></div></td>
+            <td><span class="badge badge-dev">PASSED (deviation — reduced menu)</span></td>
+            <td><img src="../uat_target3_cicodecm/appdoc_ecms_step277_folder_actions_menu.png" class="thumb" alt="appdoc_ecms_step277_folder_actions_menu.png" onclick="openModal(this.src)"></td>
           </tr>
 
           <tr>
             <td><strong>278</strong></td>
             <td><span class="step-name">Click on pin button</span></td>
-            <td>
-              <div class="expected-text">Should pin the folder</div>
-            </td>
-            <td>
-              <div class="actual-text">Pin action consolidated into "Star".</div>
-            </td>
-            <td>
-              <div class="deviation-text">Consolidated into Star folder.</div>
-            </td>
-            <td>
-              <span class="badge badge-pass">
-                PASSED
-              </span>
-            </td>
-            <td>
-              <img src="../uat_target3_cicodecm/t3_appdoc_folder_actions_menu.png" class="thumb" alt="Evidence"
-                onclick="openModal(this.src)">
-            </td>
+            <td><div class="expected-text">Should pin the folder</div></td>
+            <td><div class="actual-text">No &quot;Pin&quot; action exists in the folder menu (re-opened fresh for this check).</div></td>
+            <td><div class="deviation-text"></div></td>
+            <td><span class="badge badge-not-impl">❌ NOT IMPLEMENTED</span></td>
+            <td><img src="../uat_target3_cicodecm/appdoc_ecms_step278_pin_not_present.png" class="thumb" alt="appdoc_ecms_step278_pin_not_present.png" onclick="openModal(this.src)"></td>
           </tr>
 
           <tr>
             <td><strong>279</strong></td>
             <td><span class="step-name">Click on get link button</span></td>
-            <td>
-              <div class="expected-text">Should display the get link page</div>
-            </td>
-            <td>
-              <div class="actual-text">Handled via "Share Folder" modal.</div>
-            </td>
-            <td>
-              <div class="deviation-text">Integrated into Share Folder workflow.</div>
-            </td>
-            <td>
-              <span class="badge badge-pass">
-                PASSED
-              </span>
-            </td>
-            <td>
-              <img src="../uat_target3_cicodecm/t3_appdoc_folder_actions_menu.png" class="thumb" alt="Evidence"
-                onclick="openModal(this.src)">
-            </td>
+            <td><div class="expected-text">Should display the get link page</div></td>
+            <td><div class="actual-text">No &quot;Get Link&quot; action exists in the folder menu (re-opened fresh for this check).</div></td>
+            <td><div class="deviation-text"></div></td>
+            <td><span class="badge badge-not-impl">❌ NOT IMPLEMENTED</span></td>
+            <td><img src="../uat_target3_cicodecm/appdoc_ecms_step279_getlink_not_present.png" class="thumb" alt="appdoc_ecms_step279_getlink_not_present.png" onclick="openModal(this.src)"></td>
           </tr>
 
           <tr>
             <td><strong>280</strong></td>
             <td><span class="step-name">Click on the share button</span></td>
-            <td>
-              <div class="expected-text">Should be able to share the folder</div>
-            </td>
-            <td>
-              <div class="actual-text">"Share Folder" option opens sharing and access management modal.</div>
-            </td>
-            <td>
-              <div class="deviation-text">None.</div>
-            </td>
-            <td>
-              <span class="badge badge-pass">
-                PASSED
-              </span>
-            </td>
-            <td>
-              <img src="../uat_target3_cicodecm/t3_appdoc_folder_actions_menu.png" class="thumb" alt="Evidence"
-                onclick="openModal(this.src)">
-            </td>
+            <td><div class="expected-text">Should be able to share the folder</div></td>
+            <td><div class="actual-text">No &quot;Share&quot; action exists in the folder menu (re-opened fresh for this check).</div></td>
+            <td><div class="deviation-text"></div></td>
+            <td><span class="badge badge-not-impl">❌ NOT IMPLEMENTED</span></td>
+            <td><img src="../uat_target3_cicodecm/appdoc_ecms_step280_share_not_present.png" class="thumb" alt="appdoc_ecms_step280_share_not_present.png" onclick="openModal(this.src)"></td>
           </tr>
 
           <tr>
             <td><strong>281</strong></td>
             <td><span class="step-name">Click on the star button</span></td>
-            <td>
-              <div class="expected-text">Should star the folder.</div>
-            </td>
-            <td>
-              <div class="actual-text">Action "Star" stars the folder and indexes it in Starred category.</div>
-            </td>
-            <td>
-              <div class="deviation-text">None.</div>
-            </td>
-            <td>
-              <span class="badge badge-pass">
-                PASSED
-              </span>
-            </td>
-            <td>
-              <img src="../uat_target3_cicodecm/t3_appdoc_folder_actions_menu.png" class="thumb" alt="Evidence"
-                onclick="openModal(this.src)">
-            </td>
+            <td><div class="expected-text">Should star the folder</div></td>
+            <td><div class="actual-text">&quot;Star&quot; clicked live on the &quot;complaints&quot; row; menu closes and star state is applied (functional).</div></td>
+            <td><div class="deviation-text"></div></td>
+            <td><span class="badge badge-pass">PASSED</span></td>
+            <td><img src="../uat_target3_cicodecm/appdoc_ecms_step281_folder_starred.png" class="thumb" alt="appdoc_ecms_step281_folder_starred.png" onclick="openModal(this.src)"></td>
           </tr>
 
           <tr>
             <td><strong>282</strong></td>
             <td><span class="step-name">Click on archive button</span></td>
-            <td>
-              <div class="expected-text">Folder should be archived</div>
-            </td>
-            <td>
-              <div class="actual-text">Archival policy governed by lifecycle rules in system settings.</div>
-            </td>
-            <td>
-              <div class="deviation-text">Managed via system retention policy.</div>
-            </td>
-            <td>
-              <span class="badge badge-pass">
-                PASSED
-              </span>
-            </td>
-            <td>
-              <img src="../uat_target3_cicodecm/t3_appdoc_landing.png" class="thumb" alt="Evidence"
-                onclick="openModal(this.src)">
-            </td>
+            <td><div class="expected-text">Folder should be archived</div></td>
+            <td><div class="actual-text">No &quot;Archive&quot; action exists in the folder menu (re-opened fresh for this check).</div></td>
+            <td><div class="deviation-text"></div></td>
+            <td><span class="badge badge-not-impl">❌ NOT IMPLEMENTED</span></td>
+            <td><img src="../uat_target3_cicodecm/appdoc_ecms_step282_archive_not_present.png" class="thumb" alt="appdoc_ecms_step282_archive_not_present.png" onclick="openModal(this.src)"></td>
           </tr>
-
         </tbody>
       </table>
+      </div>
     </div>
 
     <div class="case-section" data-case="sc2">
       <div class="case-header">
-        <div class="case-title">Scenario 2: QUEUE FOLDERS & CHILD DIRECTORIES</div>
-        <div class="case-tag">Rows 283 - 292</div>
+        <div class="case-title">Scenario 2: Queue-Type Folder Level (Rows 283–292)</div>
+        <div class="case-tag">10 rows</div>
       </div>
+      <div class="table-scroll">
       <table>
         <thead>
           <tr>
@@ -625,8 +211,8 @@
             <th style="width: 220px;">Steps to Reproduce</th>
             <th style="width: 250px;">Expected Result</th>
             <th>Actual Result (Live Execution)</th>
-            <th style="width: 230px;">Deviations & Naming Notes</th>
-            <th style="width: 130px;">Status</th>
+            <th style="width: 180px;">Deviations / Notes</th>
+            <th style="width: 170px;">Status</th>
             <th style="width: 140px;">Screenshot Evidence</th>
           </tr>
         </thead>
@@ -635,243 +221,113 @@
           <tr>
             <td><strong>283</strong></td>
             <td><span class="step-name">Click on Queue folder</span></td>
-            <td>
-              <div class="expected-text">Should display the queue type folder page</div>
-            </td>
-            <td>
-              <div class="actual-text">Clicking queue folder "complaints" successfully displays the queue type folder
-                view.</div>
-            </td>
-            <td>
-              <div class="deviation-text">None.</div>
-            </td>
-            <td>
-              <span class="badge badge-pass">
-                PASSED
-              </span>
-            </td>
-            <td>
-              <img src="../uat_target3_cicodecm/t3_appdoc_queue_folder_click.png" class="thumb" alt="Evidence"
-                onclick="openModal(this.src)">
-            </td>
+            <td><div class="expected-text">Should display the queue type folder page</div></td>
+            <td><div class="actual-text">Opening &quot;complaints&quot; (via 3-dot &gt; Open Folder) navigates to `/application-documents/queue-type/&lt;id&gt;`, listing 1 sub-folder: &quot;uat address signature queue type&quot;.</div></td>
+            <td><div class="deviation-text"></div></td>
+            <td><span class="badge badge-pass">PASSED</span></td>
+            <td><img src="../uat_target3_cicodecm/appdoc_ecms_step283_queue_type_view.png" class="thumb" alt="appdoc_ecms_step283_queue_type_view.png" onclick="openModal(this.src)"></td>
           </tr>
 
           <tr>
             <td><strong>284</strong></td>
             <td><span class="step-name">Click on the three dotted action button</span></td>
-            <td>
-              <div class="expected-text">Displays a drop-down as Pin, Get link, share, star, and Archive</div>
-            </td>
-            <td>
-              <div class="actual-text">Three-dot action button triggers contextual action dropdown.</div>
-            </td>
-            <td>
-              <div class="deviation-text">None.</div>
-            </td>
-            <td>
-              <span class="badge badge-pass">
-                PASSED
-              </span>
-            </td>
-            <td>
-              <img src="../uat_target3_cicodecm/t3_appdoc_folder_actions_menu.png" class="thumb" alt="Evidence"
-                onclick="openModal(this.src)">
-            </td>
+            <td><div class="expected-text">Displays a drop-down as Pin, Get link, share, star, and Archive</div></td>
+            <td><div class="actual-text">Same reduced menu confirmed at this second hierarchy level: &quot;Open Folder&quot; and &quot;Star&quot; only.</div></td>
+            <td><div class="deviation-text"></div></td>
+            <td><span class="badge badge-dev">PASSED (deviation — reduced menu)</span></td>
+            <td><img src="../uat_target3_cicodecm/appdoc_ecms_step284_subfolder_menu.png" class="thumb" alt="appdoc_ecms_step284_subfolder_menu.png" onclick="openModal(this.src)"></td>
           </tr>
 
           <tr>
             <td><strong>285</strong></td>
             <td><span class="step-name">Click on pin button</span></td>
-            <td>
-              <div class="expected-text">Should pin the folder</div>
-            </td>
-            <td>
-              <div class="actual-text">Consolidated into Star folder.</div>
-            </td>
-            <td>
-              <div class="deviation-text">Handled via Star.</div>
-            </td>
-            <td>
-              <span class="badge badge-pass">
-                PASSED
-              </span>
-            </td>
-            <td>
-              <img src="../uat_target3_cicodecm/t3_appdoc_folder_actions_menu.png" class="thumb" alt="Evidence"
-                onclick="openModal(this.src)">
-            </td>
+            <td><div class="expected-text">Should pin the folder</div></td>
+            <td><div class="actual-text">No Pin action at this level either (re-verified independently).</div></td>
+            <td><div class="deviation-text"></div></td>
+            <td><span class="badge badge-not-impl">❌ NOT IMPLEMENTED</span></td>
+            <td><img src="../uat_target3_cicodecm/appdoc_ecms_step285_pin_absent_sub.png" class="thumb" alt="appdoc_ecms_step285_pin_absent_sub.png" onclick="openModal(this.src)"></td>
           </tr>
 
           <tr>
             <td><strong>286</strong></td>
             <td><span class="step-name">Click on get link button</span></td>
-            <td>
-              <div class="expected-text">Should display the get link page</div>
-            </td>
-            <td>
-              <div class="actual-text">Handled via Share Folder dialog.</div>
-            </td>
-            <td>
-              <div class="deviation-text">None.</div>
-            </td>
-            <td>
-              <span class="badge badge-pass">
-                PASSED
-              </span>
-            </td>
-            <td>
-              <img src="../uat_target3_cicodecm/t3_appdoc_folder_actions_menu.png" class="thumb" alt="Evidence"
-                onclick="openModal(this.src)">
-            </td>
+            <td><div class="expected-text">Should display the get link page</div></td>
+            <td><div class="actual-text">No Get Link action at this level (re-verified independently).</div></td>
+            <td><div class="deviation-text"></div></td>
+            <td><span class="badge badge-not-impl">❌ NOT IMPLEMENTED</span></td>
+            <td><img src="../uat_target3_cicodecm/appdoc_ecms_step286_getlink_absent_sub.png" class="thumb" alt="appdoc_ecms_step286_getlink_absent_sub.png" onclick="openModal(this.src)"></td>
           </tr>
 
           <tr>
             <td><strong>287</strong></td>
             <td><span class="step-name">Click on the share button</span></td>
-            <td>
-              <div class="expected-text">Should be able to share the folder</div>
-            </td>
-            <td>
-              <div class="actual-text">Share modal triggered.</div>
-            </td>
-            <td>
-              <div class="deviation-text">None.</div>
-            </td>
-            <td>
-              <span class="badge badge-pass">
-                PASSED
-              </span>
-            </td>
-            <td>
-              <img src="../uat_target3_cicodecm/t3_appdoc_folder_actions_menu.png" class="thumb" alt="Evidence"
-                onclick="openModal(this.src)">
-            </td>
+            <td><div class="expected-text">Should be able to share the folder</div></td>
+            <td><div class="actual-text">No Share action at this level (re-verified independently).</div></td>
+            <td><div class="deviation-text"></div></td>
+            <td><span class="badge badge-not-impl">❌ NOT IMPLEMENTED</span></td>
+            <td><img src="../uat_target3_cicodecm/appdoc_ecms_step287_share_absent_sub.png" class="thumb" alt="appdoc_ecms_step287_share_absent_sub.png" onclick="openModal(this.src)"></td>
           </tr>
 
           <tr>
             <td><strong>288</strong></td>
             <td><span class="step-name">Click on the star button</span></td>
-            <td>
-              <div class="expected-text">Should star the folder.</div>
-            </td>
-            <td>
-              <div class="actual-text">Star state toggled.</div>
-            </td>
-            <td>
-              <div class="deviation-text">None.</div>
-            </td>
-            <td>
-              <span class="badge badge-pass">
-                PASSED
-              </span>
-            </td>
-            <td>
-              <img src="../uat_target3_cicodecm/t3_appdoc_folder_actions_menu.png" class="thumb" alt="Evidence"
-                onclick="openModal(this.src)">
-            </td>
+            <td><div class="expected-text">Should star the folder</div></td>
+            <td><div class="actual-text">Star clicked live on &quot;uat address signature queue type&quot;; functional, consistent with Row 281.</div></td>
+            <td><div class="deviation-text"></div></td>
+            <td><span class="badge badge-pass">PASSED</span></td>
+            <td><img src="../uat_target3_cicodecm/appdoc_ecms_step288_star_sub.png" class="thumb" alt="appdoc_ecms_step288_star_sub.png" onclick="openModal(this.src)"></td>
           </tr>
 
           <tr>
             <td><strong>289</strong></td>
             <td><span class="step-name">Click on archive button</span></td>
-            <td>
-              <div class="expected-text">Folder should be archived</div>
-            </td>
-            <td>
-              <div class="actual-text">Handled by lifecycle policy.</div>
-            </td>
-            <td>
-              <div class="deviation-text">None.</div>
-            </td>
-            <td>
-              <span class="badge badge-pass">
-                PASSED
-              </span>
-            </td>
-            <td>
-              <img src="../uat_target3_cicodecm/t3_appdoc_landing.png" class="thumb" alt="Evidence"
-                onclick="openModal(this.src)">
-            </td>
+            <td><div class="expected-text">Folder should be archived</div></td>
+            <td><div class="actual-text">No Archive action at this level (re-verified independently).</div></td>
+            <td><div class="deviation-text"></div></td>
+            <td><span class="badge badge-not-impl">❌ NOT IMPLEMENTED</span></td>
+            <td><img src="../uat_target3_cicodecm/appdoc_ecms_step289_archive_absent_sub.png" class="thumb" alt="appdoc_ecms_step289_archive_absent_sub.png" onclick="openModal(this.src)"></td>
           </tr>
 
           <tr>
             <td><strong>290</strong></td>
             <td><span class="step-name">Open the folder</span></td>
-            <td>
-              <div class="expected-text">Folder should be opened</div>
-            </td>
-            <td>
-              <div class="actual-text">Folder directory opened successfully.</div>
-            </td>
-            <td>
-              <div class="deviation-text">None.</div>
-            </td>
-            <td>
-              <span class="badge badge-pass">
-                PASSED
-              </span>
-            </td>
-            <td>
-              <img src="../uat_target3_cicodecm/t3_appdoc_inside_folder.png" class="thumb" alt="Evidence"
-                onclick="openModal(this.src)">
-            </td>
+            <td><div class="expected-text">Folder should be opened</div></td>
+            <td><div class="actual-text">Opening &quot;uat address signature queue type&quot; (3-dot &gt; Open Folder) navigates to `/application-documents/ticket/&lt;id&gt;`, listing 1 ticket folder: &quot;1046&quot;.</div></td>
+            <td><div class="deviation-text"></div></td>
+            <td><span class="badge badge-pass">PASSED</span></td>
+            <td><img src="../uat_target3_cicodecm/appdoc_ecms_step290_291_ticket_folder_view.png" class="thumb" alt="appdoc_ecms_step290_291_ticket_folder_view.png" onclick="openModal(this.src)"></td>
           </tr>
 
           <tr>
             <td><strong>291</strong></td>
             <td><span class="step-name">Click on the folder</span></td>
-            <td>
-              <div class="expected-text">Should open the folder to view the file folder</div>
-            </td>
-            <td>
-              <div class="actual-text">Child folder directory rendered with document table.</div>
-            </td>
-            <td>
-              <div class="deviation-text">None.</div>
-            </td>
-            <td>
-              <span class="badge badge-pass">
-                PASSED
-              </span>
-            </td>
-            <td>
-              <img src="../uat_target3_cicodecm/t3_appdoc_inside_folder.png" class="thumb" alt="Evidence"
-                onclick="openModal(this.src)">
-            </td>
+            <td><div class="expected-text">Should open the folder to view the file folder</div></td>
+            <td><div class="actual-text">Ticket-level page confirmed distinct and stable, breadcrumb reads &quot;Application Documents &gt; complaints &gt; uat address signature queue type&quot;, listing &quot;1046&quot;.</div></td>
+            <td><div class="deviation-text"></div></td>
+            <td><span class="badge badge-pass">PASSED</span></td>
+            <td><span class="no-img-badge">DEVIATION NOTED</span></td>
           </tr>
 
           <tr>
             <td><strong>292</strong></td>
             <td><span class="step-name">Click on the file folder</span></td>
-            <td>
-              <div class="expected-text">Should display the file</div>
-            </td>
-            <td>
-              <div class="actual-text">Files displayed inside queue folder.</div>
-            </td>
-            <td>
-              <div class="deviation-text">None.</div>
-            </td>
-            <td>
-              <span class="badge badge-pass">
-                PASSED
-              </span>
-            </td>
-            <td>
-              <img src="../uat_target3_cicodecm/t3_appdoc_inside_folder.png" class="thumb" alt="Evidence"
-                onclick="openModal(this.src)">
-            </td>
+            <td><div class="expected-text">Should display the file</div></td>
+            <td><div class="actual-text">**CONFIRMED DEFECT.** Opening ticket folder &quot;1046&quot; (Properties pane shows **Owner: me**) renders a red banner: **&quot;Access denied on the files in this folder!&quot;** instead of the file. Reproduced twice, independently.</div></td>
+            <td><div class="deviation-text"></div></td>
+            <td><span class="badge badge-bug">CONFIRMED DEFECT</span></td>
+            <td><img src="../uat_target3_cicodecm/appdoc_ecms_step292_access_denied_confirmed.png" class="thumb" alt="appdoc_ecms_step292_access_denied_confirmed.png" onclick="openModal(this.src)"></td>
           </tr>
-
         </tbody>
       </table>
+      </div>
     </div>
 
     <div class="case-section" data-case="sc3">
       <div class="case-header">
-        <div class="case-title">Scenario 3: FILE ACTIONS & ADVANCED OPERATIONS</div>
-        <div class="case-tag">Rows 293 - 311</div>
+        <div class="case-title">Scenario 3: File-Level Actions &amp; Advanced Operations — Blocked by Row 292 (Rows 293–311)</div>
+        <div class="case-tag">18 rows</div>
       </div>
+      <div class="table-scroll">
       <table>
         <thead>
           <tr>
@@ -879,8 +335,8 @@
             <th style="width: 220px;">Steps to Reproduce</th>
             <th style="width: 250px;">Expected Result</th>
             <th>Actual Result (Live Execution)</th>
-            <th style="width: 230px;">Deviations & Naming Notes</th>
-            <th style="width: 130px;">Status</th>
+            <th style="width: 180px;">Deviations / Notes</th>
+            <th style="width: 170px;">Status</th>
             <th style="width: 140px;">Screenshot Evidence</th>
           </tr>
         </thead>
@@ -889,431 +345,193 @@
           <tr>
             <td><strong>293</strong></td>
             <td><span class="step-name">Click on the three dotted action button</span></td>
-            <td>
-              <div class="expected-text">A drop-down list should be displayed as PIN folder, open folder, get folder
-                link, share folder, star folder, Rename folder, view details, download folder, attach to the ticket, and
-                Archive a file.</div>
-            </td>
-            <td>
-              <div class="actual-text">File context menu displays: "Open File", "Edit Classification", "Share File",
-                "Sign File", "Version History", "Move File", and "Star File".</div>
-            </td>
-            <td>
-              <div class="deviation-text">[Feature Organization]: Life-cycle options rendered on file row trigger.</div>
-            </td>
-            <td>
-              <span class="badge badge-pass">
-                PASSED
-              </span>
-            </td>
-            <td>
-              <img src="../uat_target3_cicodecm/t3_appdoc_file_actions_menu.png" class="thumb" alt="Evidence"
-                onclick="openModal(this.src)">
-            </td>
+            <td><div class="expected-text">Drop-down: Pin folder, open folder, get folder link, share folder, star folder, Rename folder, view details, download folder, attach to ticket, Archive a file</div></td>
+            <td><div class="actual-text">Three-dot menu on the &quot;1046&quot; row shows only &quot;Open Folder&quot; and &quot;Star&quot; — none of the file-specific items exist; opening leads directly to the Row 292 block.</div></td>
+            <td><div class="deviation-text"></div></td>
+            <td><span class="badge badge-blocked">BLOCKED (see Row 292)</span></td>
+            <td><img src="../uat_target3_cicodecm/appdoc_ecms_explore_ticket_row_menu.png" class="thumb" alt="appdoc_ecms_explore_ticket_row_menu.png" onclick="openModal(this.src)"></td>
           </tr>
 
           <tr>
             <td><strong>294</strong></td>
             <td><span class="step-name">Click on preview file button</span></td>
-            <td>
-              <div class="expected-text">Should display the file</div>
-            </td>
-            <td>
-              <div class="actual-text">Document opened in preview viewer.</div>
-            </td>
-            <td>
-              <div class="deviation-text">None.</div>
-            </td>
-            <td>
-              <span class="badge badge-pass">
-                PASSED
-              </span>
-            </td>
-            <td>
-              <img src="../uat_target3_cicodecm/t3_appdoc_file_actions_menu.png" class="thumb" alt="Evidence"
-                onclick="openModal(this.src)">
-            </td>
+            <td><div class="expected-text">Should display the file</div></td>
+            <td><div class="actual-text">No file is ever reachable to preview; opening &quot;1046&quot; always renders access-denied.</div></td>
+            <td><div class="deviation-text"></div></td>
+            <td><span class="badge badge-blocked">BLOCKED (see Row 292)</span></td>
+            <td><span class="no-img-badge">BLOCKED BY<br>ACCESS DENIED</span></td>
           </tr>
 
           <tr>
             <td><strong>295</strong></td>
             <td><span class="step-name">Click on open file</span></td>
-            <td>
-              <div class="expected-text">Should display the file</div>
-            </td>
-            <td>
-              <div class="actual-text">Document opened in viewer.</div>
-            </td>
-            <td>
-              <div class="deviation-text">None.</div>
-            </td>
-            <td>
-              <span class="badge badge-pass">
-                PASSED
-              </span>
-            </td>
-            <td>
-              <img src="../uat_target3_cicodecm/t3_appdoc_file_actions_menu.png" class="thumb" alt="Evidence"
-                onclick="openModal(this.src)">
-            </td>
+            <td><div class="expected-text">Should display the file</div></td>
+            <td><div class="actual-text">Same access-denied block.</div></td>
+            <td><div class="deviation-text"></div></td>
+            <td><span class="badge badge-blocked">BLOCKED (see Row 292)</span></td>
+            <td><span class="no-img-badge">BLOCKED BY<br>ACCESS DENIED</span></td>
           </tr>
 
           <tr>
             <td><strong>296</strong></td>
             <td><span class="step-name">Click on print file in the drop-down</span></td>
-            <td>
-              <div class="expected-text">Should display the print page and the user should be able to print the file
-              </div>
-            </td>
-            <td>
-              <div class="actual-text">Handled in viewer dialog; direct dropdown print not implemented.</div>
-            </td>
-            <td>
-              <div class="deviation-text">Script notes: "Not implemented".</div>
-            </td>
-            <td>
-              <span class="badge badge-not-impl">
-                NOT IMPLEMENTED
-              </span>
-            </td>
-            <td>
-              <img src="../uat_target3_cicodecm/t3_appdoc_file_actions_menu.png" class="thumb" alt="Evidence"
-                onclick="openModal(this.src)">
-            </td>
+            <td><div class="expected-text">Should display the print page</div></td>
+            <td><div class="actual-text">Same access-denied block; no print affordance can be reached.</div></td>
+            <td><div class="deviation-text"></div></td>
+            <td><span class="badge badge-blocked">BLOCKED (see Row 292)</span></td>
+            <td><span class="no-img-badge">BLOCKED BY<br>ACCESS DENIED</span></td>
           </tr>
 
           <tr>
             <td><strong>297</strong></td>
             <td><span class="step-name">Click on the download button in the drop-down</span></td>
-            <td>
-              <div class="expected-text">The file should be downloaded</div>
-            </td>
-            <td>
-              <div class="actual-text">Direct download trigger available in document detail previewer.</div>
-            </td>
-            <td>
-              <div class="deviation-text">None.</div>
-            </td>
-            <td>
-              <span class="badge badge-pass">
-                PASSED
-              </span>
-            </td>
-            <td>
-              <img src="../uat_target3_cicodecm/t3_appdoc_file_actions_menu.png" class="thumb" alt="Evidence"
-                onclick="openModal(this.src)">
-            </td>
+            <td><div class="expected-text">The file should be downloaded</div></td>
+            <td><div class="actual-text">Same access-denied block; no download affordance can be reached.</div></td>
+            <td><div class="deviation-text"></div></td>
+            <td><span class="badge badge-blocked">BLOCKED (see Row 292)</span></td>
+            <td><img src="../uat_target3_cicodecm/appdoc_ecms_explore_file_menu.png" class="thumb" alt="appdoc_ecms_explore_file_menu.png" onclick="openModal(this.src)"></td>
           </tr>
 
           <tr>
             <td><strong>299</strong></td>
             <td><span class="step-name">Click on get folder link</span></td>
-            <td>
-              <div class="expected-text">Should display a folder link</div>
-            </td>
-            <td>
-              <div class="actual-text">Handled via "Share Folder" modal.</div>
-            </td>
-            <td>
-              <div class="deviation-text">None.</div>
-            </td>
-            <td>
-              <span class="badge badge-pass">
-                PASSED
-              </span>
-            </td>
-            <td>
-              <img src="../uat_target3_cicodecm/t3_appdoc_folder_actions_menu.png" class="thumb" alt="Evidence"
-                onclick="openModal(this.src)">
-            </td>
+            <td><div class="expected-text">Should display a folder link</div></td>
+            <td><div class="actual-text">No Get Link action on the &quot;1046&quot; folder row (independently re-verified).</div></td>
+            <td><div class="deviation-text"></div></td>
+            <td><span class="badge badge-not-impl">❌ NOT IMPLEMENTED</span></td>
+            <td><span class="no-img-badge">BLOCKED BY<br>ACCESS DENIED</span></td>
           </tr>
 
           <tr>
             <td><strong>300</strong></td>
             <td><span class="step-name">Click on share folder</span></td>
-            <td>
-              <div class="expected-text">Should open sharing link to share the file</div>
-            </td>
-            <td>
-              <div class="actual-text">Share modal opened with recipient inputs.</div>
-            </td>
-            <td>
-              <div class="deviation-text">None.</div>
-            </td>
-            <td>
-              <span class="badge badge-pass">
-                PASSED
-              </span>
-            </td>
-            <td>
-              <img src="../uat_target3_cicodecm/t3_appdoc_folder_actions_menu.png" class="thumb" alt="Evidence"
-                onclick="openModal(this.src)">
-            </td>
+            <td><div class="expected-text">Should open sharing link</div></td>
+            <td><div class="actual-text">No Share action on the &quot;1046&quot; folder row (independently re-verified).</div></td>
+            <td><div class="deviation-text"></div></td>
+            <td><span class="badge badge-not-impl">❌ NOT IMPLEMENTED</span></td>
+            <td><span class="no-img-badge">BLOCKED BY<br>ACCESS DENIED</span></td>
           </tr>
 
           <tr>
             <td><strong>301</strong></td>
             <td><span class="step-name">Click on star folder</span></td>
-            <td>
-              <div class="expected-text">Folder should be starred succeessfully</div>
-            </td>
-            <td>
-              <div class="actual-text">Folder is starred and linked to Starred menu.</div>
-            </td>
-            <td>
-              <div class="deviation-text">None.</div>
-            </td>
-            <td>
-              <span class="badge badge-pass">
-                PASSED
-              </span>
-            </td>
-            <td>
-              <img src="../uat_target3_cicodecm/t3_appdoc_folder_actions_menu.png" class="thumb" alt="Evidence"
-                onclick="openModal(this.src)">
-            </td>
+            <td><div class="expected-text">Folder should be starred</div></td>
+            <td><div class="actual-text">Star control confirmed functional and present at this level too.</div></td>
+            <td><div class="deviation-text"></div></td>
+            <td><span class="badge badge-pass">PASSED</span></td>
+            <td><span class="no-img-badge">DEVIATION NOTED</span></td>
           </tr>
 
           <tr>
             <td><strong>302</strong></td>
             <td><span class="step-name">Click on rename folder</span></td>
-            <td>
-              <div class="expected-text">A renaming field popup should be displayed</div>
-            </td>
-            <td>
-              <div class="actual-text">Not implemented in current release.</div>
-            </td>
-            <td>
-              <div class="deviation-text">Script notes: "Not implemented".</div>
-            </td>
-            <td>
-              <span class="badge badge-not-impl">
-                NOT IMPLEMENTED
-              </span>
-            </td>
-            <td>
-              <img src="../uat_target3_cicodecm/t3_appdoc_folder_actions_menu.png" class="thumb" alt="Evidence"
-                onclick="openModal(this.src)">
-            </td>
+            <td><div class="expected-text">A renaming field popup should be displayed</div></td>
+            <td><div class="actual-text">No Rename action anywhere in this menu at any level.</div></td>
+            <td><div class="deviation-text"></div></td>
+            <td><span class="badge badge-not-impl">❌ NOT IMPLEMENTED</span></td>
+            <td><span class="no-img-badge">BLOCKED BY<br>ACCESS DENIED</span></td>
           </tr>
 
           <tr>
             <td><strong>303</strong></td>
             <td><span class="step-name">Click on save button</span></td>
-            <td>
-              <div class="expected-text">The folder should be renamed and saved successfully</div>
-            </td>
-            <td>
-              <div class="actual-text">Not implemented in current release.</div>
-            </td>
-            <td>
-              <div class="deviation-text">Script notes: "Not implemented".</div>
-            </td>
-            <td>
-              <span class="badge badge-not-impl">
-                NOT IMPLEMENTED
-              </span>
-            </td>
-            <td>
-              <img src="../uat_target3_cicodecm/t3_appdoc_folder_actions_menu.png" class="thumb" alt="Evidence"
-                onclick="openModal(this.src)">
-            </td>
+            <td><div class="expected-text">The folder should be renamed and saved</div></td>
+            <td><div class="actual-text">Not reachable — no rename UI exists to save from.</div></td>
+            <td><div class="deviation-text"></div></td>
+            <td><span class="badge badge-not-impl">❌ NOT IMPLEMENTED</span></td>
+            <td><span class="no-img-badge">BLOCKED BY<br>ACCESS DENIED</span></td>
           </tr>
 
           <tr>
             <td><strong>304</strong></td>
             <td><span class="step-name">Click on cancel button</span></td>
-            <td>
-              <div class="expected-text">The process should be cancelled</div>
-            </td>
-            <td>
-              <div class="actual-text">Not implemented in current release.</div>
-            </td>
-            <td>
-              <div class="deviation-text">Script notes: "Not implemented".</div>
-            </td>
-            <td>
-              <span class="badge badge-not-impl">
-                NOT IMPLEMENTED
-              </span>
-            </td>
-            <td>
-              <img src="../uat_target3_cicodecm/t3_appdoc_folder_actions_menu.png" class="thumb" alt="Evidence"
-                onclick="openModal(this.src)">
-            </td>
+            <td><div class="expected-text">The process should be cancelled</div></td>
+            <td><div class="actual-text">Not reachable — no rename UI exists to cancel from.</div></td>
+            <td><div class="deviation-text"></div></td>
+            <td><span class="badge badge-not-impl">❌ NOT IMPLEMENTED</span></td>
+            <td><span class="no-img-badge">BLOCKED BY<br>ACCESS DENIED</span></td>
           </tr>
 
           <tr>
             <td><strong>305</strong></td>
             <td><span class="step-name">Click on view details</span></td>
-            <td>
-              <div class="expected-text">Displays the folder details</div>
-            </td>
-            <td>
-              <div class="actual-text">Inspection pane displays folder metadata.</div>
-            </td>
-            <td>
-              <div class="deviation-text">None.</div>
-            </td>
-            <td>
-              <span class="badge badge-pass">
-                PASSED
-              </span>
-            </td>
-            <td>
-              <img src="../uat_target3_cicodecm/t3_appdoc_landing.png" class="thumb" alt="Evidence"
-                onclick="openModal(this.src)">
-            </td>
+            <td><div class="expected-text">Displays the folder details</div></td>
+            <td><div class="actual-text">A single click on a folder row selects it and populates the Properties panel: Type, Size, Storage, Owner, Modified, Download Permissions, Created, &quot;Create Metadata&quot;, &quot;Who has Access&quot; + &quot;View Access&quot;. Confirmed live.</div></td>
+            <td><div class="deviation-text"></div></td>
+            <td><span class="badge badge-pass">PASSED</span></td>
+            <td><img src="../uat_target3_cicodecm/appdoc_ecms_step305_view_details_properties.png" class="thumb" alt="appdoc_ecms_step305_view_details_properties.png" onclick="openModal(this.src)"></td>
           </tr>
 
           <tr>
             <td><strong>306</strong></td>
             <td><span class="step-name">Click on download folder</span></td>
-            <td>
-              <div class="expected-text">Folder should be download</div>
-            </td>
-            <td>
-              <div class="actual-text">Folder archive download triggered.</div>
-            </td>
-            <td>
-              <div class="deviation-text">None.</div>
-            </td>
-            <td>
-              <span class="badge badge-pass">
-                PASSED
-              </span>
-            </td>
-            <td>
-              <img src="../uat_target3_cicodecm/t3_appdoc_folder_actions_menu.png" class="thumb" alt="Evidence"
-                onclick="openModal(this.src)">
-            </td>
+            <td><div class="expected-text">Folder should be downloaded</div></td>
+            <td><div class="actual-text">No download action exists anywhere for a folder — &quot;Download Permissions&quot; in Properties is a text label, not a clickable control.</div></td>
+            <td><div class="deviation-text"></div></td>
+            <td><span class="badge badge-not-impl">❌ NOT IMPLEMENTED</span></td>
+            <td><span class="no-img-badge">FEATURE NOT IMPLEMENTED</span></td>
           </tr>
 
           <tr>
             <td><strong>307</strong></td>
-            <td><span class="step-name">Click on Attach to tcket</span></td>
-            <td>
-              <div class="expected-text">Should display a modal page having a queue, queue type and ticket ID</div>
-            </td>
-            <td>
-              <div class="actual-text">Not implemented in current release.</div>
-            </td>
-            <td>
-              <div class="deviation-text">Script notes: "Not implemented".</div>
-            </td>
-            <td>
-              <span class="badge badge-not-impl">
-                NOT IMPLEMENTED
-              </span>
-            </td>
-            <td>
-              <img src="../uat_target3_cicodecm/t3_appdoc_file_actions_menu.png" class="thumb" alt="Evidence"
-                onclick="openModal(this.src)">
-            </td>
+            <td><span class="step-name">Click on Attach to ticket</span></td>
+            <td><div class="expected-text">Modal with queue, queue type, ticket ID</div></td>
+            <td><div class="actual-text">No &quot;Attach to Ticket&quot; action exists anywhere in the live menus tested.</div></td>
+            <td><div class="deviation-text"></div></td>
+            <td><span class="badge badge-not-impl">❌ NOT IMPLEMENTED</span></td>
+            <td><span class="no-img-badge">BLOCKED BY<br>ACCESS DENIED</span></td>
           </tr>
 
           <tr>
             <td><strong>308</strong></td>
             <td><span class="step-name">Click and select queue from the drop down</span></td>
-            <td>
-              <div class="expected-text">Should be able to select queue(s) and display on the queue field</div>
-            </td>
-            <td>
-              <div class="actual-text">Not implemented.</div>
-            </td>
-            <td>
-              <div class="deviation-text">Script notes: "Not implemented".</div>
-            </td>
-            <td>
-              <span class="badge badge-not-impl">
-                NOT IMPLEMENTED
-              </span>
-            </td>
-            <td>
-              <img src="../uat_target3_cicodecm/t3_appdoc_file_actions_menu.png" class="thumb" alt="Evidence"
-                onclick="openModal(this.src)">
-            </td>
+            <td><div class="expected-text">Queue field populated</div></td>
+            <td><div class="actual-text">Not reachable — no Attach to Ticket modal exists.</div></td>
+            <td><div class="deviation-text"></div></td>
+            <td><span class="badge badge-not-impl">❌ NOT IMPLEMENTED</span></td>
+            <td><span class="no-img-badge">BLOCKED BY<br>ACCESS DENIED</span></td>
           </tr>
 
           <tr>
             <td><strong>309</strong></td>
             <td><span class="step-name">Click and select queue type from the drop-down</span></td>
-            <td>
-              <div class="expected-text">Should be able to select queue-type(s) and display in the queue-type field
-              </div>
-            </td>
-            <td>
-              <div class="actual-text">Not implemented.</div>
-            </td>
-            <td>
-              <div class="deviation-text">Script notes: "Not implemented".</div>
-            </td>
-            <td>
-              <span class="badge badge-not-impl">
-                NOT IMPLEMENTED
-              </span>
-            </td>
-            <td>
-              <img src="../uat_target3_cicodecm/t3_appdoc_file_actions_menu.png" class="thumb" alt="Evidence"
-                onclick="openModal(this.src)">
-            </td>
+            <td><div class="expected-text">Queue-type field populated</div></td>
+            <td><div class="actual-text">Not reachable.</div></td>
+            <td><div class="deviation-text"></div></td>
+            <td><span class="badge badge-not-impl">❌ NOT IMPLEMENTED</span></td>
+            <td><span class="no-img-badge">BLOCKED BY<br>ACCESS DENIED</span></td>
           </tr>
 
           <tr>
             <td><strong>310</strong></td>
             <td><span class="step-name">Click and select ticket id from the drop-down</span></td>
-            <td>
-              <div class="expected-text">Should be able to select Ticket-id(s) and display in the Ticket-id field</div>
-            </td>
-            <td>
-              <div class="actual-text">Not implemented.</div>
-            </td>
-            <td>
-              <div class="deviation-text">Script notes: "Not implemented".</div>
-            </td>
-            <td>
-              <span class="badge badge-not-impl">
-                NOT IMPLEMENTED
-              </span>
-            </td>
-            <td>
-              <img src="../uat_target3_cicodecm/t3_appdoc_file_actions_menu.png" class="thumb" alt="Evidence"
-                onclick="openModal(this.src)">
-            </td>
+            <td><div class="expected-text">Ticket-id field populated</div></td>
+            <td><div class="actual-text">Not reachable.</div></td>
+            <td><div class="deviation-text"></div></td>
+            <td><span class="badge badge-not-impl">❌ NOT IMPLEMENTED</span></td>
+            <td><span class="no-img-badge">BLOCKED BY<br>ACCESS DENIED</span></td>
           </tr>
 
           <tr>
             <td><strong>311</strong></td>
-            <td><span class="step-name">Search and filter through the queue, queue-type and ticket id</span></td>
-            <td>
-              <div class="expected-text">Should be able to filter through the queue, queue-type and ticket id</div>
-            </td>
-            <td>
-              <div class="actual-text">Not implemented.</div>
-            </td>
-            <td>
-              <div class="deviation-text">Script notes: "Not implemented".</div>
-            </td>
-            <td>
-              <span class="badge badge-not-impl">
-                NOT IMPLEMENTED
-              </span>
-            </td>
-            <td>
-              <img src="../uat_target3_cicodecm/t3_appdoc_file_actions_menu.png" class="thumb" alt="Evidence"
-                onclick="openModal(this.src)">
-            </td>
+            <td><span class="step-name">Search and filter through queue, queue-type, ticket id</span></td>
+            <td><div class="expected-text">Filtering works</div></td>
+            <td><div class="actual-text">Not reachable.</div></td>
+            <td><div class="deviation-text"></div></td>
+            <td><span class="badge badge-not-impl">❌ NOT IMPLEMENTED</span></td>
+            <td><span class="no-img-badge">BLOCKED BY<br>ACCESS DENIED</span></td>
           </tr>
-
         </tbody>
       </table>
+      </div>
     </div>
 
     <div class="case-section" data-case="sc4">
       <div class="case-header">
-        <div class="case-title">Scenario 4: GRID VIEW & DOCUMENT VIEWER</div>
-        <div class="case-tag">Rows 312 - 327</div>
+        <div class="case-title">Scenario 4: Grid View &amp; Document Viewer / Signature Tools — Blocked by Row 292 (Rows 312–327)</div>
+        <div class="case-tag">16 rows</div>
       </div>
+      <div class="table-scroll">
       <table>
         <thead>
           <tr>
@@ -1321,8 +539,8 @@
             <th style="width: 220px;">Steps to Reproduce</th>
             <th style="width: 250px;">Expected Result</th>
             <th>Actual Result (Live Execution)</th>
-            <th style="width: 230px;">Deviations & Naming Notes</th>
-            <th style="width: 130px;">Status</th>
+            <th style="width: 180px;">Deviations / Notes</th>
+            <th style="width: 170px;">Status</th>
             <th style="width: 140px;">Screenshot Evidence</th>
           </tr>
         </thead>
@@ -1331,380 +549,173 @@
           <tr>
             <td><strong>312</strong></td>
             <td><span class="step-name">Click on grid view</span></td>
-            <td>
-              <div class="expected-text">Should display document in grid format</div>
-            </td>
-            <td>
-              <div class="actual-text">Grid view button successfully toggles layout between table and card view.</div>
-            </td>
-            <td>
-              <div class="deviation-text">None.</div>
-            </td>
-            <td>
-              <span class="badge badge-pass">
-                PASSED
-              </span>
-            </td>
-            <td>
-              <img src="../uat_target3_cicodecm/t3_appdoc_grid_view.png" class="thumb" alt="Evidence"
-                onclick="openModal(this.src)">
-            </td>
+            <td><div class="expected-text">Should display document in grid format</div></td>
+            <td><div class="actual-text">&quot;Grid View&quot; toggle clicked live at the ECMS queue root: renders the &quot;complaints&quot; folder as a card. Toggling back to &quot;List View&quot; successfully restores the table. Fully functional.</div></td>
+            <td><div class="deviation-text"></div></td>
+            <td><span class="badge badge-pass">PASSED</span></td>
+            <td><img src="../uat_target3_cicodecm/appdoc_ecms_step312_grid_view.png" class="thumb" alt="appdoc_ecms_step312_grid_view.png" onclick="openModal(this.src)"></td>
           </tr>
 
           <tr>
             <td><strong>313</strong></td>
             <td><span class="step-name">Click on the folder file document</span></td>
-            <td>
-              <div class="expected-text">Document should be opened successfully</div>
-            </td>
-            <td>
-              <div class="actual-text">Document opened in viewer.</div>
-            </td>
-            <td>
-              <div class="deviation-text">None.</div>
-            </td>
-            <td>
-              <span class="badge badge-pass">
-                PASSED
-              </span>
-            </td>
-            <td>
-              <img src="../uat_target3_cicodecm/t3_appdoc_file_actions_menu.png" class="thumb" alt="Evidence"
-                onclick="openModal(this.src)">
-            </td>
+            <td><div class="expected-text">Document should be opened successfully</div></td>
+            <td><div class="actual-text">Grid view exposes the same underlying folder tree; drilling into the only available chain still terminates at the Row 292 block.</div></td>
+            <td><div class="deviation-text"></div></td>
+            <td><span class="badge badge-blocked">BLOCKED (see Row 292)</span></td>
+            <td><span class="no-img-badge">BLOCKED BY<br>ACCESS DENIED</span></td>
           </tr>
 
           <tr>
             <td><strong>314</strong></td>
             <td><span class="step-name">Click on signature</span></td>
-            <td>
-              <div class="expected-text">Should display signature's page</div>
-            </td>
-            <td>
-              <div class="actual-text">Not implemented in standalone toolbar.</div>
-            </td>
-            <td>
-              <div class="deviation-text">Script notes: "Not implemented".</div>
-            </td>
-            <td>
-              <span class="badge badge-not-impl">
-                NOT IMPLEMENTED
-              </span>
-            </td>
-            <td>
-              <img src="../uat_target3_cicodecm/t3_appdoc_file_actions_menu.png" class="thumb" alt="Evidence"
-                onclick="openModal(this.src)">
-            </td>
+            <td><div class="expected-text">Should display signature's page</div></td>
+            <td><div class="actual-text">Requires an open, accessible file — unreachable.</div></td>
+            <td><div class="deviation-text"></div></td>
+            <td><span class="badge badge-blocked">BLOCKED (see Row 292)</span></td>
+            <td><span class="no-img-badge">BLOCKED BY<br>ACCESS DENIED</span></td>
           </tr>
 
           <tr>
             <td><strong>315</strong></td>
             <td><span class="step-name">Click on upload signature</span></td>
-            <td>
-              <div class="expected-text">Should upload signture</div>
-            </td>
-            <td>
-              <div class="actual-text">Not implemented.</div>
-            </td>
-            <td>
-              <div class="deviation-text">Script notes: "Not implemented".</div>
-            </td>
-            <td>
-              <span class="badge badge-not-impl">
-                NOT IMPLEMENTED
-              </span>
-            </td>
-            <td>
-              <img src="../uat_target3_cicodecm/t3_appdoc_file_actions_menu.png" class="thumb" alt="Evidence"
-                onclick="openModal(this.src)">
-            </td>
+            <td><div class="expected-text">Should upload signature</div></td>
+            <td><div class="actual-text">Unreachable (dependent on Row 314).</div></td>
+            <td><div class="deviation-text"></div></td>
+            <td><span class="badge badge-blocked">BLOCKED (see Row 292)</span></td>
+            <td><span class="no-img-badge">BLOCKED BY<br>ACCESS DENIED</span></td>
           </tr>
 
           <tr>
             <td><strong>316</strong></td>
             <td><span class="step-name">Click on edit signature</span></td>
-            <td>
-              <div class="expected-text">Should update the signature</div>
-            </td>
-            <td>
-              <div class="actual-text">Not implemented.</div>
-            </td>
-            <td>
-              <div class="deviation-text">Script notes: "Not implemented".</div>
-            </td>
-            <td>
-              <span class="badge badge-not-impl">
-                NOT IMPLEMENTED
-              </span>
-            </td>
-            <td>
-              <img src="../uat_target3_cicodecm/t3_appdoc_file_actions_menu.png" class="thumb" alt="Evidence"
-                onclick="openModal(this.src)">
-            </td>
+            <td><div class="expected-text">Should update the signature</div></td>
+            <td><div class="actual-text">Not reachable because folder cannot be opened.</div></td>
+            <td><div class="deviation-text"></div></td>
+            <td><span class="badge badge-blocked">BLOCKED (see Row 292)</span></td>
+            <td><span class="no-img-badge">BLOCKED BY<br>ACCESS DENIED</span></td>
           </tr>
 
           <tr>
             <td><strong>317</strong></td>
             <td><span class="step-name">Click on delete signature</span></td>
-            <td>
-              <div class="expected-text">Should remove the selected signature</div>
-            </td>
-            <td>
-              <div class="actual-text">Not implemented.</div>
-            </td>
-            <td>
-              <div class="deviation-text">Script notes: "Not implemented".</div>
-            </td>
-            <td>
-              <span class="badge badge-not-impl">
-                NOT IMPLEMENTED
-              </span>
-            </td>
-            <td>
-              <img src="../uat_target3_cicodecm/t3_appdoc_file_actions_menu.png" class="thumb" alt="Evidence"
-                onclick="openModal(this.src)">
-            </td>
+            <td><div class="expected-text">Should remove the selected signature</div></td>
+            <td><div class="actual-text">Not reachable because folder cannot be opened.</div></td>
+            <td><div class="deviation-text"></div></td>
+            <td><span class="badge badge-blocked">BLOCKED (see Row 292)</span></td>
+            <td><span class="no-img-badge">BLOCKED BY<br>ACCESS DENIED</span></td>
           </tr>
 
           <tr>
             <td><strong>318</strong></td>
             <td><span class="step-name">Input/Enter text</span></td>
-            <td>
-              <div class="expected-text">Should accept the text</div>
-            </td>
-            <td>
-              <div class="actual-text">Not implemented.</div>
-            </td>
-            <td>
-              <div class="deviation-text">Script notes: "Not implemented".</div>
-            </td>
-            <td>
-              <span class="badge badge-not-impl">
-                NOT IMPLEMENTED
-              </span>
-            </td>
-            <td>
-              <img src="../uat_target3_cicodecm/t3_appdoc_file_actions_menu.png" class="thumb" alt="Evidence"
-                onclick="openModal(this.src)">
-            </td>
+            <td><div class="expected-text">Should accept the text</div></td>
+            <td><div class="actual-text">Not reachable because folder cannot be opened.</div></td>
+            <td><div class="deviation-text"></div></td>
+            <td><span class="badge badge-blocked">BLOCKED (see Row 292)</span></td>
+            <td><span class="no-img-badge">BLOCKED BY<br>ACCESS DENIED</span></td>
           </tr>
 
           <tr>
             <td><strong>319</strong></td>
             <td><span class="step-name">Select signature default</span></td>
-            <td>
-              <div class="expected-text">Should display the default signature</div>
-            </td>
-            <td>
-              <div class="actual-text">Not implemented.</div>
-            </td>
-            <td>
-              <div class="deviation-text">Script notes: "Not implemented".</div>
-            </td>
-            <td>
-              <span class="badge badge-not-impl">
-                NOT IMPLEMENTED
-              </span>
-            </td>
-            <td>
-              <img src="../uat_target3_cicodecm/t3_appdoc_file_actions_menu.png" class="thumb" alt="Evidence"
-                onclick="openModal(this.src)">
-            </td>
+            <td><div class="expected-text">Should display the default signature</div></td>
+            <td><div class="actual-text">Not reachable because folder cannot be opened.</div></td>
+            <td><div class="deviation-text"></div></td>
+            <td><span class="badge badge-blocked">BLOCKED (see Row 292)</span></td>
+            <td><span class="no-img-badge">BLOCKED BY<br>ACCESS DENIED</span></td>
           </tr>
 
           <tr>
             <td><strong>320</strong></td>
             <td><span class="step-name">Check the set authentication</span></td>
-            <td>
-              <div class="expected-text">The set authentication should be checked</div>
-            </td>
-            <td>
-              <div class="actual-text">Not implemented.</div>
-            </td>
-            <td>
-              <div class="deviation-text">Script notes: "Not implemented".</div>
-            </td>
-            <td>
-              <span class="badge badge-not-impl">
-                NOT IMPLEMENTED
-              </span>
-            </td>
-            <td>
-              <img src="../uat_target3_cicodecm/t3_appdoc_file_actions_menu.png" class="thumb" alt="Evidence"
-                onclick="openModal(this.src)">
-            </td>
+            <td><div class="expected-text">Should be checked</div></td>
+            <td><div class="actual-text">Not reachable because folder cannot be opened.</div></td>
+            <td><div class="deviation-text"></div></td>
+            <td><span class="badge badge-blocked">BLOCKED (see Row 292)</span></td>
+            <td><span class="no-img-badge">BLOCKED BY<br>ACCESS DENIED</span></td>
           </tr>
 
           <tr>
             <td><strong>321</strong></td>
             <td><span class="step-name">Click on done button</span></td>
-            <td>
-              <div class="expected-text">Should append the signature on the document</div>
-            </td>
-            <td>
-              <div class="actual-text">Not implemented.</div>
-            </td>
-            <td>
-              <div class="deviation-text">Script notes: "Not implemented".</div>
-            </td>
-            <td>
-              <span class="badge badge-not-impl">
-                NOT IMPLEMENTED
-              </span>
-            </td>
-            <td>
-              <img src="../uat_target3_cicodecm/t3_appdoc_file_actions_menu.png" class="thumb" alt="Evidence"
-                onclick="openModal(this.src)">
-            </td>
+            <td><div class="expected-text">Should append the signature</div></td>
+            <td><div class="actual-text">Not reachable because folder cannot be opened.</div></td>
+            <td><div class="deviation-text"></div></td>
+            <td><span class="badge badge-blocked">BLOCKED (see Row 292)</span></td>
+            <td><span class="no-img-badge">BLOCKED BY<br>ACCESS DENIED</span></td>
           </tr>
 
           <tr>
             <td><strong>322</strong></td>
             <td><span class="step-name">Text Field</span></td>
-            <td>
-              <div class="expected-text">Text field options</div>
-            </td>
-            <td>
-              <div class="actual-text">Not implemented in this view.</div>
-            </td>
-            <td>
-              <div class="deviation-text">Script notes: "Not implemented".</div>
-            </td>
-            <td>
-              <span class="badge badge-not-impl">
-                NOT IMPLEMENTED
-              </span>
-            </td>
-            <td>
-              <img src="../uat_target3_cicodecm/t3_appdoc_file_actions_menu.png" class="thumb" alt="Evidence"
-                onclick="openModal(this.src)">
-            </td>
+            <td><div class="expected-text">Text field options</div></td>
+            <td><div class="actual-text">Unreachable — no open document to place a text field on.</div></td>
+            <td><div class="deviation-text"></div></td>
+            <td><span class="badge badge-blocked">BLOCKED (see Row 292)</span></td>
+            <td><span class="no-img-badge">BLOCKED BY<br>ACCESS DENIED</span></td>
           </tr>
 
           <tr>
             <td><strong>323</strong></td>
             <td><span class="step-name">Click on text fill tab</span></td>
-            <td>
-              <div class="expected-text">Should display the text fill area</div>
-            </td>
-            <td>
-              <div class="actual-text">Not implemented.</div>
-            </td>
-            <td>
-              <div class="deviation-text">Script notes: "Not implemented".</div>
-            </td>
-            <td>
-              <span class="badge badge-not-impl">
-                NOT IMPLEMENTED
-              </span>
-            </td>
-            <td>
-              <img src="../uat_target3_cicodecm/t3_appdoc_file_actions_menu.png" class="thumb" alt="Evidence"
-                onclick="openModal(this.src)">
-            </td>
+            <td><div class="expected-text">Should display the text fill area</div></td>
+            <td><div class="actual-text">Not reachable because folder cannot be opened.</div></td>
+            <td><div class="deviation-text"></div></td>
+            <td><span class="badge badge-blocked">BLOCKED (see Row 292)</span></td>
+            <td><span class="no-img-badge">BLOCKED BY<br>ACCESS DENIED</span></td>
           </tr>
 
           <tr>
             <td><strong>324</strong></td>
             <td><span class="step-name">Share</span></td>
-            <td>
-              <div class="expected-text">Share options</div>
-            </td>
-            <td>
-              <div class="actual-text">Document sharing handled via "Share File" / "Share Folder" modal.</div>
-            </td>
-            <td>
-              <div class="deviation-text">None.</div>
-            </td>
-            <td>
-              <span class="badge badge-pass">
-                PASSED
-              </span>
-            </td>
-            <td>
-              <img src="../uat_target3_cicodecm/t3_appdoc_file_actions_menu.png" class="thumb" alt="Evidence"
-                onclick="openModal(this.src)">
-            </td>
+            <td><div class="expected-text">Share options</div></td>
+            <td><div class="actual-text">Unreachable — no open document to share.</div></td>
+            <td><div class="deviation-text"></div></td>
+            <td><span class="badge badge-blocked">BLOCKED (see Row 292)</span></td>
+            <td><span class="no-img-badge">BLOCKED BY<br>ACCESS DENIED</span></td>
           </tr>
 
           <tr>
             <td><strong>325</strong></td>
             <td><span class="step-name">Click on share button</span></td>
-            <td>
-              <div class="expected-text">Document should be shared</div>
-            </td>
-            <td>
-              <div class="actual-text">Not implemented in standalone tab.</div>
-            </td>
-            <td>
-              <div class="deviation-text">Script notes: "Not implemented".</div>
-            </td>
-            <td>
-              <span class="badge badge-not-impl">
-                NOT IMPLEMENTED
-              </span>
-            </td>
-            <td>
-              <img src="../uat_target3_cicodecm/t3_appdoc_file_actions_menu.png" class="thumb" alt="Evidence"
-                onclick="openModal(this.src)">
-            </td>
+            <td><div class="expected-text">Document should be shared</div></td>
+            <td><div class="actual-text">Not reachable because folder cannot be opened.</div></td>
+            <td><div class="deviation-text"></div></td>
+            <td><span class="badge badge-blocked">BLOCKED (see Row 292)</span></td>
+            <td><span class="no-img-badge">BLOCKED BY<br>ACCESS DENIED</span></td>
           </tr>
 
           <tr>
             <td><strong>326</strong></td>
             <td><span class="step-name">Download tab</span></td>
-            <td>
-              <div class="expected-text">Download options</div>
-            </td>
-            <td>
-              <div class="actual-text">Handled via viewer toolbar.</div>
-            </td>
-            <td>
-              <div class="deviation-text">None.</div>
-            </td>
-            <td>
-              <span class="badge badge-pass">
-                PASSED
-              </span>
-            </td>
-            <td>
-              <img src="../uat_target3_cicodecm/t3_appdoc_file_actions_menu.png" class="thumb" alt="Evidence"
-                onclick="openModal(this.src)">
-            </td>
+            <td><div class="expected-text">Download options</div></td>
+            <td><div class="actual-text">Unreachable — no open document to download from.</div></td>
+            <td><div class="deviation-text"></div></td>
+            <td><span class="badge badge-blocked">BLOCKED (see Row 292)</span></td>
+            <td><span class="no-img-badge">BLOCKED BY<br>ACCESS DENIED</span></td>
           </tr>
 
           <tr>
             <td><strong>327</strong></td>
             <td><span class="step-name">Click on download button</span></td>
-            <td>
-              <div class="expected-text">Should download the document</div>
-            </td>
-            <td>
-              <div class="actual-text">Not implemented in standalone tab.</div>
-            </td>
-            <td>
-              <div class="deviation-text">Script notes: "Not implemented".</div>
-            </td>
-            <td>
-              <span class="badge badge-not-impl">
-                NOT IMPLEMENTED
-              </span>
-            </td>
-            <td>
-              <img src="../uat_target3_cicodecm/t3_appdoc_file_actions_menu.png" class="thumb" alt="Evidence"
-                onclick="openModal(this.src)">
-            </td>
+            <td><div class="expected-text">Should download the document</div></td>
+            <td><div class="actual-text">Not reachable because folder cannot be opened.</div></td>
+            <td><div class="deviation-text"></div></td>
+            <td><span class="badge badge-blocked">BLOCKED (see Row 292)</span></td>
+            <td><span class="no-img-badge">BLOCKED BY<br>ACCESS DENIED</span></td>
           </tr>
-
         </tbody>
       </table>
+      </div>
     </div>
 
     <div class="case-section" data-case="sc5">
       <div class="case-header">
-        <div class="case-title">Scenario 5: NESTED AUDIT TRAIL, ADVANCED SHARING & CONCLUSION</div>
-        <div class="case-tag">Rows 328 - 355</div>
+        <div class="case-title">Scenario 5: Second Folder Pass, Nested Audit Trail &amp; Conclusion (Rows 328–355)</div>
+        <div class="case-tag">27 rows</div>
       </div>
+      <div class="table-scroll">
       <table>
         <thead>
           <tr>
@@ -1712,8 +723,8 @@
             <th style="width: 220px;">Steps to Reproduce</th>
             <th style="width: 250px;">Expected Result</th>
             <th>Actual Result (Live Execution)</th>
-            <th style="width: 230px;">Deviations & Naming Notes</th>
-            <th style="width: 130px;">Status</th>
+            <th style="width: 180px;">Deviations / Notes</th>
+            <th style="width: 170px;">Status</th>
             <th style="width: 140px;">Screenshot Evidence</th>
           </tr>
         </thead>
@@ -1721,671 +732,1123 @@
 
           <tr>
             <td><strong>328</strong></td>
-            <td><span class="step-name">Click the menu button on the folder in the colaboration file created</span></td>
-            <td>
-              <div class="expected-text">A user shall be able to select a folder and view the files in the folder and a
-                drop-down as (Pin folder, Open folder, getfolder link, share folder, star folder, rename folder, view
-                details, download folder, Attach to ticket, Archieve file, delete file)</div>
-            </td>
-            <td>
-              <div class="actual-text">Displays folder action dropdown: "Open folder", "Share folder", "Star folder",
-                "View access".</div>
-            </td>
-            <td>
-              <div class="deviation-text">None.</div>
-            </td>
-            <td>
-              <span class="badge badge-pass">
-                PASSED
-              </span>
-            </td>
-            <td>
-              <img src="../uat_target3_cicodecm/t3_appdoc_folder_actions_menu.png" class="thumb" alt="Evidence"
-                onclick="openModal(this.src)">
-            </td>
+            <td><span class="step-name">Click the menu button on the folder in the collaboration file created</span></td>
+            <td><div class="expected-text">Drop-down: Pin, Open, get link, share, star, rename, view details, download, attach to ticket, archive, delete</div></td>
+            <td><div class="actual-text">Same reduced &quot;Open Folder&quot; + &quot;Star&quot; menu confirmed again (third independent context).</div></td>
+            <td><div class="deviation-text"></div></td>
+            <td><span class="badge badge-dev">PASSED (deviation — reduced menu)</span></td>
+            <td><span class="no-img-badge">DEVIATION NOTED</span></td>
           </tr>
 
           <tr>
             <td><strong>329</strong></td>
-            <td><span class="step-name">click on pin folder</span></td>
-            <td>
-              <div class="expected-text">The folder should be pinned successfully</div>
-            </td>
-            <td>
-              <div class="actual-text">Pinned state managed via "Star" / "Starred" list.</div>
-            </td>
-            <td>
-              <div class="deviation-text">Consolidated into Star folder.</div>
-            </td>
-            <td>
-              <span class="badge badge-pass">
-                PASSED
-              </span>
-            </td>
-            <td>
-              <img src="../uat_target3_cicodecm/t3_appdoc_folder_actions_menu.png" class="thumb" alt="Evidence"
-                onclick="openModal(this.src)">
-            </td>
+            <td><span class="step-name">Click on pin folder</span></td>
+            <td><div class="expected-text">Folder should be pinned</div></td>
+            <td><div class="actual-text">No Pin action exists (consistent with Rows 278/285).</div></td>
+            <td><div class="deviation-text"></div></td>
+            <td><span class="badge badge-not-impl">❌ NOT IMPLEMENTED</span></td>
+            <td><span class="no-img-badge">FEATURE NOT IMPLEMENTED</span></td>
           </tr>
 
           <tr>
             <td><strong>330</strong></td>
             <td><span class="step-name">Click on open a folder</span></td>
-            <td>
-              <div class="expected-text">The folder should be opened and the user linked to the audit trail successfully
-              </div>
-            </td>
-            <td>
-              <div class="actual-text">Folder opened successfully.</div>
-            </td>
-            <td>
-              <div class="deviation-text">None.</div>
-            </td>
-            <td>
-              <span class="badge badge-pass">
-                PASSED
-              </span>
-            </td>
-            <td>
-              <img src="../uat_target3_cicodecm/t3_appdoc_queue_folder_click.png" class="thumb" alt="Evidence"
-                onclick="openModal(this.src)">
-            </td>
+            <td><div class="expected-text">Folder opened, linked to audit trail</div></td>
+            <td><div class="actual-text">&quot;Open Folder&quot; navigates correctly to the next hierarchy level; the Properties panel serves as the closest live equivalent to an &quot;audit trail&quot;. No separate dedicated Audit Trail view was found reachable from this menu.</div></td>
+            <td><div class="deviation-text"></div></td>
+            <td><span class="badge badge-dev">PASSED (deviation — Properties panel stands in for &quot;audit trail&quot;)</span></td>
+            <td><span class="no-img-badge">DEVIATION NOTED</span></td>
           </tr>
 
           <tr>
             <td><strong>331</strong></td>
             <td><span class="step-name">Click on the three-dot button on the document folder</span></td>
-            <td>
-              <div class="expected-text">Displays a drop-down as Preview file, open file, print file, download</div>
-            </td>
-            <td>
-              <div class="actual-text">Context menu displays document operations.</div>
-            </td>
-            <td>
-              <div class="deviation-text">None.</div>
-            </td>
-            <td>
-              <span class="badge badge-pass">
-                PASSED
-              </span>
-            </td>
-            <td>
-              <img src="../uat_target3_cicodecm/t3_appdoc_file_actions_menu.png" class="thumb" alt="Evidence"
-                onclick="openModal(this.src)">
-            </td>
+            <td><div class="expected-text">Drop-down: Preview file, open file, print file, download</div></td>
+            <td><div class="actual-text">Same reduced menu on the ticket-level document folder (&quot;1046&quot;): Open Folder + Star only.</div></td>
+            <td><div class="deviation-text"></div></td>
+            <td><span class="badge badge-dev">PASSED (deviation — reduced menu)</span></td>
+            <td><span class="no-img-badge">BLOCKED BY<br>ACCESS DENIED</span></td>
           </tr>
 
           <tr>
             <td><strong>332</strong></td>
             <td><span class="step-name">Click on preview file button</span></td>
-            <td>
-              <div class="expected-text">Should display the file</div>
-            </td>
-            <td>
-              <div class="actual-text">File is displayed in viewer.</div>
-            </td>
-            <td>
-              <div class="deviation-text">None.</div>
-            </td>
-            <td>
-              <span class="badge badge-pass">
-                PASSED
-              </span>
-            </td>
-            <td>
-              <img src="../uat_target3_cicodecm/t3_appdoc_file_actions_menu.png" class="thumb" alt="Evidence"
-                onclick="openModal(this.src)">
-            </td>
+            <td><div class="expected-text">Should display the file</div></td>
+            <td><div class="actual-text">No file reachable; access-denied block hit.</div></td>
+            <td><div class="deviation-text"></div></td>
+            <td><span class="badge badge-blocked">BLOCKED (see Row 292)</span></td>
+            <td><span class="no-img-badge">BLOCKED BY<br>ACCESS DENIED</span></td>
           </tr>
 
           <tr>
             <td><strong>333</strong></td>
             <td><span class="step-name">Share</span></td>
-            <td>
-              <div class="expected-text">Share options</div>
-            </td>
-            <td>
-              <div class="actual-text">Handled via Share File modal.</div>
-            </td>
-            <td>
-              <div class="deviation-text">None.</div>
-            </td>
-            <td>
-              <span class="badge badge-pass">
-                PASSED
-              </span>
-            </td>
-            <td>
-              <img src="../uat_target3_cicodecm/t3_appdoc_file_actions_menu.png" class="thumb" alt="Evidence"
-                onclick="openModal(this.src)">
-            </td>
+            <td><div class="expected-text">Share options</div></td>
+            <td><div class="actual-text">Unreachable — no open file to share.</div></td>
+            <td><div class="deviation-text"></div></td>
+            <td><span class="badge badge-blocked">BLOCKED (see Row 292)</span></td>
+            <td><span class="no-img-badge">BLOCKED BY<br>ACCESS DENIED</span></td>
           </tr>
 
           <tr>
             <td><strong>334</strong></td>
             <td><span class="step-name">Click on share button</span></td>
-            <td>
-              <div class="expected-text">Document should be shared</div>
-            </td>
-            <td>
-              <div class="actual-text">Not implemented in standalone tab.</div>
-            </td>
-            <td>
-              <div class="deviation-text">Script notes: "Not implemented".</div>
-            </td>
-            <td>
-              <span class="badge badge-not-impl">
-                NOT IMPLEMENTED
-              </span>
-            </td>
-            <td>
-              <img src="../uat_target3_cicodecm/t3_appdoc_file_actions_menu.png" class="thumb" alt="Evidence"
-                onclick="openModal(this.src)">
-            </td>
+            <td><div class="expected-text">Document should be shared</div></td>
+            <td><div class="actual-text">Not reachable because folder cannot be opened.</div></td>
+            <td><div class="deviation-text"></div></td>
+            <td><span class="badge badge-blocked">BLOCKED (see Row 292)</span></td>
+            <td><span class="no-img-badge">BLOCKED BY<br>ACCESS DENIED</span></td>
           </tr>
 
           <tr>
             <td><strong>335</strong></td>
             <td><span class="step-name">Download tab</span></td>
-            <td>
-              <div class="expected-text">Download options</div>
-            </td>
-            <td>
-              <div class="actual-text">Handled in viewer.</div>
-            </td>
-            <td>
-              <div class="deviation-text">None.</div>
-            </td>
-            <td>
-              <span class="badge badge-pass">
-                PASSED
-              </span>
-            </td>
-            <td>
-              <img src="../uat_target3_cicodecm/t3_appdoc_file_actions_menu.png" class="thumb" alt="Evidence"
-                onclick="openModal(this.src)">
-            </td>
+            <td><div class="expected-text">Download options</div></td>
+            <td><div class="actual-text">Unreachable — no open file to download from.</div></td>
+            <td><div class="deviation-text"></div></td>
+            <td><span class="badge badge-blocked">BLOCKED (see Row 292)</span></td>
+            <td><span class="no-img-badge">BLOCKED BY<br>ACCESS DENIED</span></td>
           </tr>
 
           <tr>
             <td><strong>336</strong></td>
             <td><span class="step-name">Click on download button</span></td>
-            <td>
-              <div class="expected-text">Should download the document</div>
-            </td>
-            <td>
-              <div class="actual-text">Not implemented in standalone tab.</div>
-            </td>
-            <td>
-              <div class="deviation-text">Script notes: "Not implemented".</div>
-            </td>
-            <td>
-              <span class="badge badge-not-impl">
-                NOT IMPLEMENTED
-              </span>
-            </td>
-            <td>
-              <img src="../uat_target3_cicodecm/t3_appdoc_file_actions_menu.png" class="thumb" alt="Evidence"
-                onclick="openModal(this.src)">
-            </td>
+            <td><div class="expected-text">Should download the document</div></td>
+            <td><div class="actual-text">Not reachable because folder cannot be opened.</div></td>
+            <td><div class="deviation-text"></div></td>
+            <td><span class="badge badge-blocked">BLOCKED (see Row 292)</span></td>
+            <td><span class="no-img-badge">BLOCKED BY<br>ACCESS DENIED</span></td>
           </tr>
 
           <tr>
             <td><strong>337</strong></td>
             <td><span class="step-name">Click on open file</span></td>
-            <td>
-              <div class="expected-text">Should display the file</div>
-            </td>
-            <td>
-              <div class="actual-text">File displayed in viewer.</div>
-            </td>
-            <td>
-              <div class="deviation-text">None.</div>
-            </td>
-            <td>
-              <span class="badge badge-pass">
-                PASSED
-              </span>
-            </td>
-            <td>
-              <img src="../uat_target3_cicodecm/t3_appdoc_file_actions_menu.png" class="thumb" alt="Evidence"
-                onclick="openModal(this.src)">
-            </td>
+            <td><div class="expected-text">Should display the file</div></td>
+            <td><div class="actual-text">Unreachable; access-denied block hit.</div></td>
+            <td><div class="deviation-text"></div></td>
+            <td><span class="badge badge-blocked">BLOCKED (see Row 292)</span></td>
+            <td><span class="no-img-badge">BLOCKED BY<br>ACCESS DENIED</span></td>
           </tr>
 
           <tr>
             <td><strong>338</strong></td>
             <td><span class="step-name">Click on print file in the drop-down</span></td>
-            <td>
-              <div class="expected-text">Should display the print page and the user should be able to print the file
-              </div>
-            </td>
-            <td>
-              <div class="actual-text">Print option handled inside document viewer.</div>
-            </td>
-            <td>
-              <div class="deviation-text">Dropdown print not implemented.</div>
-            </td>
-            <td>
-              <span class="badge badge-not-impl">
-                NOT IMPLEMENTED
-              </span>
-            </td>
-            <td>
-              <img src="../uat_target3_cicodecm/t3_appdoc_file_actions_menu.png" class="thumb" alt="Evidence"
-                onclick="openModal(this.src)">
-            </td>
+            <td><div class="expected-text">Print page displayed</div></td>
+            <td><div class="actual-text">Unreachable; access-denied block hit.</div></td>
+            <td><div class="deviation-text"></div></td>
+            <td><span class="badge badge-blocked">BLOCKED (see Row 292)</span></td>
+            <td><span class="no-img-badge">BLOCKED BY<br>ACCESS DENIED</span></td>
           </tr>
 
           <tr>
             <td><strong>339</strong></td>
             <td><span class="step-name">Click on the download button in the drop-down</span></td>
-            <td>
-              <div class="expected-text">The file should be downloaded</div>
-            </td>
-            <td>
-              <div class="actual-text">Download supported inside document viewer.</div>
-            </td>
-            <td>
-              <div class="deviation-text">None.</div>
-            </td>
-            <td>
-              <span class="badge badge-pass">
-                PASSED
-              </span>
-            </td>
-            <td>
-              <img src="../uat_target3_cicodecm/t3_appdoc_file_actions_menu.png" class="thumb" alt="Evidence"
-                onclick="openModal(this.src)">
-            </td>
+            <td><div class="expected-text">File should be downloaded</div></td>
+            <td><div class="actual-text">Unreachable; access-denied block hit.</div></td>
+            <td><div class="deviation-text"></div></td>
+            <td><span class="badge badge-blocked">BLOCKED (see Row 292)</span></td>
+            <td><span class="no-img-badge">BLOCKED BY ACCESS ISSUE</span></td>
           </tr>
 
           <tr>
             <td><strong>341</strong></td>
             <td><span class="step-name">Click on get folder link</span></td>
-            <td>
-              <div class="expected-text">Should display a folder link</div>
-            </td>
-            <td>
-              <div class="actual-text">Generated via "Share folder" dialog.</div>
-            </td>
-            <td>
-              <div class="deviation-text">Integrated into Share Folder modal.</div>
-            </td>
-            <td>
-              <span class="badge badge-pass">
-                PASSED
-              </span>
-            </td>
-            <td>
-              <img src="../uat_target3_cicodecm/t3_appdoc_folder_actions_menu.png" class="thumb" alt="Evidence"
-                onclick="openModal(this.src)">
-            </td>
+            <td><div class="expected-text">Should display a folder link</div></td>
+            <td><div class="actual-text">No Get Link action (consistent with Rows 279/286/299).</div></td>
+            <td><div class="deviation-text"></div></td>
+            <td><span class="badge badge-not-impl">❌ NOT IMPLEMENTED</span></td>
+            <td><span class="no-img-badge">FEATURE NOT IMPLEMENTED</span></td>
           </tr>
 
           <tr>
             <td><strong>342</strong></td>
             <td><span class="step-name">Click on share folder</span></td>
-            <td>
-              <div class="expected-text">Should open sharing link to share the file</div>
-            </td>
-            <td>
-              <div class="actual-text">Share modal opened with collaborator permission assignment.</div>
-            </td>
-            <td>
-              <div class="deviation-text">None.</div>
-            </td>
-            <td>
-              <span class="badge badge-pass">
-                PASSED
-              </span>
-            </td>
-            <td>
-              <img src="../uat_target3_cicodecm/t3_appdoc_folder_actions_menu.png" class="thumb" alt="Evidence"
-                onclick="openModal(this.src)">
-            </td>
+            <td><div class="expected-text">Should open sharing link</div></td>
+            <td><div class="actual-text">No Share action (consistent with Rows 280/287/300).</div></td>
+            <td><div class="deviation-text"></div></td>
+            <td><span class="badge badge-not-impl">❌ NOT IMPLEMENTED</span></td>
+            <td><span class="no-img-badge">FEATURE NOT IMPLEMENTED</span></td>
           </tr>
 
           <tr>
             <td><strong>343</strong></td>
             <td><span class="step-name">Click on star folder</span></td>
-            <td>
-              <div class="expected-text">Folder should be starred succeessfully</div>
-            </td>
-            <td>
-              <div class="actual-text">Folder is starred and linked to Starred menu.</div>
-            </td>
-            <td>
-              <div class="deviation-text">None.</div>
-            </td>
-            <td>
-              <span class="badge badge-pass">
-                PASSED
-              </span>
-            </td>
-            <td>
-              <img src="../uat_target3_cicodecm/t3_appdoc_folder_actions_menu.png" class="thumb" alt="Evidence"
-                onclick="openModal(this.src)">
-            </td>
+            <td><div class="expected-text">Folder should be starred</div></td>
+            <td><div class="actual-text">Star control functional (consistent with Rows 281/288/301).</div></td>
+            <td><div class="deviation-text"></div></td>
+            <td><span class="badge badge-pass">PASSED</span></td>
+            <td><span class="no-img-badge">DEVIATION NOTED</span></td>
           </tr>
 
           <tr>
             <td><strong>344</strong></td>
             <td><span class="step-name">Click on rename folder</span></td>
-            <td>
-              <div class="expected-text">A renaming field popup should be displayed</div>
-            </td>
-            <td>
-              <div class="actual-text">Not implemented in current release.</div>
-            </td>
-            <td>
-              <div class="deviation-text">Script notes: "Not implemented".</div>
-            </td>
-            <td>
-              <span class="badge badge-not-impl">
-                NOT IMPLEMENTED
-              </span>
-            </td>
-            <td>
-              <img src="../uat_target3_cicodecm/t3_appdoc_folder_actions_menu.png" class="thumb" alt="Evidence"
-                onclick="openModal(this.src)">
-            </td>
+            <td><div class="expected-text">Renaming field popup displayed</div></td>
+            <td><div class="actual-text">No Rename action anywhere (consistent with Row 302).</div></td>
+            <td><div class="deviation-text"></div></td>
+            <td><span class="badge badge-not-impl">❌ NOT IMPLEMENTED</span></td>
+            <td><span class="no-img-badge">BLOCKED BY<br>ACCESS DENIED</span></td>
           </tr>
 
           <tr>
             <td><strong>345</strong></td>
             <td><span class="step-name">Click on save button</span></td>
-            <td>
-              <div class="expected-text">The folder should be renamed and saved successfully</div>
-            </td>
-            <td>
-              <div class="actual-text">Not implemented in current release.</div>
-            </td>
-            <td>
-              <div class="deviation-text">Script notes: "Not implemented".</div>
-            </td>
-            <td>
-              <span class="badge badge-not-impl">
-                NOT IMPLEMENTED
-              </span>
-            </td>
-            <td>
-              <img src="../uat_target3_cicodecm/t3_appdoc_folder_actions_menu.png" class="thumb" alt="Evidence"
-                onclick="openModal(this.src)">
-            </td>
+            <td><div class="expected-text">Folder renamed and saved</div></td>
+            <td><div class="actual-text">Not reachable (dependent on Row 344).</div></td>
+            <td><div class="deviation-text"></div></td>
+            <td><span class="badge badge-not-impl">❌ NOT IMPLEMENTED</span></td>
+            <td><span class="no-img-badge">BLOCKED BY<br>ACCESS DENIED</span></td>
           </tr>
 
           <tr>
             <td><strong>346</strong></td>
             <td><span class="step-name">Click on cancel button</span></td>
-            <td>
-              <div class="expected-text">The process should be cancelled</div>
-            </td>
-            <td>
-              <div class="actual-text">Not implemented in current release.</div>
-            </td>
-            <td>
-              <div class="deviation-text">Script notes: "Not implemented".</div>
-            </td>
-            <td>
-              <span class="badge badge-not-impl">
-                NOT IMPLEMENTED
-              </span>
-            </td>
-            <td>
-              <img src="../uat_target3_cicodecm/t3_appdoc_folder_actions_menu.png" class="thumb" alt="Evidence"
-                onclick="openModal(this.src)">
-            </td>
+            <td><div class="expected-text">Process cancelled</div></td>
+            <td><div class="actual-text">Not reachable (dependent on Row 344).</div></td>
+            <td><div class="deviation-text"></div></td>
+            <td><span class="badge badge-not-impl">❌ NOT IMPLEMENTED</span></td>
+            <td><span class="no-img-badge">BLOCKED BY<br>ACCESS DENIED</span></td>
           </tr>
 
           <tr>
             <td><strong>347</strong></td>
             <td><span class="step-name">Click on view details</span></td>
-            <td>
-              <div class="expected-text">Displays the folder details</div>
-            </td>
-            <td>
-              <div class="actual-text">Folder properties displayed in right-side inspection pane.</div>
-            </td>
-            <td>
-              <div class="deviation-text">None.</div>
-            </td>
-            <td>
-              <span class="badge badge-pass">
-                PASSED
-              </span>
-            </td>
-            <td>
-              <img src="../uat_target3_cicodecm/t3_appdoc_landing.png" class="thumb" alt="Evidence"
-                onclick="openModal(this.src)">
-            </td>
+            <td><div class="expected-text">Displays the folder details</div></td>
+            <td><div class="actual-text">Properties panel populates on select, consistent with Row 305.</div></td>
+            <td><div class="deviation-text"></div></td>
+            <td><span class="badge badge-pass">PASSED</span></td>
+            <td><span class="no-img-badge">DEVIATION NOTED</span></td>
           </tr>
 
           <tr>
             <td><strong>348</strong></td>
             <td><span class="step-name">Click on download folder</span></td>
-            <td>
-              <div class="expected-text">Folder should be download</div>
-            </td>
-            <td>
-              <div class="actual-text">Folder archive download triggered.</div>
-            </td>
-            <td>
-              <div class="deviation-text">None.</div>
-            </td>
-            <td>
-              <span class="badge badge-pass">
-                PASSED
-              </span>
-            </td>
-            <td>
-              <img src="../uat_target3_cicodecm/t3_appdoc_folder_actions_menu.png" class="thumb" alt="Evidence"
-                onclick="openModal(this.src)">
-            </td>
+            <td><div class="expected-text">Folder should be downloaded</div></td>
+            <td><div class="actual-text">No download action exists for a folder (consistent with Row 306).</div></td>
+            <td><div class="deviation-text"></div></td>
+            <td><span class="badge badge-not-impl">❌ NOT IMPLEMENTED</span></td>
+            <td><span class="no-img-badge">FEATURE NOT IMPLEMENTED</span></td>
           </tr>
 
           <tr>
             <td><strong>349</strong></td>
-            <td><span class="step-name">Click on Attach to tcket</span></td>
-            <td>
-              <div class="expected-text">Should display a modal page having a queue, queue type and ticket ID</div>
-            </td>
-            <td>
-              <div class="actual-text">Not implemented in current release.</div>
-            </td>
-            <td>
-              <div class="deviation-text">Script notes: "Not implemented".</div>
-            </td>
-            <td>
-              <span class="badge badge-not-impl">
-                NOT IMPLEMENTED
-              </span>
-            </td>
-            <td>
-              <img src="../uat_target3_cicodecm/t3_appdoc_file_actions_menu.png" class="thumb" alt="Evidence"
-                onclick="openModal(this.src)">
-            </td>
+            <td><span class="step-name">Click on Attach to ticket</span></td>
+            <td><div class="expected-text">Modal with queue, queue type, ticket ID</div></td>
+            <td><div class="actual-text">No Attach to Ticket action anywhere (consistent with Row 307).</div></td>
+            <td><div class="deviation-text"></div></td>
+            <td><span class="badge badge-not-impl">❌ NOT IMPLEMENTED</span></td>
+            <td><span class="no-img-badge">BLOCKED BY<br>ACCESS DENIED</span></td>
           </tr>
 
           <tr>
             <td><strong>350</strong></td>
             <td><span class="step-name">Click and select queue from the drop down</span></td>
-            <td>
-              <div class="expected-text">Should be able to select queue(s) and display on the queue field</div>
-            </td>
-            <td>
-              <div class="actual-text">Not implemented.</div>
-            </td>
-            <td>
-              <div class="deviation-text">Script notes: "Not implemented".</div>
-            </td>
-            <td>
-              <span class="badge badge-not-impl">
-                NOT IMPLEMENTED
-              </span>
-            </td>
-            <td>
-              <img src="../uat_target3_cicodecm/t3_appdoc_file_actions_menu.png" class="thumb" alt="Evidence"
-                onclick="openModal(this.src)">
-            </td>
+            <td><div class="expected-text">Queue field populated</div></td>
+            <td><div class="actual-text">Not reachable (dependent on Row 349).</div></td>
+            <td><div class="deviation-text"></div></td>
+            <td><span class="badge badge-not-impl">❌ NOT IMPLEMENTED</span></td>
+            <td><span class="no-img-badge">BLOCKED BY<br>ACCESS DENIED</span></td>
           </tr>
 
           <tr>
             <td><strong>351</strong></td>
             <td><span class="step-name">Click and select queue type from the drop-down</span></td>
-            <td>
-              <div class="expected-text">Should be able to select queue-type(s) and display in the queue-type field
-              </div>
-            </td>
-            <td>
-              <div class="actual-text">Not implemented.</div>
-            </td>
-            <td>
-              <div class="deviation-text">Script notes: "Not implemented".</div>
-            </td>
-            <td>
-              <span class="badge badge-not-impl">
-                NOT IMPLEMENTED
-              </span>
-            </td>
-            <td>
-              <img src="../uat_target3_cicodecm/t3_appdoc_file_actions_menu.png" class="thumb" alt="Evidence"
-                onclick="openModal(this.src)">
-            </td>
+            <td><div class="expected-text">Queue-type field populated</div></td>
+            <td><div class="actual-text">Not reachable.</div></td>
+            <td><div class="deviation-text"></div></td>
+            <td><span class="badge badge-not-impl">❌ NOT IMPLEMENTED</span></td>
+            <td><span class="no-img-badge">BLOCKED BY<br>ACCESS DENIED</span></td>
           </tr>
 
           <tr>
             <td><strong>352</strong></td>
             <td><span class="step-name">Click and select ticket id from the drop-down</span></td>
-            <td>
-              <div class="expected-text">Should be able to select Ticket-id(s) and display in the Ticket-id field</div>
-            </td>
-            <td>
-              <div class="actual-text">Not implemented.</div>
-            </td>
-            <td>
-              <div class="deviation-text">Script notes: "Not implemented".</div>
-            </td>
-            <td>
-              <span class="badge badge-not-impl">
-                NOT IMPLEMENTED
-              </span>
-            </td>
-            <td>
-              <img src="../uat_target3_cicodecm/t3_appdoc_file_actions_menu.png" class="thumb" alt="Evidence"
-                onclick="openModal(this.src)">
-            </td>
+            <td><div class="expected-text">Ticket-id field populated</div></td>
+            <td><div class="actual-text">Not reachable.</div></td>
+            <td><div class="deviation-text"></div></td>
+            <td><span class="badge badge-not-impl">❌ NOT IMPLEMENTED</span></td>
+            <td><span class="no-img-badge">BLOCKED BY<br>ACCESS DENIED</span></td>
           </tr>
 
           <tr>
             <td><strong>353</strong></td>
-            <td><span class="step-name">Search and filter through the queue, queue-type and ticket id</span></td>
-            <td>
-              <div class="expected-text">Should be able to filter through the queue, queue-type and ticket id</div>
-            </td>
-            <td>
-              <div class="actual-text">Not implemented.</div>
-            </td>
-            <td>
-              <div class="deviation-text">Script notes: "Not implemented".</div>
-            </td>
-            <td>
-              <span class="badge badge-not-impl">
-                NOT IMPLEMENTED
-              </span>
-            </td>
-            <td>
-              <img src="../uat_target3_cicodecm/t3_appdoc_file_actions_menu.png" class="thumb" alt="Evidence"
-                onclick="openModal(this.src)">
-            </td>
+            <td><span class="step-name">Search and filter through queue, queue-type, ticket id</span></td>
+            <td><div class="expected-text">Filtering works</div></td>
+            <td><div class="actual-text">Not reachable.</div></td>
+            <td><div class="deviation-text"></div></td>
+            <td><span class="badge badge-not-impl">❌ NOT IMPLEMENTED</span></td>
+            <td><span class="no-img-badge">BLOCKED BY<br>ACCESS DENIED</span></td>
           </tr>
 
           <tr>
             <td><strong>354</strong></td>
             <td><span class="step-name">Click on grid view</span></td>
-            <td>
-              <div class="expected-text">Should display document in grid format</div>
-            </td>
-            <td>
-              <div class="actual-text">Grid View toggle updates folder and file cards layout.</div>
-            </td>
-            <td>
-              <div class="deviation-text">None.</div>
-            </td>
-            <td>
-              <span class="badge badge-pass">
-                PASSED
-              </span>
-            </td>
-            <td>
-              <img src="../uat_target3_cicodecm/t3_appdoc_grid_view.png" class="thumb" alt="Evidence"
-                onclick="openModal(this.src)">
-            </td>
+            <td><div class="expected-text">Should display document in grid format</div></td>
+            <td><div class="actual-text">Grid View toggle re-confirmed functional at the queue root, consistent with Row 312.</div></td>
+            <td><div class="deviation-text"></div></td>
+            <td><span class="badge badge-pass">PASSED</span></td>
+            <td><span class="no-img-badge">DEVIATION NOTED</span></td>
           </tr>
 
           <tr>
             <td><strong>355</strong></td>
             <td><span class="step-name">END TEST</span></td>
-            <td>
-              <div class="expected-text">Test session completed successfully</div>
-            </td>
-            <td>
-              <div class="actual-text">Application Document test session concluded successfully.</div>
-            </td>
-            <td>
-              <div class="deviation-text">None.</div>
-            </td>
-            <td>
-              <span class="badge badge-pass">
-                PASSED
-              </span>
-            </td>
-            <td>
-              <img src="../uat_target3_cicodecm/t3_appdoc_end_test.png" class="thumb" alt="Evidence"
-                onclick="openModal(this.src)">
-            </td>
+            <td><div class="expected-text">Test session completed successfully</div></td>
+            <td><div class="actual-text">ECMS Document scenario concluded; final stable state captured back at the ECMS Documents queue view (List View restored).</div></td>
+            <td><div class="deviation-text"></div></td>
+            <td><span class="badge badge-pass">PASSED</span></td>
+            <td><img src="../uat_target3_cicodecm/appdoc_ecms_step312b_list_view_restored.png" class="thumb" alt="appdoc_ecms_step312b_list_view_restored.png" onclick="openModal(this.src)"></td>
           </tr>
-
         </tbody>
       </table>
+      </div>
     </div>
 
+    <div class="case-section" data-case="sc6">
+      <div class="case-header">
+        <div class="case-title">Scenario 6: Asset Management — Full Scenario Unreachable (Rows 357–438)</div>
+        <div class="case-tag">80 rows</div>
+      </div>
+      <div class="table-scroll">
+      <table>
+        <thead>
+          <tr>
+            <th style="width: 55px;">Row</th>
+            <th style="width: 220px;">Steps to Reproduce</th>
+            <th style="width: 250px;">Expected Result</th>
+            <th>Actual Result (Live Execution)</th>
+            <th style="width: 180px;">Deviations / Notes</th>
+            <th style="width: 170px;">Status</th>
+            <th style="width: 140px;">Screenshot Evidence</th>
+          </tr>
+        </thead>
+        <tbody>
+
+          <tr>
+            <td><strong>357</strong></td>
+            <td><span class="step-name">Asset Management — View the general document Folder</span></td>
+            <td><div class="expected-text">(Scenario header)</div></td>
+            <td><div class="actual-text">No &quot;Asset Management&quot; entry point exists anywhere in the live sidebar, the Application Documents hub, or the account's app catalog. Scenario cannot be entered.</div></td>
+            <td><div class="deviation-text"></div></td>
+            <td><span class="badge badge-not-impl">NOT AVAILABLE IN CURRENT BUILD</span></td>
+            <td><img src="../uat_target3_cicodecm/appdoc_assetmgmt_step1_appdocs_hub.png" class="thumb" alt="appdoc_assetmgmt_step1_appdocs_hub.png" onclick="openModal(this.src)"></td>
+          </tr>
+
+          <tr>
+            <td><strong>358</strong></td>
+            <td><span class="step-name">Click the menu Asset Management document side menu on the file on the general document created</span></td>
+            <td><div class="expected-text">All ECMS files should be displayed in the side menu</div></td>
+            <td><div class="actual-text">No &quot;Asset Management&quot; side-menu item exists to click.</div></td>
+            <td><div class="deviation-text"></div></td>
+            <td><span class="badge badge-not-impl">NOT AVAILABLE IN CURRENT BUILD</span></td>
+            <td><img src="../uat_target3_cicodecm/appdoc_assetmgmt_step1_cde_landing.png" class="thumb" alt="appdoc_assetmgmt_step1_cde_landing.png" onclick="openModal(this.src)"></td>
+          </tr>
+
+          <tr>
+            <td><strong>359</strong></td>
+            <td><span class="step-name">Click on open folder</span></td>
+            <td><div class="expected-text">Folder should be opened successfully</div></td>
+            <td><div class="actual-text">No Asset Management folder exists to open.</div></td>
+            <td><div class="deviation-text"></div></td>
+            <td><span class="badge badge-not-impl">NOT AVAILABLE IN CURRENT BUILD</span></td>
+            <td><span class="no-img-badge">FEATURE NOT<br>AVAILABLE</span></td>
+          </tr>
+
+          <tr>
+            <td><strong>360</strong></td>
+            <td><span class="step-name">View Audit trail: Click on the menu three dotted column</span></td>
+            <td><div class="expected-text">Displays a drop-down as Pin, Get link, share, star, and Archive</div></td>
+            <td><div class="actual-text">No Asset Management row/menu exists to open a three-dot action dropdown on.</div></td>
+            <td><div class="deviation-text"></div></td>
+            <td><span class="badge badge-not-impl">NOT AVAILABLE IN CURRENT BUILD</span></td>
+            <td><span class="no-img-badge">FEATURE NOT<br>AVAILABLE</span></td>
+          </tr>
+
+          <tr>
+            <td><strong>361</strong></td>
+            <td><span class="step-name">Click on pin button</span></td>
+            <td><div class="expected-text">Should pin the folder</div></td>
+            <td><div class="actual-text">No such menu/button exists in this scenario.</div></td>
+            <td><div class="deviation-text"></div></td>
+            <td><span class="badge badge-not-impl">NOT AVAILABLE IN CURRENT BUILD</span></td>
+            <td><span class="no-img-badge">FEATURE NOT<br>AVAILABLE</span></td>
+          </tr>
+
+          <tr>
+            <td><strong>362</strong></td>
+            <td><span class="step-name">Click on get link button</span></td>
+            <td><div class="expected-text">Should display the get link page</div></td>
+            <td><div class="actual-text">No such menu/button exists in this scenario.</div></td>
+            <td><div class="deviation-text"></div></td>
+            <td><span class="badge badge-not-impl">NOT AVAILABLE IN CURRENT BUILD</span></td>
+            <td><span class="no-img-badge">FEATURE NOT<br>AVAILABLE</span></td>
+          </tr>
+
+          <tr>
+            <td><strong>363</strong></td>
+            <td><span class="step-name">Click on the share button</span></td>
+            <td><div class="expected-text">Should be able to share the folder</div></td>
+            <td><div class="actual-text">No such menu/button exists in this scenario.</div></td>
+            <td><div class="deviation-text"></div></td>
+            <td><span class="badge badge-not-impl">NOT AVAILABLE IN CURRENT BUILD</span></td>
+            <td><span class="no-img-badge">FEATURE NOT<br>AVAILABLE</span></td>
+          </tr>
+
+          <tr>
+            <td><strong>364</strong></td>
+            <td><span class="step-name">Click on the star button</span></td>
+            <td><div class="expected-text">Should star the folder</div></td>
+            <td><div class="actual-text">No such menu/button exists in this scenario.</div></td>
+            <td><div class="deviation-text"></div></td>
+            <td><span class="badge badge-not-impl">NOT AVAILABLE IN CURRENT BUILD</span></td>
+            <td><span class="no-img-badge">FEATURE NOT<br>AVAILABLE</span></td>
+          </tr>
+
+          <tr>
+            <td><strong>365</strong></td>
+            <td><span class="step-name">Click on archive button</span></td>
+            <td><div class="expected-text">Folder should be archived</div></td>
+            <td><div class="actual-text">No such menu/button exists in this scenario.</div></td>
+            <td><div class="deviation-text"></div></td>
+            <td><span class="badge badge-not-impl">NOT AVAILABLE IN CURRENT BUILD</span></td>
+            <td><span class="no-img-badge">FEATURE NOT<br>AVAILABLE</span></td>
+          </tr>
+
+          <tr>
+            <td><strong>366</strong></td>
+            <td><span class="step-name">Click on Queue folder</span></td>
+            <td><div class="expected-text">Should display the queue type folder page</div></td>
+            <td><div class="actual-text">No Asset Management queue folder exists (only the unrelated `ecms`/`wfm` queue folders belong to ECMS Document).</div></td>
+            <td><div class="deviation-text"></div></td>
+            <td><span class="badge badge-not-impl">NOT AVAILABLE IN CURRENT BUILD</span></td>
+            <td><span class="no-img-badge">FEATURE NOT<br>AVAILABLE</span></td>
+          </tr>
+
+          <tr>
+            <td><strong>367</strong></td>
+            <td><span class="step-name">Click on the three dotted action button</span></td>
+            <td><div class="expected-text">Displays a drop-down as Pin, Get link, share, star, and Archive</div></td>
+            <td><div class="actual-text">No Asset Management queue folder row exists to trigger this menu.</div></td>
+            <td><div class="deviation-text"></div></td>
+            <td><span class="badge badge-not-impl">NOT AVAILABLE IN CURRENT BUILD</span></td>
+            <td><span class="no-img-badge">FEATURE NOT<br>AVAILABLE</span></td>
+          </tr>
+
+          <tr>
+            <td><strong>368</strong></td>
+            <td><span class="step-name">Click on pin button</span></td>
+            <td><div class="expected-text">Should pin the folder</div></td>
+            <td><div class="actual-text">No such menu/button exists.</div></td>
+            <td><div class="deviation-text"></div></td>
+            <td><span class="badge badge-not-impl">NOT AVAILABLE IN CURRENT BUILD</span></td>
+            <td><span class="no-img-badge">FEATURE NOT<br>AVAILABLE</span></td>
+          </tr>
+
+          <tr>
+            <td><strong>369</strong></td>
+            <td><span class="step-name">Click on get link button</span></td>
+            <td><div class="expected-text">Should display the get link page</div></td>
+            <td><div class="actual-text">No such menu/button exists.</div></td>
+            <td><div class="deviation-text"></div></td>
+            <td><span class="badge badge-not-impl">NOT AVAILABLE IN CURRENT BUILD</span></td>
+            <td><span class="no-img-badge">FEATURE NOT<br>AVAILABLE</span></td>
+          </tr>
+
+          <tr>
+            <td><strong>370</strong></td>
+            <td><span class="step-name">Click on the share button</span></td>
+            <td><div class="expected-text">Should be able to share the folder</div></td>
+            <td><div class="actual-text">No such menu/button exists.</div></td>
+            <td><div class="deviation-text"></div></td>
+            <td><span class="badge badge-not-impl">NOT AVAILABLE IN CURRENT BUILD</span></td>
+            <td><span class="no-img-badge">FEATURE NOT<br>AVAILABLE</span></td>
+          </tr>
+
+          <tr>
+            <td><strong>371</strong></td>
+            <td><span class="step-name">Click on the star button</span></td>
+            <td><div class="expected-text">Should star the folder</div></td>
+            <td><div class="actual-text">No such menu/button exists.</div></td>
+            <td><div class="deviation-text"></div></td>
+            <td><span class="badge badge-not-impl">NOT AVAILABLE IN CURRENT BUILD</span></td>
+            <td><span class="no-img-badge">FEATURE NOT<br>AVAILABLE</span></td>
+          </tr>
+
+          <tr>
+            <td><strong>372</strong></td>
+            <td><span class="step-name">Click on archive button</span></td>
+            <td><div class="expected-text">Folder should be archived</div></td>
+            <td><div class="actual-text">No such menu/button exists.</div></td>
+            <td><div class="deviation-text"></div></td>
+            <td><span class="badge badge-not-impl">NOT AVAILABLE IN CURRENT BUILD</span></td>
+            <td><span class="no-img-badge">FEATURE NOT<br>AVAILABLE</span></td>
+          </tr>
+
+          <tr>
+            <td><strong>373</strong></td>
+            <td><span class="step-name">Open the folder</span></td>
+            <td><div class="expected-text">*(no expected result specified in script)*</div></td>
+            <td><div class="actual-text">No Asset Management folder exists to open.</div></td>
+            <td><div class="deviation-text"></div></td>
+            <td><span class="badge badge-not-impl">NOT AVAILABLE IN CURRENT BUILD</span></td>
+            <td><span class="no-img-badge">FEATURE NOT<br>AVAILABLE</span></td>
+          </tr>
+
+          <tr>
+            <td><strong>374</strong></td>
+            <td><span class="step-name">Click on the folder</span></td>
+            <td><div class="expected-text">Should open the folder to view the file folder</div></td>
+            <td><div class="actual-text">No Asset Management folder exists.</div></td>
+            <td><div class="deviation-text"></div></td>
+            <td><span class="badge badge-not-impl">NOT AVAILABLE IN CURRENT BUILD</span></td>
+            <td><span class="no-img-badge">FEATURE NOT<br>AVAILABLE</span></td>
+          </tr>
+
+          <tr>
+            <td><strong>375</strong></td>
+            <td><span class="step-name">Click on the file folder</span></td>
+            <td><div class="expected-text">Should display the file</div></td>
+            <td><div class="actual-text">No Asset Management file/folder content exists to display.</div></td>
+            <td><div class="deviation-text"></div></td>
+            <td><span class="badge badge-not-impl">NOT AVAILABLE IN CURRENT BUILD</span></td>
+            <td><span class="no-img-badge">FEATURE NOT<br>AVAILABLE</span></td>
+          </tr>
+
+          <tr>
+            <td><strong>376</strong></td>
+            <td><span class="step-name">Click on the three dotted action button</span></td>
+            <td><div class="expected-text">A drop-down list should be displayed as PIN folder, open folder, get folder link, share folder, star folder, Rename folder, view details, download folder, attach to the ticket, and Archive a file</div></td>
+            <td><div class="actual-text">No Asset Management file row exists to trigger this menu.</div></td>
+            <td><div class="deviation-text"></div></td>
+            <td><span class="badge badge-not-impl">NOT AVAILABLE IN CURRENT BUILD</span></td>
+            <td><span class="no-img-badge">FEATURE NOT<br>AVAILABLE</span></td>
+          </tr>
+
+          <tr>
+            <td><strong>377</strong></td>
+            <td><span class="step-name">Click on preview file button</span></td>
+            <td><div class="expected-text">Should display the file</div></td>
+            <td><div class="actual-text">No such menu/button exists.</div></td>
+            <td><div class="deviation-text"></div></td>
+            <td><span class="badge badge-not-impl">NOT AVAILABLE IN CURRENT BUILD</span></td>
+            <td><span class="no-img-badge">FEATURE NOT<br>AVAILABLE</span></td>
+          </tr>
+
+          <tr>
+            <td><strong>378</strong></td>
+            <td><span class="step-name">Click on open file</span></td>
+            <td><div class="expected-text">Should display the file</div></td>
+            <td><div class="actual-text">No such menu/button exists.</div></td>
+            <td><div class="deviation-text"></div></td>
+            <td><span class="badge badge-not-impl">NOT AVAILABLE IN CURRENT BUILD</span></td>
+            <td><span class="no-img-badge">FEATURE NOT<br>AVAILABLE</span></td>
+          </tr>
+
+          <tr>
+            <td><strong>379</strong></td>
+            <td><span class="step-name">Click on print file in the drop-down</span></td>
+            <td><div class="expected-text">Should display the print page and the user should be able to print the file</div></td>
+            <td><div class="actual-text">No such menu/button exists.</div></td>
+            <td><div class="deviation-text"></div></td>
+            <td><span class="badge badge-not-impl">NOT AVAILABLE IN CURRENT BUILD</span></td>
+            <td><span class="no-img-badge">FEATURE NOT<br>AVAILABLE</span></td>
+          </tr>
+
+          <tr>
+            <td><strong>380</strong></td>
+            <td><span class="step-name">Click on the download button in the drop-down</span></td>
+            <td><div class="expected-text">The file should be downloaded</div></td>
+            <td><div class="actual-text">No such menu/button exists.</div></td>
+            <td><div class="deviation-text"></div></td>
+            <td><span class="badge badge-not-impl">NOT AVAILABLE IN CURRENT BUILD</span></td>
+            <td><span class="no-img-badge">FEATURE NOT<br>AVAILABLE</span></td>
+          </tr>
+
+          <tr>
+            <td><strong>382</strong></td>
+            <td><span class="step-name">Click on get folder link</span></td>
+            <td><div class="expected-text">Should display a folder link</div></td>
+            <td><div class="actual-text">No such menu/button exists.</div></td>
+            <td><div class="deviation-text"></div></td>
+            <td><span class="badge badge-not-impl">NOT AVAILABLE IN CURRENT BUILD</span></td>
+            <td><span class="no-img-badge">FEATURE NOT<br>AVAILABLE</span></td>
+          </tr>
+
+          <tr>
+            <td><strong>383</strong></td>
+            <td><span class="step-name">Click on share folder</span></td>
+            <td><div class="expected-text">Should open sharing link to share the file</div></td>
+            <td><div class="actual-text">No such menu/button exists.</div></td>
+            <td><div class="deviation-text"></div></td>
+            <td><span class="badge badge-not-impl">NOT AVAILABLE IN CURRENT BUILD</span></td>
+            <td><span class="no-img-badge">FEATURE NOT<br>AVAILABLE</span></td>
+          </tr>
+
+          <tr>
+            <td><strong>384</strong></td>
+            <td><span class="step-name">Click on star folder</span></td>
+            <td><div class="expected-text">Folder should be starred successfully</div></td>
+            <td><div class="actual-text">No such menu/button exists.</div></td>
+            <td><div class="deviation-text"></div></td>
+            <td><span class="badge badge-not-impl">NOT AVAILABLE IN CURRENT BUILD</span></td>
+            <td><span class="no-img-badge">FEATURE NOT<br>AVAILABLE</span></td>
+          </tr>
+
+          <tr>
+            <td><strong>385</strong></td>
+            <td><span class="step-name">Click on rename folder</span></td>
+            <td><div class="expected-text">A renaming field popup should be displayed</div></td>
+            <td><div class="actual-text">No such menu/button exists.</div></td>
+            <td><div class="deviation-text"></div></td>
+            <td><span class="badge badge-not-impl">NOT AVAILABLE IN CURRENT BUILD</span></td>
+            <td><span class="no-img-badge">FEATURE NOT<br>AVAILABLE</span></td>
+          </tr>
+
+          <tr>
+            <td><strong>386</strong></td>
+            <td><span class="step-name">Click on save button</span></td>
+            <td><div class="expected-text">The folder should be renamed and saved successfully</div></td>
+            <td><div class="actual-text">No such menu/button/modal exists.</div></td>
+            <td><div class="deviation-text"></div></td>
+            <td><span class="badge badge-not-impl">NOT AVAILABLE IN CURRENT BUILD</span></td>
+            <td><span class="no-img-badge">FEATURE NOT<br>AVAILABLE</span></td>
+          </tr>
+
+          <tr>
+            <td><strong>387</strong></td>
+            <td><span class="step-name">Click on cancel button</span></td>
+            <td><div class="expected-text">The process should be cancelled</div></td>
+            <td><div class="actual-text">No such menu/button/modal exists.</div></td>
+            <td><div class="deviation-text"></div></td>
+            <td><span class="badge badge-not-impl">NOT AVAILABLE IN CURRENT BUILD</span></td>
+            <td><span class="no-img-badge">FEATURE NOT<br>AVAILABLE</span></td>
+          </tr>
+
+          <tr>
+            <td><strong>388</strong></td>
+            <td><span class="step-name">Click on view details</span></td>
+            <td><div class="expected-text">Displays the folder details</div></td>
+            <td><div class="actual-text">No such menu/button exists.</div></td>
+            <td><div class="deviation-text"></div></td>
+            <td><span class="badge badge-not-impl">NOT AVAILABLE IN CURRENT BUILD</span></td>
+            <td><span class="no-img-badge">FEATURE NOT<br>AVAILABLE</span></td>
+          </tr>
+
+          <tr>
+            <td><strong>389</strong></td>
+            <td><span class="step-name">Click on download folder</span></td>
+            <td><div class="expected-text">Folder should be downloaded</div></td>
+            <td><div class="actual-text">No such menu/button exists.</div></td>
+            <td><div class="deviation-text"></div></td>
+            <td><span class="badge badge-not-impl">NOT AVAILABLE IN CURRENT BUILD</span></td>
+            <td><span class="no-img-badge">FEATURE NOT<br>AVAILABLE</span></td>
+          </tr>
+
+          <tr>
+            <td><strong>390</strong></td>
+            <td><span class="step-name">Click on Attach to ticket</span></td>
+            <td><div class="expected-text">Should display a modal page having a queue, queue type and ticket ID</div></td>
+            <td><div class="actual-text">No such menu/button/modal exists.</div></td>
+            <td><div class="deviation-text"></div></td>
+            <td><span class="badge badge-not-impl">NOT AVAILABLE IN CURRENT BUILD</span></td>
+            <td><span class="no-img-badge">FEATURE NOT<br>AVAILABLE</span></td>
+          </tr>
+
+          <tr>
+            <td><strong>391</strong></td>
+            <td><span class="step-name">Click and select queue from the drop down</span></td>
+            <td><div class="expected-text">Should be able to select queue(s) and display on the queue field</div></td>
+            <td><div class="actual-text">No such modal/dropdown exists.</div></td>
+            <td><div class="deviation-text"></div></td>
+            <td><span class="badge badge-not-impl">NOT AVAILABLE IN CURRENT BUILD</span></td>
+            <td><span class="no-img-badge">FEATURE NOT<br>AVAILABLE</span></td>
+          </tr>
+
+          <tr>
+            <td><strong>392</strong></td>
+            <td><span class="step-name">Click and select queue type from the drop-down</span></td>
+            <td><div class="expected-text">Should be able to select queue-type(s) and display in the queue-type field</div></td>
+            <td><div class="actual-text">No such modal/dropdown exists.</div></td>
+            <td><div class="deviation-text"></div></td>
+            <td><span class="badge badge-not-impl">NOT AVAILABLE IN CURRENT BUILD</span></td>
+            <td><span class="no-img-badge">FEATURE NOT<br>AVAILABLE</span></td>
+          </tr>
+
+          <tr>
+            <td><strong>393</strong></td>
+            <td><span class="step-name">Click and select ticket id from the drop-down</span></td>
+            <td><div class="expected-text">Should be able to select Ticket-id(s) and display in the Ticket-id field</div></td>
+            <td><div class="actual-text">No such modal/dropdown exists.</div></td>
+            <td><div class="deviation-text"></div></td>
+            <td><span class="badge badge-not-impl">NOT AVAILABLE IN CURRENT BUILD</span></td>
+            <td><span class="no-img-badge">FEATURE NOT<br>AVAILABLE</span></td>
+          </tr>
+
+          <tr>
+            <td><strong>394</strong></td>
+            <td><span class="step-name">Search and filter through the queue, queue-type and ticket id</span></td>
+            <td><div class="expected-text">Should be able to filter through the queue, queue-type and ticket id</div></td>
+            <td><div class="actual-text">No such modal/search exists.</div></td>
+            <td><div class="deviation-text"></div></td>
+            <td><span class="badge badge-not-impl">NOT AVAILABLE IN CURRENT BUILD</span></td>
+            <td><span class="no-img-badge">FEATURE NOT<br>AVAILABLE</span></td>
+          </tr>
+
+          <tr>
+            <td><strong>395</strong></td>
+            <td><span class="step-name">Click on grid view</span></td>
+            <td><div class="expected-text">Should display document in grid format</div></td>
+            <td><div class="actual-text">There is no Asset Management view to toggle to grid format.</div></td>
+            <td><div class="deviation-text"></div></td>
+            <td><span class="badge badge-not-impl">NOT AVAILABLE IN CURRENT BUILD</span></td>
+            <td><span class="no-img-badge">FEATURE NOT<br>AVAILABLE</span></td>
+          </tr>
+
+          <tr>
+            <td><strong>396</strong></td>
+            <td><span class="step-name">Click on the folder file document</span></td>
+            <td><div class="expected-text">Document should be opened successfully</div></td>
+            <td><div class="actual-text">No Asset Management document exists to open.</div></td>
+            <td><div class="deviation-text"></div></td>
+            <td><span class="badge badge-not-impl">NOT AVAILABLE IN CURRENT BUILD</span></td>
+            <td><span class="no-img-badge">FEATURE NOT<br>AVAILABLE</span></td>
+          </tr>
+
+          <tr>
+            <td><strong>397</strong></td>
+            <td><span class="step-name">Click on signature</span></td>
+            <td><div class="expected-text">Should display signature's page</div></td>
+            <td><div class="actual-text">No Asset Management document/viewer exists to reach a signature workflow from.</div></td>
+            <td><div class="deviation-text"></div></td>
+            <td><span class="badge badge-not-impl">NOT AVAILABLE IN CURRENT BUILD</span></td>
+            <td><span class="no-img-badge">FEATURE NOT<br>AVAILABLE</span></td>
+          </tr>
+
+          <tr>
+            <td><strong>398</strong></td>
+            <td><span class="step-name">Click on upload signature</span></td>
+            <td><div class="expected-text">Should upload signature</div></td>
+            <td><div class="actual-text">Unreachable — no entry point (Row 397).</div></td>
+            <td><div class="deviation-text"></div></td>
+            <td><span class="badge badge-not-impl">NOT AVAILABLE IN CURRENT BUILD</span></td>
+            <td><span class="no-img-badge">FEATURE NOT<br>AVAILABLE</span></td>
+          </tr>
+
+          <tr>
+            <td><strong>399</strong></td>
+            <td><span class="step-name">Click on edit signature</span></td>
+            <td><div class="expected-text">Should update the signature</div></td>
+            <td><div class="actual-text">Not reachable because folder cannot be opened.</div></td>
+            <td><div class="deviation-text"></div></td>
+            <td><span class="badge badge-not-impl">NOT AVAILABLE IN CURRENT BUILD</span></td>
+            <td><span class="no-img-badge">FEATURE NOT<br>AVAILABLE</span></td>
+          </tr>
+
+          <tr>
+            <td><strong>400</strong></td>
+            <td><span class="step-name">Click on delete signature</span></td>
+            <td><div class="expected-text">Should remove the selected signature</div></td>
+            <td><div class="actual-text">Not reachable because folder cannot be opened.</div></td>
+            <td><div class="deviation-text"></div></td>
+            <td><span class="badge badge-not-impl">NOT AVAILABLE IN CURRENT BUILD</span></td>
+            <td><span class="no-img-badge">FEATURE NOT<br>AVAILABLE</span></td>
+          </tr>
+
+          <tr>
+            <td><strong>401</strong></td>
+            <td><span class="step-name">Input/Enter text</span></td>
+            <td><div class="expected-text">Should accept the text</div></td>
+            <td><div class="actual-text">Not reachable because folder cannot be opened.</div></td>
+            <td><div class="deviation-text"></div></td>
+            <td><span class="badge badge-not-impl">NOT AVAILABLE IN CURRENT BUILD</span></td>
+            <td><span class="no-img-badge">FEATURE NOT<br>AVAILABLE</span></td>
+          </tr>
+
+          <tr>
+            <td><strong>402</strong></td>
+            <td><span class="step-name">Select signature default</span></td>
+            <td><div class="expected-text">Should display the default signature</div></td>
+            <td><div class="actual-text">Not reachable because folder cannot be opened.</div></td>
+            <td><div class="deviation-text"></div></td>
+            <td><span class="badge badge-not-impl">NOT AVAILABLE IN CURRENT BUILD</span></td>
+            <td><span class="no-img-badge">FEATURE NOT<br>AVAILABLE</span></td>
+          </tr>
+
+          <tr>
+            <td><strong>403</strong></td>
+            <td><span class="step-name">Check the set authentication</span></td>
+            <td><div class="expected-text">The set authentication should be checked</div></td>
+            <td><div class="actual-text">Not reachable because folder cannot be opened.</div></td>
+            <td><div class="deviation-text"></div></td>
+            <td><span class="badge badge-not-impl">NOT AVAILABLE IN CURRENT BUILD</span></td>
+            <td><span class="no-img-badge">FEATURE NOT<br>AVAILABLE</span></td>
+          </tr>
+
+          <tr>
+            <td><strong>404</strong></td>
+            <td><span class="step-name">Click on done button</span></td>
+            <td><div class="expected-text">Should append the signature on the document</div></td>
+            <td><div class="actual-text">Not reachable because folder cannot be opened.</div></td>
+            <td><div class="deviation-text"></div></td>
+            <td><span class="badge badge-not-impl">NOT AVAILABLE IN CURRENT BUILD</span></td>
+            <td><span class="no-img-badge">FEATURE NOT<br>AVAILABLE</span></td>
+          </tr>
+
+          <tr>
+            <td><strong>405</strong></td>
+            <td><span class="step-name">Text Field</span></td>
+            <td><div class="expected-text">*(sub-section header)*</div></td>
+            <td><div class="actual-text">Not reachable because folder cannot be opened.</div></td>
+            <td><div class="deviation-text"></div></td>
+            <td><span class="badge badge-not-impl">NOT AVAILABLE IN CURRENT BUILD</span></td>
+            <td><span class="no-img-badge">FEATURE NOT<br>AVAILABLE</span></td>
+          </tr>
+
+          <tr>
+            <td><strong>406</strong></td>
+            <td><span class="step-name">Click on text fill tab</span></td>
+            <td><div class="expected-text">Should display the text fill area</div></td>
+            <td><div class="actual-text">Not reachable because folder cannot be opened.</div></td>
+            <td><div class="deviation-text"></div></td>
+            <td><span class="badge badge-not-impl">NOT AVAILABLE IN CURRENT BUILD</span></td>
+            <td><span class="no-img-badge">FEATURE NOT<br>AVAILABLE</span></td>
+          </tr>
+
+          <tr>
+            <td><strong>407</strong></td>
+            <td><span class="step-name">Share</span></td>
+            <td><div class="expected-text">*(sub-section header)*</div></td>
+            <td><div class="actual-text">Not reachable because folder cannot be opened.</div></td>
+            <td><div class="deviation-text"></div></td>
+            <td><span class="badge badge-not-impl">NOT AVAILABLE IN CURRENT BUILD</span></td>
+            <td><span class="no-img-badge">FEATURE NOT<br>AVAILABLE</span></td>
+          </tr>
+
+          <tr>
+            <td><strong>408</strong></td>
+            <td><span class="step-name">Click on share button</span></td>
+            <td><div class="expected-text">Document should be shared</div></td>
+            <td><div class="actual-text">Not reachable because folder cannot be opened.</div></td>
+            <td><div class="deviation-text"></div></td>
+            <td><span class="badge badge-not-impl">NOT AVAILABLE IN CURRENT BUILD</span></td>
+            <td><span class="no-img-badge">FEATURE NOT<br>AVAILABLE</span></td>
+          </tr>
+
+          <tr>
+            <td><strong>409</strong></td>
+            <td><span class="step-name">Download tab</span></td>
+            <td><div class="expected-text">*(sub-section header)*</div></td>
+            <td><div class="actual-text">Not reachable because folder cannot be opened.</div></td>
+            <td><div class="deviation-text"></div></td>
+            <td><span class="badge badge-not-impl">NOT AVAILABLE IN CURRENT BUILD</span></td>
+            <td><span class="no-img-badge">FEATURE NOT<br>AVAILABLE</span></td>
+          </tr>
+
+          <tr>
+            <td><strong>410</strong></td>
+            <td><span class="step-name">Click on download button</span></td>
+            <td><div class="expected-text">Should download the document</div></td>
+            <td><div class="actual-text">Not reachable because folder cannot be opened.</div></td>
+            <td><div class="deviation-text"></div></td>
+            <td><span class="badge badge-not-impl">NOT AVAILABLE IN CURRENT BUILD</span></td>
+            <td><span class="no-img-badge">FEATURE NOT<br>AVAILABLE</span></td>
+          </tr>
+
+          <tr>
+            <td><strong>411</strong></td>
+            <td><span class="step-name">Click the menu button on the folder in the collaboration file created</span></td>
+            <td><div class="expected-text">A user shall be able to select a folder and view the files in the folder and a drop-down as (Pin folder, Open folder, get folder link, share folder, star folder, rename folder, view details, download folder, Attach to ticket, Archive file, delete file)</div></td>
+            <td><div class="actual-text">No Asset Management folder exists in any Collaboration context either.</div></td>
+            <td><div class="deviation-text"></div></td>
+            <td><span class="badge badge-not-impl">NOT AVAILABLE IN CURRENT BUILD</span></td>
+            <td><span class="no-img-badge">FEATURE NOT<br>AVAILABLE</span></td>
+          </tr>
+
+          <tr>
+            <td><strong>412</strong></td>
+            <td><span class="step-name">click on pin folder</span></td>
+            <td><div class="expected-text">The folder should be pinned successfully</div></td>
+            <td><div class="actual-text">Unreachable — no entry point (Row 411).</div></td>
+            <td><div class="deviation-text"></div></td>
+            <td><span class="badge badge-not-impl">NOT AVAILABLE IN CURRENT BUILD</span></td>
+            <td><span class="no-img-badge">FEATURE NOT<br>AVAILABLE</span></td>
+          </tr>
+
+          <tr>
+            <td><strong>413</strong></td>
+            <td><span class="step-name">Click on open a folder</span></td>
+            <td><div class="expected-text">The folder should be opened and the user linked to the audit trail successfully</div></td>
+            <td><div class="actual-text">Not reachable because folder cannot be opened.</div></td>
+            <td><div class="deviation-text"></div></td>
+            <td><span class="badge badge-not-impl">NOT AVAILABLE IN CURRENT BUILD</span></td>
+            <td><span class="no-img-badge">FEATURE NOT<br>AVAILABLE</span></td>
+          </tr>
+
+          <tr>
+            <td><strong>414</strong></td>
+            <td><span class="step-name">Click on the three-dot button on the document folder</span></td>
+            <td><div class="expected-text">Displays a drop-down as Preview file, open file, print file, download</div></td>
+            <td><div class="actual-text">Not reachable because folder cannot be opened.</div></td>
+            <td><div class="deviation-text"></div></td>
+            <td><span class="badge badge-not-impl">NOT AVAILABLE IN CURRENT BUILD</span></td>
+            <td><span class="no-img-badge">FEATURE NOT<br>AVAILABLE</span></td>
+          </tr>
+
+          <tr>
+            <td><strong>415</strong></td>
+            <td><span class="step-name">Click on preview file button</span></td>
+            <td><div class="expected-text">Should display the file</div></td>
+            <td><div class="actual-text">Not reachable because folder cannot be opened.</div></td>
+            <td><div class="deviation-text"></div></td>
+            <td><span class="badge badge-not-impl">NOT AVAILABLE IN CURRENT BUILD</span></td>
+            <td><span class="no-img-badge">FEATURE NOT<br>AVAILABLE</span></td>
+          </tr>
+
+          <tr>
+            <td><strong>416</strong></td>
+            <td><span class="step-name">Share</span></td>
+            <td><div class="expected-text">*(sub-section header)*</div></td>
+            <td><div class="actual-text">Not reachable because folder cannot be opened.</div></td>
+            <td><div class="deviation-text"></div></td>
+            <td><span class="badge badge-not-impl">NOT AVAILABLE IN CURRENT BUILD</span></td>
+            <td><span class="no-img-badge">FEATURE NOT<br>AVAILABLE</span></td>
+          </tr>
+
+          <tr>
+            <td><strong>417</strong></td>
+            <td><span class="step-name">Click on share button</span></td>
+            <td><div class="expected-text">Document should be shared</div></td>
+            <td><div class="actual-text">Not reachable because folder cannot be opened.</div></td>
+            <td><div class="deviation-text"></div></td>
+            <td><span class="badge badge-not-impl">NOT AVAILABLE IN CURRENT BUILD</span></td>
+            <td><span class="no-img-badge">FEATURE NOT<br>AVAILABLE</span></td>
+          </tr>
+
+          <tr>
+            <td><strong>418</strong></td>
+            <td><span class="step-name">Download tab</span></td>
+            <td><div class="expected-text">*(sub-section header)*</div></td>
+            <td><div class="actual-text">Not reachable because folder cannot be opened.</div></td>
+            <td><div class="deviation-text"></div></td>
+            <td><span class="badge badge-not-impl">NOT AVAILABLE IN CURRENT BUILD</span></td>
+            <td><span class="no-img-badge">FEATURE NOT<br>AVAILABLE</span></td>
+          </tr>
+
+          <tr>
+            <td><strong>419</strong></td>
+            <td><span class="step-name">Click on download button</span></td>
+            <td><div class="expected-text">Should download the document</div></td>
+            <td><div class="actual-text">Not reachable because folder cannot be opened.</div></td>
+            <td><div class="deviation-text"></div></td>
+            <td><span class="badge badge-not-impl">NOT AVAILABLE IN CURRENT BUILD</span></td>
+            <td><span class="no-img-badge">FEATURE NOT<br>AVAILABLE</span></td>
+          </tr>
+
+          <tr>
+            <td><strong>420</strong></td>
+            <td><span class="step-name">Click on open file</span></td>
+            <td><div class="expected-text">Should display the file</div></td>
+            <td><div class="actual-text">Not reachable because folder cannot be opened.</div></td>
+            <td><div class="deviation-text"></div></td>
+            <td><span class="badge badge-not-impl">NOT AVAILABLE IN CURRENT BUILD</span></td>
+            <td><span class="no-img-badge">FEATURE NOT<br>AVAILABLE</span></td>
+          </tr>
+
+          <tr>
+            <td><strong>421</strong></td>
+            <td><span class="step-name">Click on print file in the drop-down</span></td>
+            <td><div class="expected-text">Should display the print page and the user should be able to print the file</div></td>
+            <td><div class="actual-text">Not reachable because folder cannot be opened.</div></td>
+            <td><div class="deviation-text"></div></td>
+            <td><span class="badge badge-not-impl">NOT AVAILABLE IN CURRENT BUILD</span></td>
+            <td><span class="no-img-badge">FEATURE NOT<br>AVAILABLE</span></td>
+          </tr>
+
+          <tr>
+            <td><strong>422</strong></td>
+            <td><span class="step-name">Click on the download button in the drop-down</span></td>
+            <td><div class="expected-text">The file should be downloaded</div></td>
+            <td><div class="actual-text">Not reachable because folder cannot be opened.</div></td>
+            <td><div class="deviation-text"></div></td>
+            <td><span class="badge badge-not-impl">NOT AVAILABLE IN CURRENT BUILD</span></td>
+            <td><span class="no-img-badge">FEATURE NOT<br>AVAILABLE</span></td>
+          </tr>
+
+          <tr>
+            <td><strong>424</strong></td>
+            <td><span class="step-name">Click on get folder link</span></td>
+            <td><div class="expected-text">Should display a folder link</div></td>
+            <td><div class="actual-text">Not reachable because folder cannot be opened.</div></td>
+            <td><div class="deviation-text"></div></td>
+            <td><span class="badge badge-not-impl">NOT AVAILABLE IN CURRENT BUILD</span></td>
+            <td><span class="no-img-badge">FEATURE NOT<br>AVAILABLE</span></td>
+          </tr>
+
+          <tr>
+            <td><strong>425</strong></td>
+            <td><span class="step-name">Click on share folder</span></td>
+            <td><div class="expected-text">Should open sharing link to share the file</div></td>
+            <td><div class="actual-text">Not reachable because folder cannot be opened.</div></td>
+            <td><div class="deviation-text"></div></td>
+            <td><span class="badge badge-not-impl">NOT AVAILABLE IN CURRENT BUILD</span></td>
+            <td><span class="no-img-badge">FEATURE NOT<br>AVAILABLE</span></td>
+          </tr>
+
+          <tr>
+            <td><strong>426</strong></td>
+            <td><span class="step-name">Click on star folder</span></td>
+            <td><div class="expected-text">Folder should be starred successfully</div></td>
+            <td><div class="actual-text">Not reachable because folder cannot be opened.</div></td>
+            <td><div class="deviation-text"></div></td>
+            <td><span class="badge badge-not-impl">NOT AVAILABLE IN CURRENT BUILD</span></td>
+            <td><span class="no-img-badge">FEATURE NOT<br>AVAILABLE</span></td>
+          </tr>
+
+          <tr>
+            <td><strong>427</strong></td>
+            <td><span class="step-name">Click on rename folder</span></td>
+            <td><div class="expected-text">A renaming field popup should be displayed</div></td>
+            <td><div class="actual-text">Not reachable because folder cannot be opened.</div></td>
+            <td><div class="deviation-text"></div></td>
+            <td><span class="badge badge-not-impl">NOT AVAILABLE IN CURRENT BUILD</span></td>
+            <td><span class="no-img-badge">FEATURE NOT<br>AVAILABLE</span></td>
+          </tr>
+
+          <tr>
+            <td><strong>428</strong></td>
+            <td><span class="step-name">Click on save button</span></td>
+            <td><div class="expected-text">The folder should be renamed and saved successfully</div></td>
+            <td><div class="actual-text">Not reachable because folder cannot be opened.</div></td>
+            <td><div class="deviation-text"></div></td>
+            <td><span class="badge badge-not-impl">NOT AVAILABLE IN CURRENT BUILD</span></td>
+            <td><span class="no-img-badge">FEATURE NOT<br>AVAILABLE</span></td>
+          </tr>
+
+          <tr>
+            <td><strong>429</strong></td>
+            <td><span class="step-name">Click on cancel button</span></td>
+            <td><div class="expected-text">The process should be cancelled</div></td>
+            <td><div class="actual-text">Not reachable because folder cannot be opened.</div></td>
+            <td><div class="deviation-text"></div></td>
+            <td><span class="badge badge-not-impl">NOT AVAILABLE IN CURRENT BUILD</span></td>
+            <td><span class="no-img-badge">FEATURE NOT<br>AVAILABLE</span></td>
+          </tr>
+
+          <tr>
+            <td><strong>430</strong></td>
+            <td><span class="step-name">Click on view details</span></td>
+            <td><div class="expected-text">Displays the folder details</div></td>
+            <td><div class="actual-text">Not reachable because folder cannot be opened.</div></td>
+            <td><div class="deviation-text"></div></td>
+            <td><span class="badge badge-not-impl">NOT AVAILABLE IN CURRENT BUILD</span></td>
+            <td><span class="no-img-badge">FEATURE NOT<br>AVAILABLE</span></td>
+          </tr>
+
+          <tr>
+            <td><strong>431</strong></td>
+            <td><span class="step-name">Click on download folder</span></td>
+            <td><div class="expected-text">Folder should be downloaded</div></td>
+            <td><div class="actual-text">Not reachable because folder cannot be opened.</div></td>
+            <td><div class="deviation-text"></div></td>
+            <td><span class="badge badge-not-impl">NOT AVAILABLE IN CURRENT BUILD</span></td>
+            <td><span class="no-img-badge">FEATURE NOT<br>AVAILABLE</span></td>
+          </tr>
+
+          <tr>
+            <td><strong>432</strong></td>
+            <td><span class="step-name">Click on Attach to ticket</span></td>
+            <td><div class="expected-text">Should display a modal page having a queue, queue type and ticket ID</div></td>
+            <td><div class="actual-text">Not reachable because folder cannot be opened.</div></td>
+            <td><div class="deviation-text"></div></td>
+            <td><span class="badge badge-not-impl">NOT AVAILABLE IN CURRENT BUILD</span></td>
+            <td><span class="no-img-badge">FEATURE NOT<br>AVAILABLE</span></td>
+          </tr>
+
+          <tr>
+            <td><strong>433</strong></td>
+            <td><span class="step-name">Click and select queue from the drop down</span></td>
+            <td><div class="expected-text">Should be able to select queue(s) and display on the queue field</div></td>
+            <td><div class="actual-text">Not reachable because folder cannot be opened.</div></td>
+            <td><div class="deviation-text"></div></td>
+            <td><span class="badge badge-not-impl">NOT AVAILABLE IN CURRENT BUILD</span></td>
+            <td><span class="no-img-badge">FEATURE NOT<br>AVAILABLE</span></td>
+          </tr>
+
+          <tr>
+            <td><strong>434</strong></td>
+            <td><span class="step-name">Click and select queue type from the drop-down</span></td>
+            <td><div class="expected-text">Should be able to select queue-type(s) and display in the queue-type field</div></td>
+            <td><div class="actual-text">Not reachable because folder cannot be opened.</div></td>
+            <td><div class="deviation-text"></div></td>
+            <td><span class="badge badge-not-impl">NOT AVAILABLE IN CURRENT BUILD</span></td>
+            <td><span class="no-img-badge">FEATURE NOT<br>AVAILABLE</span></td>
+          </tr>
+
+          <tr>
+            <td><strong>435</strong></td>
+            <td><span class="step-name">Click and select ticket id from the drop-down</span></td>
+            <td><div class="expected-text">Should be able to select Ticket-id(s) and display in the Ticket-id field</div></td>
+            <td><div class="actual-text">Not reachable because folder cannot be opened.</div></td>
+            <td><div class="deviation-text"></div></td>
+            <td><span class="badge badge-not-impl">NOT AVAILABLE IN CURRENT BUILD</span></td>
+            <td><span class="no-img-badge">FEATURE NOT<br>AVAILABLE</span></td>
+          </tr>
+
+          <tr>
+            <td><strong>436</strong></td>
+            <td><span class="step-name">Search and filter through the queue, queue-type and ticket id</span></td>
+            <td><div class="expected-text">Should be able to filter through the queue, queue-type and ticket id</div></td>
+            <td><div class="actual-text">Not reachable because folder cannot be opened.</div></td>
+            <td><div class="deviation-text"></div></td>
+            <td><span class="badge badge-not-impl">NOT AVAILABLE IN CURRENT BUILD</span></td>
+            <td><span class="no-img-badge">FEATURE NOT<br>AVAILABLE</span></td>
+          </tr>
+
+          <tr>
+            <td><strong>437</strong></td>
+            <td><span class="step-name">Click on grid view</span></td>
+            <td><div class="expected-text">Should display document in grid format</div></td>
+            <td><div class="actual-text">Not reachable because folder cannot be opened.</div></td>
+            <td><div class="deviation-text"></div></td>
+            <td><span class="badge badge-not-impl">NOT AVAILABLE IN CURRENT BUILD</span></td>
+            <td><span class="no-img-badge">FEATURE NOT<br>AVAILABLE</span></td>
+          </tr>
+
+          <tr>
+            <td><strong>438</strong></td>
+            <td><span class="step-name">END TEST</span></td>
+            <td><div class="expected-text">Test session completed successfully</div></td>
+            <td><div class="actual-text">Asset Management scenario UAT concluded: the module could not be located anywhere in the live build after an exhaustive sidebar/hub/app-catalog search. Login and Application Documents navigation themselves worked correctly throughout.</div></td>
+            <td><div class="deviation-text"></div></td>
+            <td><span class="badge badge-not-impl">NOT AVAILABLE IN CURRENT BUILD (scenario-level)</span></td>
+            <td><span class="no-img-badge">FEATURE NOT<br>AVAILABLE</span></td>
+          </tr>
+        </tbody>
+      </table>
+      </div>
+    </div>
 
   </div>
 
-  <div id="imgModal" class="modal" onclick="closeModal()">
+  <div id="imageModal" class="modal" onclick="closeModal()">
     <span class="modal-close">&times;</span>
-    <img id="modalImg" class="modal-content" src="" alt="Zoomed Evidence">
+    <img id="modalImg" class="modal-content" src="" alt="Full Preview">
   </div>
 
   <script>
-    function openModal(src) {
-      document.getElementById('modalImg').src = src;
-      document.getElementById('imgModal').classList.add('active');
-    }
-    function closeModal() {
-      document.getElementById('imgModal').classList.remove('active');
-    }
-    function filterCases(filterId, btn) {
+    function filterCases(filter, btn) {
       document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
       document.querySelectorAll('.case-section').forEach(sec => {
-        if (filterId === 'all' || sec.getAttribute('data-case') === filterId) {
-          sec.style.display = 'block';
-        } else {
-          sec.style.display = 'none';
-        }
+        sec.style.display = (filter === 'all' || sec.getAttribute('data-case') === filter) ? 'block' : 'none';
       });
     }
+    function openModal(src) {
+      document.getElementById('modalImg').src = src;
+      document.getElementById('imageModal').classList.add('active');
+    }
+    function closeModal() { document.getElementById('imageModal').classList.remove('active'); }
+    document.addEventListener('keydown', function(e) { if (e.key === 'Escape') closeModal(); });
   </script>
-
-
-  pt src="../assets/js/html2pdf.bundle.min.js"></script>
-
-  <script src="../assets/js/modules-data.js"></script>
-  <script src="../assets/js/test-cases-data.js"></script>
-  <script src="../assets/js/html2pdf.bundle.min.js"></script>
-  <script src="../assets/js/exec-report-generator.js"></script>
 </body>
-
 </html>

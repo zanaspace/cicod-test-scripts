@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>UAT Report - APPLICATION Module (test/ApplicationTest.md)</title>
+  <title>UAT Report - APPLICATION Module</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
   <style>
     :root {
@@ -142,30 +142,29 @@
       font-size: 0.72rem;
       color: var(--text-muted);
     }
+  
+    .no-img-badge {
+      display: inline-block;
+      padding: 4px 8px;
+      border-radius: 6px;
+      background: rgba(245, 158, 11, 0.1);
+      border: 1px dashed rgba(245, 158, 11, 0.3);
+      color: #fbbf24;
+      font-size: 0.72rem;
+      font-weight: 600;
+      text-align: center;
+      line-height: 1.3;
+    }
+
   </style>
   <link rel="stylesheet" href="../assets/css/test-report-addon.css">
 </head>
 <body>
   <div class="container">
     <div class="header-box">
-      <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;margin-bottom:12px;">
-        <span class="summary-badge">UAT PASSED: APPLICATION Feature Verified</span>
-        <button class="btn-exec-download" onclick="if(window.ExecReportGenerator) ExecReportGenerator.downloadExecReportPdf('ecms_applications')" title="Download Official Executive &amp; Engineering PDF Report with Detailed Test Cases">
-          <span class="btn-icon-pulse">📄</span>
-          <span>Download PDF Report</span>
-          <span class="btn-exec-badge">PDF</span>
-        </button>
-      </div>
+      <div class="summary-badge">UAT PASSED: APPLICATION Feature Verified</div>
       <h1>UAT Execution Report: APPLICATION Module</h1>
-      <p class="sub">Executed strictly per <code>test/ApplicationTest.md</code> (Row 75 in CICOD DRIVE TEST SCRIPT.xlsx) across live commercial SaaS staging and reference environment.</p>
-      
-      <div class="meta-bar">
-        <div><span>Test Script:</span> <strong>test/ApplicationTest.md</strong></div>
-        <div><span>Script Reference:</span> <strong>Row 75 (APPLICATION)</strong></div>
-        <div><span>Live Environment:</span> <strong>cicodecms.cicodsaasstaging.com/admin/merchant</strong></div>
-        <div><span>Comparison Site:</span> <strong>govtest.convergenceondemand.com</strong></div>
-        <div><span>Total Test Steps:</span> <strong>2 of 2 PASSED</strong></div>
-      </div>
+      <p class="sub">Executed strictly per <code>Official Test Specification</code> (Row 75 in CICOD DRIVE TEST SCRIPT.xlsx) across live commercial SaaS staging and reference environment.</p>
     </div>
 
     <div class="table-container">

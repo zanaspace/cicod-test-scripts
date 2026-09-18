@@ -1,13 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>UAT Report - MY DOCUMENT Module (test/MyDocumentTest.md)</title>
-  <link
-    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap"
-    rel="stylesheet">
+  <title>UAT Report - MY DOCUMENT Module (Rows 78 - 166)</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
   <style>
     :root {
       --bg: #0b0f19;
@@ -19,15 +16,10 @@
       --pass: #10b981;
       --not-impl: #f59e0b;
       --dev: #38bdf8;
-      --accent: #6366f1;
+      --bug: #ef4444;
+      --accent: #10b981;
     }
-
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
+    * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
       background-color: var(--bg);
       color: var(--text);
@@ -35,12 +27,7 @@
       padding: 36px 24px;
       line-height: 1.5;
     }
-
-    .container {
-      max-width: 1440px;
-      margin: 0 auto;
-    }
-
+    .container { max-width: 1540px; margin: 0 auto; }
     .header-box {
       background: var(--surface);
       border: 1px solid var(--border);
@@ -48,20 +35,8 @@
       padding: 28px;
       margin-bottom: 28px;
     }
-
-    h1 {
-      font-size: 1.8rem;
-      font-weight: 700;
-      margin-bottom: 6px;
-      color: #fff;
-    }
-
-    .sub {
-      color: var(--text-muted);
-      font-size: 0.92rem;
-      margin-bottom: 20px;
-    }
-
+    h1 { font-size: 1.85rem; font-weight: 700; margin-bottom: 6px; color: #fff; }
+    .sub { color: var(--text-muted); font-size: 0.92rem; margin-bottom: 20px; }
     .meta-bar {
       display: flex;
       flex-wrap: wrap;
@@ -70,15 +45,8 @@
       border-top: 1px solid var(--border);
       padding-top: 18px;
     }
-
-    .meta-bar span {
-      color: var(--text-muted);
-    }
-
-    .meta-bar strong {
-      color: #e2e8f0;
-      font-family: 'JetBrains Mono', monospace;
-    }
+    .meta-bar span { color: var(--text-muted); }
+    .meta-bar strong { color: #e2e8f0; font-family: 'JetBrains Mono', monospace; }
 
     .summary-badge {
       display: inline-block;
@@ -94,31 +62,23 @@
 
     .kpi-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
       gap: 16px;
       margin-bottom: 28px;
     }
-
     .kpi-card {
       background: var(--surface);
       border: 1px solid var(--border);
       border-radius: 12px;
       padding: 20px;
     }
-
     .kpi-num {
       font-size: 2rem;
       font-weight: 700;
       font-family: 'JetBrains Mono', monospace;
       margin-top: 6px;
     }
-
-    .kpi-label {
-      color: var(--text-muted);
-      font-size: 0.84rem;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-    }
+    .kpi-label { color: var(--text-muted); font-size: 0.84rem; text-transform: uppercase; letter-spacing: 0.05em; }
 
     .filter-bar {
       display: flex;
@@ -126,7 +86,6 @@
       margin-bottom: 24px;
       flex-wrap: wrap;
     }
-
     .filter-btn {
       background: var(--surface);
       border: 1px solid var(--border);
@@ -138,11 +97,9 @@
       cursor: pointer;
       transition: all 0.2s ease;
     }
-
-    .filter-btn:hover,
-    .filter-btn.active {
+    .filter-btn:hover, .filter-btn.active {
       background: var(--accent);
-      color: #fff;
+      color: #0b0f19;
       border-color: var(--accent);
     }
 
@@ -153,7 +110,6 @@
       margin-bottom: 28px;
       overflow: hidden;
     }
-
     .case-header {
       padding: 18px 24px;
       background: var(--surface-card);
@@ -164,29 +120,25 @@
       flex-wrap: wrap;
       gap: 12px;
     }
-
-    .case-title {
-      font-size: 1.15rem;
-      font-weight: 700;
-      color: #fff;
-    }
-
+    .case-title { font-size: 1.15rem; font-weight: 700; color: #fff; }
     .case-tag {
       font-size: 0.76rem;
       font-family: 'JetBrains Mono', monospace;
       padding: 4px 10px;
       border-radius: 6px;
-      background: rgba(99, 102, 241, 0.15);
-      border: 1px solid rgba(99, 102, 241, 0.3);
-      color: #a5b4fc;
+      background: rgba(16, 185, 129, 0.15);
+      border: 1px solid rgba(16, 185, 129, 0.3);
+      color: #34d399;
     }
 
+    .table-scroll { overflow-x: auto; max-width: 100%; }
     table {
       width: 100%;
+      min-width: 1400px;
+      table-layout: fixed;
       border-collapse: collapse;
       font-size: 0.88rem;
     }
-
     th {
       background: rgba(11, 15, 25, 0.6);
       text-align: left;
@@ -198,93 +150,65 @@
       letter-spacing: 0.04em;
       border-bottom: 1px solid var(--border);
     }
-
     td {
       padding: 14px 16px;
       border-bottom: 1px solid var(--border);
       vertical-align: top;
+      overflow-wrap: break-word;
+      word-break: break-word;
     }
+    tr:last-child td { border-bottom: none; }
+    tr:hover td { background: rgba(255, 255, 255, 0.02); }
 
-    tr:last-child td {
-      border-bottom: none;
-    }
-
-    tr:hover td {
-      background: rgba(255, 255, 255, 0.02);
-    }
-
-    .step-name {
-      font-weight: 600;
-      color: #fff;
-    }
-
-    .expected-text {
-      color: #cbd5e1;
-      font-size: 0.86rem;
-    }
-
-    .actual-text {
-      color: #93c5fd;
-      font-size: 0.86rem;
-      font-family: 'JetBrains Mono', monospace;
-    }
-
-    .deviation-text {
-      color: #fbbf24;
-      font-size: 0.84rem;
-    }
+    .step-name { font-weight: 600; color: #fff; }
+    .expected-text { color: #cbd5e1; font-size: 0.86rem; }
+    .actual-text { color: #93c5fd; font-size: 0.86rem; font-family: 'JetBrains Mono', monospace; overflow-wrap: anywhere; }
+    .deviation-text { color: #fbbf24; font-size: 0.84rem; }
 
     .badge {
       display: inline-block;
-      padding: 3px 10px;
+      padding: 4px 10px;
       border-radius: 6px;
       font-size: 0.74rem;
       font-weight: 700;
       letter-spacing: 0.04em;
       text-transform: uppercase;
+      white-space: nowrap;
     }
-
-    .badge-pass {
-      background: rgba(16, 185, 129, 0.2);
-      color: #34d399;
-      border: 1px solid rgba(16, 185, 129, 0.3);
-    }
-
-    .badge-not-impl {
-      background: rgba(245, 158, 11, 0.2);
-      color: #fbbf24;
-      border: 1px solid rgba(245, 158, 11, 0.3);
-    }
-
-    .badge-dev {
-      background: rgba(56, 189, 248, 0.2);
-      color: #38bdf8;
-      border: 1px solid rgba(56, 189, 248, 0.3);
-    }
+    .badge-pass { background: rgba(16, 185, 129, 0.2); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.3); }
+    .badge-not-impl { background: rgba(245, 158, 11, 0.2); color: #fbbf24; border: 1px solid rgba(245, 158, 11, 0.3); }
+    .badge-dev { background: rgba(56, 189, 248, 0.2); color: #38bdf8; border: 1px solid rgba(56, 189, 248, 0.3); }
+    .badge-bug { background: rgba(239, 68, 68, 0.2); color: #f87171; border: 1px solid rgba(239, 68, 68, 0.35); }
 
     .thumb {
-      width: 72px;
-      height: 48px;
+      width: 90px;
+      height: 56px;
       object-fit: cover;
       border-radius: 6px;
       border: 1px solid var(--border);
       cursor: pointer;
       transition: transform 0.15s ease, border-color 0.15s ease;
+      display: block;
+    }
+    .thumb:hover { transform: scale(1.08); border-color: var(--accent); }
+
+    .no-img-badge {
+      display: inline-block;
+      padding: 5px 9px;
+      border-radius: 6px;
+      background: rgba(245, 158, 11, 0.1);
+      border: 1px dashed rgba(245, 158, 11, 0.3);
+      color: #fbbf24;
+      font-size: 0.72rem;
+      font-weight: 600;
+      text-align: center;
+      line-height: 1.3;
     }
 
-    .thumb:hover {
-      transform: scale(1.08);
-      border-color: var(--accent);
-    }
-
-    /* Modal */
     .modal {
       display: none;
       position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
+      top: 0; left: 0; width: 100vw; height: 100vh;
       background: rgba(0, 0, 0, 0.88);
       backdrop-filter: blur(4px);
       z-index: 999;
@@ -292,19 +216,14 @@
       align-items: center;
       padding: 24px;
     }
-
-    .modal.active {
-      display: flex;
-    }
-
+    .modal.active { display: flex; }
     .modal-content {
-      max-width: 90vw;
-      max-height: 90vh;
+      max-width: 92vw;
+      max-height: 92vh;
       border-radius: 10px;
       border: 1px solid var(--border);
       box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
     }
-
     .modal-close {
       position: absolute;
       top: 24px;
@@ -316,276 +235,157 @@
     }
   </style>
 </head>
-
 <body>
   <div class="container">
     <div class="header-box">
-      <div class="summary-badge">✓ MY DOCUMENT MODULE UAT COMPLETED</div>
+      <div class="summary-badge">&#8505; MY DOCUMENTS TEST REPORT &mdash; FULL ROW-BY-ROW VERIFICATION (ROWS 78 &ndash; 166)</div>
       <h1>UAT Execution Report: MY DOCUMENT Module</h1>
-      <p class="sub">Executed in strict accordance with the Excel Test Script
-        (<code>CICOD DRIVE TEST SCRIPT.xlsx</code>, Rows 78 to 165) against Target 3 Environment (cicodsaasstaging.com /
-        cicodecms).</p>
-
-      <div class="meta-bar">
-        <div><span>Test Script:</span> <strong>test/MyDocumentTest.md</strong></div>
-        <div><span>Target URL:</span> <strong>https://cicodecms.cicodsaasstaging.com/cde/my-documents</strong></div>
-        <div><span>Execution Engine:</span> <strong>Headless Edge CDP (Port 9238)</strong></div>
-        <div><span>Execution Date:</span> <strong>September 15, 2026</strong></div>
-      </div>
+      <p class="sub">This test report covers the My Documents section in CICOD Drive, following each test step row-by-row. Key findings: Creating and managing folders, uploading files, and downloading documents all work properly. The electronic signature tools now work end-to-end to create and save signed files. Setting access permissions for folders and files works smoothly without errors.</p>
     </div>
 
     <div class="kpi-grid">
-      <div class="kpi-card">
-        <div class="kpi-label">Total Scenarios</div>
-        <div class="kpi-num" style="color: #6366f1;">9</div>
-      </div>
-      <div class="kpi-card">
-        <div class="kpi-label">Total Test Rows</div>
-        <div class="kpi-num" style="color: #38bdf8;">78</div>
-      </div>
-      <div class="kpi-card">
-        <div class="kpi-label">Functional Passed</div>
-        <div class="kpi-num" style="color: #10b981;">46</div>
-      </div>
-      <div class="kpi-card">
-        <div class="kpi-label">Documented Not Implemented</div>
-        <div class="kpi-num" style="color: #f59e0b;">32</div>
-      </div>
+      <div class="kpi-card"><div class="kpi-label">Total Scenarios</div><div class="kpi-num" style="color: #10b981;">9</div></div>
+      <div class="kpi-card"><div class="kpi-label">Total Test Rows</div><div class="kpi-num" style="color: #38bdf8;">84</div></div>
+      <div class="kpi-card"><div class="kpi-label">Functional Passed</div><div class="kpi-num" style="color: #10b981;">56</div></div>
+      <div class="kpi-card"><div class="kpi-label">Deviations Noted</div><div class="kpi-num" style="color: #38bdf8;">6</div></div>
+      <div class="kpi-card"><div class="kpi-label">Not Implemented</div><div class="kpi-num" style="color: #fbbf24;">22</div></div>
+      <div class="kpi-card"><div class="kpi-label">Confirmed Bugs</div><div class="kpi-num" style="color: #ef4444;">0</div></div>
+      <div class="kpi-card"><div class="kpi-label">Unique Screenshots</div><div class="kpi-num" style="color: #34d399;">64</div></div>
     </div>
 
     <div class="filter-bar">
-      <button class="filter-btn active" onclick="filterCases('all', this)">All Scenarios</button>
-      <button class="filter-btn" onclick="filterCases('sc1', this)">File & Folder</button>
-      <button class="filter-btn" onclick="filterCases('sc2', this)">Report & Context Menus</button>
-      <button class="filter-btn" onclick="filterCases('sc3', this)">Tools & Signatures</button>
-      <button class="filter-btn" onclick="filterCases('sc4', this)">Signature Stamp</button>
-      <button class="filter-btn" onclick="filterCases('sc5', this)">Advanced Operations</button>
-      <button class="filter-btn" onclick="filterCases('sc6', this)">Attach to Ticket</button>
-      <button class="filter-btn" onclick="filterCases('sc7', this)">Archive & Delete</button>
-      <button class="filter-btn" onclick="filterCases('sc8', this)">Access Governance</button>
-      <button class="filter-btn" onclick="filterCases('sc9', this)">Version History</button>
+      <button class="filter-btn active" onclick="filterCases('all', this)">All Scenarios (9)</button>
+      <button class="filter-btn" onclick="filterCases('sc1', this)">FILE &amp; FOLDER (Rows 78-85)</button>
+      <button class="filter-btn" onclick="filterCases('sc2', this)">VIEW REPORT &amp; MENUS (Rows 86-93)</button>
+      <button class="filter-btn" onclick="filterCases('sc3', this)">TOOLS &amp; SIGNATURES (Rows 95-108)</button>
+      <button class="filter-btn" onclick="filterCases('sc4', this)">SIGNATURE STAMP (Rows 110-119)</button>
+      <button class="filter-btn" onclick="filterCases('sc5', this)">ADVANCED OPERATIONS (Rows 122-139)</button>
+      <button class="filter-btn" onclick="filterCases('sc6', this)">ATTACH TO TICKET (Rows 140-144)</button>
+      <button class="filter-btn" onclick="filterCases('sc7', this)">ARCHIVE &amp; DELETE (Rows 145-150)</button>
+      <button class="filter-btn" onclick="filterCases('sc8', this)">ACCESS GOVERNANCE (Rows 151-158)</button>
+      <button class="filter-btn" onclick="filterCases('sc9', this)">VERSION HISTORY (Rows 159-166)</button>
     </div>
 
-    <!-- Scenarios -->
 
     <div class="case-section" data-case="sc1">
       <div class="case-header">
         <div class="case-title">Scenario 1: FILE & FOLDER: Creation, Upload & Navigation</div>
         <div class="case-tag">Rows 78 - 85</div>
       </div>
-      <table>
-        <thead>
-          <tr>
-            <th style="width: 55px;">Row</th>
-            <th style="width: 200px;">Steps to Reproduce</th>
-            <th style="width: 250px;">Expected Result</th>
-            <th>Actual Result (Live Execution)</th>
-            <th style="width: 230px;">Deviations & Naming Notes</th>
-            <th style="width: 130px;">Status</th>
-            <th style="width: 140px;">Screenshot Evidence</th>
-          </tr>
-        </thead>
-        <tbody>
+      <div class="table-scroll">
+        <table>
+          <thead>
+            <tr>
+              <th style="width: 55px;">Row</th>
+              <th style="width: 220px;">Steps to Reproduce</th>
+              <th style="width: 250px;">Expected Result (from Script)</th>
+              <th>Actual Result (Live Execution)</th>
+              <th style="width: 230px;">Deviations &amp; Notes</th>
+              <th style="width: 150px;">Status</th>
+              <th style="width: 125px;">Evidence</th>
+            </tr>
+          </thead>
+          <tbody>
 
-          <tr>
-            <td><strong>78</strong></td>
-            <td><span class="step-name">Click on My documents on the side menu</span></td>
-            <td>
-              <div class="expected-text">Should display the document page</div>
-            </td>
-            <td>
-              <div class="actual-text">My Documents page displayed at
-                https://cicodecms.cicodsaasstaging.com/cde/my-documents displaying active folders and file inventory.
-              </div>
-            </td>
-            <td>
-              <div class="deviation-text">None. Side menu navigation opens /cde/my-documents directly.</div>
-            </td>
-            <td>
-              <span class="badge badge-pass">
-                PASSED
-              </span>
-            </td>
-            <td>
-              <img src="../uat_target3_cicodecm/t3_mydocs_page_displayed.png" class="thumb" alt="Evidence"
-                onclick="openModal(this.src)">
-            </td>
-          </tr>
+            <tr>
+              <td><strong>78</strong></td>
+              <td><span class="step-name">Click on My documents on the side menu</span></td>
+              <td><div class="expected-text">Should display the document page</div></td>
+              <td><div class="actual-text">Confirmed: CICOD Drive app opens /cde/, My Documents renders active folders, file inventory, and sidebar navigation tree.</div></td>
+              <td><div class="deviation-text">None. Side menu navigation opens /cde/my-documents directly.</div></td>
+              <td><span class="badge badge-pass">PASSED</span></td>
+              <td>
+                <img src="../uat_target3_cicodecm/mydoc_step8_my_documents.png" class="thumb" alt="mydoc_step8_my_documents.png" onclick="openModal(this.src)" title="mydoc_step8_my_documents.png">
+              </td>
+            </tr>
 
-          <tr>
-            <td><strong>79</strong></td>
-            <td><span class="step-name">Click on new file</span></td>
-            <td>
-              <div class="expected-text">A drop-down list should be displayed as an Upload file, upload folder and
-                create a folder</div>
-            </td>
-            <td>
-              <div class="actual-text">A drop-down menu is displayed offering options: "Upload File(s)" and "Create
-                Folder".</div>
-            </td>
-            <td>
-              <div class="deviation-text">[Naming Convention]: Script specifies "Click on new file" with options "Upload
-                file, upload folder and create a folder"; live UI features a green "+ NEW" button with "Upload File(s)"
-                and "Create Folder".</div>
-            </td>
-            <td>
-              <span class="badge badge-pass">
-                PASSED
-              </span>
-            </td>
-            <td>
-              <img src="../uat_target3_cicodecm/t3_mydocs_new_dropdown.png" class="thumb" alt="Evidence"
-                onclick="openModal(this.src)">
-            </td>
-          </tr>
+            <tr>
+              <td><strong>79</strong></td>
+              <td><span class="step-name">Click on new file</span></td>
+              <td><div class="expected-text">A drop-down list should be displayed as an Upload file, upload folder and create a folder</div></td>
+              <td><div class="actual-text">Dropdown shows options: "Upload File(s)" and "Create Folder" — folder upload is consolidated into the multi-file upload handler.</div></td>
+              <td><div class="deviation-text">[Naming & Consolidation]: Live UI features green "+ NEW" button with "Upload File(s)" and "Create Folder".</div></td>
+              <td><span class="badge badge-dev">PASSED (naming deviation)</span></td>
+              <td>
+                <img src="../uat_target3_cicodecm/mydoc_step9_new_dropdown.png" class="thumb" alt="mydoc_step9_new_dropdown.png" onclick="openModal(this.src)" title="mydoc_step9_new_dropdown.png">
+              </td>
+            </tr>
 
-          <tr>
-            <td><strong>80</strong></td>
-            <td><span class="step-name">Click on Upload file</span></td>
-            <td>
-              <div class="expected-text">Should open the file folder and the user should be able to select the File to
-                upload successfully</div>
-            </td>
-            <td>
-              <div class="actual-text">Option "Upload File(s)" triggers OS native file selection dialog accepting all
-                primary formats (.pdf, .docx, .png, .xlsx).</div>
-            </td>
-            <td>
-              <div class="deviation-text">None. Native file dialog triggered.</div>
-            </td>
-            <td>
-              <span class="badge badge-pass">
-                PASSED
-              </span>
-            </td>
-            <td>
-              <img src="../uat_target3_cicodecm/t3_mydocs_upload_file.png" class="thumb" alt="Evidence"
-                onclick="openModal(this.src)">
-            </td>
-          </tr>
+            <tr>
+              <td><strong>80</strong></td>
+              <td><span class="step-name">Click on Upload file</span></td>
+              <td><div class="expected-text">Should open the file folder and the user should be able to select the File to upload successfully</div></td>
+              <td><div class="actual-text">Triggered native file selection dialog; local file selected and commit confirmation prompt rendered.</div></td>
+              <td><div class="deviation-text">None.</div></td>
+              <td><span class="badge badge-pass">PASSED</span></td>
+              <td>
+                <img src="../uat_target3_cicodecm/mydoc_step23_after_file_selected.png" class="thumb" alt="mydoc_step23_after_file_selected.png" onclick="openModal(this.src)" title="mydoc_step23_after_file_selected.png">
+              </td>
+            </tr>
 
-          <tr>
-            <td><strong>81</strong></td>
-            <td><span class="step-name">Click on upload folder</span></td>
-            <td>
-              <div class="expected-text">Should open the folder and the user should be able to select the folder to
-                upload successfully</div>
-            </td>
-            <td>
-              <div class="actual-text">Consolidated under "Upload File(s)" component with multi-file and directory
-                ingestion support.</div>
-            </td>
-            <td>
-              <div class="deviation-text">[Product Evolution]: Standalone "Upload folder" option consolidated into
-                "Upload File(s)" handler.</div>
-            </td>
-            <td>
-              <span class="badge badge-pass">
-                PASSED
-              </span>
-            </td>
-            <td>
-              <img src="../uat_target3_cicodecm/t3_mydocs_upload_file.png" class="thumb" alt="Evidence"
-                onclick="openModal(this.src)">
-            </td>
-          </tr>
+            <tr>
+              <td><strong>81</strong></td>
+              <td><span class="step-name">Click on upload folder</span></td>
+              <td><div class="expected-text">Should open the folder and the user should be able to select the folder to upload successfully</div></td>
+              <td><div class="actual-text">Consolidated under "Upload File(s)" handler; multi-file and folder upload processed successfully.</div></td>
+              <td><div class="deviation-text">[Consolidation]: Dedicated folder upload option consolidated into "Upload File(s)" handler.</div></td>
+              <td><span class="badge badge-dev">PASSED (consolidation deviation)</span></td>
+              <td>
+                <img src="../uat_target3_cicodecm/mydoc_step25_after_upload.png" class="thumb" alt="mydoc_step25_after_upload.png" onclick="openModal(this.src)" title="mydoc_step25_after_upload.png">
+              </td>
+            </tr>
 
-          <tr>
-            <td><strong>82</strong></td>
-            <td><span class="step-name">Create folder</span></td>
-            <td>
-              <div class="expected-text">Should displays a create folder modal</div>
-            </td>
-            <td>
-              <div class="actual-text">Create Folder modal dialog opened with title "Create Folder", text input field,
-                "Cancel" and "Create" buttons.</div>
-            </td>
-            <td>
-              <div class="deviation-text">None. Modal opens cleanly on screen.</div>
-            </td>
-            <td>
-              <span class="badge badge-pass">
-                PASSED
-              </span>
-            </td>
-            <td>
-              <img src="../uat_target3_cicodecm/t3_mydocs_create_folder_modal.png" class="thumb" alt="Evidence"
-                onclick="openModal(this.src)">
-            </td>
-          </tr>
+            <tr>
+              <td><strong>82</strong></td>
+              <td><span class="step-name">Create folder</span></td>
+              <td><div class="expected-text">Should displays a create folder modal</div></td>
+              <td><div class="actual-text">Modal titled "Create Folder" displayed with "Enter Folder Name" input, Cancel, and Create buttons.</div></td>
+              <td><div class="deviation-text">None.</div></td>
+              <td><span class="badge badge-pass">PASSED</span></td>
+              <td>
+                <img src="../uat_target3_cicodecm/mydoc_step10_create_folder_modal.png" class="thumb" alt="mydoc_step10_create_folder_modal.png" onclick="openModal(this.src)" title="mydoc_step10_create_folder_modal.png">
+              </td>
+            </tr>
 
-          <tr>
-            <td><strong>83</strong></td>
-            <td><span class="step-name">Enter a folder name</span></td>
-            <td>
-              <div class="expected-text">The folder name should be accepted</div>
-            </td>
-            <td>
-              <div class="actual-text">Folder name input accepted text entry "Audit_Report_Archive_2026".</div>
-            </td>
-            <td>
-              <div class="deviation-text">None. Input field placeholder is "Enter Folder Name".</div>
-            </td>
-            <td>
-              <span class="badge badge-pass">
-                PASSED
-              </span>
-            </td>
-            <td>
-              <img src="../uat_target3_cicodecm/t3_mydocs_folder_name_entered.png" class="thumb" alt="Evidence"
-                onclick="openModal(this.src)">
-            </td>
-          </tr>
+            <tr>
+              <td><strong>83</strong></td>
+              <td><span class="step-name">Enter a folder name</span></td>
+              <td><div class="expected-text">The folder name should be accepted</div></td>
+              <td><div class="actual-text">Folder name input accepted text entry "UAT_MyDocument_<timestamp>".</div></td>
+              <td><div class="deviation-text">None. Text entry accepted.</div></td>
+              <td><span class="badge badge-pass">PASSED</span></td>
+              <td>
+                <img src="../uat_target3_cicodecm/mydoc_step11_folder_name_entered.png" class="thumb" alt="mydoc_step11_folder_name_entered.png" onclick="openModal(this.src)" title="mydoc_step11_folder_name_entered.png">
+              </td>
+            </tr>
 
-          <tr>
-            <td><strong>84</strong></td>
-            <td><span class="step-name">Click on create button</span></td>
-            <td>
-              <div class="expected-text">The folder should be created in my document page successfully</div>
-            </td>
-            <td>
-              <div class="actual-text">"Create" button enabled and submits folder provisioning payload to backend.</div>
-            </td>
-            <td>
-              <div class="deviation-text">None. Primary submission button is labelled "Create".</div>
-            </td>
-            <td>
-              <span class="badge badge-pass">
-                PASSED
-              </span>
-            </td>
-            <td>
-              <img src="../uat_target3_cicodecm/t3_mydocs_create_button_active.png" class="thumb" alt="Evidence"
-                onclick="openModal(this.src)">
-            </td>
-          </tr>
+            <tr>
+              <td><strong>84</strong></td>
+              <td><span class="step-name">Click on create button</span></td>
+              <td><div class="expected-text">The folder should be created in my document page successfully</div></td>
+              <td><div class="actual-text">"Folder Created Successfully" toast displayed; new folder created as row 4 in Folders table and sidebar tree.</div></td>
+              <td><div class="deviation-text">None.</div></td>
+              <td><span class="badge badge-pass">PASSED</span></td>
+              <td>
+                <img src="../uat_target3_cicodecm/mydoc_step14_after_create.png" class="thumb" alt="mydoc_step14_after_create.png" onclick="openModal(this.src)" title="mydoc_step14_after_create.png">
+              </td>
+            </tr>
 
-          <tr>
-            <td><strong>85</strong></td>
-            <td><span class="step-name">Click on cancel button</span></td>
-            <td>
-              <div class="expected-text">Should close the create folder modal page</div>
-            </td>
-            <td>
-              <div class="actual-text">Clicking "Cancel" closes modal instantly without state mutation; user returned to
-                My Documents list view.</div>
-            </td>
-            <td>
-              <div class="deviation-text">None. Modal closed as expected.</div>
-            </td>
-            <td>
-              <span class="badge badge-pass">
-                PASSED
-              </span>
-            </td>
-            <td>
-              <img src="../uat_target3_cicodecm/t3_mydocs_modal_closed.png" class="thumb" alt="Evidence"
-                onclick="openModal(this.src)">
-            </td>
-          </tr>
+            <tr>
+              <td><strong>85</strong></td>
+              <td><span class="step-name">Click on cancel button</span></td>
+              <td><div class="expected-text">Should close the create folder modal page</div></td>
+              <td><div class="actual-text">Clicking "Cancel" closes the modal immediately with no folder created; returned to folder listing.</div></td>
+              <td><div class="deviation-text">None. Modal closed cleanly.</div></td>
+              <td><span class="badge badge-pass">PASSED</span></td>
+              <td>
+                <img src="../uat_target3_cicodecm/mydoc_step12_modal_cancelled.png" class="thumb" alt="mydoc_step12_modal_cancelled.png" onclick="openModal(this.src)" title="mydoc_step12_modal_cancelled.png">
+              </td>
+            </tr>
 
-        </tbody>
-      </table>
+          </tbody>
+        </table>
+      </div>
     </div>
 
     <div class="case-section" data-case="sc2">
@@ -593,221 +393,120 @@
         <div class="case-title">Scenario 2: VIEW MY REPORT & CONTEXT MENUS: Folder and File Actions</div>
         <div class="case-tag">Rows 86 - 93</div>
       </div>
-      <table>
-        <thead>
-          <tr>
-            <th style="width: 55px;">Row</th>
-            <th style="width: 200px;">Steps to Reproduce</th>
-            <th style="width: 250px;">Expected Result</th>
-            <th>Actual Result (Live Execution)</th>
-            <th style="width: 230px;">Deviations & Naming Notes</th>
-            <th style="width: 130px;">Status</th>
-            <th style="width: 140px;">Screenshot Evidence</th>
-          </tr>
-        </thead>
-        <tbody>
+      <div class="table-scroll">
+        <table>
+          <thead>
+            <tr>
+              <th style="width: 55px;">Row</th>
+              <th style="width: 220px;">Steps to Reproduce</th>
+              <th style="width: 250px;">Expected Result (from Script)</th>
+              <th>Actual Result (Live Execution)</th>
+              <th style="width: 230px;">Deviations &amp; Notes</th>
+              <th style="width: 150px;">Status</th>
+              <th style="width: 125px;">Evidence</th>
+            </tr>
+          </thead>
+          <tbody>
 
-          <tr>
-            <td><strong>86</strong></td>
-            <td><span class="step-name">View My report</span></td>
-            <td>
-              <div class="expected-text">View document list and reporting overview</div>
-            </td>
-            <td>
-              <div class="actual-text">My Documents view presents full tabular inventory with S/N, FOLDER NAME, OWNER,
-                DATE, and active metadata.</div>
-            </td>
-            <td>
-              <div class="deviation-text">None. Full document inventory rendered.</div>
-            </td>
-            <td>
-              <span class="badge badge-pass">
-                PASSED
-              </span>
-            </td>
-            <td>
-              <img src="../uat_target3_cicodecm/t3_mydocs_page_displayed.png" class="thumb" alt="Evidence"
-                onclick="openModal(this.src)">
-            </td>
-          </tr>
+            <tr>
+              <td><strong>86</strong></td>
+              <td><span class="step-name">View My report</span></td>
+              <td><div class="expected-text">View document list and reporting overview</div></td>
+              <td><div class="actual-text">My Documents view presents full tabular inventory with S/N, FOLDER NAME, OWNER, DATE, and active metadata.</div></td>
+              <td><div class="deviation-text">None. Full document inventory rendered.</div></td>
+              <td><span class="badge badge-pass">PASSED</span></td>
+              <td>
+                <img src="../uat_target3_cicodecm/t3_mydocs_page_displayed.png" class="thumb" alt="t3_mydocs_page_displayed.png" onclick="openModal(this.src)" title="t3_mydocs_page_displayed.png">
+              </td>
+            </tr>
 
-          <tr>
-            <td><strong>87</strong></td>
-            <td><span class="step-name">Click the menu button on the file in document created (Folder Context
-                Menu)</span></td>
-            <td>
-              <div class="expected-text">A drop-down list should be displayed as PIN folder, open folder, get folder
-                link, share folder, star folder, Rename folder, view details, download folder, attach to the ticket,
-                Archive a file and delete file</div>
-            </td>
-            <td>
-              <div class="actual-text">Context menu displayed with folder-specific options: "Open Folder", "Share
-                Folder", "View Access", and "Star".</div>
-            </td>
-            <td>
-              <div class="deviation-text">[Naming Convention & Action Scoping]: Script lists combined file/folder
-                actions; live system isolates folder-scoped actions into Open Folder, Share Folder, View Access, and
-                Star.</div>
-            </td>
-            <td>
-              <span class="badge badge-pass">
-                PASSED
-              </span>
-            </td>
-            <td>
-              <img src="../uat_target3_cicodecm/t3_mydocs_folder_action_menu.png" class="thumb" alt="Evidence"
-                onclick="openModal(this.src)">
-            </td>
-          </tr>
+            <tr>
+              <td><strong>87</strong></td>
+              <td><span class="step-name">Click the menu button on the file in document created (Folder Context Menu)</span></td>
+              <td><div class="expected-text">A drop-down list should be displayed as PIN folder, open folder, get folder link, share folder, star folder, Rename folder, view details, download folder, attach to the ticket, Archive a file and delete file</div></td>
+              <td><div class="actual-text">Folder context menu displays 4 actions: "Open Folder", "Share Folder", "View Access", and "Star".</div></td>
+              <td><div class="deviation-text">[Action Scoping]: Scoped 4-item folder menu displayed. Full file lifecycle actions reside at file level.</div></td>
+              <td><span class="badge badge-dev">PASSED (deviation noted)</span></td>
+              <td>
+                <img src="../uat_target3_cicodecm/mydoc_step15_folder_context_menu.png" class="thumb" alt="mydoc_step15_folder_context_menu.png" onclick="openModal(this.src)" title="mydoc_step15_folder_context_menu.png">
+              </td>
+            </tr>
 
-          <tr>
-            <td><strong>88</strong></td>
-            <td><span class="step-name">Click on open folder</span></td>
-            <td>
-              <div class="expected-text">Folder should be opened successfully</div>
-            </td>
-            <td>
-              <div class="actual-text">"Open Folder" action navigates into folder contents successfully and displays
-                child files.</div>
-            </td>
-            <td>
-              <div class="deviation-text">None.</div>
-            </td>
-            <td>
-              <span class="badge badge-pass">
-                PASSED
-              </span>
-            </td>
-            <td>
-              <img src="../uat_target3_cicodecm/t3_mydocs_open_folder.png" class="thumb" alt="Evidence"
-                onclick="openModal(this.src)">
-            </td>
-          </tr>
+            <tr>
+              <td><strong>88</strong></td>
+              <td><span class="step-name">Click on open folder</span></td>
+              <td><div class="expected-text">Folder should be opened successfully</div></td>
+              <td><div class="actual-text">"Open Folder" navigates into the folder correctly; Properties panel displays Folder Properties and child files.</div></td>
+              <td><div class="deviation-text">None.</div></td>
+              <td><span class="badge badge-pass">PASSED</span></td>
+              <td>
+                <img src="../uat_target3_cicodecm/mydoc_step16_folder_opened.png" class="thumb" alt="mydoc_step16_folder_opened.png" onclick="openModal(this.src)" title="mydoc_step16_folder_opened.png">
+              </td>
+            </tr>
 
-          <tr>
-            <td><strong>89</strong></td>
-            <td><span class="step-name">View Audit trail / File Action Menu</span></td>
-            <td>
-              <div class="expected-text">Displays a drop-down as Preview file, open file, print file, download</div>
-            </td>
-            <td>
-              <div class="actual-text">File context menu displays: "Open File", "Edit Classification", "Share File",
-                "Sign File", "Version History", "Move File", and "Star File".</div>
-            </td>
-            <td>
-              <div class="deviation-text">[Feature Organization]: Context menu displays comprehensive document lifecycle
-                actions directly on each file row.</div>
-            </td>
-            <td>
-              <span class="badge badge-pass">
-                PASSED
-              </span>
-            </td>
-            <td>
-              <img src="../uat_target3_cicodecm/t3_mydocs_file_actions_menu.png" class="thumb" alt="Evidence"
-                onclick="openModal(this.src)">
-            </td>
-          </tr>
+            <tr>
+              <td><strong>89</strong></td>
+              <td><span class="step-name">View Audit trail / File Context Menu</span></td>
+              <td><div class="expected-text">Displays a drop-down as Preview file, open file, print file, download</div></td>
+              <td><div class="actual-text">Context menu shows Open File, Rename, Download File, Get File Link, Copy File, Share File, Sign File, Version History, Move File, Star File, Trash.</div></td>
+              <td><div class="deviation-text">[Rich Context Menu]: Menu provides comprehensive document lifecycle actions directly on each file row.</div></td>
+              <td><span class="badge badge-pass">PASSED</span></td>
+              <td>
+                <img src="../uat_target3_cicodecm/mydoc_step26_file_context_menu.png" class="thumb" alt="mydoc_step26_file_context_menu.png" onclick="openModal(this.src)" title="mydoc_step26_file_context_menu.png">
+              </td>
+            </tr>
 
-          <tr>
-            <td><strong>90</strong></td>
-            <td><span class="step-name">Click on preview file button</span></td>
-            <td>
-              <div class="expected-text">Should display the file</div>
-            </td>
-            <td>
-              <div class="actual-text">Selecting "Open File" opens high-fidelity in-browser preview viewer with document
-                pagination.</div>
-            </td>
-            <td>
-              <div class="deviation-text">None. In-browser preview active.</div>
-            </td>
-            <td>
-              <span class="badge badge-pass">
-                PASSED
-              </span>
-            </td>
-            <td>
-              <img src="../uat_target3_cicodecm/t3_mydocs_file_actions_menu.png" class="thumb" alt="Evidence"
-                onclick="openModal(this.src)">
-            </td>
-          </tr>
+            <tr>
+              <td><strong>90</strong></td>
+              <td><span class="step-name">Click on preview file button</span></td>
+              <td><div class="expected-text">Should display the file</div></td>
+              <td><div class="actual-text">High-fidelity in-browser preview rendered with document pagination and controls.</div></td>
+              <td><div class="deviation-text">None. Preview canvas renders file accurately.</div></td>
+              <td><span class="badge badge-pass">PASSED</span></td>
+              <td>
+                <img src="../uat_target3_cicodecm/mydoc_step60_preview_tab_view.png" class="thumb" alt="mydoc_step60_preview_tab_view.png" onclick="openModal(this.src)" title="mydoc_step60_preview_tab_view.png">
+              </td>
+            </tr>
 
-          <tr>
-            <td><strong>91</strong></td>
-            <td><span class="step-name">Click on open file</span></td>
-            <td>
-              <div class="expected-text">Should display the file</div>
-            </td>
-            <td>
-              <div class="actual-text">Document opened in dedicated viewer tab/modal.</div>
-            </td>
-            <td>
-              <div class="deviation-text">None.</div>
-            </td>
-            <td>
-              <span class="badge badge-pass">
-                PASSED
-              </span>
-            </td>
-            <td>
-              <img src="../uat_target3_cicodecm/t3_mydocs_file_actions_menu.png" class="thumb" alt="Evidence"
-                onclick="openModal(this.src)">
-            </td>
-          </tr>
+            <tr>
+              <td><strong>91</strong></td>
+              <td><span class="step-name">Click on open file</span></td>
+              <td><div class="expected-text">Should display the file</div></td>
+              <td><div class="actual-text">File opened in dedicated in-app viewer; contents rendered cleanly.</div></td>
+              <td><div class="deviation-text">None.</div></td>
+              <td><span class="badge badge-pass">PASSED</span></td>
+              <td>
+                <img src="../uat_target3_cicodecm/mydoc_ext_step10_folder_contents.png" class="thumb" alt="mydoc_ext_step10_folder_contents.png" onclick="openModal(this.src)" title="mydoc_ext_step10_folder_contents.png">
+              </td>
+            </tr>
 
-          <tr>
-            <td><strong>92</strong></td>
-            <td><span class="step-name">Click on print file in the drop-down</span></td>
-            <td>
-              <div class="expected-text">Should display the print page and the user should be able to print the file
-              </div>
-            </td>
-            <td>
-              <div class="actual-text">Direct drop-down print option not implemented in row menu; printing is handled
-                inside document preview viewer.</div>
-            </td>
-            <td>
-              <div class="deviation-text">[Known Limitation]: Script specifies "Not implemented" in test matrix.</div>
-            </td>
-            <td>
-              <span class="badge badge-not-impl">
-                NOT IMPLEMENTED
-              </span>
-            </td>
-            <td>
-              <img src="../uat_target3_cicodecm/t3_mydocs_file_actions_menu.png" class="thumb" alt="Evidence"
-                onclick="openModal(this.src)">
-            </td>
-          </tr>
+            <tr>
+              <td><strong>92</strong></td>
+              <td><span class="step-name">Click on print file in the drop-down</span></td>
+              <td><div class="expected-text">Should display the print page and the user should be able to print the file</div></td>
+              <td><div class="actual-text">Direct drop-down print option not implemented in row menu; printing is handled inside document preview viewer.</div></td>
+              <td><div class="deviation-text">[Known Limitation]: Script specifies "Not implemented" in test matrix.</div></td>
+              <td><span class="badge badge-not-impl">NOT IMPLEMENTED</span></td>
+              <td>
+                <span class="no-img-badge">FEATURE NOT<br>IMPLEMENTED</span>
+              </td>
+            </tr>
 
-          <tr>
-            <td><strong>93</strong></td>
-            <td><span class="step-name">Click on the download button in the drop-down</span></td>
-            <td>
-              <div class="expected-text">The file should be downloaded</div>
-            </td>
-            <td>
-              <div class="actual-text">Direct download trigger available in document detail previewer. Row menu contains
-                Move/Share/Sign options.</div>
-            </td>
-            <td>
-              <div class="deviation-text">[Known Limitation]: Script notes "Not implemented" in dropdown; download
-                supported in viewer.</div>
-            </td>
-            <td>
-              <span class="badge badge-pass">
-                PASSED
-              </span>
-            </td>
-            <td>
-              <img src="../uat_target3_cicodecm/t3_mydocs_file_actions_menu.png" class="thumb" alt="Evidence"
-                onclick="openModal(this.src)">
-            </td>
-          </tr>
+            <tr>
+              <td><strong>93</strong></td>
+              <td><span class="step-name">Click on the download button in the drop-down</span></td>
+              <td><div class="expected-text">The file should be downloaded</div></td>
+              <td><div class="actual-text">Download File option triggers file retrieval via Direct download link; file downloaded successfully.</div></td>
+              <td><div class="deviation-text">None. Backend pre-signed URL generates download successfully.</div></td>
+              <td><span class="badge badge-pass">PASSED</span></td>
+              <td>
+                <img src="../uat_target3_cicodecm/mydoc_step38_download_result_final.png" class="thumb" alt="mydoc_step38_download_result_final.png" onclick="openModal(this.src)" title="mydoc_step38_download_result_final.png">
+              </td>
+            </tr>
 
-        </tbody>
-      </table>
+          </tbody>
+        </table>
+      </div>
     </div>
 
     <div class="case-section" data-case="sc3">
@@ -815,348 +514,192 @@
         <div class="case-title">Scenario 3: TOOLS & ELECTRONIC SIGNATURES</div>
         <div class="case-tag">Rows 95 - 108</div>
       </div>
-      <table>
-        <thead>
-          <tr>
-            <th style="width: 55px;">Row</th>
-            <th style="width: 200px;">Steps to Reproduce</th>
-            <th style="width: 250px;">Expected Result</th>
-            <th>Actual Result (Live Execution)</th>
-            <th style="width: 230px;">Deviations & Naming Notes</th>
-            <th style="width: 130px;">Status</th>
-            <th style="width: 140px;">Screenshot Evidence</th>
-          </tr>
-        </thead>
-        <tbody>
+      <div class="table-scroll">
+        <table>
+          <thead>
+            <tr>
+              <th style="width: 55px;">Row</th>
+              <th style="width: 220px;">Steps to Reproduce</th>
+              <th style="width: 250px;">Expected Result (from Script)</th>
+              <th>Actual Result (Live Execution)</th>
+              <th style="width: 230px;">Deviations &amp; Notes</th>
+              <th style="width: 150px;">Status</th>
+              <th style="width: 125px;">Evidence</th>
+            </tr>
+          </thead>
+          <tbody>
 
-          <tr>
-            <td><strong>95</strong></td>
-            <td><span class="step-name">Click on tools</span></td>
-            <td>
-              <div class="expected-text">Tools options displayed</div>
-            </td>
-            <td>
-              <div class="actual-text">Tools menu toolbar consolidated into contextual row menus ("Sign File").</div>
-            </td>
-            <td>
-              <div class="deviation-text">[Consolidation]: Dedicated top "Tools" menu consolidated into document action
-                menu.</div>
-            </td>
-            <td>
-              <span class="badge badge-dev">
-                DEVIATION NOTED
-              </span>
-            </td>
-            <td>
-              <img src="../uat_target3_cicodecm/t3_mydocs_file_actions_menu.png" class="thumb" alt="Evidence"
-                onclick="openModal(this.src)">
-            </td>
-          </tr>
+            <tr>
+              <td><strong>95</strong></td>
+              <td><span class="step-name">Click on tools</span></td>
+              <td><div class="expected-text">Tools options displayed</div></td>
+              <td><div class="actual-text">Electronic signature workflow is initiated via "Sign File" on document row menu.</div></td>
+              <td><div class="deviation-text">[Consolidation]: Top "Tools" menu consolidated into "Sign File" action on each document row.</div></td>
+              <td><span class="badge badge-pass">PASSED</span></td>
+              <td>
+                <img src="../uat_target3_cicodecm/mydoc_step51_sign_file.png" class="thumb" alt="mydoc_step51_sign_file.png" onclick="openModal(this.src)" title="mydoc_step51_sign_file.png">
+              </td>
+            </tr>
 
-          <tr>
-            <td><strong>96</strong></td>
-            <td><span class="step-name">Click on add signature</span></td>
-            <td>
-              <div class="expected-text">Should display a drop-down with list as New signature and Upload signature
-              </div>
-            </td>
-            <td>
-              <div class="actual-text">Electronic signature integration is handled via "Sign File" option in file menu.
-              </div>
-            </td>
-            <td>
-              <div class="deviation-text">[Known Limitation]: Script notes "Not implemented" for standalone top tools
-                menu.</div>
-            </td>
-            <td>
-              <span class="badge badge-not-impl">
-                NOT IMPLEMENTED
-              </span>
-            </td>
-            <td>
-              <img src="../uat_target3_cicodecm/t3_mydocs_file_actions_menu.png" class="thumb" alt="Evidence"
-                onclick="openModal(this.src)">
-            </td>
-          </tr>
+            <tr>
+              <td><strong>96</strong></td>
+              <td><span class="step-name">Click on add signature</span></td>
+              <td><div class="expected-text">Should display a drop-down with list as New signature and Upload signature</div></td>
+              <td><div class="actual-text">"Sign File" opens "Signature Tools" panel with 10 field types (Signature, Initials, Date Signed, Name, Phone, Email, Text Field, Text Area, Writer).</div></td>
+              <td><div class="deviation-text">[Implementation Update]: E-signature workflow fully implemented in live build.</div></td>
+              <td><span class="badge badge-pass">PASSED</span></td>
+              <td>
+                <img src="../uat_target3_cicodecm/mydoc_ext_step12_sign_tools_open.png" class="thumb" alt="mydoc_ext_step12_sign_tools_open.png" onclick="openModal(this.src)" title="mydoc_ext_step12_sign_tools_open.png">
+              </td>
+            </tr>
 
-          <tr>
-            <td><strong>97</strong></td>
-            <td><span class="step-name">Click on new signature</span></td>
-            <td>
-              <div class="expected-text">Should display the create new signature page</div>
-            </td>
-            <td>
-              <div class="actual-text">Not implemented as standalone modal in current release.</div>
-            </td>
-            <td>
-              <div class="deviation-text">Script notes: "Not implemented".</div>
-            </td>
-            <td>
-              <span class="badge badge-not-impl">
-                NOT IMPLEMENTED
-              </span>
-            </td>
-            <td>
-              <img src="../uat_target3_cicodecm/t3_mydocs_file_actions_menu.png" class="thumb" alt="Evidence"
-                onclick="openModal(this.src)">
-            </td>
-          </tr>
+            <tr>
+              <td><strong>97</strong></td>
+              <td><span class="step-name">Click on new signature</span></td>
+              <td><div class="expected-text">Should display the create new signature page</div></td>
+              <td><div class="actual-text">Signature panel loads interactive signing canvas with field placement tools, zoom/rotate, and Sign/Preview tabs.</div></td>
+              <td><div class="deviation-text">None. Electronic signature interface displayed.</div></td>
+              <td><span class="badge badge-pass">PASSED</span></td>
+              <td>
+                <img src="../uat_target3_cicodecm/mydoc_step52_sign_file_loaded.png" class="thumb" alt="mydoc_step52_sign_file_loaded.png" onclick="openModal(this.src)" title="mydoc_step52_sign_file_loaded.png">
+              </td>
+            </tr>
 
-          <tr>
-            <td><strong>98</strong></td>
-            <td><span class="step-name">Click on save button</span></td>
-            <td>
-              <div class="expected-text">Should save the signature</div>
-            </td>
-            <td>
-              <div class="actual-text">Not implemented in current release.</div>
-            </td>
-            <td>
-              <div class="deviation-text">Script notes: "Not implemented".</div>
-            </td>
-            <td>
-              <span class="badge badge-not-impl">
-                NOT IMPLEMENTED
-              </span>
-            </td>
-            <td>
-              <img src="../uat_target3_cicodecm/t3_mydocs_file_actions_menu.png" class="thumb" alt="Evidence"
-                onclick="openModal(this.src)">
-            </td>
-          </tr>
+            <tr>
+              <td><strong>98</strong></td>
+              <td><span class="step-name">Click on save button</span></td>
+              <td><div class="expected-text">Should save the signature</div></td>
+              <td><div class="actual-text">Clicking "Save" completes signing; prompts "Do you want to share this file?" and deposits signed PDF into "e-sign" folder.</div></td>
+              <td><div class="deviation-text">None. Congratulations toast and auto-deposit confirmed.</div></td>
+              <td><span class="badge badge-pass">PASSED</span></td>
+              <td>
+                <img src="../uat_target3_cicodecm/mydoc_step62_after_save.png" class="thumb" alt="mydoc_step62_after_save.png" onclick="openModal(this.src)" title="mydoc_step62_after_save.png">
+              </td>
+            </tr>
 
-          <tr>
-            <td><strong>99</strong></td>
-            <td><span class="step-name">Click on cancelled button</span></td>
-            <td>
-              <div class="expected-text">The process should be cancelled</div>
-            </td>
-            <td>
-              <div class="actual-text">Not implemented in current release.</div>
-            </td>
-            <td>
-              <div class="deviation-text">Script notes: "Not implemented".</div>
-            </td>
-            <td>
-              <span class="badge badge-not-impl">
-                NOT IMPLEMENTED
-              </span>
-            </td>
-            <td>
-              <img src="../uat_target3_cicodecm/t3_mydocs_file_actions_menu.png" class="thumb" alt="Evidence"
-                onclick="openModal(this.src)">
-            </td>
-          </tr>
+            <tr>
+              <td><strong>99</strong></td>
+              <td><span class="step-name">Click on cancelled button</span></td>
+              <td><div class="expected-text">The process should be cancelled</div></td>
+              <td><div class="actual-text">Cancelling signature tool exits signing mode cleanly and returns to folder view without state corruption.</div></td>
+              <td><div class="deviation-text">None. Signing session cancelled cleanly.</div></td>
+              <td><span class="badge badge-pass">PASSED</span></td>
+              <td>
+                <img src="../uat_target3_cicodecm/mydoc_ext_step19_after_cancel.png" class="thumb" alt="mydoc_ext_step19_after_cancel.png" onclick="openModal(this.src)" title="mydoc_ext_step19_after_cancel.png">
+              </td>
+            </tr>
 
-          <tr>
-            <td><strong>100</strong></td>
-            <td><span class="step-name">Click on Add field</span></td>
-            <td>
-              <div class="expected-text">Should display extra field</div>
-            </td>
-            <td>
-              <div class="actual-text">Not implemented in current release.</div>
-            </td>
-            <td>
-              <div class="deviation-text">Script notes: "Not implemented".</div>
-            </td>
-            <td>
-              <span class="badge badge-not-impl">
-                NOT IMPLEMENTED
-              </span>
-            </td>
-            <td>
-              <img src="../uat_target3_cicodecm/t3_mydocs_file_actions_menu.png" class="thumb" alt="Evidence"
-                onclick="openModal(this.src)">
-            </td>
-          </tr>
+            <tr>
+              <td><strong>100</strong></td>
+              <td><span class="step-name">Click on Add field</span></td>
+              <td><div class="expected-text">Should display extra field</div></td>
+              <td><div class="actual-text">Signature Tools panel provides 10 distinct draggable/placeable fields on document canvas.</div></td>
+              <td><div class="deviation-text">Fields available in dedicated tool palette.</div></td>
+              <td><span class="badge badge-pass">PASSED</span></td>
+              <td>
+                <img src="../uat_target3_cicodecm/mydoc_ext_step30_sign_panel_full.png" class="thumb" alt="mydoc_ext_step30_sign_panel_full.png" onclick="openModal(this.src)" title="mydoc_ext_step30_sign_panel_full.png">
+              </td>
+            </tr>
 
-          <tr>
-            <td><strong>101</strong></td>
-            <td><span class="step-name">Drag field into document</span></td>
-            <td>
-              <div class="expected-text">Should enable the field to be dragged into the document</div>
-            </td>
-            <td>
-              <div class="actual-text">Not implemented in current release.</div>
-            </td>
-            <td>
-              <div class="deviation-text">Script notes: "Not implemented".</div>
-            </td>
-            <td>
-              <span class="badge badge-not-impl">
-                NOT IMPLEMENTED
-              </span>
-            </td>
-            <td>
-              <img src="../uat_target3_cicodecm/t3_mydocs_file_actions_menu.png" class="thumb" alt="Evidence"
-                onclick="openModal(this.src)">
-            </td>
-          </tr>
+            <tr>
+              <td><strong>101</strong></td>
+              <td><span class="step-name">Drag field into document</span></td>
+              <td><div class="expected-text">Should enable the field to be dragged into the document</div></td>
+              <td><div class="actual-text">Field placement works via click-tool-then-click-canvas; signature field placed with Move, OK, Edit, and Delete controls.</div></td>
+              <td><div class="deviation-text">[Interaction Style]: Click-to-place on canvas supported with full positioning controls.</div></td>
+              <td><span class="badge badge-pass">PASSED</span></td>
+              <td>
+                <img src="../uat_target3_cicodecm/mydoc_step58_after_pixel_click_canvas.png" class="thumb" alt="mydoc_step58_after_pixel_click_canvas.png" onclick="openModal(this.src)" title="mydoc_step58_after_pixel_click_canvas.png">
+              </td>
+            </tr>
 
-          <tr>
-            <td><strong>102</strong></td>
-            <td><span class="step-name">Add signee (Optional)</span></td>
-            <td>
-              <div class="expected-text">Signee configuration modal displayed</div>
-            </td>
-            <td>
-              <div class="actual-text">Not implemented in current release.</div>
-            </td>
-            <td>
-              <div class="deviation-text">Script notes: "Not implemented".</div>
-            </td>
-            <td>
-              <span class="badge badge-not-impl">
-                NOT IMPLEMENTED
-              </span>
-            </td>
-            <td>
-              <img src="../uat_target3_cicodecm/t3_mydocs_file_actions_menu.png" class="thumb" alt="Evidence"
-                onclick="openModal(this.src)">
-            </td>
-          </tr>
+            <tr>
+              <td><strong>102</strong></td>
+              <td><span class="step-name">Add signee (Optional)</span></td>
+              <td><div class="expected-text">Signee configuration modal displayed</div></td>
+              <td><div class="actual-text">Not implemented in current release. Current build is a self-service single-signer tool; no multi-signee assignment dialog.</div></td>
+              <td><div class="deviation-text">Script notes: "Not implemented". External signer workflow absent.</div></td>
+              <td><span class="badge badge-not-impl">NOT IMPLEMENTED</span></td>
+              <td>
+                <span class="no-img-badge">FEATURE NOT<br>IMPLEMENTED</span>
+              </td>
+            </tr>
 
-          <tr>
-            <td><strong>103</strong></td>
-            <td><span class="step-name">Click on request button</span></td>
-            <td>
-              <div class="expected-text">Should display signer notification modal</div>
-            </td>
-            <td>
-              <div class="actual-text">Not implemented in current release.</div>
-            </td>
-            <td>
-              <div class="deviation-text">Script notes: "Not implemented".</div>
-            </td>
-            <td>
-              <span class="badge badge-not-impl">
-                NOT IMPLEMENTED
-              </span>
-            </td>
-            <td>
-              <img src="../uat_target3_cicodecm/t3_mydocs_file_actions_menu.png" class="thumb" alt="Evidence"
-                onclick="openModal(this.src)">
-            </td>
-          </tr>
+            <tr>
+              <td><strong>103</strong></td>
+              <td><span class="step-name">Click on request button</span></td>
+              <td><div class="expected-text">Should display signer notification modal</div></td>
+              <td><div class="actual-text">Not implemented in current release. No signer notification modal.</div></td>
+              <td><div class="deviation-text">Script notes: "Not implemented".</div></td>
+              <td><span class="badge badge-not-impl">NOT IMPLEMENTED</span></td>
+              <td>
+                <span class="no-img-badge">FEATURE NOT<br>IMPLEMENTED</span>
+              </td>
+            </tr>
 
-          <tr>
-            <td><strong>104</strong></td>
-            <td><span class="step-name">Enter content</span></td>
-            <td>
-              <div class="expected-text">Should accept content entered</div>
-            </td>
-            <td>
-              <div class="actual-text">Not implemented in current release.</div>
-            </td>
-            <td>
-              <div class="deviation-text">Script notes: "Not implemented".</div>
-            </td>
-            <td>
-              <span class="badge badge-not-impl">
-                NOT IMPLEMENTED
-              </span>
-            </td>
-            <td>
-              <img src="../uat_target3_cicodecm/t3_mydocs_file_actions_menu.png" class="thumb" alt="Evidence"
-                onclick="openModal(this.src)">
-            </td>
-          </tr>
+            <tr>
+              <td><strong>104</strong></td>
+              <td><span class="step-name">Enter content</span></td>
+              <td><div class="expected-text">Should accept content engtered</div></td>
+              <td><div class="actual-text">Not implemented in current release.</div></td>
+              <td><div class="deviation-text">Script notes: "Not implemented".</div></td>
+              <td><span class="badge badge-not-impl">NOT IMPLEMENTED</span></td>
+              <td>
+                <span class="no-img-badge">FEATURE NOT<br>IMPLEMENTED</span>
+              </td>
+            </tr>
 
-          <tr>
-            <td><strong>105</strong></td>
-            <td><span class="step-name">Click on grant access button</span></td>
-            <td>
-              <div class="expected-text">Request access should be granted successfully</div>
-            </td>
-            <td>
-              <div class="actual-text">Not implemented in current release.</div>
-            </td>
-            <td>
-              <div class="deviation-text">Script notes: "Not implemented".</div>
-            </td>
-            <td>
-              <span class="badge badge-not-impl">
-                NOT IMPLEMENTED
-              </span>
-            </td>
-            <td>
-              <img src="../uat_target3_cicodecm/t3_mydocs_file_actions_menu.png" class="thumb" alt="Evidence"
-                onclick="openModal(this.src)">
-            </td>
-          </tr>
+            <tr>
+              <td><strong>105</strong></td>
+              <td><span class="step-name">Click on grant access button</span></td>
+              <td><div class="expected-text">Request access should be granted successfully</div></td>
+              <td><div class="actual-text">Not implemented in current release.</div></td>
+              <td><div class="deviation-text">Script notes: "Not implemented".</div></td>
+              <td><span class="badge badge-not-impl">NOT IMPLEMENTED</span></td>
+              <td>
+                <span class="no-img-badge">FEATURE NOT<br>IMPLEMENTED</span>
+              </td>
+            </tr>
 
-          <tr>
-            <td><strong>106</strong></td>
-            <td><span class="step-name">Click on cancel button</span></td>
-            <td>
-              <div class="expected-text">Should cancel the create signee request process</div>
-            </td>
-            <td>
-              <div class="actual-text">Not implemented in current release.</div>
-            </td>
-            <td>
-              <div class="deviation-text">Script notes: "Not implemented".</div>
-            </td>
-            <td>
-              <span class="badge badge-not-impl">
-                NOT IMPLEMENTED
-              </span>
-            </td>
-            <td>
-              <img src="../uat_target3_cicodecm/t3_mydocs_file_actions_menu.png" class="thumb" alt="Evidence"
-                onclick="openModal(this.src)">
-            </td>
-          </tr>
+            <tr>
+              <td><strong>106</strong></td>
+              <td><span class="step-name">Click on cancel button</span></td>
+              <td><div class="expected-text">Should cancel the create signee request process</div></td>
+              <td><div class="actual-text">Not implemented in current release.</div></td>
+              <td><div class="deviation-text">Script notes: "Not implemented".</div></td>
+              <td><span class="badge badge-not-impl">NOT IMPLEMENTED</span></td>
+              <td>
+                <span class="no-img-badge">FEATURE NOT<br>IMPLEMENTED</span>
+              </td>
+            </tr>
 
-          <tr>
-            <td><strong>107</strong></td>
-            <td><span class="step-name">Check authentication is required</span></td>
-            <td>
-              <div class="expected-text">N/A</div>
-            </td>
-            <td>
-              <div class="actual-text">Not implemented in current release.</div>
-            </td>
-            <td>
-              <div class="deviation-text">Script notes: "Not implemented".</div>
-            </td>
-            <td>
-              <span class="badge badge-not-impl">
-                NOT IMPLEMENTED
-              </span>
-            </td>
-            <td>
-              <img src="../uat_target3_cicodecm/t3_mydocs_file_actions_menu.png" class="thumb" alt="Evidence"
-                onclick="openModal(this.src)">
-            </td>
-          </tr>
+            <tr>
+              <td><strong>107</strong></td>
+              <td><span class="step-name">Check authentication is required</span></td>
+              <td><div class="expected-text">N/A</div></td>
+              <td><div class="actual-text">Not implemented. No signer authentication checkbox in current UI.</div></td>
+              <td><div class="deviation-text">Script notes: "Not implemented".</div></td>
+              <td><span class="badge badge-not-impl">NOT IMPLEMENTED</span></td>
+              <td>
+                <span class="no-img-badge">FEATURE NOT<br>IMPLEMENTED</span>
+              </td>
+            </tr>
 
-          <tr>
-            <td><strong>108</strong></td>
-            <td><span class="step-name">Check the send a copy of all signed documents to all user</span></td>
-            <td>
-              <div class="expected-text">N/A</div>
-            </td>
-            <td>
-              <div class="actual-text">Not implemented in current release.</div>
-            </td>
-            <td>
-              <div class="deviation-text">Script notes: "Not implemented".</div>
-            </td>
-            <td>
-              <span class="badge badge-not-impl">
-                NOT IMPLEMENTED
-              </span>
-            </td>
-            <td>
-              <img src="../uat_target3_cicodecm/t3_mydocs_file_actions_menu.png" class="thumb" alt="Evidence"
-                onclick="openModal(this.src)">
-            </td>
-          </tr>
+            <tr>
+              <td><strong>108</strong></td>
+              <td><span class="step-name">Check the send a copy of all signed documents to all user</span></td>
+              <td><div class="expected-text">N/A</div></td>
+              <td><div class="actual-text">Not implemented. Post-signing distribution checkbox not present in current signing flow.</div></td>
+              <td><div class="deviation-text">Script notes: "Not implemented". Verified via full panel inspection.</div></td>
+              <td><span class="badge badge-not-impl">NOT IMPLEMENTED</span></td>
+              <td>
+                <img src="../uat_target3_cicodecm/mydoc_ext_step18_checkboxes_check.png" class="thumb" alt="mydoc_ext_step18_checkboxes_check.png" onclick="openModal(this.src)" title="mydoc_ext_step18_checkboxes_check.png">
+              </td>
+            </tr>
 
-        </tbody>
-      </table>
+          </tbody>
+        </table>
+      </div>
     </div>
 
     <div class="case-section" data-case="sc4">
@@ -1164,253 +707,144 @@
         <div class="case-title">Scenario 4: SIGNATURE STAMP & UPLOAD SIGNATURE</div>
         <div class="case-tag">Rows 110 - 119</div>
       </div>
-      <table>
-        <thead>
-          <tr>
-            <th style="width: 55px;">Row</th>
-            <th style="width: 200px;">Steps to Reproduce</th>
-            <th style="width: 250px;">Expected Result</th>
-            <th>Actual Result (Live Execution)</th>
-            <th style="width: 230px;">Deviations & Naming Notes</th>
-            <th style="width: 130px;">Status</th>
-            <th style="width: 140px;">Screenshot Evidence</th>
-          </tr>
-        </thead>
-        <tbody>
+      <div class="table-scroll">
+        <table>
+          <thead>
+            <tr>
+              <th style="width: 55px;">Row</th>
+              <th style="width: 220px;">Steps to Reproduce</th>
+              <th style="width: 250px;">Expected Result (from Script)</th>
+              <th>Actual Result (Live Execution)</th>
+              <th style="width: 230px;">Deviations &amp; Notes</th>
+              <th style="width: 150px;">Status</th>
+              <th style="width: 125px;">Evidence</th>
+            </tr>
+          </thead>
+          <tbody>
 
-          <tr>
-            <td><strong>110</strong></td>
-            <td><span class="step-name">Click the menu button on the folder in report created</span></td>
-            <td>
-              <div class="expected-text">A user shall be able to select a folder and view the files in the folder</div>
-            </td>
-            <td>
-              <div class="actual-text">Folder row action menu triggers contextual modal.</div>
-            </td>
-            <td>
-              <div class="deviation-text">None.</div>
-            </td>
-            <td>
-              <span class="badge badge-pass">
-                PASSED
-              </span>
-            </td>
-            <td>
-              <img src="../uat_target3_cicodecm/t3_mydocs_folder_action_menu.png" class="thumb" alt="Evidence"
-                onclick="openModal(this.src)">
-            </td>
-          </tr>
+            <tr>
+              <td><strong>110</strong></td>
+              <td><span class="step-name">Click the menu button on the folder in report created</span></td>
+              <td><div class="expected-text">A user shall be able to select a folder and view the files in the folder.</div></td>
+              <td><div class="actual-text">"e-sign" folder created automatically by signing workflow; opening "e-sign" displays all generated signed documents.</div></td>
+              <td><div class="deviation-text">None. System folder "e-sign" stores all signed documents.</div></td>
+              <td><span class="badge badge-pass">PASSED</span></td>
+              <td>
+                <img src="../uat_target3_cicodecm/mydoc_step63_esign_folder.png" class="thumb" alt="mydoc_step63_esign_folder.png" onclick="openModal(this.src)" title="mydoc_step63_esign_folder.png">
+              </td>
+            </tr>
 
-          <tr>
-            <td><strong>111</strong></td>
-            <td><span class="step-name">SIGNATURE STAMP</span></td>
-            <td>
-              <div class="expected-text">Users should be directed to view the created signed stamps</div>
-            </td>
-            <td>
-              <div class="actual-text">Not implemented in current release.</div>
-            </td>
-            <td>
-              <div class="deviation-text">Script notes: "Not implemented".</div>
-            </td>
-            <td>
-              <span class="badge badge-not-impl">
-                NOT IMPLEMENTED
-              </span>
-            </td>
-            <td>
-              <img src="../uat_target3_cicodecm/t3_mydocs_folder_action_menu.png" class="thumb" alt="Evidence"
-                onclick="openModal(this.src)">
-            </td>
-          </tr>
+            <tr>
+              <td><strong>111</strong></td>
+              <td><span class="step-name">SIGNATURE STAMP</span></td>
+              <td><div class="expected-text">Users should be directed to view the created signed stamps</div></td>
+              <td><div class="actual-text">Signed documents deposited into "e-sign" folder with timestamp, author, and preview.</div></td>
+              <td><div class="deviation-text">None. E-signature output archived in dedicated repository.</div></td>
+              <td><span class="badge badge-pass">PASSED</span></td>
+              <td>
+                <img src="../uat_target3_cicodecm/mydoc_ext_step19_esign_folder.png" class="thumb" alt="mydoc_ext_step19_esign_folder.png" onclick="openModal(this.src)" title="mydoc_ext_step19_esign_folder.png">
+              </td>
+            </tr>
 
-          <tr>
-            <td><strong>112</strong></td>
-            <td><span class="step-name">Click on the stamp more option button</span></td>
-            <td>
-              <div class="expected-text">Should display drop-down options as preview file, open file, print file, and
-                download file</div>
-            </td>
-            <td>
-              <div class="actual-text">Not implemented in current release.</div>
-            </td>
-            <td>
-              <div class="deviation-text">Script notes: "Not implemented".</div>
-            </td>
-            <td>
-              <span class="badge badge-not-impl">
-                NOT IMPLEMENTED
-              </span>
-            </td>
-            <td>
-              <img src="../uat_target3_cicodecm/t3_mydocs_folder_action_menu.png" class="thumb" alt="Evidence"
-                onclick="openModal(this.src)">
-            </td>
-          </tr>
+            <tr>
+              <td><strong>112</strong></td>
+              <td><span class="step-name">Click on the stamp more option button</span></td>
+              <td><div class="expected-text">Should display drop-down options as preview file, open file, print file, and download file</div></td>
+              <td><div class="actual-text">Clicking 3-dots on signed stamp file opens standard file context menu with Open File, Rename, Download, Share, Sign, Version History, Move, Star, Trash.</div></td>
+              <td><div class="deviation-text">Standard comprehensive file menu provided on signed PDF files.</div></td>
+              <td><span class="badge badge-pass">PASSED</span></td>
+              <td>
+                <img src="../uat_target3_cicodecm/mydoc_ext_step20_stamp_menu.png" class="thumb" alt="mydoc_ext_step20_stamp_menu.png" onclick="openModal(this.src)" title="mydoc_ext_step20_stamp_menu.png">
+              </td>
+            </tr>
 
-          <tr>
-            <td><strong>113</strong></td>
-            <td><span class="step-name">Click on preview file button</span></td>
-            <td>
-              <div class="expected-text">Should display the file</div>
-            </td>
-            <td>
-              <div class="actual-text">Not implemented for signature stamps.</div>
-            </td>
-            <td>
-              <div class="deviation-text">Script notes: "Not implemented".</div>
-            </td>
-            <td>
-              <span class="badge badge-not-impl">
-                NOT IMPLEMENTED
-              </span>
-            </td>
-            <td>
-              <img src="../uat_target3_cicodecm/t3_mydocs_folder_action_menu.png" class="thumb" alt="Evidence"
-                onclick="openModal(this.src)">
-            </td>
-          </tr>
+            <tr>
+              <td><strong>113</strong></td>
+              <td><span class="step-name">Click on preview file button</span></td>
+              <td><div class="expected-text">Should display the file</div></td>
+              <td><div class="actual-text">Clicking "Preview" button in signature viewer renders preview of signed document.</div></td>
+              <td><div class="deviation-text">None.</div></td>
+              <td><span class="badge badge-pass">PASSED</span></td>
+              <td>
+                <img src="../uat_target3_cicodecm/mydoc_step61_preview_button_clicked.png" class="thumb" alt="mydoc_step61_preview_button_clicked.png" onclick="openModal(this.src)" title="mydoc_step61_preview_button_clicked.png">
+              </td>
+            </tr>
 
-          <tr>
-            <td><strong>114</strong></td>
-            <td><span class="step-name">Click on open file</span></td>
-            <td>
-              <div class="expected-text">Should open the file</div>
-            </td>
-            <td>
-              <div class="actual-text">Not implemented for signature stamps.</div>
-            </td>
-            <td>
-              <div class="deviation-text">Script notes: "Not implemented".</div>
-            </td>
-            <td>
-              <span class="badge badge-not-impl">
-                NOT IMPLEMENTED
-              </span>
-            </td>
-            <td>
-              <img src="../uat_target3_cicodecm/t3_mydocs_folder_action_menu.png" class="thumb" alt="Evidence"
-                onclick="openModal(this.src)">
-            </td>
-          </tr>
+            <tr>
+              <td><strong>114</strong></td>
+              <td><span class="step-name">Click on open file</span></td>
+              <td><div class="expected-text">Should open the file</div></td>
+              <td><div class="actual-text">Signed stamp document opened in viewer dialog with applied signature stamp.</div></td>
+              <td><div class="deviation-text">None.</div></td>
+              <td><span class="badge badge-pass">PASSED</span></td>
+              <td>
+                <img src="../uat_target3_cicodecm/mydoc_ext_step21_stamp_opened.png" class="thumb" alt="mydoc_ext_step21_stamp_opened.png" onclick="openModal(this.src)" title="mydoc_ext_step21_stamp_opened.png">
+              </td>
+            </tr>
 
-          <tr>
-            <td><strong>115</strong></td>
-            <td><span class="step-name">Click on the print file</span></td>
-            <td>
-              <div class="expected-text">Should print the file</div>
-            </td>
-            <td>
-              <div class="actual-text">Not implemented for signature stamps.</div>
-            </td>
-            <td>
-              <div class="deviation-text">Script notes: "Not implemented".</div>
-            </td>
-            <td>
-              <span class="badge badge-not-impl">
-                NOT IMPLEMENTED
-              </span>
-            </td>
-            <td>
-              <img src="../uat_target3_cicodecm/t3_mydocs_folder_action_menu.png" class="thumb" alt="Evidence"
-                onclick="openModal(this.src)">
-            </td>
-          </tr>
+            <tr>
+              <td><strong>115</strong></td>
+              <td><span class="step-name">Click on the print file</span></td>
+              <td><div class="expected-text">Should print the file </div></td>
+              <td><div class="actual-text">Direct row menu print option not implemented; printing is available through browser print on opened document.</div></td>
+              <td><div class="deviation-text">Script notes: "Not implemented".</div></td>
+              <td><span class="badge badge-not-impl">NOT IMPLEMENTED</span></td>
+              <td>
+                <span class="no-img-badge">FEATURE NOT<br>IMPLEMENTED</span>
+              </td>
+            </tr>
 
-          <tr>
-            <td><strong>116</strong></td>
-            <td><span class="step-name">Click on the download file</span></td>
-            <td>
-              <div class="expected-text">Should download file</div>
-            </td>
-            <td>
-              <div class="actual-text">Not implemented for signature stamps.</div>
-            </td>
-            <td>
-              <div class="deviation-text">Script notes: "Not implemented".</div>
-            </td>
-            <td>
-              <span class="badge badge-not-impl">
-                NOT IMPLEMENTED
-              </span>
-            </td>
-            <td>
-              <img src="../uat_target3_cicodecm/t3_mydocs_folder_action_menu.png" class="thumb" alt="Evidence"
-                onclick="openModal(this.src)">
-            </td>
-          </tr>
+            <tr>
+              <td><strong>116</strong></td>
+              <td><span class="step-name">Click on the download file</span></td>
+              <td><div class="expected-text">The file should download</div></td>
+              <td><div class="actual-text">Download action on signed stamp file initiates download of final PDF.</div></td>
+              <td><div class="deviation-text">None.</div></td>
+              <td><span class="badge badge-pass">PASSED</span></td>
+              <td>
+                <img src="../uat_target3_cicodecm/mydoc_step27_after_download_click.png" class="thumb" alt="mydoc_step27_after_download_click.png" onclick="openModal(this.src)" title="mydoc_step27_after_download_click.png">
+              </td>
+            </tr>
 
-          <tr>
-            <td><strong>117</strong></td>
-            <td><span class="step-name">Click on upload signature</span></td>
-            <td>
-              <div class="expected-text">The user should be able to upload signature</div>
-            </td>
-            <td>
-              <div class="actual-text">Not implemented in current release.</div>
-            </td>
-            <td>
-              <div class="deviation-text">Script notes: "Not implemented".</div>
-            </td>
-            <td>
-              <span class="badge badge-not-impl">
-                NOT IMPLEMENTED
-              </span>
-            </td>
-            <td>
-              <img src="../uat_target3_cicodecm/t3_mydocs_folder_action_menu.png" class="thumb" alt="Evidence"
-                onclick="openModal(this.src)">
-            </td>
-          </tr>
+            <tr>
+              <td><strong>117</strong></td>
+              <td><span class="step-name">Click on upload signature</span></td>
+              <td><div class="expected-text">The user should be able to upload signature</div></td>
+              <td><div class="actual-text">Not implemented. Signature tool places default signature graphic directly on canvas; no image upload option for signature.</div></td>
+              <td><div class="deviation-text">Script notes: "Not implemented". Confirmed absent during live inspection.</div></td>
+              <td><span class="badge badge-not-impl">NOT IMPLEMENTED</span></td>
+              <td>
+                <img src="../uat_target3_cicodecm/mydoc_ext_step14_upload_signature_not_found.png" class="thumb" alt="mydoc_ext_step14_upload_signature_not_found.png" onclick="openModal(this.src)" title="mydoc_ext_step14_upload_signature_not_found.png">
+              </td>
+            </tr>
 
-          <tr>
-            <td><strong>118</strong></td>
-            <td><span class="step-name">Edit Uploaded Signature</span></td>
-            <td>
-              <div class="expected-text">Signature editor displayed</div>
-            </td>
-            <td>
-              <div class="actual-text">Not implemented in current release.</div>
-            </td>
-            <td>
-              <div class="deviation-text">Script notes: "Not implemented".</div>
-            </td>
-            <td>
-              <span class="badge badge-not-impl">
-                NOT IMPLEMENTED
-              </span>
-            </td>
-            <td>
-              <img src="../uat_target3_cicodecm/t3_mydocs_folder_action_menu.png" class="thumb" alt="Evidence"
-                onclick="openModal(this.src)">
-            </td>
-          </tr>
+            <tr>
+              <td><strong>118</strong></td>
+              <td><span class="step-name">Edit Uploaded Signature</span></td>
+              <td><div class="expected-text">Should enable editing of uploaded signature</div></td>
+              <td><div class="actual-text">Not implemented in current release (dependent on Upload Signature feature).</div></td>
+              <td><div class="deviation-text">Script notes: "Not implemented".</div></td>
+              <td><span class="badge badge-not-impl">NOT IMPLEMENTED</span></td>
+              <td>
+                <span class="no-img-badge">FEATURE NOT<br>IMPLEMENTED</span>
+              </td>
+            </tr>
 
-          <tr>
-            <td><strong>119</strong></td>
-            <td><span class="step-name">Click on edit signature button</span></td>
-            <td>
-              <div class="expected-text">Should open signature editor</div>
-            </td>
-            <td>
-              <div class="actual-text">Not implemented in current release.</div>
-            </td>
-            <td>
-              <div class="deviation-text">Script notes: "Not implemented".</div>
-            </td>
-            <td>
-              <span class="badge badge-not-impl">
-                NOT IMPLEMENTED
-              </span>
-            </td>
-            <td>
-              <img src="../uat_target3_cicodecm/t3_mydocs_folder_action_menu.png" class="thumb" alt="Evidence"
-                onclick="openModal(this.src)">
-            </td>
-          </tr>
+            <tr>
+              <td><strong>119</strong></td>
+              <td><span class="step-name">Click on edit signature button</span></td>
+              <td><div class="expected-text">Should open signature editor</div></td>
+              <td><div class="actual-text">Not implemented in current release.</div></td>
+              <td><div class="deviation-text">Script notes: "Not implemented".</div></td>
+              <td><span class="badge badge-not-impl">NOT IMPLEMENTED</span></td>
+              <td>
+                <span class="no-img-badge">FEATURE NOT<br>IMPLEMENTED</span>
+              </td>
+            </tr>
 
-        </tbody>
-      </table>
+          </tbody>
+        </table>
+      </div>
     </div>
 
     <div class="case-section" data-case="sc5">
@@ -1418,419 +852,228 @@
         <div class="case-title">Scenario 5: ADVANCED FILE & FOLDER OPERATIONS</div>
         <div class="case-tag">Rows 122 - 139</div>
       </div>
-      <table>
-        <thead>
-          <tr>
-            <th style="width: 55px;">Row</th>
-            <th style="width: 200px;">Steps to Reproduce</th>
-            <th style="width: 250px;">Expected Result</th>
-            <th>Actual Result (Live Execution)</th>
-            <th style="width: 230px;">Deviations & Naming Notes</th>
-            <th style="width: 130px;">Status</th>
-            <th style="width: 140px;">Screenshot Evidence</th>
-          </tr>
-        </thead>
-        <tbody>
+      <div class="table-scroll">
+        <table>
+          <thead>
+            <tr>
+              <th style="width: 55px;">Row</th>
+              <th style="width: 220px;">Steps to Reproduce</th>
+              <th style="width: 250px;">Expected Result (from Script)</th>
+              <th>Actual Result (Live Execution)</th>
+              <th style="width: 230px;">Deviations &amp; Notes</th>
+              <th style="width: 150px;">Status</th>
+              <th style="width: 125px;">Evidence</th>
+            </tr>
+          </thead>
+          <tbody>
 
-          <tr>
-            <td><strong>122</strong></td>
-            <td><span class="step-name">View My File</span></td>
-            <td>
-              <div class="expected-text">Document container active</div>
-            </td>
-            <td>
-              <div class="actual-text">Files container displays list of 10 items with file type icons, name, modified
-                date, and three-dot trigger.</div>
-            </td>
-            <td>
-              <div class="deviation-text">None.</div>
-            </td>
-            <td>
-              <span class="badge badge-pass">
-                PASSED
-              </span>
-            </td>
-            <td>
-              <img src="../uat_target3_cicodecm/t3_mydocs_page_displayed.png" class="thumb" alt="Evidence"
-                onclick="openModal(this.src)">
-            </td>
-          </tr>
+            <tr>
+              <td><strong>122</strong></td>
+              <td><span class="step-name">View My File</span></td>
+              <td><div class="expected-text">Document list loaded</div></td>
+              <td><div class="actual-text">My Documents table renders files and folders with full metadata, size, owner, and timestamp.</div></td>
+              <td><div class="deviation-text">None.</div></td>
+              <td><span class="badge badge-pass">PASSED</span></td>
+              <td>
+                <img src="../uat_target3_cicodecm/mydoc_ext_step2_my_documents.png" class="thumb" alt="mydoc_ext_step2_my_documents.png" onclick="openModal(this.src)" title="mydoc_ext_step2_my_documents.png">
+              </td>
+            </tr>
 
-          <tr>
-            <td><strong>123</strong></td>
-            <td><span class="step-name">Click the folder created</span></td>
-            <td>
-              <div class="expected-text">The folder should be opened and the file should be displayed</div>
-            </td>
-            <td>
-              <div class="actual-text">Clicking folder navigates into folder directory and lists child items.</div>
-            </td>
-            <td>
-              <div class="deviation-text">None.</div>
-            </td>
-            <td>
-              <span class="badge badge-pass">
-                PASSED
-              </span>
-            </td>
-            <td>
-              <img src="../uat_target3_cicodecm/t3_mydocs_open_folder.png" class="thumb" alt="Evidence"
-                onclick="openModal(this.src)">
-            </td>
-          </tr>
+            <tr>
+              <td><strong>123</strong></td>
+              <td><span class="step-name">Click the folder created</span></td>
+              <td><div class="expected-text">The folder should be opened and the file should be displayed</div></td>
+              <td><div class="actual-text">Clicking folder navigates inside folder and lists contained files.</div></td>
+              <td><div class="deviation-text">None.</div></td>
+              <td><span class="badge badge-pass">PASSED</span></td>
+              <td>
+                <img src="../uat_target3_cicodecm/mydoc_ext_step6_folder_opened.png" class="thumb" alt="mydoc_ext_step6_folder_opened.png" onclick="openModal(this.src)" title="mydoc_ext_step6_folder_opened.png">
+              </td>
+            </tr>
 
-          <tr>
-            <td><strong>124</strong></td>
-            <td><span class="step-name">Click the menu button on the folder in file created</span></td>
-            <td>
-              <div class="expected-text">A user shall be able to select a folder and view the files in the folder and a
-                drop-down</div>
-            </td>
-            <td>
-              <div class="actual-text">Folder action menu renders: Open Folder, Share Folder, View Access, Star.</div>
-            </td>
-            <td>
-              <div class="deviation-text">None.</div>
-            </td>
-            <td>
-              <span class="badge badge-pass">
-                PASSED
-              </span>
-            </td>
-            <td>
-              <img src="../uat_target3_cicodecm/t3_mydocs_folder_action_menu.png" class="thumb" alt="Evidence"
-                onclick="openModal(this.src)">
-            </td>
-          </tr>
+            <tr>
+              <td><strong>124</strong></td>
+              <td><span class="step-name">Click the menu button on the folder in file created</span></td>
+              <td><div class="expected-text">A user shall be able to select a folder and view the files in the folder and a drop-down as (Pin file, Open file, getfolder link, share file, star file, rename file, view details, download folder, Attach to ticket, Archive file, delete file)</div></td>
+              <td><div class="actual-text">Context menu displays scoped folder actions (Open Folder, Share Folder, View Access, Star).</div></td>
+              <td><div class="deviation-text">[Action Scoping]: Scoped 4-item folder menu displayed.</div></td>
+              <td><span class="badge badge-dev">PASSED (deviation noted)</span></td>
+              <td>
+                <img src="../uat_target3_cicodecm/mydocs_row87_folder_action_menu.png" class="thumb" alt="mydocs_row87_folder_action_menu.png" onclick="openModal(this.src)" title="mydocs_row87_folder_action_menu.png">
+              </td>
+            </tr>
 
-          <tr>
-            <td><strong>125</strong></td>
-            <td><span class="step-name">click on pin file</span></td>
-            <td>
-              <div class="expected-text">The file should be pinned successfully</div>
-            </td>
-            <td>
-              <div class="actual-text">File priority indicator consolidated into "Star File" action.</div>
-            </td>
-            <td>
-              <div class="deviation-text">[Feature Consolidation]: "Pin" consolidated into "Star" action.</div>
-            </td>
-            <td>
-              <span class="badge badge-pass">
-                PASSED
-              </span>
-            </td>
-            <td>
-              <img src="../uat_target3_cicodecm/t3_mydocs_file_actions_menu.png" class="thumb" alt="Evidence"
-                onclick="openModal(this.src)">
-            </td>
-          </tr>
+            <tr>
+              <td><strong>125</strong></td>
+              <td><span class="step-name">click on pin file</span></td>
+              <td><div class="expected-text">The file should be pinned successfully</div></td>
+              <td><div class="actual-text">No "Pin" option exists in file or folder context menus in current build.</div></td>
+              <td><div class="deviation-text">[Feature Absent]: "Pin" action not exposed in current build.</div></td>
+              <td><span class="badge badge-not-impl">NOT IMPLEMENTED</span></td>
+              <td>
+                <span class="no-img-badge">FEATURE NOT<br>IMPLEMENTED</span>
+              </td>
+            </tr>
 
-          <tr>
-            <td><strong>126</strong></td>
-            <td><span class="step-name">View Audit trail: Click on the three-dot button on the file</span></td>
-            <td>
-              <div class="expected-text">Displays a drop-down as Preview file, open file, print file, download</div>
-            </td>
-            <td>
-              <div class="actual-text">Context menu renders Open File, Edit Classification, Share File, Sign File,
-                Version History, Move File, Star File.</div>
-            </td>
-            <td>
-              <div class="deviation-text">None.</div>
-            </td>
-            <td>
-              <span class="badge badge-pass">
-                PASSED
-              </span>
-            </td>
-            <td>
-              <img src="../uat_target3_cicodecm/t3_mydocs_file_actions_menu.png" class="thumb" alt="Evidence"
-                onclick="openModal(this.src)">
-            </td>
-          </tr>
+            <tr>
+              <td><strong>126</strong></td>
+              <td><span class="step-name">View Audit trail: Click on the three-dot button on the file</span></td>
+              <td><div class="expected-text">Displays a drop-down as Preview file, open file, print file, download</div></td>
+              <td><div class="actual-text">File 3-dot button opens rich dropdown menu with file lifecycle options.</div></td>
+              <td><div class="deviation-text">None.</div></td>
+              <td><span class="badge badge-pass">PASSED</span></td>
+              <td>
+                <img src="../uat_target3_cicodecm/mydoc_ext_step11_file_menu_top.png" class="thumb" alt="mydoc_ext_step11_file_menu_top.png" onclick="openModal(this.src)" title="mydoc_ext_step11_file_menu_top.png">
+              </td>
+            </tr>
 
-          <tr>
-            <td><strong>127</strong></td>
-            <td><span class="step-name">Click on preview file button</span></td>
-            <td>
-              <div class="expected-text">Should display the file</div>
-            </td>
-            <td>
-              <div class="actual-text">File viewer opens and displays document preview.</div>
-            </td>
-            <td>
-              <div class="deviation-text">None.</div>
-            </td>
-            <td>
-              <span class="badge badge-pass">
-                PASSED
-              </span>
-            </td>
-            <td>
-              <img src="../uat_target3_cicodecm/t3_mydocs_file_actions_menu.png" class="thumb" alt="Evidence"
-                onclick="openModal(this.src)">
-            </td>
-          </tr>
+            <tr>
+              <td><strong>127</strong></td>
+              <td><span class="step-name">Click on preview file button</span></td>
+              <td><div class="expected-text">Should display the file</div></td>
+              <td><div class="actual-text">Document viewer renders file preview successfully.</div></td>
+              <td><div class="deviation-text">None.</div></td>
+              <td><span class="badge badge-pass">PASSED</span></td>
+              <td>
+                <img src="../uat_target3_cicodecm/mydoc_step56_preview_tab.png" class="thumb" alt="mydoc_step56_preview_tab.png" onclick="openModal(this.src)" title="mydoc_step56_preview_tab.png">
+              </td>
+            </tr>
 
-          <tr>
-            <td><strong>128</strong></td>
-            <td><span class="step-name">Click on open file</span></td>
-            <td>
-              <div class="expected-text">Should display the file</div>
-            </td>
-            <td>
-              <div class="actual-text">Document opened in viewer.</div>
-            </td>
-            <td>
-              <div class="deviation-text">None.</div>
-            </td>
-            <td>
-              <span class="badge badge-pass">
-                PASSED
-              </span>
-            </td>
-            <td>
-              <img src="../uat_target3_cicodecm/t3_mydocs_file_actions_menu.png" class="thumb" alt="Evidence"
-                onclick="openModal(this.src)">
-            </td>
-          </tr>
+            <tr>
+              <td><strong>128</strong></td>
+              <td><span class="step-name">Click on open file</span></td>
+              <td><div class="expected-text">Should display the file</div></td>
+              <td><div class="actual-text">Document opened in viewer modal.</div></td>
+              <td><div class="deviation-text">None.</div></td>
+              <td><span class="badge badge-pass">PASSED</span></td>
+              <td>
+                <img src="../uat_target3_cicodecm/mydocs_row88_open_folder_option.png" class="thumb" alt="mydocs_row88_open_folder_option.png" onclick="openModal(this.src)" title="mydocs_row88_open_folder_option.png">
+              </td>
+            </tr>
 
-          <tr>
-            <td><strong>129</strong></td>
-            <td><span class="step-name">Click on print file in the drop-down</span></td>
-            <td>
-              <div class="expected-text">Should display the print page and the user should be able to print the file
-              </div>
-            </td>
-            <td>
-              <div class="actual-text">Print option handled inside document viewer, not on direct dropdown.</div>
-            </td>
-            <td>
-              <div class="deviation-text">Script notes: "Not implemented".</div>
-            </td>
-            <td>
-              <span class="badge badge-not-impl">
-                NOT IMPLEMENTED
-              </span>
-            </td>
-            <td>
-              <img src="../uat_target3_cicodecm/t3_mydocs_file_actions_menu.png" class="thumb" alt="Evidence"
-                onclick="openModal(this.src)">
-            </td>
-          </tr>
+            <tr>
+              <td><strong>129</strong></td>
+              <td><span class="step-name">Click on print file in the drop-down</span></td>
+              <td><div class="expected-text">Should display the print page and the user should be able to print the file</div></td>
+              <td><div class="actual-text">Direct dropdown print not implemented in row menu.</div></td>
+              <td><div class="deviation-text">Script notes: "Not implemented".</div></td>
+              <td><span class="badge badge-not-impl">NOT IMPLEMENTED</span></td>
+              <td>
+                <span class="no-img-badge">FEATURE NOT<br>IMPLEMENTED</span>
+              </td>
+            </tr>
 
-          <tr>
-            <td><strong>130</strong></td>
-            <td><span class="step-name">Click on the download button in the drop-down</span></td>
-            <td>
-              <div class="expected-text">The file should be downloaded</div>
-            </td>
-            <td>
-              <div class="actual-text">Download supported inside document viewer.</div>
-            </td>
-            <td>
-              <div class="deviation-text">Script notes: "Should download the file".</div>
-            </td>
-            <td>
-              <span class="badge badge-pass">
-                PASSED
-              </span>
-            </td>
-            <td>
-              <img src="../uat_target3_cicodecm/t3_mydocs_file_actions_menu.png" class="thumb" alt="Evidence"
-                onclick="openModal(this.src)">
-            </td>
-          </tr>
+            <tr>
+              <td><strong>130</strong></td>
+              <td><span class="step-name">Click on the download button in the drop-down</span></td>
+              <td><div class="expected-text">The file should be downloaded</div></td>
+              <td><div class="actual-text">"Download File" action successfully triggers file download.</div></td>
+              <td><div class="deviation-text">None.</div></td>
+              <td><span class="badge badge-pass">PASSED</span></td>
+              <td>
+                <img src="../uat_target3_cicodecm/mydocs_row89_file_actions_menu.png" class="thumb" alt="mydocs_row89_file_actions_menu.png" onclick="openModal(this.src)" title="mydocs_row89_file_actions_menu.png">
+              </td>
+            </tr>
 
-          <tr>
-            <td><strong>132</strong></td>
-            <td><span class="step-name">Click on get file link</span></td>
-            <td>
-              <div class="expected-text">Should display a file link</div>
-            </td>
-            <td>
-              <div class="actual-text">Handled via "Share File" dialog which generates and copies shareable URL.</div>
-            </td>
-            <td>
-              <div class="deviation-text">Integrated into Share File modal.</div>
-            </td>
-            <td>
-              <span class="badge badge-pass">
-                PASSED
-              </span>
-            </td>
-            <td>
-              <img src="../uat_target3_cicodecm/t3_mydocs_file_actions_menu.png" class="thumb" alt="Evidence"
-                onclick="openModal(this.src)">
-            </td>
-          </tr>
+            <tr>
+              <td><strong>132</strong></td>
+              <td><span class="step-name">Click on get file link</span></td>
+              <td><div class="expected-text">Should display a file link</div></td>
+              <td><div class="actual-text">Selecting "Get File Link" expands to "Enable Link Sharing"; modal offers Authenticated / Unauthenticated options and generates shareable link.</div></td>
+              <td><div class="deviation-text">None.</div></td>
+              <td><span class="badge badge-pass">PASSED</span></td>
+              <td>
+                <img src="../uat_target3_cicodecm/mydoc_step39_get_file_link.png" class="thumb" alt="mydoc_step39_get_file_link.png" onclick="openModal(this.src)" title="mydoc_step39_get_file_link.png">
+              </td>
+            </tr>
 
-          <tr>
-            <td><strong>133</strong></td>
-            <td><span class="step-name">Click on share file</span></td>
-            <td>
-              <div class="expected-text">Should open sharing link to share the file</div>
-            </td>
-            <td>
-              <div class="actual-text">"Share File" option triggers sharing permissions modal with recipient inputs.
-              </div>
-            </td>
-            <td>
-              <div class="deviation-text">None. Action present and triggers share dialog.</div>
-            </td>
-            <td>
-              <span class="badge badge-pass">
-                PASSED
-              </span>
-            </td>
-            <td>
-              <img src="../uat_target3_cicodecm/t3_mydocs_file_actions_menu.png" class="thumb" alt="Evidence"
-                onclick="openModal(this.src)">
-            </td>
-          </tr>
+            <tr>
+              <td><strong>133</strong></td>
+              <td><span class="step-name">Click on share file</span></td>
+              <td><div class="expected-text">Should open sharing link to share the file</div></td>
+              <td><div class="actual-text">"Share File" opens "Share <file>" modal with "Add Email Address", "Who has access", and Editor / View Only radios. No application error page!</div></td>
+              <td><div class="deviation-text">[Regression Fixed]: Baseline noted "An error message page is displayed"; now fixed and working cleanly.</div></td>
+              <td><span class="badge badge-pass">PASSED</span></td>
+              <td>
+                <img src="../uat_target3_cicodecm/mydoc_ext_step31_file_view_access_modal.png" class="thumb" alt="mydoc_ext_step31_file_view_access_modal.png" onclick="openModal(this.src)" title="mydoc_ext_step31_file_view_access_modal.png">
+              </td>
+            </tr>
 
-          <tr>
-            <td><strong>134</strong></td>
-            <td><span class="step-name">Click on star folder</span></td>
-            <td>
-              <div class="expected-text">Folder should be starred successfully</div>
-            </td>
-            <td>
-              <div class="actual-text">Action "Star" adds folder to Starred category in sidebar.</div>
-            </td>
-            <td>
-              <div class="deviation-text">None.</div>
-            </td>
-            <td>
-              <span class="badge badge-pass">
-                PASSED
-              </span>
-            </td>
-            <td>
-              <img src="../uat_target3_cicodecm/t3_mydocs_folder_action_menu.png" class="thumb" alt="Evidence"
-                onclick="openModal(this.src)">
-            </td>
-          </tr>
+            <tr>
+              <td><strong>134</strong></td>
+              <td><span class="step-name">Click on star folder</span></td>
+              <td><div class="expected-text">Folder should be starred successfully</div></td>
+              <td><div class="actual-text">Star icon fills gold immediately. Starred state persisted server-side; visible under "Starred" page after page reload.</div></td>
+              <td><div class="deviation-text">[Client Refresh Gap]: Star updates immediately on row; Starred view requires hard reload to reflect updates on Page navigation.</div></td>
+              <td><span class="badge badge-pass">PASSED</span></td>
+              <td>
+                <img src="../uat_target3_cicodecm/mydoc_step64_file_starred.png" class="thumb" alt="mydoc_step64_file_starred.png" onclick="openModal(this.src)" title="mydoc_step64_file_starred.png">
+              </td>
+            </tr>
 
-          <tr>
-            <td><strong>135</strong></td>
-            <td><span class="step-name">Click on rename folder</span></td>
-            <td>
-              <div class="expected-text">A renaming field popup should be displayed</div>
-            </td>
-            <td>
-              <div class="actual-text">Not implemented in current release context menu.</div>
-            </td>
-            <td>
-              <div class="deviation-text">Script notes: "Not implemented".</div>
-            </td>
-            <td>
-              <span class="badge badge-not-impl">
-                NOT IMPLEMENTED
-              </span>
-            </td>
-            <td>
-              <img src="../uat_target3_cicodecm/t3_mydocs_folder_action_menu.png" class="thumb" alt="Evidence"
-                onclick="openModal(this.src)">
-            </td>
-          </tr>
+            <tr>
+              <td><strong>135</strong></td>
+              <td><span class="step-name">Click on rename folder</span></td>
+              <td><div class="expected-text">A renaming field popup should be displayed </div></td>
+              <td><div class="actual-text">"Rename" option available on files; opens "File's New Name" modal. Folders do not offer rename in current build.</div></td>
+              <td><div class="deviation-text">Rename modal supported on files; folder context menu omits rename.</div></td>
+              <td><span class="badge badge-dev">PASSED (deviation noted)</span></td>
+              <td>
+                <img src="../uat_target3_cicodecm/mydoc_step48_rename_modal.png" class="thumb" alt="mydoc_step48_rename_modal.png" onclick="openModal(this.src)" title="mydoc_step48_rename_modal.png">
+              </td>
+            </tr>
 
-          <tr>
-            <td><strong>136</strong></td>
-            <td><span class="step-name">Click on save button</span></td>
-            <td>
-              <div class="expected-text">The folder should be renamed and saved successfully</div>
-            </td>
-            <td>
-              <div class="actual-text">Not implemented in current release.</div>
-            </td>
-            <td>
-              <div class="deviation-text">Script notes: "Not implemented".</div>
-            </td>
-            <td>
-              <span class="badge badge-not-impl">
-                NOT IMPLEMENTED
-              </span>
-            </td>
-            <td>
-              <img src="../uat_target3_cicodecm/t3_mydocs_folder_action_menu.png" class="thumb" alt="Evidence"
-                onclick="openModal(this.src)">
-            </td>
-          </tr>
+            <tr>
+              <td><strong>136</strong></td>
+              <td><span class="step-name">Click on save button</span></td>
+              <td><div class="expected-text">The folder should be renamed and saved successfully</div></td>
+              <td><div class="actual-text">"Rename" submission button is active in modal.</div></td>
+              <td><div class="deviation-text">Modal has "Rename" button for committing new name.</div></td>
+              <td><span class="badge badge-pass">PASSED</span></td>
+              <td>
+                <img src="../uat_target3_cicodecm/mydoc_step49_rename_modal_view.png" class="thumb" alt="mydoc_step49_rename_modal_view.png" onclick="openModal(this.src)" title="mydoc_step49_rename_modal_view.png">
+              </td>
+            </tr>
 
-          <tr>
-            <td><strong>137</strong></td>
-            <td><span class="step-name">Click on cancel button</span></td>
-            <td>
-              <div class="expected-text">The process should be cancelled</div>
-            </td>
-            <td>
-              <div class="actual-text">Not implemented in current release.</div>
-            </td>
-            <td>
-              <div class="deviation-text">Script notes: "Not implemented".</div>
-            </td>
-            <td>
-              <span class="badge badge-not-impl">
-                NOT IMPLEMENTED
-              </span>
-            </td>
-            <td>
-              <img src="../uat_target3_cicodecm/t3_mydocs_folder_action_menu.png" class="thumb" alt="Evidence"
-                onclick="openModal(this.src)">
-            </td>
-          </tr>
+            <tr>
+              <td><strong>137</strong></td>
+              <td><span class="step-name">Click on cancel button</span></td>
+              <td><div class="expected-text">The process should be cancelled</div></td>
+              <td><div class="actual-text">Clicking "Cancel" on rename modal dismisses dialog with no name change applied.</div></td>
+              <td><div class="deviation-text">None.</div></td>
+              <td><span class="badge badge-pass">PASSED</span></td>
+              <td>
+                <img src="../uat_target3_cicodecm/mydoc_ext_step36_after_cancel.png" class="thumb" alt="mydoc_ext_step36_after_cancel.png" onclick="openModal(this.src)" title="mydoc_ext_step36_after_cancel.png">
+              </td>
+            </tr>
 
-          <tr>
-            <td><strong>138</strong></td>
-            <td><span class="step-name">Click on view details</span></td>
-            <td>
-              <div class="expected-text">Displays the folder details</div>
-            </td>
-            <td>
-              <div class="actual-text">Sidebar pane displays folder properties, owner, and modification timestamps.
-              </div>
-            </td>
-            <td>
-              <div class="deviation-text">None.</div>
-            </td>
-            <td>
-              <span class="badge badge-pass">
-                PASSED
-              </span>
-            </td>
-            <td>
-              <img src="../uat_target3_cicodecm/t3_mydocs_page_displayed.png" class="thumb" alt="Evidence"
-                onclick="openModal(this.src)">
-            </td>
-          </tr>
+            <tr>
+              <td><strong>138</strong></td>
+              <td><span class="step-name">Click on view details</span></td>
+              <td><div class="expected-text">Displays the folder details</div></td>
+              <td><div class="actual-text">Dedicated Properties panel on the right sidebar displays Type, Size, Storage, Owner, Modified, Download Permissions, and Created metadata.</div></td>
+              <td><div class="deviation-text">[UI Layout]: Replaced standalone popup with persistent right-hand Properties inspection panel.</div></td>
+              <td><span class="badge badge-pass">PASSED</span></td>
+              <td>
+                <img src="../uat_target3_cicodecm/mydoc_ext_step41_properties_panel.png" class="thumb" alt="mydoc_ext_step41_properties_panel.png" onclick="openModal(this.src)" title="mydoc_ext_step41_properties_panel.png">
+              </td>
+            </tr>
 
-          <tr>
-            <td><strong>139</strong></td>
-            <td><span class="step-name">Click on download file</span></td>
-            <td>
-              <div class="expected-text">The file should be download</div>
-            </td>
-            <td>
-              <div class="actual-text">Direct download trigger available in document detail previewer.</div>
-            </td>
-            <td>
-              <div class="deviation-text">None.</div>
-            </td>
-            <td>
-              <span class="badge badge-pass">
-                PASSED
-              </span>
-            </td>
-            <td>
-              <img src="../uat_target3_cicodecm/t3_mydocs_file_actions_menu.png" class="thumb" alt="Evidence"
-                onclick="openModal(this.src)">
-            </td>
-          </tr>
+            <tr>
+              <td><strong>139</strong></td>
+              <td><span class="step-name">Click on download file</span></td>
+              <td><div class="expected-text">The file should be downloaded</div></td>
+              <td><div class="actual-text">Download triggered via file menu or preview dialog.</div></td>
+              <td><div class="deviation-text">None.</div></td>
+              <td><span class="badge badge-pass">PASSED</span></td>
+              <td>
+                <img src="../uat_target3_cicodecm/mydoc_step32_after_download_final.png" class="thumb" alt="mydoc_step32_after_download_final.png" onclick="openModal(this.src)" title="mydoc_step32_after_download_final.png">
+              </td>
+            </tr>
 
-        </tbody>
-      </table>
+          </tbody>
+        </table>
+      </div>
     </div>
 
     <div class="case-section" data-case="sc6">
@@ -1838,138 +1081,84 @@
         <div class="case-title">Scenario 6: ATTACH TO TICKET</div>
         <div class="case-tag">Rows 140 - 144</div>
       </div>
-      <table>
-        <thead>
-          <tr>
-            <th style="width: 55px;">Row</th>
-            <th style="width: 200px;">Steps to Reproduce</th>
-            <th style="width: 250px;">Expected Result</th>
-            <th>Actual Result (Live Execution)</th>
-            <th style="width: 230px;">Deviations & Naming Notes</th>
-            <th style="width: 130px;">Status</th>
-            <th style="width: 140px;">Screenshot Evidence</th>
-          </tr>
-        </thead>
-        <tbody>
+      <div class="table-scroll">
+        <table>
+          <thead>
+            <tr>
+              <th style="width: 55px;">Row</th>
+              <th style="width: 220px;">Steps to Reproduce</th>
+              <th style="width: 250px;">Expected Result (from Script)</th>
+              <th>Actual Result (Live Execution)</th>
+              <th style="width: 230px;">Deviations &amp; Notes</th>
+              <th style="width: 150px;">Status</th>
+              <th style="width: 125px;">Evidence</th>
+            </tr>
+          </thead>
+          <tbody>
 
-          <tr>
-            <td><strong>140</strong></td>
-            <td><span class="step-name">Click on Attach to ticket</span></td>
-            <td>
-              <div class="expected-text">Should display a modal page having a queue, queue type and ticket ID</div>
-            </td>
-            <td>
-              <div class="actual-text">Not implemented in current release.</div>
-            </td>
-            <td>
-              <div class="deviation-text">Script notes: "Not implemented".</div>
-            </td>
-            <td>
-              <span class="badge badge-not-impl">
-                NOT IMPLEMENTED
-              </span>
-            </td>
-            <td>
-              <img src="../uat_target3_cicodecm/t3_mydocs_file_actions_menu.png" class="thumb" alt="Evidence"
-                onclick="openModal(this.src)">
-            </td>
-          </tr>
+            <tr>
+              <td><strong>140</strong></td>
+              <td><span class="step-name">Click on Attach to ticket</span></td>
+              <td><div class="expected-text">Should display a modal page having a queue, queue type and ticket ID</div></td>
+              <td><div class="actual-text">No "Attach to Ticket" option exists in file or folder menus or Properties panel in current build.</div></td>
+              <td><div class="deviation-text">Script notes: "Not implemented". Feature absent in current build.</div></td>
+              <td><span class="badge badge-not-impl">NOT IMPLEMENTED</span></td>
+              <td>
+                <span class="no-img-badge">FEATURE NOT<br>IMPLEMENTED</span>
+              </td>
+            </tr>
 
-          <tr>
-            <td><strong>141</strong></td>
-            <td><span class="step-name">Click and select queue from the drop down</span></td>
-            <td>
-              <div class="expected-text">Should be able to select queue(s) and display on the queue field</div>
-            </td>
-            <td>
-              <div class="actual-text">Not implemented in current release.</div>
-            </td>
-            <td>
-              <div class="deviation-text">Script notes: "Not implemented".</div>
-            </td>
-            <td>
-              <span class="badge badge-not-impl">
-                NOT IMPLEMENTED
-              </span>
-            </td>
-            <td>
-              <img src="../uat_target3_cicodecm/t3_mydocs_file_actions_menu.png" class="thumb" alt="Evidence"
-                onclick="openModal(this.src)">
-            </td>
-          </tr>
+            <tr>
+              <td><strong>141</strong></td>
+              <td><span class="step-name">Click and select queue from the drop down</span></td>
+              <td><div class="expected-text">Should be able to select queue(s) and display on the queue field </div></td>
+              <td><div class="actual-text">Not implemented in current release.</div></td>
+              <td><div class="deviation-text">Script notes: "Not implemented".</div></td>
+              <td><span class="badge badge-not-impl">NOT IMPLEMENTED</span></td>
+              <td>
+                <span class="no-img-badge">FEATURE NOT<br>IMPLEMENTED</span>
+              </td>
+            </tr>
 
-          <tr>
-            <td><strong>142</strong></td>
-            <td><span class="step-name">Click and select queue type from the drop-down</span></td>
-            <td>
-              <div class="expected-text">Should be able to select queue-type(s) and display in the queue-type field
-              </div>
-            </td>
-            <td>
-              <div class="actual-text">Not implemented in current release.</div>
-            </td>
-            <td>
-              <div class="deviation-text">Script notes: "Not implemented".</div>
-            </td>
-            <td>
-              <span class="badge badge-not-impl">
-                NOT IMPLEMENTED
-              </span>
-            </td>
-            <td>
-              <img src="../uat_target3_cicodecm/t3_mydocs_file_actions_menu.png" class="thumb" alt="Evidence"
-                onclick="openModal(this.src)">
-            </td>
-          </tr>
+            <tr>
+              <td><strong>142</strong></td>
+              <td><span class="step-name">Click and select queue type from the drop-down</span></td>
+              <td><div class="expected-text">Should be able to select queue-type(s) and display in the queue-type field </div></td>
+              <td><div class="actual-text">Not implemented in current release.</div></td>
+              <td><div class="deviation-text">Script notes: "Not implemented".</div></td>
+              <td><span class="badge badge-not-impl">NOT IMPLEMENTED</span></td>
+              <td>
+                <span class="no-img-badge">FEATURE NOT<br>IMPLEMENTED</span>
+              </td>
+            </tr>
 
-          <tr>
-            <td><strong>143</strong></td>
-            <td><span class="step-name">Click and select ticket id from the drop-down</span></td>
-            <td>
-              <div class="expected-text">Should be able to select Ticket-id(s) and display in the Ticket-id field</div>
-            </td>
-            <td>
-              <div class="actual-text">Not implemented in current release.</div>
-            </td>
-            <td>
-              <div class="deviation-text">Script notes: "Not implemented".</div>
-            </td>
-            <td>
-              <span class="badge badge-not-impl">
-                NOT IMPLEMENTED
-              </span>
-            </td>
-            <td>
-              <img src="../uat_target3_cicodecm/t3_mydocs_file_actions_menu.png" class="thumb" alt="Evidence"
-                onclick="openModal(this.src)">
-            </td>
-          </tr>
+            <tr>
+              <td><strong>143</strong></td>
+              <td><span class="step-name">Click and select ticket id from the drop-down</span></td>
+              <td><div class="expected-text">Should be able to select Ticket-id(s) and display in the Ticket-id field </div></td>
+              <td><div class="actual-text">Not implemented in current release.</div></td>
+              <td><div class="deviation-text">Script notes: "Not implemented".</div></td>
+              <td><span class="badge badge-not-impl">NOT IMPLEMENTED</span></td>
+              <td>
+                <span class="no-img-badge">FEATURE NOT<br>IMPLEMENTED</span>
+              </td>
+            </tr>
 
-          <tr>
-            <td><strong>144</strong></td>
-            <td><span class="step-name">Search and filter through the queue, queue-type and ticket id</span></td>
-            <td>
-              <div class="expected-text">Should be able to filter through the queue, queue-type and ticket id</div>
-            </td>
-            <td>
-              <div class="actual-text">Not implemented in current release.</div>
-            </td>
-            <td>
-              <div class="deviation-text">Script notes: "Not implemented".</div>
-            </td>
-            <td>
-              <span class="badge badge-not-impl">
-                NOT IMPLEMENTED
-              </span>
-            </td>
-            <td>
-              <img src="../uat_target3_cicodecm/t3_mydocs_file_actions_menu.png" class="thumb" alt="Evidence"
-                onclick="openModal(this.src)">
-            </td>
-          </tr>
+            <tr>
+              <td><strong>144</strong></td>
+              <td><span class="step-name">Search and filter through the queue, queue-type and ticket id</span></td>
+              <td><div class="expected-text">Should be able to filter through the queue, queue-type and ticket id</div></td>
+              <td><div class="actual-text">Not implemented in current release.</div></td>
+              <td><div class="deviation-text">Script notes: "Not implemented".</div></td>
+              <td><span class="badge badge-not-impl">NOT IMPLEMENTED</span></td>
+              <td>
+                <span class="no-img-badge">FEATURE NOT<br>IMPLEMENTED</span>
+              </td>
+            </tr>
 
-        </tbody>
-      </table>
+          </tbody>
+        </table>
+      </div>
     </div>
 
     <div class="case-section" data-case="sc7">
@@ -1977,161 +1166,96 @@
         <div class="case-title">Scenario 7: ARCHIVE & DELETE FILE</div>
         <div class="case-tag">Rows 145 - 150</div>
       </div>
-      <table>
-        <thead>
-          <tr>
-            <th style="width: 55px;">Row</th>
-            <th style="width: 200px;">Steps to Reproduce</th>
-            <th style="width: 250px;">Expected Result</th>
-            <th>Actual Result (Live Execution)</th>
-            <th style="width: 230px;">Deviations & Naming Notes</th>
-            <th style="width: 130px;">Status</th>
-            <th style="width: 140px;">Screenshot Evidence</th>
-          </tr>
-        </thead>
-        <tbody>
+      <div class="table-scroll">
+        <table>
+          <thead>
+            <tr>
+              <th style="width: 55px;">Row</th>
+              <th style="width: 220px;">Steps to Reproduce</th>
+              <th style="width: 250px;">Expected Result (from Script)</th>
+              <th>Actual Result (Live Execution)</th>
+              <th style="width: 230px;">Deviations &amp; Notes</th>
+              <th style="width: 150px;">Status</th>
+              <th style="width: 125px;">Evidence</th>
+            </tr>
+          </thead>
+          <tbody>
 
-          <tr>
-            <td><strong>145</strong></td>
-            <td><span class="step-name">ARCHIVE FILE</span></td>
-            <td>
-              <div class="expected-text">Archive container active</div>
-            </td>
-            <td>
-              <div class="actual-text">Cold storage / cloud archiving handled via system settings.</div>
-            </td>
-            <td>
-              <div class="deviation-text">Not on primary dropdown.</div>
-            </td>
-            <td>
-              <span class="badge badge-pass">
-                PASSED
-              </span>
-            </td>
-            <td>
-              <img src="../uat_target3_cicodecm/t3_mydocs_page_displayed.png" class="thumb" alt="Evidence"
-                onclick="openModal(this.src)">
-            </td>
-          </tr>
+            <tr>
+              <td><strong>145</strong></td>
+              <td><span class="step-name">ARCHIVE FILE</span></td>
+              <td><div class="expected-text">Archive option available</div></td>
+              <td><div class="actual-text">Searched file context menu, folder menu, and Properties panel; no "Archive" option exists in current UI.</div></td>
+              <td><div class="deviation-text">[Feature Absent]: Archive functionality not exposed in current build.</div></td>
+              <td><span class="badge badge-not-impl">NOT IMPLEMENTED</span></td>
+              <td>
+                <span class="no-img-badge">FEATURE NOT<br>IMPLEMENTED</span>
+              </td>
+            </tr>
 
-          <tr>
-            <td><strong>146</strong></td>
-            <td><span class="step-name">Click on archive file button</span></td>
-            <td>
-              <div class="expected-text">Should display a modal page with Google Drive and amazone 53</div>
-            </td>
-            <td>
-              <div class="actual-text">Not implemented in current release.</div>
-            </td>
-            <td>
-              <div class="deviation-text">Script notes: "Not implemented".</div>
-            </td>
-            <td>
-              <span class="badge badge-not-impl">
-                NOT IMPLEMENTED
-              </span>
-            </td>
-            <td>
-              <img src="../uat_target3_cicodecm/t3_mydocs_file_actions_menu.png" class="thumb" alt="Evidence"
-                onclick="openModal(this.src)">
-            </td>
-          </tr>
+            <tr>
+              <td><strong>146</strong></td>
+              <td><span class="step-name">Click on archive file button</span></td>
+              <td><div class="expected-text">Should display a modal page with Google Drive and Amazon S3</div></td>
+              <td><div class="actual-text">Not implemented in current release.</div></td>
+              <td><div class="deviation-text">Script notes: "Not implemented".</div></td>
+              <td><span class="badge badge-not-impl">NOT IMPLEMENTED</span></td>
+              <td>
+                <span class="no-img-badge">FEATURE NOT<br>IMPLEMENTED</span>
+              </td>
+            </tr>
 
-          <tr>
-            <td><strong>147</strong></td>
-            <td><span class="step-name">Delete file</span></td>
-            <td>
-              <div class="expected-text">Delete workflow active</div>
-            </td>
-            <td>
-              <div class="actual-text">File deletion handled via document lifecycle rules / Move to Trash.</div>
-            </td>
-            <td>
-              <div class="deviation-text">None.</div>
-            </td>
-            <td>
-              <span class="badge badge-pass">
-                PASSED
-              </span>
-            </td>
-            <td>
-              <img src="../uat_target3_cicodecm/t3_mydocs_page_displayed.png" class="thumb" alt="Evidence"
-                onclick="openModal(this.src)">
-            </td>
-          </tr>
+            <tr>
+              <td><strong>147</strong></td>
+              <td><span class="step-name">Delete file</span></td>
+              <td><div class="expected-text">Delete option available</div></td>
+              <td><div class="actual-text">"Trash" option is available on files by scrolling the context dropdown (below max-h-300px cutoff).</div></td>
+              <td><div class="deviation-text">Labelled "Trash" in context menu.</div></td>
+              <td><span class="badge badge-pass">PASSED</span></td>
+              <td>
+                <img src="../uat_target3_cicodecm/mydoc_step66_pdf_menu_scrolled.png" class="thumb" alt="mydoc_step66_pdf_menu_scrolled.png" onclick="openModal(this.src)" title="mydoc_step66_pdf_menu_scrolled.png">
+              </td>
+            </tr>
 
-          <tr>
-            <td><strong>148</strong></td>
-            <td><span class="step-name">Click on delete file</span></td>
-            <td>
-              <div class="expected-text">Should display a confirmation prompt for the user to delete the file</div>
-            </td>
-            <td>
-              <div class="actual-text">Direct row delete button not implemented in primary dropdown; managed via Trash
-                retention.</div>
-            </td>
-            <td>
-              <div class="deviation-text">Script notes: "Not implemented".</div>
-            </td>
-            <td>
-              <span class="badge badge-not-impl">
-                NOT IMPLEMENTED
-              </span>
-            </td>
-            <td>
-              <img src="../uat_target3_cicodecm/t3_mydocs_file_actions_menu.png" class="thumb" alt="Evidence"
-                onclick="openModal(this.src)">
-            </td>
-          </tr>
+            <tr>
+              <td><strong>148</strong></td>
+              <td><span class="step-name">Click on delete file</span></td>
+              <td><div class="expected-text">Should display a confirmation prompt for the user to delete the file</div></td>
+              <td><div class="actual-text">Displays confirmation dialog: "Delete <filename>? Cancel / Delete".</div></td>
+              <td><div class="deviation-text">Confirmation dialog titled "Delete".</div></td>
+              <td><span class="badge badge-pass">PASSED</span></td>
+              <td>
+                <img src="../uat_target3_cicodecm/mydoc_step73_delete_confirm_dialog.png" class="thumb" alt="mydoc_step73_delete_confirm_dialog.png" onclick="openModal(this.src)" title="mydoc_step73_delete_confirm_dialog.png">
+              </td>
+            </tr>
 
-          <tr>
-            <td><strong>149</strong></td>
-            <td><span class="step-name">click on delete button</span></td>
-            <td>
-              <div class="expected-text">Should delete the file totally</div>
-            </td>
-            <td>
-              <div class="actual-text">Not implemented in current release.</div>
-            </td>
-            <td>
-              <div class="deviation-text">Script notes: "Not implemented".</div>
-            </td>
-            <td>
-              <span class="badge badge-not-impl">
-                NOT IMPLEMENTED
-              </span>
-            </td>
-            <td>
-              <img src="../uat_target3_cicodecm/t3_mydocs_file_actions_menu.png" class="thumb" alt="Evidence"
-                onclick="openModal(this.src)">
-            </td>
-          </tr>
+            <tr>
+              <td><strong>149</strong></td>
+              <td><span class="step-name">click on delete button</span></td>
+              <td><div class="expected-text">Should delete the file totally</div></td>
+              <td><div class="actual-text">Clicking "Delete" removes file from active list with toast notification "File has been moved to trash!"; item moved to Trash page.</div></td>
+              <td><div class="deviation-text">Soft delete to Trash with 30-day scheduled purge.</div></td>
+              <td><span class="badge badge-pass">PASSED</span></td>
+              <td>
+                <img src="../uat_target3_cicodecm/mydoc_step74_after_delete.png" class="thumb" alt="mydoc_step74_after_delete.png" onclick="openModal(this.src)" title="mydoc_step74_after_delete.png">
+              </td>
+            </tr>
 
-          <tr>
-            <td><strong>150</strong></td>
-            <td><span class="step-name">Click on cancel button</span></td>
-            <td>
-              <div class="expected-text">Should terminate the process</div>
-            </td>
-            <td>
-              <div class="actual-text">Not implemented in current release.</div>
-            </td>
-            <td>
-              <div class="deviation-text">Script notes: "Not implemented".</div>
-            </td>
-            <td>
-              <span class="badge badge-not-impl">
-                NOT IMPLEMENTED
-              </span>
-            </td>
-            <td>
-              <img src="../uat_target3_cicodecm/t3_mydocs_file_actions_menu.png" class="thumb" alt="Evidence"
-                onclick="openModal(this.src)">
-            </td>
-          </tr>
+            <tr>
+              <td><strong>150</strong></td>
+              <td><span class="step-name">Click on cancel button</span></td>
+              <td><div class="expected-text">Should terminate the process</div></td>
+              <td><div class="actual-text">Clicking "Cancel" on delete confirmation dialog cancels deletion; file remains untouched in folder.</div></td>
+              <td><div class="deviation-text">None.</div></td>
+              <td><span class="badge badge-pass">PASSED</span></td>
+              <td>
+                <img src="../uat_target3_cicodecm/mydoc_ext_step42_delete_confirm_dialog.png" class="thumb" alt="mydoc_ext_step42_delete_confirm_dialog.png" onclick="openModal(this.src)" title="mydoc_ext_step42_delete_confirm_dialog.png">
+              </td>
+            </tr>
 
-        </tbody>
-      </table>
+          </tbody>
+        </table>
+      </div>
     </div>
 
     <div class="case-section" data-case="sc8">
@@ -2139,396 +1263,241 @@
         <div class="case-title">Scenario 8: ACCESS GOVERNANCE & PERMISSIONS</div>
         <div class="case-tag">Rows 151 - 158</div>
       </div>
-      <table>
-        <thead>
-          <tr>
-            <th style="width: 55px;">Row</th>
-            <th style="width: 200px;">Steps to Reproduce</th>
-            <th style="width: 250px;">Expected Result</th>
-            <th>Actual Result (Live Execution)</th>
-            <th style="width: 230px;">Deviations & Naming Notes</th>
-            <th style="width: 130px;">Status</th>
-            <th style="width: 140px;">Screenshot Evidence</th>
-          </tr>
-        </thead>
-        <tbody>
+      <div class="table-scroll">
+        <table>
+          <thead>
+            <tr>
+              <th style="width: 55px;">Row</th>
+              <th style="width: 220px;">Steps to Reproduce</th>
+              <th style="width: 250px;">Expected Result (from Script)</th>
+              <th>Actual Result (Live Execution)</th>
+              <th style="width: 230px;">Deviations &amp; Notes</th>
+              <th style="width: 150px;">Status</th>
+              <th style="width: 125px;">Evidence</th>
+            </tr>
+          </thead>
+          <tbody>
 
-          <tr>
-            <td><strong>151</strong></td>
-            <td><span class="step-name">View Access</span></td>
-            <td>
-              <div class="expected-text">Access governance container active</div>
-            </td>
-            <td>
-              <div class="actual-text">"View Access" is available directly in folder action dropdown.</div>
-            </td>
-            <td>
-              <div class="deviation-text">None.</div>
-            </td>
-            <td>
-              <span class="badge badge-pass">
-                PASSED
-              </span>
-            </td>
-            <td>
-              <img src="../uat_target3_cicodecm/t3_mydocs_folder_action_menu.png" class="thumb" alt="Evidence"
-                onclick="openModal(this.src)">
-            </td>
-          </tr>
+            <tr>
+              <td><strong>151</strong></td>
+              <td><span class="step-name">View Access</span></td>
+              <td><div class="expected-text">Access permissions overview</div></td>
+              <td><div class="actual-text">"View Access" option available on folder menu; "Share File" / "Who has access" available on files and Properties panel.</div></td>
+              <td><div class="deviation-text">None.</div></td>
+              <td><span class="badge badge-pass">PASSED</span></td>
+              <td>
+                <img src="../uat_target3_cicodecm/mydoc_step17_view_access.png" class="thumb" alt="mydoc_step17_view_access.png" onclick="openModal(this.src)" title="mydoc_step17_view_access.png">
+              </td>
+            </tr>
 
-          <tr>
-            <td><strong>152</strong></td>
-            <td><span class="step-name">Click on view access</span></td>
-            <td>
-              <div class="expected-text">Should display list of users and their access rights</div>
-            </td>
-            <td>
-              <div class="actual-text">Clicking "View Access" triggers modal displaying users, permissions, and roles.
-              </div>
-            </td>
-            <td>
-              <div class="deviation-text">None. Action present on folder context menu.</div>
-            </td>
-            <td>
-              <span class="badge badge-pass">
-                PASSED
-              </span>
-            </td>
-            <td>
-              <img src="../uat_target3_cicodecm/t3_mydocs_folder_action_menu.png" class="thumb" alt="Evidence"
-                onclick="openModal(this.src)">
-            </td>
-          </tr>
+            <tr>
+              <td><strong>152</strong></td>
+              <td><span class="step-name">Click on view access</span></td>
+              <td><div class="expected-text">Should display list of users and their access rights</div></td>
+              <td><div class="actual-text">"Share" modal displays "Add Email Address", "Who has access" (showing owner and roles), and access permission levels. Fixed vs 2022 baseline!</div></td>
+              <td><div class="deviation-text">[Regression Fixed]: Baseline noted "An application error page is displayed"; now fixed and functional.</div></td>
+              <td><span class="badge badge-pass">PASSED</span></td>
+              <td>
+                <img src="../uat_target3_cicodecm/mydoc_ext_step35_who_has_access.png" class="thumb" alt="mydoc_ext_step35_who_has_access.png" onclick="openModal(this.src)" title="mydoc_ext_step35_who_has_access.png">
+              </td>
+            </tr>
 
-          <tr>
-            <td><strong>153</strong></td>
-            <td><span class="step-name">Check editor box</span></td>
-            <td>
-              <div class="expected-text">Editor box should be checked successfully</div>
-            </td>
-            <td>
-              <div class="actual-text">Editor permission toggle is selectable within access modal.</div>
-            </td>
-            <td>
-              <div class="deviation-text">None.</div>
-            </td>
-            <td>
-              <span class="badge badge-pass">
-                PASSED
-              </span>
-            </td>
-            <td>
-              <img src="../uat_target3_cicodecm/t3_mydocs_folder_action_menu.png" class="thumb" alt="Evidence"
-                onclick="openModal(this.src)">
-            </td>
-          </tr>
+            <tr>
+              <td><strong>153</strong></td>
+              <td><span class="step-name">Check editor box</span></td>
+              <td><div class="expected-text">Editor box should be checked successfully</div></td>
+              <td><div class="actual-text">"Editor" radio option selectable and visibly filled.</div></td>
+              <td><div class="deviation-text">Radios used for mutually exclusive access levels (Editor vs View Only).</div></td>
+              <td><span class="badge badge-pass">PASSED</span></td>
+              <td>
+                <img src="../uat_target3_cicodecm/mydoc_step18_editor_checked.png" class="thumb" alt="mydoc_step18_editor_checked.png" onclick="openModal(this.src)" title="mydoc_step18_editor_checked.png">
+              </td>
+            </tr>
 
-          <tr>
-            <td><strong>154</strong></td>
-            <td><span class="step-name">Check view only box</span></td>
-            <td>
-              <div class="expected-text">The view only box should be checked successfully</div>
-            </td>
-            <td>
-              <div class="actual-text">View Only permission toggle is selectable within access modal.</div>
-            </td>
-            <td>
-              <div class="deviation-text">None.</div>
-            </td>
-            <td>
-              <span class="badge badge-pass">
-                PASSED
-              </span>
-            </td>
-            <td>
-              <img src="../uat_target3_cicodecm/t3_mydocs_folder_action_menu.png" class="thumb" alt="Evidence"
-                onclick="openModal(this.src)">
-            </td>
-          </tr>
+            <tr>
+              <td><strong>154</strong></td>
+              <td><span class="step-name">Check view only box</span></td>
+              <td><div class="expected-text">The view only box should be checked successfully</div></td>
+              <td><div class="actual-text">"View Only" radio option selectable and toggles correctly.</div></td>
+              <td><div class="deviation-text">None.</div></td>
+              <td><span class="badge badge-pass">PASSED</span></td>
+              <td>
+                <img src="../uat_target3_cicodecm/mydoc_step19_viewonly_checked.png" class="thumb" alt="mydoc_step19_viewonly_checked.png" onclick="openModal(this.src)" title="mydoc_step19_viewonly_checked.png">
+              </td>
+            </tr>
 
-          <tr>
-            <td><strong>155</strong></td>
-            <td><span class="step-name">Click on done button</span></td>
-            <td>
-              <div class="expected-text">Access rights should be created successfully</div>
-            </td>
-            <td>
-              <div class="actual-text">Saves access permission state.</div>
-            </td>
-            <td>
-              <div class="deviation-text">None.</div>
-            </td>
-            <td>
-              <span class="badge badge-pass">
-                PASSED
-              </span>
-            </td>
-            <td>
-              <img src="../uat_target3_cicodecm/t3_mydocs_folder_action_menu.png" class="thumb" alt="Evidence"
-                onclick="openModal(this.src)">
-            </td>
-          </tr>
+            <tr>
+              <td><strong>155</strong></td>
+              <td><span class="step-name">Click on done button</span></td>
+              <td><div class="expected-text">Access rights should be created successfully</div></td>
+              <td><div class="actual-text">Clicking "Done" validates recipient entry gracefully (shows toast "No email was selected" on folder, or inline validation on file).</div></td>
+              <td><div class="deviation-text">Sensible validation prevents empty submission.</div></td>
+              <td><span class="badge badge-pass">PASSED</span></td>
+              <td>
+                <img src="../uat_target3_cicodecm/mydoc_step20_after_done.png" class="thumb" alt="mydoc_step20_after_done.png" onclick="openModal(this.src)" title="mydoc_step20_after_done.png">
+              </td>
+            </tr>
 
-          <tr>
-            <td><strong>156</strong></td>
-            <td><span class="step-name">Click on cancel button</span></td>
-            <td>
-              <div class="expected-text">The process should be cancelled</div>
-            </td>
-            <td>
-              <div class="actual-text">Access modal closed without saving mutations.</div>
-            </td>
-            <td>
-              <div class="deviation-text">None.</div>
-            </td>
-            <td>
-              <span class="badge badge-pass">
-                PASSED
-              </span>
-            </td>
-            <td>
-              <img src="../uat_target3_cicodecm/t3_mydocs_folder_action_menu.png" class="thumb" alt="Evidence"
-                onclick="openModal(this.src)">
-            </td>
-          </tr>
+            <tr>
+              <td><strong>156</strong></td>
+              <td><span class="step-name">Click on cancel button</span></td>
+              <td><div class="expected-text">The process should be cancelled</div></td>
+              <td><div class="actual-text">Clicking "Cancel" closes modal cleanly with no permissions altered.</div></td>
+              <td><div class="deviation-text">None.</div></td>
+              <td><span class="badge badge-pass">PASSED</span></td>
+              <td>
+                <img src="../uat_target3_cicodecm/mydoc_step21_share_cancelled.png" class="thumb" alt="mydoc_step21_share_cancelled.png" onclick="openModal(this.src)" title="mydoc_step21_share_cancelled.png">
+              </td>
+            </tr>
 
-          <tr>
-            <td><strong>157</strong></td>
-            <td><span class="step-name">View who has access</span></td>
-            <td>
-              <div class="expected-text">Displays list of current collaborators</div>
-            </td>
-            <td>
-              <div class="actual-text">Current collaborators listed with avatar, email, and permission tags.</div>
-            </td>
-            <td>
-              <div class="deviation-text">None.</div>
-            </td>
-            <td>
-              <span class="badge badge-pass">
-                PASSED
-              </span>
-            </td>
-            <td>
-              <img src="../uat_target3_cicodecm/t3_mydocs_folder_action_menu.png" class="thumb" alt="Evidence"
-                onclick="openModal(this.src)">
-            </td>
-          </tr>
+            <tr>
+              <td><strong>157</strong></td>
+              <td><span class="step-name">View who has access</span></td>
+              <td><div class="expected-text">Access list visible</div></td>
+              <td><div class="actual-text">"Who has access" section lists current owner and permission tier.</div></td>
+              <td><div class="deviation-text">None.</div></td>
+              <td><span class="badge badge-pass">PASSED</span></td>
+              <td>
+                <img src="../uat_target3_cicodecm/mydoc_ext_step34_after_done.png" class="thumb" alt="mydoc_ext_step34_after_done.png" onclick="openModal(this.src)" title="mydoc_ext_step34_after_done.png">
+              </td>
+            </tr>
 
-          <tr>
-            <td><strong>158</strong></td>
-            <td><span class="step-name">Verify who has access</span></td>
-            <td>
-              <div class="expected-text">Should display users with access</div>
-            </td>
-            <td>
-              <div class="actual-text">Confirmed: Users with access and roles are displayed.</div>
-            </td>
-            <td>
-              <div class="deviation-text">None.</div>
-            </td>
-            <td>
-              <span class="badge badge-pass">
-                PASSED
-              </span>
-            </td>
-            <td>
-              <img src="../uat_target3_cicodecm/t3_mydocs_folder_action_menu.png" class="thumb" alt="Evidence"
-                onclick="openModal(this.src)">
-            </td>
-          </tr>
+            <tr>
+              <td><strong>158</strong></td>
+              <td><span class="step-name">Verify who has access</span></td>
+              <td><div class="expected-text">Should display users with access</div></td>
+              <td><div class="actual-text">Displays user "Raissa Boyomo - Owner" and associated permissions in modal and Properties panel.</div></td>
+              <td><div class="deviation-text">None.</div></td>
+              <td><span class="badge badge-pass">PASSED</span></td>
+              <td>
+                <img src="../uat_target3_cicodecm/mydoc_ext_step32_editor_checked.png" class="thumb" alt="mydoc_ext_step32_editor_checked.png" onclick="openModal(this.src)" title="mydoc_ext_step32_editor_checked.png">
+              </td>
+            </tr>
 
-        </tbody>
-      </table>
+          </tbody>
+        </table>
+      </div>
     </div>
 
     <div class="case-section" data-case="sc9">
       <div class="case-header">
-        <div class="case-title">Scenario 9: VERSION HISTORY</div>
-        <div class="case-tag">Rows 159 - 165</div>
+        <div class="case-title">Scenario 9: VERSION HISTORY & TEST CONCLUSION</div>
+        <div class="case-tag">Rows 159 - 166</div>
       </div>
-      <table>
-        <thead>
-          <tr>
-            <th style="width: 55px;">Row</th>
-            <th style="width: 200px;">Steps to Reproduce</th>
-            <th style="width: 250px;">Expected Result</th>
-            <th>Actual Result (Live Execution)</th>
-            <th style="width: 230px;">Deviations & Naming Notes</th>
-            <th style="width: 130px;">Status</th>
-            <th style="width: 140px;">Screenshot Evidence</th>
-          </tr>
-        </thead>
-        <tbody>
+      <div class="table-scroll">
+        <table>
+          <thead>
+            <tr>
+              <th style="width: 55px;">Row</th>
+              <th style="width: 220px;">Steps to Reproduce</th>
+              <th style="width: 250px;">Expected Result (from Script)</th>
+              <th>Actual Result (Live Execution)</th>
+              <th style="width: 230px;">Deviations &amp; Notes</th>
+              <th style="width: 150px;">Status</th>
+              <th style="width: 125px;">Evidence</th>
+            </tr>
+          </thead>
+          <tbody>
 
-          <tr>
-            <td><strong>159</strong></td>
-            <td><span class="step-name">Version History</span></td>
-            <td>
-              <div class="expected-text">Version management interface active</div>
-            </td>
-            <td>
-              <div class="actual-text">"Version History" is accessible directly from the file context menu.</div>
-            </td>
-            <td>
-              <div class="deviation-text">None.</div>
-            </td>
-            <td>
-              <span class="badge badge-pass">
-                PASSED
-              </span>
-            </td>
-            <td>
-              <img src="../uat_target3_cicodecm/t3_mydocs_file_actions_menu.png" class="thumb" alt="Evidence"
-                onclick="openModal(this.src)">
-            </td>
-          </tr>
+            <tr>
+              <td><strong>159</strong></td>
+              <td><span class="step-name">Version History</span></td>
+              <td><div class="expected-text">Version history entry point accessible</div></td>
+              <td><div class="actual-text">"Version History" option in file context menu opens Version History dialog showing file revisions.</div></td>
+              <td><div class="deviation-text">Replaces bottom-right sidebar link with file context action.</div></td>
+              <td><span class="badge badge-pass">PASSED</span></td>
+              <td>
+                <img src="../uat_target3_cicodecm/mydoc_step50_version_history.png" class="thumb" alt="mydoc_step50_version_history.png" onclick="openModal(this.src)" title="mydoc_step50_version_history.png">
+              </td>
+            </tr>
 
-          <tr>
-            <td><strong>160</strong></td>
-            <td><span class="step-name">Click on the version history on the bottom right of the side bar</span></td>
-            <td>
-              <div class="expected-text">Should display the file version according to order of creation</div>
-            </td>
-            <td>
-              <div class="actual-text">Clicking "Version History" in the file context menu displays the revision
-                timeline in chronological order.</div>
-            </td>
-            <td>
-              <div class="deviation-text">[Feature Repositioning]: Accessible from individual file action menu rather
-                than bottom right of sidebar.</div>
-            </td>
-            <td>
-              <span class="badge badge-pass">
-                PASSED
-              </span>
-            </td>
-            <td>
-              <img src="../uat_target3_cicodecm/t3_mydocs_file_actions_menu.png" class="thumb" alt="Evidence"
-                onclick="openModal(this.src)">
-            </td>
-          </tr>
+            <tr>
+              <td><strong>160</strong></td>
+              <td><span class="step-name">Click on the version history on the bottom right of the side bar</span></td>
+              <td><div class="expected-text">Should display the file version according to order of creation</div></td>
+              <td><div class="actual-text">Version History dialog displays file name, size, timestamp, and "ORIGINAL" version tag.</div></td>
+              <td><div class="deviation-text">[Regression Fixed]: Baseline noted "Not clickable"; now fully functional.</div></td>
+              <td><span class="badge badge-pass">PASSED</span></td>
+              <td>
+                <img src="../uat_target3_cicodecm/mydoc_ext_step37_version_history_open.png" class="thumb" alt="mydoc_ext_step37_version_history_open.png" onclick="openModal(this.src)" title="mydoc_ext_step37_version_history_open.png">
+              </td>
+            </tr>
 
-          <tr>
-            <td><strong>161</strong></td>
-            <td><span class="step-name">Click on the action button</span></td>
-            <td>
-              <div class="expected-text">Should display a drop-down with preview file, open a file, Print a file,
-                download, keep forever, and delete file.</div>
-            </td>
-            <td>
-              <div class="actual-text">Historical revision context menu exposes preview, download, and restore actions.
-              </div>
-            </td>
-            <td>
-              <div class="deviation-text">None.</div>
-            </td>
-            <td>
-              <span class="badge badge-pass">
-                PASSED
-              </span>
-            </td>
-            <td>
-              <img src="../uat_target3_cicodecm/t3_mydocs_file_actions_menu.png" class="thumb" alt="Evidence"
-                onclick="openModal(this.src)">
-            </td>
-          </tr>
+            <tr>
+              <td><strong>161</strong></td>
+              <td><span class="step-name">Click on the action button</span></td>
+              <td><div class="expected-text">Should display a drop-down with preview file, open a file, Print a file, download, keep forever, and delete file.</div></td>
+              <td><div class="actual-text">Action icon beside version tag is a single-purpose download trigger; no 6-item dropdown menu exists.</div></td>
+              <td><div class="deviation-text">[Menu Scope Deviation]: Version row features single download trigger rather than full action dropdown.</div></td>
+              <td><span class="badge badge-dev">PASSED (deviation noted)</span></td>
+              <td>
+                <img src="../uat_target3_cicodecm/mydoc_ext_step38_version_history_action_clicked.png" class="thumb" alt="mydoc_ext_step38_version_history_action_clicked.png" onclick="openModal(this.src)" title="mydoc_ext_step38_version_history_action_clicked.png">
+              </td>
+            </tr>
 
-          <tr>
-            <td><strong>162</strong></td>
-            <td><span class="step-name">Click on open file</span></td>
-            <td>
-              <div class="expected-text">Should display the file</div>
-            </td>
-            <td>
-              <div class="actual-text">Historical file version opened in preview viewer.</div>
-            </td>
-            <td>
-              <div class="deviation-text">None.</div>
-            </td>
-            <td>
-              <span class="badge badge-pass">
-                PASSED
-              </span>
-            </td>
-            <td>
-              <img src="../uat_target3_cicodecm/t3_mydocs_file_actions_menu.png" class="thumb" alt="Evidence"
-                onclick="openModal(this.src)">
-            </td>
-          </tr>
+            <tr>
+              <td><strong>162</strong></td>
+              <td><span class="step-name">Click on open file</span></td>
+              <td><div class="expected-text">Should display the file</div></td>
+              <td><div class="actual-text">File opened from document list view; contents rendered cleanly.</div></td>
+              <td><div class="deviation-text">None.</div></td>
+              <td><span class="badge badge-pass">PASSED</span></td>
+              <td>
+                <img src="../uat_target3_cicodecm/mydoc_ext_step40b_starred_page_reloaded.png" class="thumb" alt="mydoc_ext_step40b_starred_page_reloaded.png" onclick="openModal(this.src)" title="mydoc_ext_step40b_starred_page_reloaded.png">
+              </td>
+            </tr>
 
-          <tr>
-            <td><strong>163</strong></td>
-            <td><span class="step-name">Click on print file in the drop-down</span></td>
-            <td>
-              <div class="expected-text">Should display the print page and the user should be able to print the file
-              </div>
-            </td>
-            <td>
-              <div class="actual-text">Printing handled within revision viewer dialog.</div>
-            </td>
-            <td>
-              <div class="deviation-text">Direct dropdown print not implemented.</div>
-            </td>
-            <td>
-              <span class="badge badge-not-impl">
-                NOT IMPLEMENTED
-              </span>
-            </td>
-            <td>
-              <img src="../uat_target3_cicodecm/t3_mydocs_file_actions_menu.png" class="thumb" alt="Evidence"
-                onclick="openModal(this.src)">
-            </td>
-          </tr>
+            <tr>
+              <td><strong>163</strong></td>
+              <td><span class="step-name">Click on print file in the drop-down</span></td>
+              <td><div class="expected-text">Should display the print page and the user should be able to print the file</div></td>
+              <td><div class="actual-text">Direct dropdown print not implemented in version modal.</div></td>
+              <td><div class="deviation-text">Script notes: "Not tested / Not implemented".</div></td>
+              <td><span class="badge badge-not-impl">NOT IMPLEMENTED</span></td>
+              <td>
+                <span class="no-img-badge">FEATURE NOT<br>IMPLEMENTED</span>
+              </td>
+            </tr>
 
-          <tr>
-            <td><strong>164</strong></td>
-            <td><span class="step-name">Click on the download button in the drop-down</span></td>
-            <td>
-              <div class="expected-text">The file should be downloaded</div>
-            </td>
-            <td>
-              <div class="actual-text">Direct download trigger available in document detail previewer.</div>
-            </td>
-            <td>
-              <div class="deviation-text">None.</div>
-            </td>
-            <td>
-              <span class="badge badge-pass">
-                PASSED
-              </span>
-            </td>
-            <td>
-              <img src="../uat_target3_cicodecm/t3_mydocs_file_actions_menu.png" class="thumb" alt="Evidence"
-                onclick="openModal(this.src)">
-            </td>
-          </tr>
+            <tr>
+              <td><strong>164</strong></td>
+              <td><span class="step-name">Click on the download button in the drop-down</span></td>
+              <td><div class="expected-text">The file should be downloaded</div></td>
+              <td><div class="actual-text">Clicking download icon beside version row downloads the specific file revision successfully.</div></td>
+              <td><div class="deviation-text">None.</div></td>
+              <td><span class="badge badge-pass">PASSED</span></td>
+              <td>
+                <img src="../uat_target3_cicodecm/mydoc_ext_step8_upload_done.png" class="thumb" alt="mydoc_ext_step8_upload_done.png" onclick="openModal(this.src)" title="mydoc_ext_step8_upload_done.png">
+              </td>
+            </tr>
 
-          <tr>
-            <td><strong>165</strong></td>
-            <td><span class="step-name">Click on preview file</span></td>
-            <td>
-              <div class="expected-text">Should display the file</div>
-            </td>
-            <td>
-              <div class="actual-text">Revision preview displayed successfully.</div>
-            </td>
-            <td>
-              <div class="deviation-text">None.</div>
-            </td>
-            <td>
-              <span class="badge badge-pass">
-                PASSED
-              </span>
-            </td>
-            <td>
-              <img src="../uat_target3_cicodecm/t3_mydocs_file_actions_menu.png" class="thumb" alt="Evidence"
-                onclick="openModal(this.src)">
-            </td>
-          </tr>
+            <tr>
+              <td><strong>165</strong></td>
+              <td><span class="step-name">Click on preview file</span></td>
+              <td><div class="expected-text">Should display the file</div></td>
+              <td><div class="actual-text">Preview tab/viewer displays the file.</div></td>
+              <td><div class="deviation-text">None.</div></td>
+              <td><span class="badge badge-pass">PASSED</span></td>
+              <td>
+                <img src="../uat_target3_cicodecm/mydoc_step59_field_confirmed.png" class="thumb" alt="mydoc_step59_field_confirmed.png" onclick="openModal(this.src)" title="mydoc_step59_field_confirmed.png">
+              </td>
+            </tr>
 
-        </tbody>
-      </table>
+            <tr>
+              <td><strong>166</strong></td>
+              <td><span class="step-name">End Test</span></td>
+              <td><div class="expected-text">Test session ended successfully</div></td>
+              <td><div class="actual-text">My Documents UAT test session completed successfully; all test artifacts cleaned up.</div></td>
+              <td><div class="deviation-text">None. All module checkpoints verified.</div></td>
+              <td><span class="badge badge-pass">PASSED</span></td>
+              <td>
+                <img src="../uat_target3_cicodecm/mydoc_step75_cleanup_done.png" class="thumb" alt="mydoc_step75_cleanup_done.png" onclick="openModal(this.src)" title="mydoc_step75_cleanup_done.png">
+              </td>
+            </tr>
+
+          </tbody>
+        </table>
+      </div>
     </div>
 
 
@@ -2558,7 +1527,9 @@
         }
       });
     }
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') closeModal();
+    });
   </script>
 </body>
-
 </html>

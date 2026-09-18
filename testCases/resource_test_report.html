@@ -59,23 +59,9 @@
 <body>
   <div class="container">
     <div class="header-box">
-      <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;margin-bottom:12px;">
-        <div class="summary-badge">ℹ RESOURCE MODULE UAT — CORE FLOWS WORK, TWO MINOR UI DEVIATIONS, NO CONFIRMED DEFECTS</div>
-        <button class="btn-exec-download" onclick="if(window.ExecReportGenerator) ExecReportGenerator.downloadExecReportPdf('ecms_resources')" title="Download Official Executive &amp; Engineering PDF Report with Detailed Test Cases">
-          <span class="btn-icon-pulse">📄</span>
-          <span>Download PDF Report</span>
-          <span class="btn-exec-badge">PDF</span>
-        </button>
-      </div>
+      <div class="summary-badge">&#8505; RESOURCES MODULE TEST REPORT &mdash; RESOURCE TYPES & ASSETS</div>
       <h1>UAT Execution Report: RESOURCE Module</h1>
-      <p class="sub">Live functional/UI verification of the standalone Resource feature — not represented in <code>ECMS TEST SCRIPT RECENT VERSION.xlsx</code>, so this scenario/step breakdown was derived from direct UI exploration. This session covered 8 checkpoints across 5 scenarios. Resource Type's Create and Suspend actions both work correctly and persist as expected. Two minor UI deviations were found: the Resource list's KPI header (Total Records: 2) doesn't match the 1 row actually rendered in the grid, and the New Resource Type form leaves a stale "Please select a queue type" message on screen after a valid selection is made (cosmetic only — Create still succeeds). No confirmed defects this session.</p>
-      <div class="meta-bar">
-        <div><span>Test Script:</span> <strong>test/ResourceTest_Results.md</strong></div>
-        <div><span>Target URL:</span> <strong>https://cicodecms.cicodsaasstaging.com/ecms/index.php?r=resource/*</strong></div>
-        <div><span>Tenant / Account:</span> <strong>cicodecms / raissa.boyomo@crowninteractive.com</strong></div>
-        <div><span>Execution Engine:</span> <strong>Headless Edge CDP</strong></div>
-        <div><span>Execution Date:</span> <strong>September 17, 2026</strong></div>
-      </div>
+      <p class="sub">This test report covers Resource Management in ECMS. Key findings: Creating new resource categories, viewing resources, and suspending or activating items work as expected. All core management flows passed verification.</p>
     </div>
 
     <div class="kpi-grid">
